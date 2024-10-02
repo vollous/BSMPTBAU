@@ -12,6 +12,7 @@
  *
  */
 
+#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/transport_equations.h> // for GSL_integ...
 #include <BSMPT/minimizer/Minimizer.h>
@@ -55,6 +56,15 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
+  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
+  Kfactor K(Ki);
+  clock_t begin_time = clock();
+  std::cout << K(Rbarbos, 0.1) << "\n";
+  std::cout << K(Rbarfer, 0.1) << "\n";
+  std::cout << "Computation time:\n"
+            << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
+
+  exit(1);
 
   const auto SMConstants = GetSMConstants();
 
@@ -231,7 +241,7 @@ try
         Logger::Write(LoggingLevel::Default, ss.str());
 
       } // END: LineStart == LineEnd
-    }   // END: Valid Line
+    } // END: Valid Line
     linecounter++;
     if (infile.eof()) break;
   } // END: Input Read

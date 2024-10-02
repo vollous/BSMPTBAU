@@ -30,7 +30,7 @@ class BSMPT(ConanFile):
         "UseLibCMAES": True,
         "UseNLopt": True,
         "MakeAdditionalTesting": False,
-        "CompileBaryo": False,
+        "CompileBaryo": True,
         "EnableCoverage": False,
         "UseVectorization": True,
     }
