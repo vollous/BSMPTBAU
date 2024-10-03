@@ -20,6 +20,7 @@ foreach(file_path ${SOURCE_FILES})
             ThermalFunctions
             BounceSolution
             TransitionTracer
+            Baryo
             GW)
   set_target_properties(
     "${filename}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY

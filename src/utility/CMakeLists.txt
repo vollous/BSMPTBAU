@@ -8,7 +8,9 @@ set(header
     ${header_path}/utility.h ${header_path}/Logger.h ${header_path}/parser.h
     ${header_path}/const_velocity_spline.h
     ${header_path}/NumericalDerivatives.h
-    ${header_path}/NumericalIntegration.h)
+    ${header_path}/NumericalIntegration.h
+    ${header_path}/nr3.h)
+
 set(src utility.cpp Logger.cpp parser.cpp const_velocity_spline.cpp
         NumericalDerivatives.cpp)
 add_library(Utility ${header} ${src})

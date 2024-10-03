@@ -81,6 +81,12 @@ Transpose(const std::vector<std::vector<double>> &A)
   return r;
 }
 
+int Delta(const int &i, const int &j)
+{
+  if (i == j) return 1;
+  return 0;
+}
+
 double Li2(const double &x)
 {
   if (x == 0) return 0;

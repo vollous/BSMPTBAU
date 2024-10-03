@@ -260,6 +260,15 @@ std::vector<std::vector<double>>
 Transpose(const std::vector<std::vector<double>> &A);
 
 /**
+ * @brief Delta \f$ \delta_{i,j} =  1\f$ if $i=j$ otherwise $=0$
+ *
+ * @param i
+ * @param j
+ * @return int
+ */
+int Delta(const int &i, const int &j);
+
+/**
  * @brief Dilogarithm of x
  *
  * https://en.wikipedia.org/wiki/Dilogarithm

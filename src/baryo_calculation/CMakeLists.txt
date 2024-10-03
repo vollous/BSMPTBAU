@@ -11,7 +11,9 @@ set(header
     ${header_path}/Fluid_Type/top_source.h
     ${header_path}/Fluid_Type/bot_source.h
     ${header_path}/Fluid_Type/tau_source.h
-    ${header_path}/CalculateEtaInterface.h)
+    ${header_path}/CalculateEtaInterface.h
+    ${header_path}/difeq.h
+    ${header_path}/solvde.h)
 
 set(src
     transport_equations.cpp
