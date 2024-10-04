@@ -1,6 +1,7 @@
 // https://github.com/NJdevPro/Numerical-Recipes
 
 #pragma once
+#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/utility/nr3.h>
 #include <BSMPT/utility/utility.h>
 
@@ -9,20 +10,11 @@ using BSMPT::Delta;
 struct Difeq
 {
   // vw
-  const Doub &vw;
-  Doub gamma;
+  std::shared_ptr<BSMPT::Kinfo> Ki;
   // List of z coordinates on the grid
   const VecDoub &z;
   // Number of fermion and number of bosons
   const Int &nFermions, &nBosons;
-  // Thermal averages functions for fermions. Matrices k-steps x nFermion
-  const MatDoub &fD0, &fD1, &fD2, &fR, &fRbar, &fQ1, &fQ2, &fm2prime, &fS;
-  // Thermal averages functions for bosons. Matrices k-steps x nBoson
-  const MatDoub &bD1, &bD2, &bR, &bRbar, &bQ1, &bQ2, &bm2prime;
-  // Collision matrix.
-  // Rank-3 "tensor" k-steps x 2 * (nFermions + nBosons) x 2 * (nFermions +
-  // nBosons)
-  const Mat3DDoub &CollisionMatrix;
   // Matrix Stilde = A^-1 * S (source) for each k
   MatDoub STilde;
   // Tensor with  A^-1 Gamma for each k
@@ -37,55 +29,35 @@ struct Difeq
       const Int &nFermions_In,
       const Int &nBosons_In,
       // Fermions
-      const MatDoub &fD0_In,
-      const MatDoub &fD1_In,
-      const MatDoub &fD2_In,
-      const MatDoub &fR_In,
-      const MatDoub &fRbar_In,
-      const MatDoub &fQ1_In,
-      const MatDoub &fQ2_In,
-      const MatDoub &fm2prime_In,
-      const MatDoub &fS_In,
+      const MatDoub &fD0,
+      const MatDoub &fD1,
+      const MatDoub &fD2,
+      const MatDoub &fR,
+      const MatDoub &fRbar,
+      const MatDoub &fQ1,
+      const MatDoub &fQ2,
+      const MatDoub &fm2prime,
+      const MatDoub &fS,
       // Bosons
-      const MatDoub &bD1_In,
-      const MatDoub &bD2_In,
-      const MatDoub &bR_In,
-      const MatDoub &bRbar_In,
-      const MatDoub &bQ1_In,
-      const MatDoub &bQ2_In,
-      const MatDoub &bm2prime_In,
+      const MatDoub &bD1,
+      const MatDoub &bD2,
+      const MatDoub &bR,
+      const MatDoub &bRbar,
+      const MatDoub &bQ1,
+      const MatDoub &bQ2,
+      const MatDoub &bm2prime,
       // Collision matrix
-      const Mat3DDoub &CollisionMatrix_In)
-      : vw(vw_In)
-      , z(z_In)
+      const Mat3DDoub &CollisionMatrix)
+      : z(z_In)
       , nFermions(nFermions_In)
       , nBosons(nBosons_In)
-      , fD0(fD0_In)
-      , fD1(fD1_In)
-      , fD2(fD2_In)
-      , fR(fR_In)
-      , fRbar(fRbar_In)
-      , fQ1(fQ1_In)
-      , fQ2(fQ2_In)
-      , fm2prime(fm2prime_In)
-      , fS(fS_In)
-      , bD1(bD1_In)
-      , bD2(bD2_In)
-      , bR(bR_In)
-      , bRbar(bRbar_In)
-      , bQ1(bQ1_In)
-      , bQ2(bQ2_In)
-      , bm2prime(bm2prime_In)
-      , CollisionMatrix(CollisionMatrix_In)
-      , M(std::size(z),
+      , M(z.size(),
           2 * (nFermions + nBosons),
           2 * (nFermions + nBosons))                    // A^-1 * Gamma matrix
-      , STilde(std::size(z), 2 * (nFermions + nBosons)) // A^-1 * Sources vector
+      , STilde(z.size(), 2 * (nFermions + nBosons)) // A^-1 * Sources vector
 
   {
-    gamma = 1 / sqrt(1 - vw * vw); // Lorenz factor
-
-    for (int k = 0; k < std::size(z); k++)
+    for (int k = 0; k < z.size(); k++)
     {
       // Calculate A^-1
       MatDoub Ainverse(2 * (nBosons + nFermions), 2 * (nBosons + nFermions));
@@ -127,18 +99,18 @@ struct Difeq
       for (int fermion = 0; fermion < nFermions; fermion++)
       {
         Gamma[2 * fermion][2 * fermion] -=
-            gamma * vw * fQ1[k][fermion] * fm2prime[k][fermion];
+            Ki->gamw * Ki->vw * fQ1[k][fermion] * fm2prime[k][fermion];
         Gamma[2 * fermion + 1][2 * fermion] -=
-            gamma * vw * fQ2[k][fermion] * fm2prime[k][fermion];
+            Ki->gamw * Ki->vw * fQ2[k][fermion] * fm2prime[k][fermion];
         Gamma[2 * fermion + 1][2 * fermion + 1] -=
             fRbar[k][fermion] * fm2prime[k][fermion];
       }
       for (int boson = 0; boson < nBosons; boson++)
       {
         Gamma[2 * nFermions + 2 * boson][2 * nFermions + 2 * boson] -=
-            gamma * vw * bQ1[k][boson] * bm2prime[k][boson];
+            Ki->gamw * Ki->vw * bQ1[k][boson] * bm2prime[k][boson];
         Gamma[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson] -=
-            gamma * vw * bQ2[k][boson] * bm2prime[k][boson];
+            Ki->gamw * Ki->vw * bQ2[k][boson] * bm2prime[k][boson];
         ;
         Gamma[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson + 1] -=
             bRbar[k][boson] * bm2prime[k][boson];
@@ -194,8 +166,8 @@ struct Difeq
     }
     else
     {
-      for (int j = 0; j < 2 * (nFermions * nBosons); j++)
-        for (int n = 0; n < 2 * (nFermions * nBosons); n++)
+      for (int j = 0; j < 2 * (nFermions + nBosons); j++)
+        for (int n = 0; n < 2 * (nFermions + nBosons); n++)
         {
           // s matrix for the middle point
           // S_{j,n}
