@@ -51,10 +51,10 @@ struct Difeq
       : z(z_In)
       , nFermions(nFermions_In)
       , nBosons(nBosons_In)
+      , STilde(z.size(), 2 * (nFermions + nBosons)) // A^-1 * Sources vector
       , M(z.size(),
           2 * (nFermions + nBosons),
-          2 * (nFermions + nBosons))                    // A^-1 * Gamma matrix
-      , STilde(z.size(), 2 * (nFermions + nBosons)) // A^-1 * Sources vector
+          2 * (nFermions + nBosons)) // A^-1 * Gamma matrix
 
   {
     for (int k = 0; k < z.size(); k++)
