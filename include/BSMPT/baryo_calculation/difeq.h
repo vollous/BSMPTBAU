@@ -29,7 +29,6 @@ struct Difeq
       const Int &nFermions_In,
       const Int &nBosons_In,
       // Fermions
-      const MatDoub &fD0,
       const MatDoub &fD1,
       const MatDoub &fD2,
       const MatDoub &fR,
