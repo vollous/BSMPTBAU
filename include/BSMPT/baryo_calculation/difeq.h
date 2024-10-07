@@ -171,16 +171,17 @@ struct Difeq
         {
           // s matrix for the middle point
           // S_{j,n}
+          // M[k] and S[k] are evaluated between k and k-1
           s[j][indexv[n]] =
-              -Delta(j, n) - 0.5 * (z[k] - z[k - 1]) * (M[k - 1][j][n]);
+              -Delta(j, n) - 0.5 * (z[k] - z[k - 1]) * (M[k][j][n]);
           // S_{j,N + n}
           s[j][2 * (nFermions * nBosons) + indexv[n]] =
               Delta(j, n) - 0.5 * (z[k] - z[k - 1]) * (M[k][j][n]);
           // Equations for E(k,k-1)
-          temp = STilde[k][j] + STilde[k - 1][j];
+          temp = STilde[k][j];
           for (int i = 0; i <= 2 * (nFermions + nBosons); i++)
-            temp += M[k][j][i] * y[i][k] + M[k - 1][j][i] * y[i][k - 1];
-          s[j][jsf] = y[j][k] - y[j][k - 1] - 0.5 * (z[k] - z[k - 1]) * temp;
+            temp += M[k][j][i] * (y[i][k] + y[i][k - 1]) / 2.;
+          s[j][jsf] = y[j][k] - y[j][k - 1] - (z[k] - z[k - 1]) * temp;
         }
     }
   }
