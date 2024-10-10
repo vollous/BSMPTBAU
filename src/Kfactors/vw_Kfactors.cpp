@@ -261,7 +261,7 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   }
   case K_type::Q9o2:
   {
-    Q9o1int2 integrand(Ki, statistic, x, 1);
+    Q9o2int2 integrand(Ki, statistic, x, 1);
     double est = kronrod_61(integrand, 0., 1.);
     double res = h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-3);
     return -3 / (4. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * res;
