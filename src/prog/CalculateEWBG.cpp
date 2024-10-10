@@ -59,8 +59,10 @@ try
   std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
   Kfactor K(Ki);
   clock_t begin_time = clock();
-  std::cout << K(Rbarbos, 0.1) << "\n";
-  std::cout << K(Rbarfer, 0.1) << "\n";
+  for (double m = 1; m < 100; m++)
+  {
+    std::cout << K(Q9o2bos, m) << "\n";
+  }
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
 
