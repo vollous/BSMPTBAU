@@ -5,12 +5,13 @@
 #include <BSMPT/utility/nr3.h>
 #include <BSMPT/utility/utility.h>
 
-using BSMPT::Delta;
-
-struct Difeq
+namespace BSMPT
 {
-  // vw
-  std::shared_ptr<BSMPT::Kinfo> Ki;
+class Difeq
+{
+private:
+  // Information about vw and Tc
+  std::shared_ptr<Kinfo> Ki;
   // List of z coordinates on the grid
   const VecDoub &z;
   // Number of fermion and number of bosons
@@ -20,114 +21,21 @@ struct Difeq
   // Tensor with  A^-1 Gamma for each k
   Mat3DDoub M;
 
+public:
   Difeq(
-      // Wall velocity
-      const Doub &vw_In,
+      std::shared_ptr<Kinfo> K_in,
       // z list
       VecDoub &z_In,
       // Number of fermions and bosons
       const Int &nFermions_In,
       const Int &nBosons_In,
       // Fermions
-      const MatDoub &fD0,
-      const MatDoub &fD1,
-      const MatDoub &fD2,
-      const MatDoub &fR,
-      const MatDoub &fRbar,
-      const MatDoub &fQ1,
-      const MatDoub &fQ2,
       const MatDoub &fm2prime,
       const MatDoub &fS,
       // Bosons
-      const MatDoub &bD1,
-      const MatDoub &bD2,
-      const MatDoub &bR,
-      const MatDoub &bRbar,
-      const MatDoub &bQ1,
-      const MatDoub &bQ2,
       const MatDoub &bm2prime,
       // Collision matrix
-      const Mat3DDoub &CollisionMatrix)
-      : z(z_In)
-      , nFermions(nFermions_In)
-      , nBosons(nBosons_In)
-      , M(z.size(),
-          2 * (nFermions + nBosons),
-          2 * (nFermions + nBosons))                    // A^-1 * Gamma matrix
-      , STilde(z.size(), 2 * (nFermions + nBosons)) // A^-1 * Sources vector
-
-  {
-    for (int k = 0; k < z.size(); k++)
-    {
-      // Calculate A^-1
-      MatDoub Ainverse(2 * (nBosons + nFermions), 2 * (nBosons + nFermions));
-      for (int fermion = 0; fermion < nFermions; fermion++)
-      {
-        Ainverse[2 * fermion][2 * fermion] =
-            fR[k][fermion] /
-            (fD2[k][fermion] - fD1[k][fermion] * fR[k][fermion]);
-        Ainverse[2 * fermion][2 * fermion + 1] =
-            -1 / (fD2[k][fermion] - fD1[k][fermion] * fR[k][fermion]);
-        Ainverse[2 * fermion + 1][2 * fermion] =
-            fD2[k][fermion] /
-            (fD2[k][fermion] - fD1[k][fermion] * fR[k][fermion]);
-        Ainverse[2 * fermion + 1][2 * fermion + 1] =
-            -fD1[k][fermion] /
-            (fD2[k][fermion] - fD1[k][fermion] * fR[k][fermion]);
-      }
-
-      for (int boson = 0; boson < nBosons; boson++)
-      {
-        Ainverse[2 * nFermions + 2 * boson][2 * nFermions + 2 * boson] =
-            bR[k][boson] / (bD2[k][boson] - bD1[k][boson] * bR[k][boson]);
-        Ainverse[2 * nFermions + 2 * boson][2 * nFermions + 2 * boson + 1] =
-            -1 / (bD2[k][boson] - bD1[k][boson] * bR[k][boson]);
-        Ainverse[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson] =
-            bD2[k][boson] / (bD2[k][boson] - bD1[k][boson] * bR[k][boson]);
-        Ainverse[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson + 1] =
-            -bD1[k][boson] / (bD2[k][boson] - bD1[k][boson] * bR[k][boson]);
-      }
-
-      // Calculate Gamma Matrix (Collision matrix - m^2' B)
-      MatDoub Gamma(2 * (nBosons + nFermions), 2 * (nBosons + nFermions));
-
-      // Gamma = CollisionMatrix[k]
-      for (int i = 0; i < 2 * (nBosons + nFermions); i++)
-        for (int j = 0; j < 2 * (nBosons + nFermions); j++)
-          Gamma[i][j] = CollisionMatrix[k][i][j];
-
-      for (int fermion = 0; fermion < nFermions; fermion++)
-      {
-        Gamma[2 * fermion][2 * fermion] -=
-            Ki->gamw * Ki->vw * fQ1[k][fermion] * fm2prime[k][fermion];
-        Gamma[2 * fermion + 1][2 * fermion] -=
-            Ki->gamw * Ki->vw * fQ2[k][fermion] * fm2prime[k][fermion];
-        Gamma[2 * fermion + 1][2 * fermion + 1] -=
-            fRbar[k][fermion] * fm2prime[k][fermion];
-      }
-      for (int boson = 0; boson < nBosons; boson++)
-      {
-        Gamma[2 * nFermions + 2 * boson][2 * nFermions + 2 * boson] -=
-            Ki->gamw * Ki->vw * bQ1[k][boson] * bm2prime[k][boson];
-        Gamma[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson] -=
-            Ki->gamw * Ki->vw * bQ2[k][boson] * bm2prime[k][boson];
-        ;
-        Gamma[2 * nFermions + 2 * boson + 1][2 * nFermions + 2 * boson + 1] -=
-            bRbar[k][boson] * bm2prime[k][boson];
-      }
-
-      // Calculate M = A^-1 * Gamma
-      for (int i = 0; i < 2 * (nBosons + nFermions); i++)
-        for (int j = 0; j < 2 * (nBosons + nFermions); j++)
-          for (int l = 0; l < 2 * (nBosons + nFermions); l++)
-            M[k][i][j] = Ainverse[i][l] * Gamma[l][j];
-
-      // Calculate Stilde = A^-1 * S
-      for (int i = 0; i < 2 * (nBosons + nFermions); i++)
-        for (int j = 0; j < 2 * (nFermions); j++)
-          STilde[k][i] += Ainverse[i][j] * fS[k][j];
-    }
-  }
+      const Mat3DDoub &CollisionMatrix); // A^-1 * Sources vector
 
   void smatrix(const Int k,
                const Int k1,
@@ -185,3 +93,5 @@ struct Difeq
     }
   }
 };
+
+} // namespace BSMPT

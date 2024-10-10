@@ -13,6 +13,8 @@
  */
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/baryo_calculation/transport_network.h>
+
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/transport_equations.h> // for GSL_integ...
 #include <BSMPT/minimizer/Minimizer.h>
@@ -59,8 +61,10 @@ try
   std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
   Kfactor K(Ki);
   clock_t begin_time = clock();
-  std::cout << K(Rbarbos, 0.1) << "\n";
-  std::cout << K(Rbarfer, 0.1) << "\n";
+  for (double mass = 1; mass < 100; mass++)
+  {
+    std::cout << K(Q9o2, boson, mass) << "\n";
+  }
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
 
@@ -168,6 +172,27 @@ try
                                         args.WhichMinimizer,
                                         args.UseMultithreading);
         // Call: Calculation of eta in the different implemented approaches
+
+        ////////////////new calculation starts here/////////////////////////////
+        std::cout << "Computations starts:\n";
+        std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
+        TransportNetwork Tr(modelPointer, Ki, {tL, bL, tR, h}, EWPT.EWMinimum);
+        std::cout << std::setprecision(3);
+        MatDoub testM;
+        VecDoub testV;
+        testM = Tr.calc_A_inv(0);
+        printmat(testM);
+        testM = Tr.calc_B(0);
+        printmat(testM);
+        testM = Tr.calc_Collision(0.);
+        printmat(testM);
+        testV = Tr.calc_Source(0.);
+        printvec(testV);
+
+        exit(1);
+
+        ////////////////and ends here///////////////////////////////////////////
+
         if (args.TerminalOutput)
           Logger::Write(LoggingLevel::ProgDetailed, "Calling CalcEta...");
         eta = EtaInterface.CalcEta(args.vw,

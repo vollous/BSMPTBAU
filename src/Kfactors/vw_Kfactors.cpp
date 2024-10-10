@@ -33,6 +33,13 @@ double Rbarint::operator()(const double u)
          (u * u);
 }
 
+double K4int::operator()(const double u)
+{
+  const double w   = x + (1 - u) / u;
+  const double pwt = std::sqrt(w * w - x * x);
+  return -2 / (M_PI * M_PI) * pwt * pwt * pwt / w * f0w(w, s, 1) / (u * u);
+}
+
 double D0int::operator()(const double u)
 {
   const double w = x + (1 - u) / u;
@@ -105,21 +112,25 @@ double Q8oint2::operator()(const double u)
   return adap_simpson38(integrand, -1, 1, f, 1e-4);
 }
 
-void Q9oint1::set_u(const double u_in)
+void Q9o1int1::set_u(const double u_in)
 {
-  u = u_in;
+  u    = u_in;
+  w    = x + (1 - u) / u;
+  pwt  = std::sqrt(w * w - x * x);
+  pre1 = f0w(w, s, 1) / (u * u);
+  pre2 = Ki->gamw * f0w(w, s, 2) / (u * u);
 }
 
-double Q9oint1::operator()(const double y)
+double Q9o1int1::operator()(const double y)
 {
-  const double w = x + (1 - u) / u;
-  if (part == 1)
-    return 0.25 * Ki->Kintegrand2D(w, y, x) * f0w(w, s, 1) / (u * u);
-  else
-    return 0.25 * Ki->gamw * Ki->Kintegrand2D(w, y, x) * f0w(w, s, 2) / (u * u);
+  const double pzt = Ki->gamw * (y * pwt - w * Ki->vw);
+  const double Et  = Ki->gamw * (w - Ki->vw * y * pwt);
+  const double Vx =
+      1. / (1. + x * x / (pzt * pzt)) / sqrt(1. - pzt * pzt / (Et * Et));
+  return Vx * pwt / (pzt * Et) * (pre1 / Et - pre2);
 }
 
-double Q9oint2::operator()(const double u)
+double Q9o1int2::operator()(const double u)
 {
   integrand.set_u(u);
   double f[4];
@@ -128,209 +139,132 @@ double Q9oint2::operator()(const double u)
   return adap_simpson38(integrand, -1, 1, f, 1e-4);
 }
 
-double Kfactor::operator()(const K_type type, const double m)
+void Q9o2int1::set_u(const double u_in)
 {
-  const double x = m / Ki->Tc;
-  switch (type)
+  u    = u_in;
+  w    = x + (1 - u) / u;
+  pwt  = std::sqrt(w * w - x * x);
+  pre1 = f0w(w, s, 1) / (u * u);
+  pre2 = Ki->gamw * f0w(w, s, 2) / (u * u);
+}
+
+double Q9o2int1::operator()(const double y)
+{
+  const double pzt = Ki->gamw * (y * pwt - w * Ki->vw);
+  const double Et  = Ki->gamw * (w - Ki->vw * y * pwt);
+  const double Vx =
+      1. / (1. + x * x / (pzt * pzt)) / sqrt(1. - pzt * pzt / (Et * Et));
+  return Vx * pwt / (Et * Et) * (pre1 / Et - pre2);
+}
+
+double Q9o2int2::operator()(const double u)
+{
+  integrand.set_u(u);
+  double f[4];
+  for (size_t i = 0; i < 4; i++)
+    f[i] = integrand(-1. + 2. * (double)i / 3.);
+  return adap_simpson38(integrand, -1, 1, f, 1e-4);
+}
+double
+Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
+{
+  const double x      = m / Ki->Tc;
+  const int statistic = (ptype == boson ? -1 : 1);
+  switch (ktype)
   {
-  case K_type::N0bos:
+  case K_type::N0:
   {
-    N0int integrand(Ki, -1, x);
+    N0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::N0fer:
+  case K_type::Rbar:
   {
-    N0int integrand(Ki, 1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Rbarbos:
-  {
-    N0int integrand1(Ki, -1, x);
+    N0int integrand1(Ki, statistic, x);
     const double est1 = kronrod_61(integrand1, 0., 1.);
     const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
-    Rbarint integrand2(Ki, -1, x);
+    Rbarint integrand2(Ki, statistic, x);
     const double est2 = kronrod_61(integrand2, 0., 1.);
     const double res2 = h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
     return res2 / res1;
   }
-  case K_type::Rbarfer:
+  case K_type::K4:
   {
-    N0int integrand1(Ki, 1, x);
-    const double est1 = kronrod_61(integrand1, 0., 1.);
-    const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
-    Rbarint integrand2(Ki, 1, x);
-    const double est2 = kronrod_61(integrand2, 0., 1.);
-    const double res2 = h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
-    return res2 / res1;
-  }
-  case K_type::D0bos:
-  {
-    D0int integrand(Ki, -1, x);
+    K4int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::D0fer:
+  case K_type::D0:
   {
-    D0int integrand(Ki, 1, x);
+    D0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::D1bos:
+  case K_type::D1:
   {
-    D0int integrand(Ki, -1, x);
+    D0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return -Ki->vw * h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::D1fer:
+  case K_type::D2:
   {
-    D0int integrand(Ki, 1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return -Ki->vw * h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::D2bos:
-  {
-    D2int integrand(Ki, -1, x);
+    D2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::D2fer:
+  case K_type::Q1:
   {
-    D2int integrand(Ki, 1, x);
+    Q1int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q1bos:
+  case K_type::Q2:
   {
-    Q1int integrand(Ki, -1, x);
+    Q2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q1fer:
+  case K_type::Qe1:
   {
-    Q1int integrand(Ki, 1, x);
+    Qe1int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q2bos:
+  case K_type::Qe2:
   {
-    Q2int integrand(Ki, -1, x);
+    Qe2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q2fer:
+  case K_type::Q8o1:
   {
-    Q2int integrand(Ki, 1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Qe1bos:
-  {
-    Qe1int integrand(Ki, -1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Qe1fer:
-  {
-    Qe1int integrand(Ki, 1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Qe2bos:
-  {
-    Qe2int integrand(Ki, -1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Qe2fer:
-  {
-    Qe2int integrand(Ki, 1, x);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Q8o1bos:
-  {
-    Q8oint2 integrand(Ki, -1, x);
+    Q8oint2 integrand(Ki, statistic, x);
     Ki->set_nmk(-1, 1, 1);
     const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
+    return -3 / (M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) *
+           h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q8o1fer:
+  case K_type::Q8o2:
   {
-    Q8oint2 integrand(Ki, 1, x);
-    Ki->set_nmk(-1, 1, 1);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Q8o2bos:
-  {
-    Q8oint2 integrand(Ki, -1, x);
+    Q8oint2 integrand(Ki, statistic, x);
     Ki->set_nmk(0, 2, 1);
     const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
+    return -3 / (M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) *
+           h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
-  case K_type::Q8o2fer:
+  case K_type::Q9o1:
   {
-    Q8oint2 integrand(Ki, 1, x);
-    Ki->set_nmk(0, 2, 1);
-    const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
-  }
-  case K_type::Q9o1bos:
-  {
-    double res = 0.;
-    Q9oint2 integrand1(Ki, -1, x, 1);
-    Q9oint2 integrand2(Ki, -1, x, 2);
-    Ki->set_nmk(-1, 3, 1);
+    Q9o1int2 integrand1(Ki, statistic, x, 1);
     double est = kronrod_61(integrand1, 0., 1.);
-    res += h_adap_gauss_kronrod_15(integrand1, 0., 1., est, 1e-4);
-    Ki->set_nmk(-1, 2, 2);
-    est = kronrod_61(integrand2, 0., 1.);
-    res -= h_adap_gauss_kronrod_15(integrand2, 0., 1., est, 1e-4);
-    return res;
+    double res = h_adap_gauss_kronrod_15(integrand1, 0., 1., est, 1e-3);
+    return -3 / (4 * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * res;
   }
-  case K_type::Q9o1fer:
+  case K_type::Q9o2:
   {
-    double res = 0.;
-    Q9oint2 integrand1(Ki, 1, x, 1);
-    Q9oint2 integrand2(Ki, 1, x, 2);
-    Ki->set_nmk(-1, 3, 1);
-    double est = kronrod_61(integrand1, 0., 1.);
-    res += h_adap_gauss_kronrod_15(integrand1, 0., 1., est, 1e-4);
-    Ki->set_nmk(-1, 2, 2);
-    est = kronrod_61(integrand2, 0., 1.);
-    res -= h_adap_gauss_kronrod_15(integrand2, 0., 1., est, 1e-4);
-    return res;
-  }
-  case K_type::Q9o2bos:
-  {
-    double res = 0.;
-    Q9oint2 integrand1(Ki, -1, x, 1);
-    Q9oint2 integrand2(Ki, -1, x, 2);
-    Ki->set_nmk(0, 4, 1);
-    double est = kronrod_61(integrand1, 0., 1.);
-    res += h_adap_gauss_kronrod_15(integrand1, 0., 1., est, 1e-4);
-    Ki->set_nmk(0, 3, 2);
-    est = kronrod_61(integrand2, 0., 1.);
-    res -= h_adap_gauss_kronrod_15(integrand2, 0., 1., est, 1e-4);
-    return res;
-  }
-  case K_type::Q9o2fer:
-  {
-    double res = 0.;
-    Q9oint2 integrand1(Ki, 1, x, 1);
-    Q9oint2 integrand2(Ki, 1, x, 2);
-    Ki->set_nmk(0, 4, 1);
-    double est1 = kronrod_61(integrand1, 0., 1.);
-    Ki->set_nmk(0, 3, 2);
-    double est2 = kronrod_61(integrand2, 0., 1.);
-    if (Ki->fast) return est1 - est2;
-    Ki->set_nmk(0, 4, 1);
-    res += h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
-    Ki->set_nmk(0, 3, 2);
-    res -= h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
-    return res;
+    Q9o1int2 integrand(Ki, statistic, x, 1);
+    double est = kronrod_61(integrand, 0., 1.);
+    double res = h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-3);
+    return -3 / (M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * res;
   }
 
   break;

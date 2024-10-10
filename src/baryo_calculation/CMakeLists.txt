@@ -5,6 +5,7 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_calculation")
 set(header
+    ${header_path}/transport_network.h
     ${header_path}/transport_equations.h
     ${header_path}/Fluid_Type/gen_calc.h
     ${header_path}/Fluid_Type/gen_func_fluid.h
@@ -16,6 +17,8 @@ set(header
     ${header_path}/solvde.h)
 
 set(src
+    #difeq.cpp
+    transport_network.cpp
     transport_equations.cpp
     Fluid_Type/gen_calc.cpp
     Fluid_Type/gen_func_fluid.cpp
