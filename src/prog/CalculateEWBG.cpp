@@ -63,7 +63,7 @@ try
   clock_t begin_time = clock();
   for (double mass = 1; mass < 100; mass++)
   {
-    std::cout << K(Q9o2, boson, mass) << "\n";
+    std::cout << K(Q8o1, boson, mass) << "\n";
   }
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";

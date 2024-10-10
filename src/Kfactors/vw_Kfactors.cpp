@@ -92,18 +92,24 @@ double Qe2int::operator()(const double u)
          f0w(w, s, 1) / (u * u);
 }
 
-void Q8oint1::set_u(const double u_in)
+void Q8o1int1::set_u(const double u_in)
 {
-  u = u_in;
+  u   = u_in;
+  w   = x + (1 - u) / u;
+  pwt = std::sqrt(w * w - x * x);
+  pre = f0w(w, s, 1) / (u * u);
 }
 
-double Q8oint1::operator()(const double y)
+double Q8o1int1::operator()(const double y)
 {
-  const double w = x + (1 - u) / u;
-  return 0.5 * Ki->Kintegrand2D(w, y, x) * f0w(w, s, 1) / (u * u);
+  const double pzt = Ki->gamw * (y * pwt - w * Ki->vw);
+  const double Et  = Ki->gamw * (w - Ki->vw * y * pwt);
+  const double Vx =
+      1. / (1. + x * x / (pzt * pzt)) / sqrt(1. - pzt * pzt / (Et * Et));
+  return Vx * pwt / pzt;
 }
 
-double Q8oint2::operator()(const double u)
+double Q8o1int2::operator()(const double u)
 {
   integrand.set_u(u);
   double f[4];
@@ -238,15 +244,14 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   }
   case K_type::Q8o1:
   {
-    Q8oint2 integrand(Ki, statistic, x);
-    Ki->set_nmk(-1, 1, 1);
+    Q8o1int2 integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
-    return -3 / (M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) *
-           h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
+    const double res = h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-3);
+    return -3 / (2. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) * res;
   }
   case K_type::Q8o2:
   {
-    Q8oint2 integrand(Ki, statistic, x);
+    Q8o1int2 integrand(Ki, statistic, x);
     Ki->set_nmk(0, 2, 1);
     const double est = kronrod_61(integrand, 0., 1.);
     return -3 / (M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) *

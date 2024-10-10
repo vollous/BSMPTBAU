@@ -232,17 +232,17 @@ public:
   ~Qe2int() {};
 };
 
-class Q8oint1
+class Q8o1int1
 {
 private:
   std::shared_ptr<Kinfo> Ki;
   const double s;
   const double x;
-  double u;
-  double w;
+  double u, w, pwt, pre;
+
 
 public:
-  Q8oint1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
+  Q8o1int1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
       : s(s_in)
       , x(x_in)
   {
@@ -250,19 +250,19 @@ public:
   }
   void set_u(const double u_in);
   double operator()(const double y);
-  ~Q8oint1() {};
+  ~Q8o1int1() {};
 };
 
-class Q8oint2
+class Q8o1int2
 {
 private:
-  Q8oint1 integrand;
+  Q8o1int1 integrand;
 
 public:
-  Q8oint2(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
+  Q8o1int2(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
       : integrand(K_in, s_in, x_in) {};
   double operator()(const double u);
-  ~Q8oint2() {};
+  ~Q8o1int2() {};
 };
 
 class Q9o1int1
