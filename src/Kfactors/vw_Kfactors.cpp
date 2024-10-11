@@ -106,10 +106,36 @@ double Q8o1int1::operator()(const double y)
   const double Et  = Ki->gamw * (w - Ki->vw * y * pwt);
   const double Vx =
       1. / (1. + x * x / (pzt * pzt)) / sqrt(1. - pzt * pzt / (Et * Et));
-  return Vx * pwt / pzt;
+  return Vx * pwt / pzt * pre;
 }
 
 double Q8o1int2::operator()(const double u)
+{
+  integrand.set_u(u);
+  double f[4];
+  for (size_t i = 0; i < 4; i++)
+    f[i] = integrand(-1. + 2. * (double)i / 3.);
+  return adap_simpson38(integrand, -1, 1, f, 1e-4);
+}
+
+void Q8o2int1::set_u(const double u_in)
+{
+  u   = u_in;
+  w   = x + (1 - u) / u;
+  pwt = std::sqrt(w * w - x * x);
+  pre = f0w(w, s, 1) / (u * u);
+}
+
+double Q8o2int1::operator()(const double y)
+{
+  const double pzt = Ki->gamw * (y * pwt - w * Ki->vw);
+  const double Et  = Ki->gamw * (w - Ki->vw * y * pwt);
+  const double Vx =
+      1. / (1. + x * x / (pzt * pzt)) / sqrt(1. - pzt * pzt / (Et * Et));
+  return Vx * pwt / Et * pre;
+}
+
+double Q8o2int2::operator()(const double u)
 {
   integrand.set_u(u);
   double f[4];

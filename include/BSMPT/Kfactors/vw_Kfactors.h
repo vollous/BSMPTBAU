@@ -240,7 +240,6 @@ private:
   const double x;
   double u, w, pwt, pre;
 
-
 public:
   Q8o1int1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
       : s(s_in)
@@ -265,6 +264,38 @@ public:
   ~Q8o1int2() {};
 };
 
+class Q8o2int1
+{
+private:
+  std::shared_ptr<Kinfo> Ki;
+  const double s;
+  const double x;
+  double u, w, pwt, pre;
+
+public:
+  Q8o2int1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
+      : s(s_in)
+      , x(x_in)
+  {
+    Ki = K_in;
+  }
+  void set_u(const double u_in);
+  double operator()(const double y);
+  ~Q8o2int1() {};
+};
+
+class Q8o2int2
+{
+private:
+  Q8o2int1 integrand;
+
+public:
+  Q8o2int2(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
+      : integrand(K_in, s_in, x_in) {};
+  double operator()(const double u);
+  ~Q8o2int2() {};
+};
+
 class Q9o1int1
 {
 private:
@@ -276,9 +307,9 @@ private:
 
 public:
   Q9o1int1(std::shared_ptr<Kinfo> K_in,
-          const double s_in,
-          const double x_in,
-          const int part_in)
+           const double s_in,
+           const double x_in,
+           const int part_in)
       : part(part_in)
       , s(s_in)
       , x(x_in)
@@ -297,9 +328,9 @@ private:
 
 public:
   Q9o1int2(std::shared_ptr<Kinfo> K_in,
-          const double s_in,
-          const double x_in,
-          const int part_in)
+           const double s_in,
+           const double x_in,
+           const int part_in)
       : integrand(K_in, s_in, x_in, part_in) {};
   double operator()(const double u);
   ~Q9o1int2() {};
@@ -316,9 +347,9 @@ private:
 
 public:
   Q9o2int1(std::shared_ptr<Kinfo> K_in,
-          const double s_in,
-          const double x_in,
-          const int part_in)
+           const double s_in,
+           const double x_in,
+           const int part_in)
       : part(part_in)
       , s(s_in)
       , x(x_in)
@@ -337,9 +368,9 @@ private:
 
 public:
   Q9o2int2(std::shared_ptr<Kinfo> K_in,
-          const double s_in,
-          const double x_in,
-          const int part_in)
+           const double s_in,
+           const double x_in,
+           const int part_in)
       : integrand(K_in, s_in, x_in, part_in) {};
   double operator()(const double u);
   ~Q9o2int2() {};
