@@ -37,10 +37,7 @@ struct Kinfo
 {
   const double Tc, vw;
   double gamw;
-  int n, m, k;
   const bool fast;
-
-  double pwt, pre;
 
   Kinfo(const double T_in, const double vw_in, const bool fast_in)
       : Tc(T_in)
@@ -50,21 +47,6 @@ struct Kinfo
     gamw = 1 / std::sqrt(1 - vw_in * vw_in);
   }
 
-  void set_nmk(const double n_in, const double m_in, const double k_in)
-  {
-    n = n_in;
-    m = m_in;
-    k = k_in;
-  }
-
-  double Kintegrand2D(const double w, const double y, const double x)
-  {
-    double pzt = gamw * (y * pwt - w * vw);
-    double Et  = gamw * (w - vw * y * pwt);
-    double Vx  = pow((pzt / sqrt(pzt * pzt + x * x)), 2) * 1 /
-                sqrt(1 - pzt * pzt / (Et * Et));
-    return Vx * pwt * pow(pzt, n) / pow(Et, m - 1);
-  }
   ~Kinfo() {};
 };
 
@@ -238,16 +220,17 @@ private:
   std::shared_ptr<Kinfo> Ki;
   const double s;
   const double x;
-  double u, w, pwt, pre;
+  double w, pwt;
 
 public:
+  double pre;
   Q8o1int1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
       : s(s_in)
       , x(x_in)
   {
     Ki = K_in;
   }
-  void set_u(const double u_in);
+  void set_w(const double u_in);
   double operator()(const double y);
   ~Q8o1int1() {};
 };
@@ -270,16 +253,17 @@ private:
   std::shared_ptr<Kinfo> Ki;
   const double s;
   const double x;
-  double u, w, pwt, pre;
+  double w;
 
 public:
+  double pre, pwt;
   Q8o2int1(std::shared_ptr<Kinfo> K_in, const double s_in, const double x_in)
       : s(s_in)
       , x(x_in)
   {
     Ki = K_in;
   }
-  void set_u(const double u_in);
+  void set_w(const double u_in);
   double operator()(const double y);
   ~Q8o2int1() {};
 };
@@ -303,9 +287,10 @@ private:
   const int part;
   const double s;
   const double x;
-  double u, w, pwt, pre1, pre2;
+  double w, pwt;
 
 public:
+  double pre2, pre1, pre3;
   Q9o1int1(std::shared_ptr<Kinfo> K_in,
            const double s_in,
            const double x_in,
@@ -316,7 +301,7 @@ public:
   {
     Ki = K_in;
   }
-  void set_u(const double u_in);
+  void set_w(const double u_in);
   double operator()(const double y);
   ~Q9o1int1() {};
 };
@@ -343,9 +328,10 @@ private:
   const int part;
   const double s;
   const double x;
-  double u, w, pwt, pre1, pre2;
+  double w, pwt;
 
 public:
+  double pre1;
   Q9o2int1(std::shared_ptr<Kinfo> K_in,
            const double s_in,
            const double x_in,
@@ -356,7 +342,7 @@ public:
   {
     Ki = K_in;
   }
-  void set_u(const double u_in);
+  void set_w(const double u_in);
   double operator()(const double y);
   ~Q9o2int1() {};
 };
