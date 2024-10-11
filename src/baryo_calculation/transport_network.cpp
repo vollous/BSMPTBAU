@@ -217,7 +217,7 @@ MatDoub TransportNetwork::calc_A_inv(const double z)
   MatDoub res(2 * N_prtcls, VecDoub(2 * N_prtcls, 0));
   double m, detA, D1, D2;
   P_type pt;
-  Kfactor K(Ki);
+  Kfactor K(Ki, false);
 
   for (size_t i = 0; i < N_prtcls; i++)
   {
@@ -241,7 +241,7 @@ MatDoub TransportNetwork::calc_B(const double z)
   double m, dmsq;
   VecDoub temp;
   P_type pt;
-  Kfactor K(Ki);
+  Kfactor K(Ki, false);
 
   for (size_t i = 0; i < N_prtcls; i++)
   {
@@ -259,7 +259,7 @@ MatDoub TransportNetwork::calc_B(const double z)
 MatDoub TransportNetwork::calc_Collision(const double z)
 {
   MatDoub res;
-  Kfactor K(Ki);
+  Kfactor K(Ki, false);
   double K0         = 1.;
   const double mtsq = get_squared_mass_and_deriv(z, Particles::tL)[0];
   const double mbsq = get_squared_mass_and_deriv(z, Particles::bL)[0];
@@ -331,7 +331,7 @@ VecDoub TransportNetwork::calc_Source(const double z)
   VecDoub temp;
   double msq;
   double dmsq;
-  Kfactor K(Ki);
+  Kfactor K(Ki, false);
   P_type pt;
 
   for (size_t i = 0; i < prtcl_list.size(); i++)

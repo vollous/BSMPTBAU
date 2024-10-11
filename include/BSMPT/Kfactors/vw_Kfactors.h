@@ -37,12 +37,8 @@ struct Kinfo
 {
   const double Tc, vw;
   double gamw;
-  const bool fast;
 
-  Kinfo(const double T_in, const double vw_in, const bool fast_in)
-      : Tc(T_in)
-      , vw(vw_in)
-      , fast(fast_in)
+  Kinfo(const double T_in, const double vw_in) : Tc(T_in), vw(vw_in)
   {
     gamw = 1 / std::sqrt(1 - vw_in * vw_in);
   }
@@ -290,7 +286,7 @@ private:
   double w, pwt;
 
 public:
-  double pre2, pre1, pre3;
+  double pre2, pre, pre3;
   Q9o1int1(std::shared_ptr<Kinfo> K_in,
            const double s_in,
            const double x_in,
@@ -331,7 +327,7 @@ private:
   double w, pwt;
 
 public:
-  double pre1;
+  double pre;
   Q9o2int1(std::shared_ptr<Kinfo> K_in,
            const double s_in,
            const double x_in,
@@ -365,10 +361,13 @@ class Kfactor
 {
 private:
   std::shared_ptr<Kinfo> Ki;
+  const bool fast;
 
 public:
-  Kfactor(std::shared_ptr<Kinfo> K_in) { Ki = K_in; }
-
+  Kfactor(std::shared_ptr<Kinfo> K_in, const bool fast_in) : fast(fast_in)
+  {
+    Ki = K_in;
+  }
   double operator()(const K_type ktype, const P_type ptype, const double m);
 
   ~Kfactor() {};

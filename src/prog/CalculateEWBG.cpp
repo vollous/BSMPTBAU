@@ -58,8 +58,8 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
-  Kfactor K(Ki);
+  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
+  Kfactor K(Ki, false);
   clock_t begin_time = clock();
   for (double mass = 1; mass < 100; mass++)
   {
@@ -175,7 +175,7 @@ try
 
         ////////////////new calculation starts here/////////////////////////////
         std::cout << "Computations starts:\n";
-        std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5, false);
+        std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
         TransportNetwork Tr(modelPointer, Ki, {tL, bL, tR, h}, EWPT.EWMinimum);
         std::cout << std::setprecision(3);
         MatDoub testM;
