@@ -12,7 +12,8 @@
  *
  */
 
-#include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/baryo_calculation/difeq.h>
+#include <BSMPT/baryo_calculation/solvde.h>
 #include <BSMPT/baryo_calculation/transport_network.h>
 
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
@@ -58,17 +59,17 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
-  Kfactor K(Ki, false);
+  /* std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
+  Kfactor K(Ki, true);
   clock_t begin_time = clock();
-  for (double mass = 1; mass < 100; mass++)
+  for (double mass = 0.1; mass < 10; mass+=0.1)
   {
     std::cout << K(Q9o2, boson, mass) << "\n";
   }
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
 
-  exit(1);
+  exit(1); */
 
   const auto SMConstants = GetSMConstants();
 
@@ -174,20 +175,45 @@ try
         // Call: Calculation of eta in the different implemented approaches
 
         ////////////////new calculation starts here/////////////////////////////
-        std::cout << "Computations starts:\n";
-        std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
-        TransportNetwork Tr(modelPointer, Ki, {tL, bL, tR, h}, EWPT.EWMinimum);
-        std::cout << std::setprecision(3);
-        MatDoub testM;
-        VecDoub testV;
-        testM = Tr.calc_A_inv(0);
-        printmat(testM);
-        testM = Tr.calc_B(0);
-        printmat(testM);
-        testM = Tr.calc_Collision(0.);
-        printmat(testM);
-        testV = Tr.calc_Source(0.);
-        printvec(testV);
+        std::cout << "FDE construction starts:\n";
+        std::shared_ptr<Kinfo> Ki     = std::make_unique<Kinfo>(EWPT.Tc, 0.1);
+        std::vector<Particles> prtcls = {tL, bL, tR, h};
+        TransportNetwork Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum);
+        /* double zini      = 0.05;
+        double zfin      = -0.05;
+        int count        = 0;
+        const double ini = 0.;
+        VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, ini};
+        rk4_adap(Tr, zini, uini, zfin, -1e-6, 1e-4, -1e-6, count);
+        exit(1); */
+
+        std::cout << std::setprecision(3) << std::setw(9);
+        VecInt col_index = {0, 4, 1, 5, 2, 6, 3, 7};
+        VecDoub scale(8, 0.01);
+        VecDoub z;
+        double steps   = 300;
+        double start   = -0.05;
+        double end     = 0.;
+        const double h = (end - start) / steps;
+        for (int i = 0; i <= steps; i++)
+        {
+          z.push_back(start + (double)i * h);
+        }
+        MatDoub s(2 * prtcls.size(), VecDoub(4 * prtcls.size() + 1, 0));
+        MatDoub y(8, VecDoub(steps + 1, 0.1));
+        Difeq D(z, Tr);
+        std::cout
+            << "FDE construction finished. Now relaxing to the true solution\n";
+        Solvde relax(10, 1e-4, 0.01, scale, col_index, 4, y, D);
+
+        std::ofstream yfile("res.dat");
+        for (auto it : y)
+        {
+          for (auto jt : it)
+            yfile << jt << "\t";
+          yfile << "\n";
+        }
+        yfile.close();
 
         exit(1);
 

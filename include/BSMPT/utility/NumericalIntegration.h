@@ -1,7 +1,12 @@
 #pragma once
 
 #include "abscissa.h"
+#include <cmath>
+#include <fstream>
 #include <iostream>
+#include <vector>
+
+void save(const char *filename, const double &x, const std::vector<double> &y);
 
 template <class FUNC> double kronrod_61(FUNC &f, const double l, const double r)
 {
@@ -158,4 +163,116 @@ double h_adap_simpson38(FUNC &f,
   }
   return h_adap_simpson38(f, l, m, f0, est, err, depth + 1) +
          h_adap_simpson38(f, m, r, f1, est, err, depth + 1);
+}
+
+template <class FUNC>
+void rk4(FUNC &f, double &x, std::vector<double> &y, double h)
+{
+  std::vector<double> k1(8), k2(8), k3(8), k4(8), tmp(8);
+
+  f(x, y, k1);
+  for (size_t i = 0; i < 8; i++)
+  {
+    k1.at(i) *= std::abs(h);
+    tmp.at(i) = y.at(i) + k1.at(i) / 2;
+  }
+
+  x += h / 2;
+  f(x, tmp, k2);
+  for (size_t i = 0; i < 8; i++)
+  {
+    k2.at(i) *= std::abs(h);
+    tmp.at(i) = y.at(i) + k2.at(i) / 2;
+  }
+
+  f(x, tmp, k3);
+  for (size_t i = 0; i < 8; i++)
+  {
+    k3.at(i) *= std::abs(h);
+    tmp.at(i) = y.at(i) + k3.at(i) / 2;
+  }
+
+  x += h / 2;
+  f(x, tmp, k4);
+  for (size_t i = 0; i < 8; i++)
+  {
+    k4.at(i) *= std::abs(h);
+  }
+
+  for (size_t i = 0; i < 8; i++)
+  {
+    y.at(i) += (k1.at(i) + 2 * k2.at(i) + 2 * k3.at(i) + k4.at(i)) / 6;
+  }
+}
+
+double setStep(double hnow, double err);
+
+template <class FUNC>
+void rk4_adap(FUNC &f,
+              double &x,
+              std::vector<double> &y,
+              double xfin,
+              double h,
+              double eps,
+              double minstep,
+              int &count)
+{
+  std::cout << x << "\t" << h << "\n";
+  double err  = 0.;
+  double xini = x;
+  double tmperr;
+  std::vector<double> yini = y;
+  std::vector<double> ytemp;
+
+  rk4(f, x, y, h);
+  ytemp = y;
+
+  x = xini;
+  y = yini;
+
+  rk4(f, x, y, h / 2);
+  rk4(f, x, y, h / 2);
+
+  for (size_t i = 0; i < 8; i++)
+  {
+    tmperr = std::abs((y.at(i) - ytemp.at(i)) / ytemp.at(i));
+    if (tmperr > err)
+    {
+      err = tmperr;
+    }
+  }
+
+  err = err / eps;
+
+  h = setStep(h, err);
+  if (std::abs(h) < std::abs(minstep))
+  {
+
+    save("test5.csv", x, y);
+    h = minstep;
+    // std::cout << mu.at(2) << std::endl;
+    count++;
+    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+  }
+  else if (err > 1)
+  {
+    x = xini;
+    y = yini;
+    count++;
+    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+  }
+  else if (x + h < xfin)
+  {
+    h = x - xfin;
+    rk4(f, x, y, h);
+    count++;
+    save("test5.csv", x, y);
+  }
+  else
+  {
+    save("test5.csv", x, y);
+    // std::cout << mu.at(0) << std::endl;
+    count++;
+    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+  }
 }

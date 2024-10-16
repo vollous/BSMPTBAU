@@ -3,6 +3,11 @@
 namespace BSMPT
 {
 
+size_t TransportNetwork::get_N_particles()
+{
+  return prtcl_list.size();
+}
+
 P_type TransportNetwork::get_particle_type(const Particles prtcl)
 {
   if ((prtcl == tL) || (prtcl == bL)) return fermion;
@@ -344,7 +349,7 @@ VecDoub TransportNetwork::calc_Source(const double z)
       dmsq       = temp[1];
       double p1  = (dmsq * dth + msq * d2th);
       double p2  = dmsq * msq * dth;
-      double hel = (pt == fermion) ? -1 : 1;
+      double hel = (pt == fermion) ? -1. : 1.;
       res[2 * i] =
           -Ki->vw * Ki->gamw * hel *
           (p1 * K(Q8o1, pt, std::sqrt(msq)) - p2 * K(Q9o1, pt, std::sqrt(msq)));
@@ -359,6 +364,11 @@ VecDoub TransportNetwork::calc_Source(const double z)
     }
   }
   return res;
+}
+
+void TransportNetwork::operator()(const double z, VecDoub &u, VecDoub &du)
+{
+  du = calc_A_inv(z) * ((calc_Collision(z) - calc_B(z)) * u + calc_Source(z));
 }
 
 } // namespace BSMPT

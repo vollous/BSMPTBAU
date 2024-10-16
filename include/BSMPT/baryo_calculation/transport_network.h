@@ -44,6 +44,8 @@ public:
     vev_critical = modelPointer->MinimizeOrderVEV(vev_critical_in);
   }
 
+  size_t get_N_particles();
+
   P_type get_particle_type(const Particles prtcl);
 
   double vevProfileKink(const double &z, size_t deriv);
@@ -67,6 +69,8 @@ public:
   MatDoub calc_Collision(const double z);
 
   VecDoub calc_Source(const double z);
+
+  void operator()(const double z, VecDoub &u, VecDoub &du);
 
   ~TransportNetwork() {};
 };

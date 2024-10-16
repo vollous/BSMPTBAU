@@ -17,7 +17,7 @@ set(header
     ${header_path}/solvde.h)
 
 set(src
-    #difeq.cpp
+    difeq.cpp
     transport_network.cpp
     transport_equations.cpp
     Fluid_Type/gen_calc.cpp

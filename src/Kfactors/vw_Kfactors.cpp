@@ -303,10 +303,13 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   case K_type::Q9o2:
   {
     Q9o2int2 integrand1(Ki, statistic, x, 1);
-    const double est1 = kronrod_61(integrand1, 0., 1.);
-    const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
     Q9o2int2 integrand2(Ki, statistic, x, 2);
+    const double est1 = kronrod_61(integrand1, 0., 1.);
     const double est2 = kronrod_61(integrand2, 0., 1.);
+    if (fast)
+      return -3 / (4. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) *
+             (est1 - est2);
+    const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
     const double res2 = h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
 
     return -3 / (4. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * (res1 - res2);

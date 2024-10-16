@@ -16,6 +16,14 @@ VecDoub operator*(const double a, const VecDoub &b)
   return res;
 }
 
+VecDoub operator+(const VecDoub &a, const VecDoub &b)
+{
+  VecDoub res(a.size());
+  for (size_t i = 0; i < a.size(); i++)
+    res[i] = a[i] + b[i];
+  return res;
+}
+
 VecDoub operator*(const MatDoub &a, const VecDoub &b)
 {
   assert(a[0].size() == b.size());
@@ -59,6 +67,13 @@ MatDoub operator*(const MatDoub &a, const MatDoub &b)
   return res;
 }
 
+void set_zero(MatDoub &a)
+{
+  for (auto &it : a)
+    for (auto &jt : it)
+      jt = 0;
+}
+
 void printvec(const VecDoub &a)
 {
   std::cout << "----------------------------------\n";
@@ -74,7 +89,7 @@ void printmat(const MatDoub &a)
   {
     for (auto jt : it)
     {
-      std::cout << jt << "\t";
+      std::cout << jt << " ";
     }
     std::cout << "\n";
   }
