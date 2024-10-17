@@ -179,7 +179,7 @@ try
         std::vector<Particles> prtcls = {tL, bL, tR, h};
         TransportNetwork Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum);
         VecDoub a, b;
-        //Tr(0.05, a, b);
+        //Tr(0.1, a, b);
         double zini      = -0.3;
         double zfin      = 0.3;
         const double ini = 0.;

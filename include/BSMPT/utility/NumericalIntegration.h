@@ -250,7 +250,7 @@ void rk4_adap(FUNC &f,
   if (std::abs(h) < std::abs(minstep))
   {
 #ifdef SAVE
-    save("K0neg.csv", x, y);
+    save("standard.csv", x, y);
 #endif
     h     = minstep;
     /* ytemp = y;
@@ -258,12 +258,12 @@ void rk4_adap(FUNC &f,
     output.push_back(ytemp); */
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
-  else if (std::abs(h) > 0.1)
+  else if (std::abs(h) > 0.01)
   {
 #ifdef SAVE
-    save("K0neg.csv", x, y);
+    save("standard.csv", x, y);
 #endif
-    h = minstep;
+    h = 0.01;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
   else if (err > 1)
@@ -280,13 +280,13 @@ void rk4_adap(FUNC &f,
     h = x - xfin;
     rk4(f, x, y, h);
 #ifdef SAVE
-    save("K0neg.csv", x, y);
+    save("standard.csv", x, y);
 #endif
   }
   else
   {
 #ifdef SAVE
-    save("K0neg.csv", x, y);
+    save("standard.csv", x, y);
 #endif
     // std::cout << mu.at(0) << std::endl;
     /* ytemp = y;

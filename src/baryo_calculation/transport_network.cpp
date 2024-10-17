@@ -265,7 +265,7 @@ MatDoub TransportNetwork::calc_Collision(const double z)
 {
   MatDoub res;
   Kfactor K(Ki, false);
-  double K0         = -1.;
+  double K0         = 1.;
   const double mtsq = get_squared_mass_and_deriv(z, Particles::tL)[0];
   const double mbsq = get_squared_mass_and_deriv(z, Particles::bL)[0];
   const double mhsq = get_squared_mass_and_deriv(z, Particles::h)[0];
@@ -293,7 +293,7 @@ MatDoub TransportNetwork::calc_Collision(const double z)
                 K0 * GY,
                 0.};
   res.push_back(Ci);
-  Ci    = Ci * Ki->vw;
+  Ci    = Ki->vw * Ci;
   Ci[1] = Gtott;
   res.push_back(Ci);
   Ci = {K0 * (-GW + GSS * (1. + 9. * D0t)),
@@ -305,7 +305,7 @@ MatDoub TransportNetwork::calc_Collision(const double z)
         K0 * GY,
         0.};
   res.push_back(Ci);
-  Ci    = Ci * Ki->vw;
+  Ci    = Ki->vw * Ci;
   Ci[3] = Gtotb;
   res.push_back(Ci);
   Ci = {-K0 * (GY + GM + GSS * (1. + 9. * D0t)),
@@ -317,12 +317,12 @@ MatDoub TransportNetwork::calc_Collision(const double z)
         -2. * K0 * GY,
         0.};
   res.push_back(Ci);
-  Ci    = Ci * Ki->vw;
+  Ci    = Ki->vw * Ci;
   Ci[5] = Gtott;
   res.push_back(Ci);
   Ci = {K0 * GY, 0., K0 * GY, 0., -2. * K0 * GY, 0., K0 * (2. * GY + Gh), 0.};
   res.push_back(Ci);
-  Ci    = Ci * Ki->vw;
+  Ci    = Ki->vw * Ci;
   Ci[7] = Gtoth;
   res.push_back(Ci);
   return res;
@@ -338,7 +338,7 @@ VecDoub TransportNetwork::calc_Source(const double z)
   double dmsq;
   Kfactor K(Ki, false);
   P_type pt;
-  if (z > 0.09) return VecDoub(2 * prtcl_list.size(), 0);
+  if (std::abs(z) > 0.09) return VecDoub(2 * prtcl_list.size(), 0);
   for (size_t i = 0; i < prtcl_list.size(); i++)
   {
     pt = get_particle_type(prtcl_list[i]);
