@@ -13,6 +13,7 @@ namespace BSMPT
 
 struct Solvde
 {
+  double temperr = 1e10;
   const int itmax;
   const double conv;
   const double slowc;
@@ -139,8 +140,9 @@ Solvde::Solvde(const int itmaxx,
     std::cout << std::setw(6) << it;
     std::cout << std::fixed << std::setprecision(6) << std::setw(13) << err;
     std::cout << std::setw(12) << fac << std::endl;
-    save("experiment1.dat", (double)it, y);
-    if (err < conv) return;
+    save("experiment1.dat", (double)it, y[0]);
+    if ((err < conv) || (temperr < err)) return;
+    temperr = err;
   }
 }
 

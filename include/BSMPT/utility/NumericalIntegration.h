@@ -1,6 +1,8 @@
 #pragma once
 
+#define SAVE
 #include "abscissa.h"
+#include <BSMPT/utility/matrix_operations.h>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -215,7 +217,7 @@ void rk4_adap(FUNC &f,
               double h,
               double eps,
               double minstep,
-              int &count)
+              MatDoub &output)
 {
   std::cout << x << "\t" << h << "\n";
   double err  = 0.;
@@ -247,32 +249,49 @@ void rk4_adap(FUNC &f,
   h = setStep(h, err);
   if (std::abs(h) < std::abs(minstep))
   {
-
-    save("test5.csv", x, y);
+#ifdef SAVE
+    save("K0neg.csv", x, y);
+#endif
+    h     = minstep;
+    /* ytemp = y;
+    ytemp.push_back(x);
+    output.push_back(ytemp); */
+    rk4_adap(f, x, y, xfin, h, eps, minstep, output);
+  }
+  else if (std::abs(h) > 0.1)
+  {
+#ifdef SAVE
+    save("K0neg.csv", x, y);
+#endif
     h = minstep;
-    // std::cout << mu.at(2) << std::endl;
-    count++;
-    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+    rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
   else if (err > 1)
   {
     x = xini;
     y = yini;
-    count++;
-    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+    rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
-  else if (x + h < xfin)
+  else if (x + h > xfin)
   {
+    /* ytemp = y;
+    ytemp.push_back(x);
+    output.push_back(ytemp); */
     h = x - xfin;
     rk4(f, x, y, h);
-    count++;
-    save("test5.csv", x, y);
+#ifdef SAVE
+    save("K0neg.csv", x, y);
+#endif
   }
   else
   {
-    save("test5.csv", x, y);
+#ifdef SAVE
+    save("K0neg.csv", x, y);
+#endif
     // std::cout << mu.at(0) << std::endl;
-    count++;
-    rk4_adap(f, x, y, xfin, h, eps, minstep, count);
+    /* ytemp = y;
+    ytemp.push_back(x);
+    output.push_back(ytemp); */
+    rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
 }

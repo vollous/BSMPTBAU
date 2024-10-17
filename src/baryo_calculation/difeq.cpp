@@ -60,7 +60,7 @@ void Difeq::smatrix(const int k,
       // Sn at the last boundary
       s[i][2 * Np + indexv[2 * i]] = 1.0;
       // C0
-      s[i][jsf] = y[indexv[2 * i]][z.size()];
+      s[i][jsf] = y[indexv[2 * i]][z.size() - 1];
     }
   }
   else

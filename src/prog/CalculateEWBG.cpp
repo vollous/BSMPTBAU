@@ -175,24 +175,28 @@ try
         // Call: Calculation of eta in the different implemented approaches
 
         ////////////////new calculation starts here/////////////////////////////
-        std::cout << "FDE construction starts:\n";
         std::shared_ptr<Kinfo> Ki     = std::make_unique<Kinfo>(EWPT.Tc, 0.1);
         std::vector<Particles> prtcls = {tL, bL, tR, h};
         TransportNetwork Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum);
-        /* double zini      = 0.05;
-        double zfin      = -0.05;
-        int count        = 0;
+        VecDoub a, b;
+        //Tr(0.05, a, b);
+        double zini      = -0.3;
+        double zfin      = 0.3;
         const double ini = 0.;
         VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, ini};
-        rk4_adap(Tr, zini, uini, zfin, -1e-6, 1e-4, -1e-6, count);
-        exit(1); */
+        MatDoub appr;
+        rk4_adap(Tr, zini, uini, zfin, 1e-4, 1e-4, 1e-4, appr);
 
+        std::cout << appr.size() << "\n";
+        exit(1);
+
+        std::cout << "FDE construction starts:\n";
         std::cout << std::setprecision(3) << std::setw(9);
         VecInt col_index = {0, 4, 1, 5, 2, 6, 3, 7};
         VecDoub scale(8, 0.01);
         VecDoub z;
-        double steps   = 300;
-        double start   = -0.05;
+        double steps   = 500;
+        double start   = -1.5;
         double end     = 0.;
         const double h = (end - start) / steps;
         for (int i = 0; i <= steps; i++)
@@ -200,11 +204,11 @@ try
           z.push_back(start + (double)i * h);
         }
         MatDoub s(2 * prtcls.size(), VecDoub(4 * prtcls.size() + 1, 0));
-        MatDoub y(8, VecDoub(steps + 1, 0.1));
+        MatDoub y(8, VecDoub(steps + 1, -0.1));
         Difeq D(z, Tr);
         std::cout
             << "FDE construction finished. Now relaxing to the true solution\n";
-        Solvde relax(10, 1e-4, 0.01, scale, col_index, 4, y, D);
+        Solvde relax(10000, 1e-4, 0.01, scale, col_index, 4, y, D);
 
         std::ofstream yfile("res.dat");
         for (auto it : y)
