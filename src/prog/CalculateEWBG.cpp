@@ -59,17 +59,15 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  /* std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
+  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
   Kfactor K(Ki, true);
   clock_t begin_time = clock();
-  for (double mass = 0.1; mass < 10; mass+=0.1)
-  {
-    std::cout << K(Q9o2, boson, mass) << "\n";
-  }
+  std::cout << K(Q8o1, fermion, 0.001) << "\n";
+  std::cout << K(Q9o1, boson, 0.001) << "\n";
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
 
-  exit(1); */
+  exit(1);
 
   const auto SMConstants = GetSMConstants();
 
@@ -179,11 +177,11 @@ try
         std::vector<Particles> prtcls = {tL, bL, tR, h};
         TransportNetwork Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum);
         VecDoub a, b;
-        //Tr(0.1, a, b);
-        double zini      = -0.3;
+        // Tr(0.1, a, b);
+        double zini      = -0.2;
         double zfin      = 0.3;
-        const double ini = 0.;
-        VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, ini};
+        const double ini = -0.;
+        VecDoub uini     = {ini, -ini, ini, ini, -ini, ini, -ini, ini};
         MatDoub appr;
         rk4_adap(Tr, zini, uini, zfin, 1e-4, 1e-4, 1e-4, appr);
 

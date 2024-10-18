@@ -46,7 +46,7 @@ double adap_gauss_kronrod_15(FUNC &f,
             0.190350578064785409913256402421014 * (y[5] + y[9]) +
             0.204432940075298892414161999234649 * (y[6] + y[8]) +
             0.209482141084727828012999174891714 * y[7]);
-  if ((I1 == 0) || (depth > 16))
+  if ((I1 == 0) || (depth > 12))
   {
     return I1;
   }
@@ -86,7 +86,7 @@ double h_adap_gauss_kronrod_15(FUNC &f,
             0.190350578064785409913256402421014 * (y[5] + y[9]) +
             0.204432940075298892414161999234649 * (y[6] + y[8]) +
             0.209482141084727828012999174891714 * y[7]);
-  if ((I1 == 0) || (depth > 16))
+  if ((I1 == 0) || (depth > 12))
   {
     return I1;
   }
@@ -250,7 +250,7 @@ void rk4_adap(FUNC &f,
   if (std::abs(h) < std::abs(minstep))
   {
 #ifdef SAVE
-    save("standard.csv", x, y);
+    save("standard4.csv", x, y);
 #endif
     h     = minstep;
     /* ytemp = y;
@@ -261,7 +261,7 @@ void rk4_adap(FUNC &f,
   else if (std::abs(h) > 0.01)
   {
 #ifdef SAVE
-    save("standard.csv", x, y);
+    save("standard4.csv", x, y);
 #endif
     h = 0.01;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
@@ -280,13 +280,13 @@ void rk4_adap(FUNC &f,
     h = x - xfin;
     rk4(f, x, y, h);
 #ifdef SAVE
-    save("standard.csv", x, y);
+    save("standard4.csv", x, y);
 #endif
   }
   else
   {
 #ifdef SAVE
-    save("standard.csv", x, y);
+    save("standard4.csv", x, y);
 #endif
     // std::cout << mu.at(0) << std::endl;
     /* ytemp = y;
