@@ -204,21 +204,62 @@ double Q9o2int2::operator()(const double u)
          (u * u);
 }
 
+void Kfactor::spline_Kfactors(const double mmin,
+                              const double mmax,
+                              const size_t N_points)
+{
+  double logmmin = std::log10(mmin);
+  double logmmax = std::log10(mmax);
+  double h       = (logmmax - logmmin) / (double)N_points;
+  std::vector<double> masses;
+  std::vector<double> K_values;
+  for (size_t i = 0; i < 14; i++)
+  {
+    masses.clear();
+    K_values.clear();
+    for (double mass = logmmin; mass <= logmmax; mass += h)
+    {
+      double current = pow(10, mass);
+      masses.push_back(current);
+      K_values.push_back(operator()((K_type)i, fermion, current));
+    }
+    Kspl[i] = tk::spline(masses, K_values);
+  }
+
+  // only until Qe1 in the boson case since there are no source terms
+  for (size_t i = 0; i < 9; i++)
+  {
+    std::vector<double> masses;
+    std::vector<double> K_values;
+    for (double mass = logmmin; mass <= logmmax; mass += h)
+    {
+      double current = pow(10, mass);
+      masses.push_back(current);
+      K_values.push_back(operator()((K_type)i, boson, current));
+    }
+    Kspl[14 + i] = tk::spline(masses, K_values);
+  }
+  is_spline = true;
+}
+
 double
 Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
 {
   const double x      = m / Ki->Tc;
   const int statistic = (ptype == boson ? -1 : 1);
+  const size_t shift  = (ptype == boson ? 14 : 0);
   switch (ktype)
   {
   case K_type::N0:
   {
+    if (is_spline) return Kspl[shift + 0](m);
     N0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Rbar:
   {
+    if (is_spline) return Kspl[shift + 1](m);
     N0int integrand1(Ki, statistic, x);
     const double est1 = kronrod_61(integrand1, 0., 1.);
     const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
@@ -229,66 +270,77 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   }
   case K_type::K4:
   {
+    if (is_spline) return Kspl[shift + 2](m);
     K4int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::D0:
   {
+    if (is_spline) return Kspl[shift + 3](m);
     D0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::D1:
   {
+    if (is_spline) return Kspl[shift + 4](m);
     D0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return -Ki->vw * h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::D2:
   {
+    if (is_spline) return Kspl[shift + 5](m);
     D2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Q1:
   {
+    if (is_spline) return Kspl[shift + 6](m);
     Q1int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Q2:
   {
+    if (is_spline) return Kspl[shift + 7](m);
     Q2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Qe1:
   {
+    if (is_spline) return Kspl[shift + 8](m);
     Qe1int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Qe2:
   {
+    if (is_spline) return Kspl[shift + 9](m);
     Qe2int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
     return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Q8o1:
   {
+    if (is_spline) return Kspl[shift + 10](m);
     Q8o1int2 integrand(Ki, statistic, x);
     const double res = adap_gauss_kronrod_15(integrand, 0., 1., 1e-4);
     return -3 / (2. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) * res;
   }
   case K_type::Q8o2:
   {
+    if (is_spline) return Kspl[shift + 11](m);
     Q8o2int2 integrand(Ki, statistic, x);
     const double res = adap_gauss_kronrod_15(integrand, 0., 1., 1e-4);
     return -3 / (2. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) * res;
   }
   case K_type::Q9o1:
   {
+    if (is_spline) return Kspl[shift + 12](m);
     Q9o1int2 integrand1(Ki, statistic, x, 1);
     const double res1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-4);
     Q9o1int2 integrand2(Ki, statistic, x, 2);
@@ -298,6 +350,7 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   }
   case K_type::Q9o2:
   {
+    if (is_spline) return Kspl[shift + 13](m);
     Q9o2int2 integrand1(Ki, statistic, x, 1);
     Q9o2int2 integrand2(Ki, statistic, x, 2);
     const double res1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-4);

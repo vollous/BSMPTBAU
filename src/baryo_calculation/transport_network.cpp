@@ -216,13 +216,29 @@ VecDoub TransportNetwork::get_squared_mass_and_deriv(const double z,
   return res;
 }
 
+void TransportNetwork::spline_Kfactors(const double zmin,
+                                       const double zmax,
+                                       const size_t N_points)
+{
+  double mmin = 1e10;
+  double mmax = 0;
+  double temp;
+  for (auto it : prtcl_list)
+  {
+    temp = std::sqrt(get_squared_mass_and_deriv(zmin, it)[0]);
+    if (temp > mmax) mmax = temp;
+    temp = std::sqrt(get_squared_mass_and_deriv(zmax, it)[0]);
+    if (temp < mmin) mmin = temp;
+  }
+  K.spline_Kfactors(mmin, mmax, N_points);
+}
+
 MatDoub TransportNetwork::calc_A_inv(const double z)
 {
   size_t N_prtcls = prtcl_list.size();
   MatDoub res(2 * N_prtcls, VecDoub(2 * N_prtcls, 0));
   double m, detA, D1, D2;
   P_type pt;
-  Kfactor K(Ki, false);
 
   for (size_t i = 0; i < N_prtcls; i++)
   {
@@ -246,7 +262,6 @@ MatDoub TransportNetwork::calc_B(const double z)
   double m, dmsq;
   VecDoub temp;
   P_type pt;
-  Kfactor K(Ki, false);
 
   for (size_t i = 0; i < N_prtcls; i++)
   {
@@ -264,14 +279,13 @@ MatDoub TransportNetwork::calc_B(const double z)
 MatDoub TransportNetwork::calc_Collision(const double z)
 {
   MatDoub res;
-  Kfactor K(Ki, false);
   double K0         = 1.;
   const double mtsq = get_squared_mass_and_deriv(z, Particles::tL)[0];
   const double mbsq = get_squared_mass_and_deriv(z, Particles::bL)[0];
   const double mhsq = get_squared_mass_and_deriv(z, Particles::h)[0];
   const double GSS  = 4.9e-4 * Ki->Tc;
   const double GY   = 4.2e-3 * Ki->Tc;
-  const double GM   = mtsq / (63. * Ki->Tc);
+  const double GM   = 2 * mtsq / (63. * Ki->Tc);
   const double Gh =
       get_squared_mass_and_deriv(z, Particles::W)[0] / (50. * Ki->Tc);
   const double Gtott = K(K4, fermion, std::sqrt(mtsq)) * Ki->Tc /
@@ -279,7 +293,7 @@ MatDoub TransportNetwork::calc_Collision(const double z)
   const double Gtotb = K(K4, fermion, std::sqrt(mbsq)) * Ki->Tc /
                        (6. * K(D0, fermion, std::sqrt(mbsq)));
   const double Gtoth = K(K4, boson, std::sqrt(mhsq)) * Ki->Tc /
-                       (20. * K(D0, fermion, std::sqrt(mhsq)));
+                       (20. * K(D0, boson, std::sqrt(mhsq)));
   const double GW  = Gtoth;
   const double D0t = K(D0, fermion, std::sqrt(mtsq));
   const double D0b = K(D0, fermion, std::sqrt(mbsq));
@@ -336,7 +350,6 @@ VecDoub TransportNetwork::calc_Source(const double z)
   VecDoub temp;
   double msq;
   double dmsq;
-  Kfactor K(Ki, false);
   P_type pt;
   for (size_t i = 0; i < prtcl_list.size(); i++)
   {

@@ -16,6 +16,7 @@ Difeq::Difeq(
   for (size_t i = 1; i < z.size(); i++)
   {
     zmid = 0.5 * (z[i] + z[i - 1]);
+    if (i == 1) std::cout << zmid << "\n";
 
     // Ainv * (Collision - B)
     Ainv  = TN.calc_A_inv(zmid);
@@ -67,6 +68,8 @@ void Difeq::smatrix(const int k,
   {
     double temp;
     for (size_t j = 0; j < 2 * Np; j++)
+    {
+      temp = Stilde[k - 1][j];
       for (size_t n = 0; n < 2 * Np; n++)
       {
         double del = (j == n) ? 1 : 0;
@@ -76,12 +79,12 @@ void Difeq::smatrix(const int k,
         // S_{j,N + n}
         s[j][2 * Np + indexv[n]] =
             del - 0.5 * (z[k] - z[k - 1]) * (M[k - 1][j][n]);
-        // Equations for E(k,k-1)
-        temp = Stilde[k - 1][j];
-        for (size_t i = 0; i < 2 * Np; i++)
-          temp += M[k - 1][j][i] * (y[i][k] + y[i][k - 1]);
-        s[j][jsf] = y[j][k] - y[j][k - 1] - 0.5 * (z[k] - z[k - 1]) * temp;
       }
+      // Equations for E(k,k-1)
+      for (size_t i = 0; i < 2 * Np; i++)
+        temp += M[k - 1][j][i] * (y[i][k] + y[i][k - 1]);
+      s[j][jsf] = y[j][k] - y[j][k - 1] - 0.5 * (z[k] - z[k - 1]) * temp;
+    }
   }
 }
 

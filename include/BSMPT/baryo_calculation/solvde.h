@@ -85,13 +85,12 @@ Solvde::Solvde(const int itmaxx,
 //, c(ne, ne - nb + 1, m + 1)
 //, s(ne, 2 * ne + 1)
 {
+  printmat(s);
   int jv, k, nvars = ne * m;
   int k1 = 0, k2 = m;
   int j1 = 0, j2 = nb, j3 = nb, j4 = ne, j5 = j4 + j1, j6 = j4 + j2,
       j7 = j4 + j3, j8 = j4 + j4, j9 = j8 + j1;
   int ic1 = 0, ic2 = ne - nb, ic3 = ic2, ic4 = ne, jc1 = 0, jcf = ic3;
-  std::cout << std::setw(8) << "Iter.";
-  std::cout << std::setw(10) << "Error" << std::setw(10) << "FAC" << std::endl;
   for (int it = 0; it < itmax; it++)
   {
     k = k1;
@@ -140,8 +139,7 @@ Solvde::Solvde(const int itmaxx,
     std::cout << std::setw(6) << it;
     std::cout << std::fixed << std::setprecision(6) << std::setw(13) << err;
     std::cout << std::setw(12) << fac << std::endl;
-    save("experiment1.dat", (double)it, y[0]);
-    if ((err < conv) || (temperr < err)) return;
+    if ((err < conv) /* || (temperr < err) */) return;
     temperr = err;
   }
 }

@@ -219,7 +219,7 @@ void rk4_adap(FUNC &f,
               double minstep,
               MatDoub &output)
 {
-  std::cout << x << "\t" << h << "\n";
+  std::cout << x << "\n";
   double err  = 0.;
   double xini = x;
   double tmperr;
@@ -250,9 +250,9 @@ void rk4_adap(FUNC &f,
   if (std::abs(h) < std::abs(minstep))
   {
 #ifdef SAVE
-    save("standard4.csv", x, y);
+    save("ini2.csv", x, y);
 #endif
-    h     = minstep;
+    h = minstep;
     /* ytemp = y;
     ytemp.push_back(x);
     output.push_back(ytemp); */
@@ -261,8 +261,12 @@ void rk4_adap(FUNC &f,
   else if (std::abs(h) > 0.01)
   {
 #ifdef SAVE
-    save("standard4.csv", x, y);
+    save("ini2.csv", x, y);
 #endif
+    /* ytemp = y;
+    ytemp.push_back(x);
+    output.push_back(ytemp); */
+
     h = 0.01;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
@@ -272,7 +276,7 @@ void rk4_adap(FUNC &f,
     y = yini;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
-  else if (x + h > xfin)
+  else if (x + h < xfin)
   {
     /* ytemp = y;
     ytemp.push_back(x);
@@ -280,13 +284,13 @@ void rk4_adap(FUNC &f,
     h = x - xfin;
     rk4(f, x, y, h);
 #ifdef SAVE
-    save("standard4.csv", x, y);
+    save("ini2.csv", x, y);
 #endif
   }
   else
   {
 #ifdef SAVE
-    save("standard4.csv", x, y);
+    save("ini2.csv", x, y);
 #endif
     // std::cout << mu.at(0) << std::endl;
     /* ytemp = y;

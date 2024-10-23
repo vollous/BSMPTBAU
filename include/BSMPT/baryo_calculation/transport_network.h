@@ -28,6 +28,7 @@ private:
   std::shared_ptr<Kinfo> Ki;
   const std::vector<Particles> prtcl_list;
   VecDoub vev_critical;
+  Kfactor K;
   const double thsym = 0.0603557;
   const double thbrk = 0.00688404;
   const double LW    = 0.0341292;
@@ -38,6 +39,7 @@ public:
                    std::vector<Particles> prtcl_list_in,
                    const VecDoub vev_critical_in)
       : prtcl_list(prtcl_list_in)
+      , K(K_in)
   {
     Ki           = K_in;
     modelPointer = modelPointer_input;
@@ -61,6 +63,8 @@ public:
   double get_W_mass(const VecDoub &vev) const;
 
   VecDoub get_squared_mass_and_deriv(const double z, const Particles prtcl);
+
+  void spline_Kfactors(const double zmin, const double zmax, const size_t N_points);
 
   MatDoub calc_A_inv(const double z);
 

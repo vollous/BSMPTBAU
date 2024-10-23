@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BSMPT/utility/NumericalIntegration.h>
+#include <BSMPT/utility/spline/spline.h>
 #include <cmath>
 #include <iostream>
 #include <memory>
@@ -357,17 +358,18 @@ public:
   double operator()(const double u);
   ~Q9o2int2() {};
 };
+
 class Kfactor
 {
 private:
   std::shared_ptr<Kinfo> Ki;
-  const bool fast;
+  bool is_spline = false;
+  std::vector<tk::spline> Kspl{23};
 
 public:
-  Kfactor(std::shared_ptr<Kinfo> K_in, const bool fast_in) : fast(fast_in)
-  {
-    Ki = K_in;
-  }
+  Kfactor(std::shared_ptr<Kinfo> K_in) { Ki = K_in; }
+  void
+  spline_Kfactors(const double mlow, const double mhigh, const size_t N_points);
   double operator()(const K_type ktype, const P_type ptype, const double m);
 
   ~Kfactor() {};
