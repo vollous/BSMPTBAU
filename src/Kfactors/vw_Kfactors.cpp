@@ -6,15 +6,13 @@ namespace BSMPT
 double f0w(const double w, const double s, const int diff)
 {
   if (w > 100) return std::pow(-1, diff) * std::exp(-w);
-  double res        = 0.;
   const double expw = std::exp(-w / 2.);
   if (diff == 0)
-    res += expw / (1 / expw + s * expw);
+    return expw / (1 / expw + s * expw);
   else if (diff == 1)
-    res -= 1 / std::pow(1 / expw + s * expw, 2);
+    return -1 / std::pow(1 / expw + s * expw, 2);
   else if (diff == 2)
-    res += (1 / expw - s * expw) / std::pow(1 / expw + s * expw, 3);
-  return res;
+    return (1 / expw - s * expw) / std::pow(1 / expw + s * expw, 3);
 }
 
 double N0int::operator()(const double u)

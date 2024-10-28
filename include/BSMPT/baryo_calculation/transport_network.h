@@ -31,7 +31,7 @@ private:
   Kfactor K;
   const double thsym = 0.0603557;
   const double thbrk = 0.00688404;
-  const double LW    = 0.0341292;
+  const double LW    = 0.03379;
 
 public:
   TransportNetwork(std::shared_ptr<Class_Potential_Origin> &modelPointer_input,

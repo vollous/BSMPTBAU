@@ -18,14 +18,12 @@ P_type TransportNetwork::get_particle_type(const Particles prtcl)
 double TransportNetwork::vevProfileKink(const double &z, size_t deriv)
 {
   double th = tanh(z / LW);
-
-  double res = 0;
   if (deriv == 0)
-    res += 0.5 * (1 - th);
+    return 0.5 * (1 - th);
   else if (deriv == 1)
-    res += 0.5 / LW * (th * th - 1);
+    return 0.5 / LW * (th * th - 1);
   else if (deriv == 2)
-    res += th / (LW * LW) * (1 - th * th);
+    return th / (LW * LW) * (1 - th * th);
   return res;
 }
 
@@ -196,18 +194,24 @@ VecDoub TransportNetwork::get_squared_mass_and_deriv(const double z,
   break;
   case Particles::h:
   {
-    VecDoub vevdiff = calc_vev(z, 1);
-    VecDoub hres    = get_h_mass_and_derivative(vev);
-    res[0]          = hres[0];
-    for (size_t i = 0; i < vevdiff.size(); i++)
+    // VecDoub vevdiff = calc_vev(z, 1);
+    // VecDoub hres    = get_h_mass_and_derivative(vev);
+    res[0] = 0.; // hres[0];
+    /* for (size_t i = 0; i < vevdiff.size(); i++)
     {
       res[1] += vevdiff[i] * hres[i + 1];
-    }
+    } */
+    res[1] = 0.;
   }
   break;
   case Particles::W:
   {
-    res[0] = get_W_mass(vev);
+    for (size_t i = 0; i < vev.size(); i++)
+    {
+      res[0] += vev[i] * vev[i];
+    }
+    res[0] *= 0.641 * 0.641 / 4;
+    // res[0] = get_W_mass(vev);
   }
   break;
 
@@ -246,7 +250,7 @@ MatDoub TransportNetwork::calc_A_inv(const double z)
     pt   = get_particle_type(prtcl_list[i]);
     D1   = K(K_type::D1, pt, m);
     D2   = K(K_type::D2, pt, m);
-    detA = D1 + Ki->vw * D2;
+    detA = Ki->vw * D1 + D2;
     res[2 * i][2 * i]         = -Ki->vw / detA;
     res[2 * i][2 * i + 1]     = -1 / detA;
     res[2 * i + 1][2 * i]     = D2 / detA;
@@ -279,13 +283,13 @@ MatDoub TransportNetwork::calc_B(const double z)
 MatDoub TransportNetwork::calc_Collision(const double z)
 {
   MatDoub res;
-  double K0         = 1.;
+  double K0         = Ki->Tc;
   const double mtsq = get_squared_mass_and_deriv(z, Particles::tL)[0];
   const double mbsq = get_squared_mass_and_deriv(z, Particles::bL)[0];
   const double mhsq = get_squared_mass_and_deriv(z, Particles::h)[0];
   const double GSS  = 4.9e-4 * Ki->Tc;
   const double GY   = 4.2e-3 * Ki->Tc;
-  const double GM   = 2 * mtsq / (63. * Ki->Tc);
+  const double GM   = mtsq / (63. * Ki->Tc);
   const double Gh =
       get_squared_mass_and_deriv(z, Particles::W)[0] / (50. * Ki->Tc);
   const double Gtott = K(K4, fermion, std::sqrt(mtsq)) * Ki->Tc /
