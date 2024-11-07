@@ -250,7 +250,7 @@ void rk4_adap(FUNC &f,
   if (std::abs(h) < std::abs(minstep))
   {
 #ifdef SAVE
-    save("ini3.csv", x, y);
+    save("ini1.csv", x, y);
 #endif
     h = minstep;
     /* ytemp = y;
@@ -261,13 +261,13 @@ void rk4_adap(FUNC &f,
   else if (std::abs(h) > 0.01)
   {
 #ifdef SAVE
-    save("ini3.csv", x, y);
+    save("ini1.csv", x, y);
 #endif
     /* ytemp = y;
     ytemp.push_back(x);
     output.push_back(ytemp); */
 
-    h = -0.01;
+    h = 0.01;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
   else if (err > 1)
@@ -276,7 +276,7 @@ void rk4_adap(FUNC &f,
     y = yini;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
-  else if (x + h < xfin)
+  else if (x + h > xfin)
   {
     /* ytemp = y;
     ytemp.push_back(x);
@@ -284,13 +284,13 @@ void rk4_adap(FUNC &f,
     h = x - xfin;
     rk4(f, x, y, h);
 #ifdef SAVE
-    save("ini3.csv", x, y);
+    save("ini1.csv", x, y);
 #endif
   }
   else
   {
 #ifdef SAVE
-    save("ini3.csv", x, y);
+    save("ini1.csv", x, y);
 #endif
     // std::cout << mu.at(0) << std::endl;
     /* ytemp = y;

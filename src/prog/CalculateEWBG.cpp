@@ -12,8 +12,6 @@
  *
  */
 
-#include <BSMPT/baryo_calculation/difeq.h>
-#include <BSMPT/baryo_calculation/solvde.h>
 #include <BSMPT/baryo_calculation/transport_network.h>
 
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
@@ -59,16 +57,28 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  /* std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
+  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
   Kfactor K(Ki);
   clock_t begin_time = clock();
-  std::cout << K(D0, fermion, 100) << "\n";
-  //K.spline_Kfactors(1e-5,200,500);
-  std::cout << K(Qe1, boson, 2e-5) << "\n";
+  TransportNetwork Tr(Ki);
+  /* std::ofstream yfile("theta.dat");
+  for (double z = -0.3; z <= 0.3; z += 0.001)
+  {
+    yfile << z << "\t" << Tr.theta(z, 0) << "\t" << Tr.theta(z, 1) << "\t"
+          << Tr.theta(z, 2) << "\t" << "\n";
+  }
+  yfile.close(); */
+  double zini      = -0.5;
+  double zfin      = 0.;
+  const double ini = 0.;
+  VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, 0.001};
+  MatDoub appr;
+  rk4_adap(Tr, zini, uini, zfin, 1e-4, 1e-4, 1e-4, appr);
+
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
 
-  exit(1); */
+  exit(1);
 
   const auto SMConstants = GetSMConstants();
 
@@ -174,10 +184,9 @@ try
         // Call: Calculation of eta in the different implemented approaches
 
         ////////////////new calculation starts here/////////////////////////////
-        std::shared_ptr<Kinfo> Ki     = std::make_unique<Kinfo>(EWPT.Tc, 0.1);
-        std::vector<Particles> prtcls = {tL , bL, tR, h};
-        TransportNetwork Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum);
-        double zini      = 0.5;
+        /* std::shared_ptr<Kinfo> Ki     = std::make_unique<Kinfo>(EWPT.Tc,
+        0.1); std::vector<Particles> prtcls = {tL , bL, tR, h}; TransportNetwork
+        Tr(modelPointer, Ki, prtcls, EWPT.EWMinimum); double zini      = 0.5;
         double zfin      = -0.5;
         const double ini = 0.;
         std::cout << "Building splines\n";
@@ -209,7 +218,7 @@ try
         Difeq D(z, Tr);
         std::cout
             << "FDE construction finished. Now relaxing to the true solution\n";
-        Solvde relax(100, 1e-4, 1, scale, col_index, 4, y, D);
+        Solvde relax(100, 1e-4, 1, scale, col_index, 4, y, D); */
         /* std::ofstream yfile("res.dat");
         for (auto it : y)
         {
@@ -218,8 +227,6 @@ try
           yfile << "\n";
         }
         yfile.close(); */
-
-        exit(1);
 
         ////////////////and ends here///////////////////////////////////////////
 

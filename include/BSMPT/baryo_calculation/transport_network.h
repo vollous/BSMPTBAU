@@ -24,53 +24,42 @@ namespace BSMPT
 class TransportNetwork
 {
 private:
-  std::shared_ptr<Class_Potential_Origin> modelPointer;
   std::shared_ptr<Kinfo> Ki;
-  const std::vector<Particles> prtcl_list;
-  VecDoub vev_critical;
   Kfactor K;
-  const double thsym = 0.0603557;
-  const double thbrk = 0.00688404;
-  const double LW    = 0.03379;
+  double LW, vh, vs, LAM = 1000.;
+  double D0b, D1b, D2b, D1h, D2h;
+  double detAb, detAh;
+  double Gtotb, Gtoth;
 
 public:
-  TransportNetwork(std::shared_ptr<Class_Potential_Origin> &modelPointer_input,
-                   std::shared_ptr<Kinfo> K_in,
-                   std::vector<Particles> prtcl_list_in,
-                   const VecDoub vev_critical_in)
-      : prtcl_list(prtcl_list_in)
-      , K(K_in)
+  TransportNetwork(std::shared_ptr<Kinfo> K_in) : K(K_in)
   {
-    Ki           = K_in;
-    modelPointer = modelPointer_input;
-    vev_critical = modelPointer->MinimizeOrderVEV(vev_critical_in);
+    Ki    = K_in;
+    LW    = 5. / Ki->Tc;
+    vh    = Ki->Tc;
+    vs    = 2 * Ki->Tc;
+    D0b   = K(D0, fermion, 0.);
+    D1b   = K(D1, fermion, 0.);
+    D2b   = K(D2, fermion, 0.);
+    D1h   = K(D1, boson, 0.);
+    D2h   = K(D2, boson, 0.);
+    detAb = Ki->vw * D1b + D2b;
+    detAh = Ki->vw * D1h + D2h;
+    Gtotb = K(K4, fermion, 0.) * Ki->Tc / (6. * D0b);
+    Gtoth = K(K4, boson, 0.) * Ki->Tc / (20. * K(D0, boson, 0.));
   }
-
-  size_t get_N_particles();
 
   P_type get_particle_type(const Particles prtcl);
 
-  double vevProfileKink(const double &z, size_t deriv);
+  double vev1_profile(const double &z, const size_t deriv);
 
-  VecDoub calc_vev(const double &z, size_t deriv);
+  double vev2_profile(const double &z, const size_t deriv);
 
-  double calculate_theta(const double &z, size_t diff);
+  double top_mass(const double z, const size_t deriv);
 
-  VecDoub get_top_mass_and_derivative(const VecDoub &vev) const;
+  double W_mass(const double z);
 
-  VecDoub get_h_mass_and_derivative(const std::vector<double> &vev);
-
-  double get_W_mass(const VecDoub &vev) const;
-
-  VecDoub get_squared_mass_and_deriv(const double z, const Particles prtcl);
-
-  void spline_Kfactors(const double zmin, const double zmax, const size_t N_points);
-
-  MatDoub calc_A_inv(const double z);
-
-  MatDoub calc_B(const double z);
-
-  MatDoub calc_Collision(const double z);
+  double theta(const double z, const size_t deriv);
 
   VecDoub calc_Source(const double z);
 
