@@ -11,7 +11,7 @@ set(header
     ${header_path}/NumericalIntegration.h
     ${header_path}/nr3.h)
 
-set(src utility.cpp matrix_operations.cpp NumericalIntegration.cpp Logger.cpp parser.cpp const_velocity_spline.cpp
+set(src utility.cpp newt.cpp matrix_operations.cpp NumericalIntegration.cpp Logger.cpp parser.cpp const_velocity_spline.cpp
         NumericalDerivatives.cpp)
 add_library(Utility ${header} ${src})
 target_include_directories(Utility PUBLIC ${BSMPT_SOURCE_DIR}/include

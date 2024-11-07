@@ -61,10 +61,26 @@ public:
 
   double theta(const double z, const size_t deriv);
 
+  void
+  spline_Kfactors(const double zmin, const double zmax, const size_t N_points);
+
   VecDoub calc_Source(const double z);
 
   void operator()(const double z, VecDoub &u, VecDoub &du);
 
   ~TransportNetwork() {};
 };
+
+class shootf
+{
+private:
+  const double zl = -0.3, zr = 0.3;
+  TransportNetwork tr;
+
+public:
+  shootf(Kinfo Ki) : tr(Ki) { tr.spline_Kfactors(zl, zr, 300); };
+  VecDoub operator()(VecDoub &v);
+  ~shootf() {};
+};
+
 } // namespace BSMPT

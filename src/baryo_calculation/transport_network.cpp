@@ -68,6 +68,15 @@ double TransportNetwork::theta(const double z, const size_t deriv)
   }
 }
 
+void TransportNetwork::spline_Kfactors(const double zmin,
+                                       const double zmax,
+                                       const size_t N_points)
+{
+  double mmax = top_mass(zmin, 0);
+  double mmin = top_mass(zmax, 0);
+  K.spline_Kfactors(mmin, mmax, N_points);
+}
+
 VecDoub TransportNetwork::calc_Source(const double z)
 {
   VecDoub res(2);
@@ -145,6 +154,12 @@ void TransportNetwork::operator()(const double z, VecDoub &u, VecDoub &du)
   du[7] = (D2h * (Gh + GY * (u[2] + 2. * u[6] + u[0] - 2. * u[4])) +
            D1h * Gtoth * u[7]) /
           detAh;
+}
+
+VecDoub shootf::operator()(VecDoub &v)
+{
+  VecDoub uini = {0., v[0], 0., v[1], 0., v[2], 0., [v3]};
+  rk4_adap(tr, zl, uini, 0., 1e-4, )
 }
 
 } // namespace BSMPT

@@ -68,11 +68,12 @@ try
           << Tr.theta(z, 2) << "\t" << "\n";
   }
   yfile.close(); */
-  double zini      = -0.5;
+  double zini      = -0.3;
   double zfin      = 0.;
   const double ini = 0.;
   VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, 0.001};
   MatDoub appr;
+  Tr.spline_Kfactors(zini, zfin, 200);
   rk4_adap(Tr, zini, uini, zfin, 1e-4, 1e-4, 1e-4, appr);
 
   std::cout << "Computation time:\n"
