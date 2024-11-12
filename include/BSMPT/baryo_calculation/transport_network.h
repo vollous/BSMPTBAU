@@ -1,10 +1,10 @@
 #pragma once
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
-#include <BSMPT/utility/NumericalIntegration.h>
 #include <BSMPT/models/ClassPotentialOrigin.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/utility/Logger.h>
+#include <BSMPT/utility/NumericalIntegration.h>
 #include <BSMPT/utility/matrix_operations.h>
 #include <memory>
 #include <vector>
@@ -62,6 +62,8 @@ public:
 
   double theta(const double z, const size_t deriv);
 
+  MatDoub Ainv(const double z);
+
   void
   spline_Kfactors(const double zmin, const double zmax, const size_t N_points);
 
@@ -79,9 +81,14 @@ private:
   TransportNetwork tr;
 
 public:
-  bool save = false;
+  bool save   = false;
   double zmid = 0.;
-  shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in) { tr.spline_Kfactors(zl, zr, 600); };
+  shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in)
+  {
+    tr.spline_Kfactors(zl, zr, 600);
+    tr.Ainv(zl);
+    exit(1);
+  };
   VecDoub operator()(VecDoub &v);
   ~shootf() {};
 };

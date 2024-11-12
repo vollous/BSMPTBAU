@@ -68,6 +68,35 @@ double TransportNetwork::theta(const double z, const size_t deriv)
   }
 }
 
+MatDoub TransportNetwork::Ainv(const double z)
+{
+  MatDoub res(8, VecDoub(8));
+  double mt                 = top_mass(z, 0);
+  double detAt              = Ki->vw * K(D1, fermion, mt) + K(D2, fermion, mt);
+  size_t i                  = 0;
+  res[2 * i][2 * i]         = -Ki->vw / detAt;
+  res[2 * i][2 * i + 1]     = -1. / detAt;
+  res[2 * i + 1][2 * i]     = K(D2, fermion, mt) / detAt;
+  res[2 * i + 1][2 * i + 1] = -K(D1, fermion, mt) / detAt;
+  i                         = 1;
+  res[2 * i][2 * i]         = -Ki->vw / detAb;
+  res[2 * i][2 * i + 1]     = -1. / detAb;
+  res[2 * i + 1][2 * i]     = D2b / detAb;
+  res[2 * i + 1][2 * i + 1] = -D1b / detAb;
+  i                         = 2;
+  res[2 * i][2 * i]         = -Ki->vw / detAt;
+  res[2 * i][2 * i + 1]     = -1. / detAt;
+  res[2 * i + 1][2 * i]     = K(D2, fermion, mt) / detAt;
+  res[2 * i + 1][2 * i + 1] = -K(D1, fermion, mt) / detAt;
+  i                         = 3;
+  res[2 * i][2 * i]         = -Ki->vw / detAh;
+  res[2 * i][2 * i + 1]     = -1. / detAh;
+  res[2 * i + 1][2 * i]     = D2h / detAh;
+  res[2 * i + 1][2 * i + 1] = -D1h / detAh;
+  printmat(res);
+  return res;
+}
+
 void TransportNetwork::spline_Kfactors(const double zmin,
                                        const double zmax,
                                        const size_t N_points)
@@ -171,7 +200,7 @@ VecDoub shootf::operator()(VecDoub &v)
   tr(zmid, ur, dur);
   for (size_t i = 0; i < 4; i++)
   {
-    res[2 * i]     = 2*(ul[2 * i] - ur[2 * i]);
+    res[2 * i]     = 2 * (ul[2 * i] - ur[2 * i]);
     res[2 * i + 1] = dul[2 * i] + dur[2 * i];
     if (save)
       std::cout << "i: " << i << " " << dul[2 * i] << " " << dur[2 * i] << "\n";
