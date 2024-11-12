@@ -158,8 +158,51 @@ void TransportNetwork::operator()(const double z, VecDoub &u, VecDoub &du)
 
 VecDoub shootf::operator()(VecDoub &v)
 {
-  VecDoub uini = {0., v[0], 0., v[1], 0., v[2], 0., [v3]};
-  rk4_adap(tr, zl, uini, 0., 1e-4, )
+  VecDoub ul = {0., v[0], 0., v[1], 0., v[2], 0., v[3]};
+  VecDoub ur = {0., v[4], 0., v[5], 0., v[6], 0., v[7]};
+  VecDoub dul(8), dur(8);
+  VecDoub res(8);
+  double zini = zl;
+  double zfin = zr;
+  rk4_adap(tr, zini, ul, zmid, 1e-4, 1e-4, 1e-5, save);
+  tr(zmid, ul, dul);
+  // if (save) rk4_adap(tr, zini, ul, zfin, 1e-4, 1e-4, 1e-4, save);
+  rk4_adap(tr, zfin, ur, zmid, -1e-4, 1e-4, -1e-5, save);
+  tr(zmid, ur, dur);
+  for (size_t i = 0; i < 4; i++)
+  {
+    res[2 * i]     = 2*(ul[2 * i] - ur[2 * i]);
+    res[2 * i + 1] = dul[2 * i] + dur[2 * i];
+    if (save)
+      std::cout << "i: " << i << " " << dul[2 * i] << " " << dur[2 * i] << "\n";
+  }
+  if (save)
+    for (auto it : res)
+      std::cout << it << "\n";
+  // if (save) rk4_adap(tr, zfin, ur, zini, -1e-4, 1e-4, -1e-4, save);
+
+  return res;
 }
 
+/* VecDoub shootf::operator()(VecDoub &v)
+{
+  VecDoub ur = {v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]};
+  VecDoub dur(8);
+  VecDoub res(8);
+  double zini = zl;
+  double zfin = zr;
+  tr(zfin, ur, dur);
+  rk4_adap(tr, zfin, ur, 0., -1e-4, 1e-4, -1e-5, save);
+  for (size_t i = 0; i < 4; i++)
+  {
+    res[2 * i]     = std::abs(ur[2 * i]) + std::abs(dur[2 * i]);
+    res[2 * i + 1] = std::abs(dur[2 * i + 1]);
+  }
+  if (save)
+    for (auto it : res)
+      std::cout << it << "\n";
+  // if (save) rk4_adap(tr, zfin, ur, zini, -1e-4, 1e-4, -1e-4, save);
+
+  return res;
+} */
 } // namespace BSMPT

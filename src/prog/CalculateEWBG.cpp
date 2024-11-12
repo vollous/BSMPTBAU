@@ -13,6 +13,7 @@
  */
 
 #include <BSMPT/baryo_calculation/transport_network.h>
+#include <BSMPT/utility/newt.h>
 
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/transport_equations.h> // for GSL_integ...
@@ -57,24 +58,37 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
-  Kfactor K(Ki);
+  srand((unsigned)time(NULL));
   clock_t begin_time = clock();
-  TransportNetwork Tr(Ki);
-  /* std::ofstream yfile("theta.dat");
-  for (double z = -0.3; z <= 0.3; z += 0.001)
+
+  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
+  shootf sf(Ki);
+  std::ofstream reset;
+  reset.open("ini_r2.csv", std::ofstream::out | std::ofstream::trunc);
+  reset.close();
+  /* for (auto &it : vini)
   {
-    yfile << z << "\t" << Tr.theta(z, 0) << "\t" << Tr.theta(z, 1) << "\t"
-          << Tr.theta(z, 2) << "\t" << "\n";
-  }
-  yfile.close(); */
+    double random = rand();
+    random /= (double)RAND_MAX;
+    it = -0.1 + (0.1 + 0.1) * random;
+  } */
+  VecDoub vini = {0., 0., 0., 0., 0., 0., 0., 0.};
+  sf.zmid      = -0.2;
+  bool check   = false;
+  sf.save      = false;
+  newt(vini, check, sf);
+  sf.save = true;
+  vini    = sf(vini);
+
+  /* TransportNetwork Tr(Ki);
   double zini      = -0.3;
-  double zfin      = 0.;
+  double zfin      = 0.3;
   const double ini = 0.;
   VecDoub uini     = {ini, ini, ini, ini, ini, ini, ini, 0.001};
-  MatDoub appr;
   Tr.spline_Kfactors(zini, zfin, 200);
-  rk4_adap(Tr, zini, uini, zfin, 1e-4, 1e-4, 1e-4, appr);
+  zini = 0.3, zfin = 0.;
+  std::cout << "Splined\n";
+  rk4_adap(Tr, zini, uini, zfin, -1e-4, 1e-4, -1e-4, true); */
 
   std::cout << "Computation time:\n"
             << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";

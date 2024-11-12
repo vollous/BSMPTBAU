@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/utility/NumericalIntegration.h>
 #include <BSMPT/models/ClassPotentialOrigin.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/utility/Logger.h>
@@ -74,11 +75,13 @@ public:
 class shootf
 {
 private:
-  const double zl = -0.3, zr = 0.3;
+  const double zl = -0.7, zr = 0.8;
   TransportNetwork tr;
 
 public:
-  shootf(Kinfo Ki) : tr(Ki) { tr.spline_Kfactors(zl, zr, 300); };
+  bool save = false;
+  double zmid = 0.;
+  shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in) { tr.spline_Kfactors(zl, zr, 600); };
   VecDoub operator()(VecDoub &v);
   ~shootf() {};
 };

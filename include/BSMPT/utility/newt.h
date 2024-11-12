@@ -29,7 +29,7 @@ void lnsrch(VecDoub &xold,
             bool &check,
             F &func)
 {
-  static const double ALF = 1e-4, TOLX = 1e-10;
+  static const double ALF = 1e-4, TOLX = 1e-16;
   double a, alam, alam2 = 0., alamin, b, disc, f2 = 0.;
   double rhs1, rhs2, slope = 0., sum = 0., temp, test, tmplam;
   int i, n = xold.size();
@@ -101,7 +101,7 @@ template <class F> class NRfdjac
 {
 private:
   F &func;
-  const double EPS = 1e-5;
+  const double EPS = 1e-8;
 
 public:
   NRfdjac(F &funcc) : func(funcc) {};
@@ -150,8 +150,8 @@ public:
 template <class F> void newt(VecDoub &x, bool &check, F &vecfunc)
 {
   const int MAXITS  = 200;
-  const double TOLF = 1e-5, TOLMIN = 1e-8, STPMAX = 100.;
-  const double TOLX = 1e-10;
+  const double TOLF = 1e-8, TOLMIN = 1e-12, STPMAX = 100.;
+  const double TOLX = 1e-16;
   int i, j, its, n = x.size();
   double den, f, fold, stpmax, sum, temp, test;
   VecDoub g(n), p(n), xold(n);
@@ -174,6 +174,7 @@ template <class F> void newt(VecDoub &x, bool &check, F &vecfunc)
   stpmax = STPMAX * std::max(std::sqrt(sum), (double)n);
   for (its = 0; its < MAXITS; its++)
   {
+    std::cout << its << "\n";
     fjac = fdjac(x, fvec);
     for (i = 0; i < n; i++)
     {
