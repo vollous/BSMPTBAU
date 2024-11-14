@@ -64,6 +64,8 @@ public:
 
   MatDoub Ainv(const double z);
 
+  MatDoub gamma(const double z);
+
   void
   spline_Kfactors(const double zmin, const double zmax, const size_t N_points);
 
@@ -74,7 +76,45 @@ public:
   ~TransportNetwork() {};
 };
 
+class dgl
+{
+private:
+  /* data */
+public:
+  dgl(/* args */) {};
+  void operator()(const double t, const VecDoub &y, VecDoub &dy);
+  ~dgl() {};
+};
+
 class shootf
+{
+private:
+  // const double zl = -0.7, zr = 0.9;
+  TransportNetwork tr;
+  dgl eq;
+  const double xi = 0., xf = 10.;
+  const double Nb  = 1.;
+  const double Neq = 2.;
+  const double Np  = 20.;
+  double dx;
+
+public:
+  bool save   = false;
+  double zmid = 0.;
+  shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in)
+  {
+    dx = (xf - xi) / Np;
+    // tr.spline_Kfactors(zl, zr, 600);
+    // MatDoub a = tr.Ainv(zr);
+    // MatDoub b = tr.gamma(zr);
+    // printmat(a * b);
+    // exit(1);
+  };
+  VecDoub operator()(VecDoub &v);
+  ~shootf() {};
+};
+
+class shootf2
 {
 private:
   const double zl = -0.7, zr = 0.8;
@@ -83,14 +123,16 @@ private:
 public:
   bool save   = false;
   double zmid = 0.;
-  shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in)
+  shootf2(std::shared_ptr<Kinfo> K_in) : tr(K_in)
   {
     tr.spline_Kfactors(zl, zr, 600);
-    tr.Ainv(zl);
-    exit(1);
+    // MatDoub a = tr.Ainv(zr);
+    // MatDoub b = tr.gamma(zr);
+    // printmat(a * b);
+    // exit(1);
   };
   VecDoub operator()(VecDoub &v);
-  ~shootf() {};
+  ~shootf2() {};
 };
 
 } // namespace BSMPT

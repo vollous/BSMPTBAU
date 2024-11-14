@@ -97,6 +97,63 @@ MatDoub TransportNetwork::Ainv(const double z)
   return res;
 }
 
+MatDoub TransportNetwork::gamma(const double z)
+{
+  MatDoub res;
+  double mt    = top_mass(z, 0);
+  double D0t   = K(D0, fermion, mt);
+  double Gh    = pow(W_mass(z), 2) / (50. * Ki->Tc);
+  double Gtott = K(K4, fermion, mt) * Ki->Tc / (6. * D0t);
+  double GW    = Gtoth;
+  double GY    = 4.2e-3 * Ki->Tc;
+  double GM    = mt * mt / (63. * Ki->Tc);
+  double GSS   = 4.9e-4 * Ki->Tc;
+  double K0    = 1.;
+  VecDoub Ci   = {K0 * (GY + GW + GM + GSS * (1. + 9. * D0t)),
+                  0.,
+                  K0 * (-GW + GSS * (1. + 9. * D0b)),
+                  0.,
+                  -K0 * (GY + GM + GSS * (1. - 9. * D0t)),
+                  0.,
+                  K0 * GY,
+                  0.};
+  res.push_back(Ci);
+  Ci    = 0. * Ci;
+  Ci[1] = -Gtott;
+  res.push_back(Ci);
+  Ci = {K0 * (-GW + GSS * (1. + 9. * D0t)),
+        0.,
+        K0 * (GY + GW + GSS * (1. + 9. * D0b)),
+        0.,
+        -K0 * (GY + GSS * (1. - 9. * D0t)),
+        0.,
+        K0 * GY,
+        0.};
+  res.push_back(Ci);
+  Ci    = 0. * Ci;
+  Ci[3] = -Gtotb;
+  res.push_back(Ci);
+  Ci = {-K0 * (GY + GM + GSS * (1. + 9. * D0t)),
+        0.,
+        -K0 * (GY + GSS * (1. + 9. * D0b)),
+        0.,
+        K0 * (2 * GY + GM + GSS * (1. - 9. * D0t)),
+        0.,
+        -2. * K0 * GY,
+        0.};
+  res.push_back(Ci);
+  Ci    = 0. * Ci;
+  Ci[5] = -Gtott;
+  res.push_back(Ci);
+  Ci = {K0 * GY, 0., K0 * GY, 0., -2. * K0 * GY, 0., K0 * (2. * GY + Gh), 0.};
+  res.push_back(Ci);
+  Ci    = 0. * Ci;
+  Ci[7] = -Gtoth;
+  res.push_back(Ci);
+  printmat(res);
+  return res;
+}
+
 void TransportNetwork::spline_Kfactors(const double zmin,
                                        const double zmax,
                                        const size_t N_points)
@@ -185,7 +242,53 @@ void TransportNetwork::operator()(const double z, VecDoub &u, VecDoub &du)
           detAh;
 }
 
+void dgl::operator()(const double t, const VecDoub &y, VecDoub &dy)
+{
+  dy[0] = y[1];
+  dy[1] = 110. * y[0] + y[1];
+}
+
 VecDoub shootf::operator()(VecDoub &v)
+{
+  VecDoub res(v.size());
+  VecDoub y = {1, v[0]};
+  double x0 = xi;
+
+  for (size_t i = 0; i < Np - 1; i++)
+  {
+    rk4_adap(eq, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
+    res[2 * i]     = y[0] - v[Nb + 2 * i];
+    res[2 * i + 1] = y[1] - v[Nb + 2 * i + 1];
+    y[0]           = v[Nb + 2 * i];
+    y[1]           = v[Nb + 2 * i + 1];
+  }
+  rk4_adap(eq, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
+  res[2 * (Np - 1)]     = y[0] - 1;
+  res[2 * (Np - 1) + 1] = y[1] - v[2 * (Np - 1) + 1];
+
+  return res;
+
+  /* VecDoub ul = {0., v[0], 0., v[1], 0., v[2], 0., v[3]};
+  VecDoub ur = {0., v[4], 0., v[5], 0., v[6], 0., v[7]};
+  VecDoub dul(8), dur(8);
+  VecDoub res(8);
+  double zini = zl;
+  double zfin = zr;
+  rk4_adap(tr, zini, ul, zmid, 1e-4, 1e-4, 1e-6, save);
+  tr(zmid, ul, dul);
+  rk4_adap(tr, zfin, ur, zmid, -1e-4, 1e-4, -1e-6, save);
+  tr(zmid, ur, dur);
+  for (size_t i = 0; i < 4; i++)
+  {
+    // res[i] = (ul[i] - ur[i]);
+    res[2 * i]     = ul[2 * i] - ur[2 * i];
+    res[2 * i + 1] = dul[2 * i] + dur[2 * i];
+  }
+
+  return res; */
+}
+
+VecDoub shootf2::operator()(VecDoub &v)
 {
   VecDoub ul = {0., v[0], 0., v[1], 0., v[2], 0., v[3]};
   VecDoub ur = {0., v[4], 0., v[5], 0., v[6], 0., v[7]};
@@ -198,35 +301,35 @@ VecDoub shootf::operator()(VecDoub &v)
   // if (save) rk4_adap(tr, zini, ul, zfin, 1e-4, 1e-4, 1e-4, save);
   rk4_adap(tr, zfin, ur, zmid, -1e-4, 1e-4, -1e-5, save);
   tr(zmid, ur, dur);
-  for (size_t i = 0; i < 4; i++)
-  {
-    res[2 * i]     = 2 * (ul[2 * i] - ur[2 * i]);
-    res[2 * i + 1] = dul[2 * i] + dur[2 * i];
-    if (save)
-      std::cout << "i: " << i << " " << dul[2 * i] << " " << dur[2 * i] << "\n";
-  }
-  if (save)
-    for (auto it : res)
-      std::cout << it << "\n";
+  for (size_t i = 0; i < 8; i++)
+    res[i] = (ul[i] - ur[i]);
   // if (save) rk4_adap(tr, zfin, ur, zini, -1e-4, 1e-4, -1e-4, save);
 
   return res;
 }
-
 /* VecDoub shootf::operator()(VecDoub &v)
 {
-  VecDoub ur = {v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]};
+  static const double LAM = 100.;
+  VecDoub ur              = {v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]};
+  VecDoub scale           = {1., 1., 20., 20., 1., 1., 20., 20.};
+  double expo             = 0.;
+  for (size_t i = 0; i < ur.size(); i++)
+    expo += std::abs(ur[i] * scale[i]);
+  double supr = exp(1. + LAM * expo);
   VecDoub dur(8);
   VecDoub res(8);
-  double zini = zl;
-  double zfin = zr;
+  double zini = zr;
+  double zfin = zl;
+  rk4_adap(tr, zini, ur, zfin, -1e-4, 1e-4, -1e-5, save);
   tr(zfin, ur, dur);
-  rk4_adap(tr, zfin, ur, 0., -1e-4, 1e-4, -1e-5, save);
-  for (size_t i = 0; i < 4; i++)
-  {
-    res[2 * i]     = std::abs(ur[2 * i]) + std::abs(dur[2 * i]);
-    res[2 * i + 1] = std::abs(dur[2 * i + 1]);
-  }
+  res[0] = supr * ur[0];
+  res[1] = supr * ur[1];
+  res[2] = 20 * supr * ur[2];
+  res[3] = 20 * supr * ur[3];
+  res[4] = supr * ur[4];
+  res[5] = supr * ur[5];
+  res[6] = 20 * supr * ur[6];
+  res[7] = 20 * supr * ur[7];
   if (save)
     for (auto it : res)
       std::cout << it << "\n";

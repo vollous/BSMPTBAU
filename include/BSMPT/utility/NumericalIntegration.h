@@ -170,10 +170,11 @@ double h_adap_simpson38(FUNC &f,
 template <class FUNC>
 void rk4(FUNC &f, double &x, std::vector<double> &y, double h)
 {
-  std::vector<double> k1(8), k2(8), k3(8), k4(8), tmp(8);
+  size_t Neq = y.size();
+  std::vector<double> k1(Neq), k2(Neq), k3(Neq), k4(Neq), tmp(Neq);
 
   f(x, y, k1);
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < Neq; i++)
   {
     k1.at(i) *= std::abs(h);
     tmp.at(i) = y.at(i) + k1.at(i) / 2;
@@ -181,14 +182,14 @@ void rk4(FUNC &f, double &x, std::vector<double> &y, double h)
 
   x += h / 2;
   f(x, tmp, k2);
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < Neq; i++)
   {
     k2.at(i) *= std::abs(h);
     tmp.at(i) = y.at(i) + k2.at(i) / 2;
   }
 
   f(x, tmp, k3);
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < Neq; i++)
   {
     k3.at(i) *= std::abs(h);
     tmp.at(i) = y.at(i) + k3.at(i) / 2;
@@ -196,12 +197,12 @@ void rk4(FUNC &f, double &x, std::vector<double> &y, double h)
 
   x += h / 2;
   f(x, tmp, k4);
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < Neq; i++)
   {
     k4.at(i) *= std::abs(h);
   }
 
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < Neq; i++)
   {
     y.at(i) += (k1.at(i) + 2 * k2.at(i) + 2 * k3.at(i) + k4.at(i)) / 6;
   }
@@ -234,7 +235,7 @@ void rk4_adap(FUNC &f,
   rk4(f, x, y, h / 2);
   rk4(f, x, y, h / 2);
 
-  for (size_t i = 0; i < 8; i++)
+  for (size_t i = 0; i < y.size(); i++)
   {
     tmperr = std::abs((y.at(i) - ytemp.at(i)) / ytemp.at(i));
     if (tmperr > err)
@@ -248,7 +249,7 @@ void rk4_adap(FUNC &f,
   h = setStep(h, err);
   if (std::abs(h) < std::abs(minstep))
   {
-    if (output) save("ini_r2.csv", x, y);
+    if (output) save("grow_modes_fixed.csv", x, y);
     h = minstep;
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
@@ -261,18 +262,20 @@ void rk4_adap(FUNC &f,
   else if ((h > 0) && (x + h > xfin))
   {
     h = x - xfin;
-    rk4(f, x, y, h);
-    if (output) save("ini_r2.csv", x, y);
+    rk4(f, x, y, h / 2);
+    rk4(f, x, y, h / 2);
+    if (output) save("grow_modes_fixed.csv", x, y);
   }
   else if ((h < 0) && (x + h < xfin))
   {
     h = x - xfin;
-    rk4(f, x, y, h);
-    if (output) save("ini_r2.csv", x, y);
+    rk4(f, x, y, h / 2);
+    rk4(f, x, y, h / 2);
+    if (output) save("grow_modes_fixed.csv", x, y);
   }
   else
   {
-    if (output) save("ini_r2.csv", x, y);
+    if (output) save("grow_modes_fixed.csv", x, y);
     rk4_adap(f, x, y, xfin, h, eps, minstep, output);
   }
 }

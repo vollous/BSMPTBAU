@@ -62,21 +62,24 @@ try
   clock_t begin_time = clock();
 
   std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.1);
-  shootf sf(Ki);
   std::ofstream reset;
-  reset.open("ini_r2.csv", std::ofstream::out | std::ofstream::trunc);
+  reset.open("grow_modes_fixed.csv", std::ofstream::out | std::ofstream::trunc);
   reset.close();
+  VecDoub vini(40, 1.);
   /* for (auto &it : vini)
   {
     double random = rand();
     random /= (double)RAND_MAX;
-    it = -0.1 + (0.1 + 0.1) * random;
+    it = -0.001 + (0.001 + 0.001) * random;
   } */
-  VecDoub vini = {0., 0., 0., 0., 0., 0., 0., 0.};
-  sf.zmid      = -0.2;
-  bool check   = false;
-  sf.save      = false;
+
+  shootf sf(Ki);
+  sf.zmid    = -0.3;
+  bool check = false;
+  sf.save    = false;
   newt(vini, check, sf);
+  for (auto it : vini)
+    std::cout << it << "\n";
   sf.save = true;
   vini    = sf(vini);
 

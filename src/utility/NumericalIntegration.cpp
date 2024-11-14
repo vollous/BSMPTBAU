@@ -1,7 +1,9 @@
 #include <BSMPT/utility/NumericalIntegration.h>
+#include <iomanip>
 
 void save(const char *filename, const double &x, const std::vector<double> &y)
 {
+  std::cout << std::setprecision(16);
   std::ofstream outfile(filename, std::ios::out | std::ios::app);
   outfile.seekp(0, std::ios::end);
   outfile << x << "\t";
