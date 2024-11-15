@@ -149,7 +149,7 @@ public:
 
 template <class F> void newt(VecDoub &x, bool &check, F &vecfunc)
 {
-  const int MAXITS  = 10;
+  const int MAXITS  = 100;
   const double TOLF = 1e-8, TOLMIN = 1e-12, STPMAX = 100.;
   const double TOLX = 1e-16;
   int i, j, its, n = x.size();

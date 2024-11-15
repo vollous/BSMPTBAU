@@ -65,15 +65,17 @@ try
   std::ofstream reset;
   reset.open("grow_modes_fixed.csv", std::ofstream::out | std::ofstream::trunc);
   reset.close();
-  VecDoub vini(40, 1.);
+  VecDoub vini(8 * 10, 0.);
   /* for (auto &it : vini)
   {
     double random = rand();
     random /= (double)RAND_MAX;
     it = -0.001 + (0.001 + 0.001) * random;
   } */
-
   shootf sf(Ki);
+  sf.save = true;
+  sf(vini);
+
   sf.zmid    = -0.3;
   bool check = false;
   sf.save    = false;
@@ -81,7 +83,7 @@ try
   for (auto it : vini)
     std::cout << it << "\n";
   sf.save = true;
-  vini    = sf(vini);
+  sf(vini);
 
   /* TransportNetwork Tr(Ki);
   double zini      = -0.3;

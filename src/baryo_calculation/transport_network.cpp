@@ -251,20 +251,27 @@ void dgl::operator()(const double t, const VecDoub &y, VecDoub &dy)
 VecDoub shootf::operator()(VecDoub &v)
 {
   VecDoub res(v.size());
-  VecDoub y = {1, v[0]};
+  VecDoub y = {v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]};
   double x0 = xi;
 
   for (size_t i = 0; i < Np - 1; i++)
   {
-    rk4_adap(eq, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
-    res[2 * i]     = y[0] - v[Nb + 2 * i];
-    res[2 * i + 1] = y[1] - v[Nb + 2 * i + 1];
-    y[0]           = v[Nb + 2 * i];
-    y[1]           = v[Nb + 2 * i + 1];
+    rk4_adap(tr, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
+    for (size_t j = 0; j < Neq; j++)
+    {
+      res[Neq * i + j] = y[j] - v[Nb + Neq * i + j];
+      y[j]             = v[Nb + Neq * i + j];
+    }
   }
-  rk4_adap(eq, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
-  res[2 * (Np - 1)]     = y[0] - 1;
-  res[2 * (Np - 1) + 1] = y[1] - v[2 * (Np - 1) + 1];
+  rk4_adap(tr, x0, y, x0 + dx, 1e-4, 1e-6, 1e-6, save);
+  res[Neq * (Np - 1)]     = y[0];
+  res[Neq * (Np - 1) + 1] = y[1];
+  res[Neq * (Np - 1) + 2] = y[2];
+  res[Neq * (Np - 1) + 3] = y[3];
+  res[Neq * (Np - 1) + 4] = y[4];
+  res[Neq * (Np - 1) + 5] = y[5];
+  res[Neq * (Np - 1) + 6] = y[6];
+  res[Neq * (Np - 1) + 7] = y[7];
 
   return res;
 

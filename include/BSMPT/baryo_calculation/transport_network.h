@@ -92,10 +92,10 @@ private:
   // const double zl = -0.7, zr = 0.9;
   TransportNetwork tr;
   dgl eq;
-  const double xi = 0., xf = 10.;
-  const double Nb  = 1.;
-  const double Neq = 2.;
-  const double Np  = 20.;
+  const double xi = -0.7, xf = 0.7;
+  const double Nb  = 8.;
+  const double Neq = 8.;
+  const double Np  = 10.;
   double dx;
 
 public:
@@ -104,7 +104,7 @@ public:
   shootf(std::shared_ptr<Kinfo> K_in) : tr(K_in)
   {
     dx = (xf - xi) / Np;
-    // tr.spline_Kfactors(zl, zr, 600);
+    tr.spline_Kfactors(xi, xf, 600);
     // MatDoub a = tr.Ainv(zr);
     // MatDoub b = tr.gamma(zr);
     // printmat(a * b);
