@@ -16,6 +16,7 @@ add_subdirectory(minimum_tracer)
 add_subdirectory(transition_tracer)
 add_subdirectory(bounce_solution)
 add_subdirectory(gravitational_waves)
+add_subdirectory(baryo_fhck)
 
 # ==============================Utility==================================
 

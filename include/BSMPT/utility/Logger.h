@@ -32,6 +32,7 @@ enum class LoggingLevel
   MinTracerDetailed,
   TransitionDetailed,
   GWDetailed,
+  FHCK,
   BounceDetailed,
   ProgDetailed,
   EWBGDetailed,
@@ -97,6 +98,7 @@ private:
       {LoggingLevel::TransitionDetailed, false},
       {LoggingLevel::BounceDetailed, false},
       {LoggingLevel::GWDetailed, false},
+      {LoggingLevel::FHCK, false},
       {LoggingLevel::Debug, false}};
 };
 

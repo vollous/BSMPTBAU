@@ -20,7 +20,9 @@ target_link_libraries(
           ThermalFunctions
           BounceSolution
           TransitionTracer
-          GW)
+          GW
+          Baryo
+          BaryoFHCK)
 target_compile_features(GenericTests PUBLIC cxx_std_17)
 
 include(Catch)

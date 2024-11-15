@@ -29,6 +29,7 @@ static std::map<std::string, LoggingLevel> LoggingPrefixes{
     {"--logginglevel::mintracerdetailed=", LoggingLevel::MinTracerDetailed},
     {"--logginglevel::bouncedetailed=", LoggingLevel::BounceDetailed},
     {"--logginglevel::gwdetailed=", LoggingLevel::GWDetailed},
+    {"--logginglevel::fhck=", LoggingLevel::FHCK},
     {"--logginglevel::complete=", LoggingLevel::Complete}};
 
 void ShowLoggerHelp()

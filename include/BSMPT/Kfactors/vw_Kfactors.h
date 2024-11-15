@@ -364,6 +364,7 @@ private:
   const bool fast;
 
 public:
+  Kfactor();
   Kfactor(std::shared_ptr<Kinfo> K_in, const bool fast_in) : fast(fast_in)
   {
     Ki = K_in;
