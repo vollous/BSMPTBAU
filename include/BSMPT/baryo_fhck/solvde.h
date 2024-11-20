@@ -68,7 +68,7 @@ struct Solvde
       difeq.smatrix(k, k1, k2, j9, ic1, ic2, indexv, s, y);
       red(ic1, ic2, j5, j6, j7, j8, j9, ic3, jc1, jcf, k2);
       pinvs(ic1, ic2, j7, j9, jcf, k2);
-      bksub(ne, nb, jcf, k1, k2);
+      bksub(jcf, k1, k2);
       Doub err = 0.0;
       for (Int j = 0; j < ne; j++)
       {
@@ -206,8 +206,7 @@ struct Solvde
     }
   }
 
-  inline void
-  bksub(const Int ne, const Int nb, const Int jf, const Int k1, const Int k2)
+  inline void bksub(const Int jf, const Int k1, const Int k2)
   {
     Int nbf = ne - nb, im = 1;
     for (Int k = k2 - 1; k >= k1; k--)
