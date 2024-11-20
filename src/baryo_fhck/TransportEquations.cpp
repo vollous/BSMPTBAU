@@ -80,10 +80,6 @@ void TransportEquations::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
-  kVEV      = std::vector<std::vector<double>>(NumberOfSteps);
-  kdVEVdz   = std::vector<std::vector<double>>(NumberOfSteps);
-  kd2VEVdz2 = std::vector<std::vector<double>>(NumberOfSteps);
-
   CalculateBubbleWallThickness();
 
   Ki   = std::make_unique<Kinfo>(Tstar, vwall);
@@ -133,9 +129,10 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
   {
     return std::vector<double>(2, 0.0);
   }
-  else
-    Logger::Write(LoggingLevel::FHCK,
-                  "Error! No VEV profile selected. - Vev()");
+
+  Logger::Write(LoggingLevel::FHCK, "Error! No VEV profile selected. - Vev()");
+  std::runtime_error("VEV profile mode selected is not valid.");
+  return std::vector<double>();
 }
 
 void TransportEquations::GetFermionMass(
@@ -170,9 +167,13 @@ void TransportEquations::GetFermionMass(
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
-    const double brk = atan(TrueVacuum.at(3) / (TrueVacuum.at(2) + 1e-100));
-    const double sym = atan(FalseVacuum.at(3) / (FalseVacuum.at(2) + 1e-100));
-    thetaprime       = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
+    const double brk =
+        atan(TrueVacuum.at(3) /
+             (TrueVacuum.at(2) + 1e-100)); // TODO only works for the 2HDM
+    const double sym =
+        atan(FalseVacuum.at(3) /
+             (FalseVacuum.at(2) + 1e-100)); // TODO only works for the 2HDM
+    thetaprime = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
     theta2prime =
         ((brk - sym) / pow(cosh(z / Lw), 2) * tanh(z / Lw)) / pow(Lw, 2);
   }
