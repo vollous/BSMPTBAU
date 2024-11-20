@@ -45,7 +45,23 @@ public:
    */
   double vwall;
 
+  /**
+   * @brief Wall thickness
+   *
+   */
   double Lw;
+
+  /**
+   * @brief Phase of the top mass at the false vacuum
+   *
+   */
+  double Theta_False;
+
+  /**
+   * @brief Phase of the top mass at the true vacuum
+   *
+   */
+  double Theta_True;
 
   /**
    * @brief Number of Weil fermions
@@ -64,10 +80,6 @@ public:
    *
    */
   int NumberOfSteps = 101;
-
-  std::vector<std::vector<double>> kVEV;
-  std::vector<std::vector<double>> kdVEVdz;
-  std::vector<std::vector<double>> kd2VEVdz2;
 
   /**
    * @brief False vacuum
@@ -94,8 +106,16 @@ public:
    */
   VevProfileMode VevProfile = VevProfileMode::Unset;
 
+  /**
+   * @brief Ki object that has the bubble wall properties
+   *
+   */
   std::shared_ptr<Kinfo> Ki;
 
+  /**
+   * @brief Kfac object to calculate the K-functions
+   *
+   */
   std::shared_ptr<Kfactor> Kfac;
 
   /**
@@ -224,10 +244,6 @@ public:
    */
   std::vector<double> Vev(const double &z, const int &diff = 0);
 
-  void GenerateStepsAndVEVsKink();
-
-  void GenerateStepsAndVEVsTunnelPath();
-
   /**
    * @brief Calculate the collision matrix \f$ \deltaC^{1/2} \f$
    *
@@ -239,6 +255,18 @@ public:
                            const std::vector<double> &FermionMasses,
                            const std::vector<double> &BosonMasses);
 
+  /**
+   * @brief Get the Fermion Mass object Calculate the fermion mass and its
+   * derivatives
+   *
+   * @param z distance to the bubble wall
+   * @param fermion which fermion, 0 = most massive
+   * @param esQuark Quark mass matrix
+   * @param m2 \f$ m^2 \f$
+   * @param m2prime \f$ m'^2 \f$
+   * @param thetaprime \f$ \theta' \f$
+   * @param theta2prime \f$ \theta'' \f$
+   */
   void
   GetFermionMass(const double &z,
                  const int &fermion,
