@@ -92,7 +92,6 @@ struct Solvde
       err /= nvars;
       Doub fac = (err > slowc ? slowc / err : 1.0);
 
-      /*
       // Save individual iteration of the path
       std::string str = "output_" + std::to_string(it) + ".tsv";
       std::ofstream out(str);
@@ -103,7 +102,6 @@ struct Solvde
             << "\t" << y[6][i] << "\t" << y[7][i] << "\n";
       }
       out.close();
-      */
 
       for (Int j = 0; j < ne; j++)
       {
@@ -115,7 +113,7 @@ struct Solvde
       std::cout << std::setw(13) << err;
       std::cout << std::setw(12) << fac << std::endl;
 
-      if (err < conv and it > 30) return;
+      if (err < conv and it > 3) return;
     }
     // throw("Too many iterations in solvde");
   }
