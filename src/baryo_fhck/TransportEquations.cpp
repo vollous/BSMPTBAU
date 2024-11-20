@@ -170,8 +170,8 @@ void TransportEquations::GetFermionMass(
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
-    const double brk = atan(TrueVacuum[7] / (TrueVacuum[6] + 1e-100));
-    const double sym = atan(FalseVacuum[7] / (FalseVacuum[6] + 1e-100));
+    const double brk = atan(TrueVacuum.at(3) / (TrueVacuum.at(2) + 1e-100));
+    const double sym = atan(FalseVacuum.at(3) / (FalseVacuum.at(2) + 1e-100));
     thetaprime       = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
     theta2prime =
         ((brk - sym) / pow(cosh(z / Lw), 2) * tanh(z / Lw)) / pow(Lw, 2);
