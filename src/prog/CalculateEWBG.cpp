@@ -58,7 +58,6 @@ try
 {
   std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
   Kfactor K(Ki, false);
-  clock_t begin_time = clock();
 
   const auto SMConstants = GetSMConstants();
 
