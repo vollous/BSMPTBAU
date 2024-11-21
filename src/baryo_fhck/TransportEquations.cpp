@@ -519,6 +519,47 @@ void TransportEquations::SolveTransportEquation()
   Int NB    = 4;
   MatDoub y(2 * (nFermions + nBosons), zList.size(), (double)0.);
   Solvde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
+
+  // Store the solution
+  SolutionZ = zList;
+  Solution  = y;
+  // f
+  PrintTransportEquation(80, "tL", "mu");
+  PrintTransportEquation(80, "tR", "mu");
+  PrintTransportEquation(80, "bL", "mu");
+  PrintTransportEquation(80, "h", "mu");
+}
+
+void TransportEquations::PrintTransportEquation(const int &size,
+                                                const std::string &Particle,
+                                                const std::string &MuOrU,
+                                                const double &multiplier)
+{
+  AsciiPlotter Plot(Particle + " " + MuOrU, size, ceil(size / 3.));
+  std::optional<int> ind;
+  std::vector<double> z, y;
+
+  if (Particle == "tL") ind = 0;
+  if (Particle == "tR") ind = 2;
+  if (Particle == "bL") ind = 4;
+  if (Particle == "h") ind = 6;
+
+  if (not ind.has_value()) throw("Invalid particle to plot the solution.");
+
+  if (MuOrU == "u") ind = ind.value() + 1;
+
+  std::cout << "Wtf\t" << Lw.value() * multiplier << "\n";
+
+  for (size_t i = 0; i < SolutionZ.value().size(); i++)
+    if (abs(SolutionZ.value()[i]) < Lw.value() * multiplier)
+    {
+      z.push_back(SolutionZ.value()[i]);
+      y.push_back(Solution.value()[ind.value()][i]);
+    }
+  Plot.addPlot(z, y, "", '*');
+  std::stringstream ss;
+  Plot.show(ss);
+  Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 } // namespace FHCK
 } // namespace Baryo

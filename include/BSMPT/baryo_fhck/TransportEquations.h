@@ -71,6 +71,17 @@ public:
   std::optional<double> Theta_True;
 
   /**
+   * @brief Store the Zs from the solution from the relaxation method
+   *
+   */
+  std::optional<std::vector<double>> SolutionZ;
+  /**
+   * @brief Store the solution from the relaxation method
+   *
+   */
+  std::optional<MatDoub> Solution;
+
+  /**
    * @brief Number of Weil fermions
    *
    */
@@ -320,6 +331,18 @@ public:
    *
    */
   void SolveTransportEquation();
+
+  /**
+   * @brief
+   *
+   * @param size
+   * @param Particle
+   * @param MuOrU
+   */
+  void PrintTransportEquation(const int &size,
+                              const std::string &Particle,
+                              const std::string &MuOrU,
+                              const double &multiplier = 3);
 };
 } // namespace FHCK
 } // namespace Baryo
