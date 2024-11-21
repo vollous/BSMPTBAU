@@ -438,8 +438,7 @@ void TransportEquations::Equations(const double &z,
   for (int i = 0; i < 2 * (nBosons + nFermions); i++)
     for (int j = 0; j < 2 * (nBosons + nFermions); j++)
       for (int l = 0; l < 2 * (nBosons + nFermions); l++)
-        Mtilde[i][j] +=
-            Ainverse[i][l] * (CollisiontMatrix[l][j] - 0 * m2B[l][j]);
+        Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
   for (int i = 0; i < 2 * (nBosons + nFermions); i++)
