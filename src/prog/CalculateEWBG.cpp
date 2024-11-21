@@ -59,14 +59,6 @@ try
   std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
   Kfactor K(Ki, false);
   clock_t begin_time = clock();
-  for (double m = 1; m < 100; m++)
-  {
-    std::cout << K(Q9o2, boson, m) << "\n";
-  }
-  std::cout << "Computation time:\n"
-            << float(clock() - begin_time) / CLOCKS_PER_SEC << "\n";
-
-  exit(1);
 
   const auto SMConstants = GetSMConstants();
 
