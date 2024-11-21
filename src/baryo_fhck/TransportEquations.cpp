@@ -1,5 +1,8 @@
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 
+namespace BSMPT
+{
+
 namespace Baryo
 {
 namespace FHCK
@@ -80,7 +83,7 @@ void TransportEquations::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
-  CalculateBubbleWallThickness();
+  if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
 
   Ki   = std::make_unique<Kinfo>(Tstar, vwall);
   Kfac = std::make_unique<Kfactor>(Ki, true);
@@ -92,25 +95,24 @@ void TransportEquations::SetNumberOfSteps(const int &num)
   Initialize();
 }
 
-void TransportEquations::CalculateBubbleWallThickness()
+void TransportEquations::SetEtaInterface()
 {
-  double Vb = 1e-100;
-  // Potential barrier in the straigh line approximation for the tunneling path
-  for (double d = 0.; d <= 1; d += 0.001)
-  {
+  if (VevProfile != VevProfileMode::Kink)
+    throw("Cannot set theta is a non kink vev profile");
 
-    const std::vector<double> vev =
-        FalseVacuum + d * (TrueVacuum - FalseVacuum);
-    const double VevPotential =
-        modelPointer->VEff(modelPointer->MinimizeOrderVEV(vev), Tstar);
+  auto config =
+      std::pair<std::vector<bool>, int>{std::vector<bool>(5, true), 1};
+  EtaInterface =
+      std::make_shared<CalculateEtaInterface>(config, GetSMConstants());
 
-    const double FalseVacuumPotential =
-        modelPointer->VEff(modelPointer->MinimizeOrderVEV(FalseVacuum), Tstar);
+  EtaInterface->CalcEta(vwall,
+                        TrueVacuum,
+                        FalseVacuum,
+                        Tstar,
+                        modelPointer,
+                        Minimizer::WhichMinimizerDefault);
 
-    Vb = max(Vb, VevPotential - FalseVacuumPotential);
-  }
-  Lw = modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(TrueVacuum)) /
-       sqrt(8 * Vb);
+  Lw = EtaInterface->getLW();
 }
 
 std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
@@ -118,12 +120,14 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
   if (VevProfile == VevProfileMode::Kink)
   {
     if (diff == 0)
-      return FalseVacuum + (1 - tanh(z / Lw)) * (TrueVacuum - FalseVacuum) / 2;
+      return FalseVacuum +
+             (1 - tanh(z / Lw.value())) * (TrueVacuum - FalseVacuum) / 2;
     if (diff == 1)
-      return -1 / pow(cosh(z / Lw), 2) * (TrueVacuum - FalseVacuum) / (2 * Lw);
+      return -1 / pow(cosh(z / Lw.value()), 2) * (TrueVacuum - FalseVacuum) /
+             (2 * Lw.value());
     if (diff == 2)
-      return 2 * tanh(z / Lw) / pow(cosh(z / Lw), 2) *
-             (TrueVacuum - FalseVacuum) / (2 * Lw * Lw);
+      return 2 * tanh(z / Lw.value()) / pow(cosh(z / Lw.value()), 2) *
+             (TrueVacuum - FalseVacuum) / (2 * Lw.value() * Lw.value());
   }
   else if (VevProfile == VevProfileMode::TunnelPath)
   {
@@ -167,18 +171,35 @@ void TransportEquations::GetFermionMass(
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
-    const double brk =
-        atan(TrueVacuum.at(3) /
-             (TrueVacuum.at(2) + 1e-100)); // TODO only works for the 2HDM
-    const double sym =
-        atan(FalseVacuum.at(3) /
-             (FalseVacuum.at(2) + 1e-100)); // TODO only works for the 2HDM
-    thetaprime = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
+    double brk;
+    double sym;
+
+    // Use BSMPTv2 functions
+    switch (fermion)
+    {
+    case 0:
+      brk = EtaInterface->getBrokenCPViolatingPhase_top();
+      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      break;
+    case 1:
+      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
+      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
+      break;
+    case 2:
+      brk = EtaInterface->getBrokenCPViolatingPhase_top();
+      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      break;
+    default: throw("Invalid fermion in GetFermionMass()"); break;
+    }
+    thetaprime =
+        -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw.value()), 2)) / Lw.value();
     theta2prime =
-        ((brk - sym) / pow(cosh(z / Lw), 2) * tanh(z / Lw)) / pow(Lw, 2);
+        ((brk - sym) / pow(cosh(z / Lw.value()), 2) * tanh(z / Lw.value())) /
+        pow(Lw.value(), 2);
   }
   else if (VevProfile == VevProfileMode::TunnelPath)
   {
+    // Deduce theta' and theta'' from the mass's phase
     thetaprime = (m.real() * mprime.imag() - m.imag() * mprime.real()) /
                  (pow(m.imag(), 2) + pow(m.real(), 2));
     theta2prime = (pow(m.real(), 2) * (-2 * mprime.imag() * mprime.real() +
@@ -501,3 +522,4 @@ void TransportEquations::SolveTransportEquation()
 }
 } // namespace FHCK
 } // namespace Baryo
+} // namespace BSMPT

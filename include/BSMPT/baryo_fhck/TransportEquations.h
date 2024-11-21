@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_fhck/solvde.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
@@ -8,8 +9,8 @@
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/utility/utility.h>
 
-using namespace BSMPT;
-
+namespace BSMPT
+{
 namespace Baryo
 {
 namespace FHCK
@@ -49,19 +50,25 @@ public:
    * @brief Wall thickness
    *
    */
-  double Lw;
+  std::optional<double> Lw;
+
+  /**
+   * @brief EtaInterface object. To  use BSMPTv2 functions
+   *
+   */
+  std::shared_ptr<CalculateEtaInterface> EtaInterface;
 
   /**
    * @brief Phase of the top mass at the false vacuum
    *
    */
-  double Theta_False;
+  std::optional<double> Theta_False;
 
   /**
    * @brief Phase of the top mass at the true vacuum
    *
    */
-  double Theta_True;
+  std::optional<double> Theta_True;
 
   /**
    * @brief Number of Weil fermions
@@ -227,11 +234,10 @@ public:
   void SetNumberOfSteps(const int &num);
 
   /**
-   * @brief Calculate the bubble wall thickness. TODO we use a different
-   * algorithm from that of BSMPT v2 paper
+   * @brief Set EtaInterface obejct to use BSMPTv2 functions.
    *
    */
-  void CalculateBubbleWallThickness();
+  void SetEtaInterface();
 
   /**
    * @brief Calculates the VEV \f$ \vec{v} \f$ and derivatives \f$
@@ -317,3 +323,4 @@ public:
 };
 } // namespace FHCK
 } // namespace Baryo
+} // namespace BSMPT

@@ -187,6 +187,12 @@ public:
   CalculateEtaInterface(const std::string &file,
                         const ISMConstants &smConstants);
 
+  /**
+   * @brief Construct a new Calculate Eta Interface object default
+   *
+   */
+  CalculateEtaInterface();
+
   virtual ~CalculateEtaInterface();
 
   /**

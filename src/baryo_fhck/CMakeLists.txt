@@ -21,6 +21,7 @@ target_link_libraries(
          Kfactors
          LibWallThickness
          Utility
+         Baryo
          Boost::boost
          BounceSolution
          GW)
