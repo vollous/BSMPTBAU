@@ -517,7 +517,7 @@ void TransportEquations::SolveTransportEquation()
   indexv[6] = 3;
   indexv[7] = 7;
   Int NB    = 4;
-  MatDoub y(2 * (nFermions + nBosons), zList.size());
+  MatDoub y(2 * (nFermions + nBosons), zList.size(), (double)0.);
   Solvde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 }
 } // namespace FHCK
