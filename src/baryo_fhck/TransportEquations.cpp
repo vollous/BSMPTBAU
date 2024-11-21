@@ -548,8 +548,6 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  std::cout << "Wtf\t" << Lw.value() * multiplier << "\n";
-
   for (size_t i = 0; i < SolutionZ.value().size(); i++)
     if (abs(SolutionZ.value()[i]) < Lw.value() * multiplier)
     {
