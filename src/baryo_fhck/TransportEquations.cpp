@@ -523,11 +523,11 @@ void TransportEquations::SolveTransportEquation()
   // Store the solution
   SolutionZ = zList;
   Solution  = y;
-  // f
-  PrintTransportEquation(80, "tL", "mu");
-  PrintTransportEquation(80, "tR", "mu");
-  PrintTransportEquation(80, "bL", "mu");
-  PrintTransportEquation(80, "h", "mu");
+
+  PrintTransportEquation(80, "tL", "mu", 5);
+  PrintTransportEquation(80, "tR", "mu", 5);
+  PrintTransportEquation(80, "bL", "mu", 5);
+  PrintTransportEquation(80, "h", "mu", 5);
 }
 
 void TransportEquations::PrintTransportEquation(const int &size,
