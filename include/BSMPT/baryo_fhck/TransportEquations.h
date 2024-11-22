@@ -8,6 +8,8 @@
 #include <BSMPT/gravitational_waves/gw.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/utility/utility.h>
+#include <gsl/gsl_integration.h>
+#include <gsl/gsl_interp.h>
 
 namespace BSMPT
 {
@@ -29,6 +31,12 @@ enum class VevProfileMode
 class TransportEquations
 {
 public:
+  /**
+   * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
+   *
+   */
+  std::optional<double> BAUEta;
+
   /**
    * @brief modelPointer for the used parameter point
    */
@@ -331,6 +339,12 @@ public:
    *
    */
   void SolveTransportEquation();
+
+  /**
+   * @brief Calculate the baryonic assymetry of the Universe
+   *
+   */
+  void CalculateBAU();
 
   /**
    * @brief

@@ -528,6 +528,98 @@ void TransportEquations::SolveTransportEquation()
   PrintTransportEquation(80, "tR", "mu", 5);
   PrintTransportEquation(80, "bL", "mu", 5);
   PrintTransportEquation(80, "h", "mu", 5);
+
+  CalculateBAU();
+}
+
+void TransportEquations::CalculateBAU()
+{
+  double m2, m2prime, thetaprime, theta2prime; // temporary vars
+  // Weak spharelon rate
+  const double Gsph = 1.e-6 * Tstar;
+  double r;                // temporary variable to store the result
+  std::vector<double> z;   // list of z positions
+  std::vector<double> muB; // muB integrand at position z
+  for (size_t i = 0; i < SolutionZ.value().size(); i++)
+  {
+
+    const double zi = SolutionZ.value()[i]; // z at position i
+    // Calculate the vev at z
+    const std::vector<double> vev = Vev(zi, 0);
+    // Calculate masses
+    Eigen::MatrixXcd MIJQuarks =
+        modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(vev));
+    Eigen::ComplexEigenSolver<Eigen::MatrixXcd> esQuark(MIJQuarks);
+    // D0 of t
+    GetFermionMass(zi, 0, esQuark, m2, m2prime, thetaprime, theta2prime);
+    const double D0t = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
+    // D0 of b
+    GetFermionMass(zi, 2, esQuark, m2, m2prime, thetaprime, theta2prime);
+    const double D0b = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
+    // Results
+    r = 0;
+    r += (1 + 4 * D0t) / 2. * Solution.value()[0][i]; // tL
+    r += (1 + 4 * D0b) / 2. * Solution.value()[4][i]; // bL
+    r += 2. * D0b * Solution.value()[2][i];           // tR
+    r *=
+        min(1.,
+            2.4 * Gsph / Tstar *
+                exp(-40 *
+                    modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev)) /
+                    Tstar)); // f_sph(z)
+    r *= exp(-45 * Gsph * std::abs(zi) /
+             (4. * Ki->vw * Ki->gamw)); // exp(-45 G_sph |z| / 4 vw gammaw)
+    // Save in list to pass to integrator
+    z.push_back(zi);
+    muB.push_back(r); // integrand
+  }
+  // Step 1: Set up GSL interpolation
+  size_t n = z.size();
+  const gsl_interp_type *interp_type =
+      gsl_interp_cspline; // Cubic spline interpolation
+  gsl_interp *interp = gsl_interp_alloc(interp_type, n);
+  gsl_interp_init(interp, z.data(), muB.data(), n);
+  gsl_interp_accel *acc = gsl_interp_accel_alloc();
+  // Step 2: Integrate the interpolated function
+  double a = z.front(); // Lower bound of integration
+  double b = z.back();  // Upper bound of integration
+  double result, error;
+  // Struct to hold parameters
+  struct Params
+  {
+    gsl_interp *interp;
+    gsl_interp_accel *acc;
+    const std::vector<double> *z;
+    const std::vector<double> *muB;
+  } params                             = {interp, acc, &z, &muB};
+  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
+  gsl_function F;
+  F.function = [](double x, void *p) -> double
+  {
+    auto *data = static_cast<Params *>(p);
+    return gsl_interp_eval(
+        data->interp, data->z->data(), data->muB->data(), x, data->acc);
+  };
+  F.params = &params;
+  gsl_integration_qags(
+      &F, a, b, 1e-30, 1e-30, 1000, workspace, &result, &error);
+  // Cleanup
+  gsl_interp_free(interp);
+  gsl_interp_accel_free(acc);
+  gsl_integration_workspace_free(workspace);
+  // Results
+  const double prefactor =
+      405. * Gsph /
+      (4 * M_PI * M_PI * Ki->vw * Ki->gamw * 106.75 * Tstar); // TODO Fix gstas
+
+  result *= prefactor;
+  // Save the result
+  BAUEta = result;
+  // Step 3: Output the result
+  stringstream ss;
+  ss << "eta = " << result << " with error " << error << std::endl;
+  ss << "eta/eta_obs = " << result / (6.2e-10) << std::endl;
+  Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
 void TransportEquations::PrintTransportEquation(const int &size,
