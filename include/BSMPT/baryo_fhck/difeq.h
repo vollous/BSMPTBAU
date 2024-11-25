@@ -3,7 +3,7 @@
 #pragma once
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
-#include <BSMPT/utility/nr3.h>
+#include <BSMPT/utility/data_structures.h>
 #include <BSMPT/utility/utility.h>
 
 using BSMPT::Delta;
@@ -13,7 +13,7 @@ struct Difeq
   // List of z coordinates on the grid
   const std::vector<double> &z;
   // Number of fermion and number of bosons
-  const Int &nFermions, &nBosons;
+  const int &nFermions, &nBosons;
   // Tensor with  A^-1 Gamma for each k
   const std::vector<std::vector<std::vector<double>>> &MTilde;
   // Matrix Stilde = A^-1 * S (source) for each k
@@ -23,8 +23,8 @@ struct Difeq
       // z list
       std::vector<double> &z_In,
       // Number of fermions and bosons
-      const Int &nFermions_In,
-      const Int &nBosons_In,
+      const int &nFermions_In,
+      const int &nBosons_In,
       const std::vector<std::vector<std::vector<double>>> &MTilde_In,
       const std::vector<std::vector<double>> &STilde_In)
       : z(z_In)
@@ -35,21 +35,21 @@ struct Difeq
   {
   }
 
-  void smatrix(const Int k,
-               const Int k1,
-               const Int k2,
-               const Int jsf,
-               const Int is1,
-               const Int isf,
-               VecInt_I &indexv,
-               MatDoub_O &s,
-               MatDoub_I &y)
+  void smatrix(const int k,
+               const int k1,
+               const int k2,
+               const int jsf,
+               const int is1,
+               const int isf,
+               VecInt &indexv,
+               MatDoub &s,
+               MatDoub &y)
   {
     (void)is1;
     (void)isf;
     const int nP = nFermions + nBosons;
-    Doub temp;
-    s = MatDoub_O(s.nrows(), s.ncols(), (double)0.); // Set matrix s = 0
+    double temp;
+    s = MatDoub(s.rows(), s.cols(), (double)0.); // Set matrix s = 0
     if (k == k1)
     {
       // Boundary conditions mu = 0 on first boundary

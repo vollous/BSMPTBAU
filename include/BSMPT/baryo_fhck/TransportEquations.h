@@ -275,10 +275,9 @@ public:
    * @param z distance to the bubble wall.
    * @return std::vector<std::vector<double>> Collision matrix
    */
-  std::vector<std::vector<double>>
-  CalculateCollisionMatrix(const double &mW,
-                           const std::vector<double> &FermionMasses,
-                           const std::vector<double> &BosonMasses);
+  MatDoub CalculateCollisionMatrix(const double &mW,
+                                   const std::vector<double> &FermionMasses,
+                                   const std::vector<double> &BosonMasses);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its

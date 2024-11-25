@@ -3,31 +3,32 @@
 #pragma once
 
 #include <BSMPT/baryo_fhck/difeq.h>
-#include <BSMPT/utility/nr3.h>
+#include <BSMPT/utility/data_structures.h>
+#include <fstream>
 
 struct Solvde
 {
-  const Int itmax;
-  const Doub conv;
-  const Doub slowc;
+  const int itmax;
+  const double conv;
+  const double slowc;
   const VecDoub &scalv;
-  const VecInt &indexv;
-  const Int nb;
+  VecInt &indexv;
+  const int nb;
   MatDoub &y;
   Difeq &difeq;
-  Int ne, m;
+  int ne, m;
   VecInt kmax;
   VecDoub ermax;
   Mat3DDoub c;
   MatDoub s;
 
-  inline Solvde(const Int itmaxx,
-                const Doub convv,
-                const Doub slowcc,
-                VecDoub_I &scalvv,
-                VecInt_I &indexvv,
-                const Int nbb,
-                MatDoub_IO &yy,
+  inline Solvde(const int itmaxx,
+                const double convv,
+                const double slowcc,
+                VecDoub &scalvv,
+                VecInt &indexvv,
+                const int nbb,
+                MatDoub &yy,
                 Difeq &difeqq)
       : itmax(itmaxx)
       , conv(convv)
@@ -37,29 +38,29 @@ struct Solvde
       , nb(nbb)
       , y(yy)
       , difeq(difeqq)
-      , ne(y.nrows())
-      , m(y.ncols())
+      , ne(y.rows())
+      , m(y.cols())
       , kmax(ne)
       , ermax(ne)
       , c(ne, ne - nb + 1, m + 1)
       , s(MatDoub(ne, 2 * ne + 1, (double)0.))
   {
-    Int jv, k, nvars = ne * m;
-    Int k1 = 0, k2 = m;
-    Int j1 = 0, j2 = nb, j3 = nb, j4 = ne, j5 = j4 + j1, j6 = j4 + j2,
+    int jv, k, nvars = ne * m;
+    int k1 = 0, k2 = m;
+    int j1 = 0, j2 = nb, j3 = nb, j4 = ne, j5 = j4 + j1, j6 = j4 + j2,
         j7 = j4 + j3, j8 = j4 + j4, j9 = j8 + j1;
-    Int ic1 = 0, ic2 = ne - nb, ic3 = ic2, ic4 = ne, jc1 = 0, jcf = ic3;
+    int ic1 = 0, ic2 = ne - nb, ic3 = ic2, ic4 = ne, jc1 = 0, jcf = ic3;
     std::cout << std::setw(8) << "Iter.";
     std::cout << std::setw(10) << "Error" << std::setw(10) << "FAC"
               << std::endl;
-    for (Int it = 0; it < itmax; it++)
+    for (int it = 0; it < itmax; it++)
     {
       k = k1;
       difeq.smatrix(k, k1, k2, j9, ic3, ic4, indexv, s, y);
       pinvs(ic3, ic4, j5, j9, jc1, k1);
       for (k = k1 + 1; k < k2; k++)
       {
-        Int kp = k;
+        int kp = k;
         difeq.smatrix(k, k1, k2, j9, ic1, ic4, indexv, s, y);
         red(ic1, ic4, j1, j2, j3, j4, j9, ic3, jc1, jcf, kp);
         pinvs(ic1, ic4, j3, j9, jc1, k);
@@ -69,15 +70,15 @@ struct Solvde
       red(ic1, ic2, j5, j6, j7, j8, j9, ic3, jc1, jcf, k2);
       pinvs(ic1, ic2, j7, j9, jcf, k2);
       bksub(jcf, k1, k2);
-      Doub err = 0.0;
-      for (Int j = 0; j < ne; j++)
+      double err = 0.0;
+      for (int j = 0; j < ne; j++)
       {
-        jv        = indexv[j];
-        Doub errj = 0.0, vmax = 0.0;
-        Int km = 0;
+        jv          = indexv[j];
+        double errj = 0.0, vmax = 0.0;
+        int km = 0;
         for (k = k1; k < k2; k++)
         {
-          Doub vz = abs(c[jv][0][k]);
+          double vz = abs(c[jv][0][k]);
           if (vz > vmax)
           {
             vmax = vz;
@@ -90,7 +91,7 @@ struct Solvde
         kmax[j]  = km;
       }
       err /= nvars;
-      Doub fac = (err > slowc ? slowc / err : 1.0);
+      double fac = (err > slowc ? slowc / err : 1.0);
 
       // Save individual iteration of the path
       std::string str = "output_" + std::to_string(it) + ".tsv";
@@ -103,7 +104,7 @@ struct Solvde
       }
       out.close();
 
-      for (Int j = 0; j < ne; j++)
+      for (int j = 0; j < ne; j++)
       {
         jv = indexv[j];
         for (k = k1 + 1; k < k2 - 1; k++)
@@ -133,12 +134,12 @@ struct Solvde
                     size_t ie2,
                     const size_t je1,
                     const size_t jsf,
-                    const Int jc1,
-                    const Int k)
+                    const int jc1,
+                    const int k)
   {
-    Int jpiv, jp, jcoff, irow, ipiv, icoff;
+    int jpiv, jp, jcoff, irow, ipiv, icoff;
     size_t je2;
-    Doub pivinv, piv, big;
+    double pivinv, piv, big;
     const size_t iesize = ie2 - ie1;
     VecInt indxr(iesize);
     VecDoub pscl(iesize);
@@ -188,7 +189,7 @@ struct Solvde
         {
           if (s[i][jpiv] != 0.0)
           {
-            Doub dum = s[i][jpiv];
+            double dum = s[i][jpiv];
             for (size_t j = je1; j <= jsf; j++)
               s[i][j] -= dum * s[ipiv][j];
             s[i][jpiv] = 0.0;
@@ -206,26 +207,26 @@ struct Solvde
     }
   }
 
-  inline void bksub(const Int jf, const Int k1, const Int k2)
+  inline void bksub(const int jf, const int k1, const int k2)
   {
-    Int nbf = ne - nb, im = 1;
-    for (Int k = k2 - 1; k >= k1; k--)
+    int nbf = ne - nb, im = 1;
+    for (int k = k2 - 1; k >= k1; k--)
     {
       if (k == k1) im = nbf + 1;
-      Int kp = k + 1;
-      for (Int j = 0; j < nbf; j++)
+      int kp = k + 1;
+      for (int j = 0; j < nbf; j++)
       {
-        Doub xx = c[j][jf][kp];
-        for (Int i = im - 1; i < ne; i++)
+        double xx = c[j][jf][kp];
+        for (int i = im - 1; i < ne; i++)
           c[i][jf][k] -= c[i][j][k] * xx;
       }
     }
-    for (Int k = k1; k < k2; k++)
+    for (int k = k1; k < k2; k++)
     {
-      Int kp = k + 1;
-      for (Int i = 0; i < nb; i++)
+      int kp = k + 1;
+      for (int i = 0; i < nb; i++)
         c[i][0][k] = c[i + nbf][jf][k];
-      for (Int i = 0; i < nbf; i++)
+      for (int i = 0; i < nbf; i++)
         c[i + nb][0][k] = c[i][jf][kp];
     }
   }
@@ -246,21 +247,21 @@ struct Solvde
    * @param jcf
    * @param kc
    */
-  inline void red(const Int iz1,
-                  const Int iz2,
-                  const Int jz1,
-                  const Int jz2,
-                  const Int jm1,
-                  const Int jm2,
-                  const Int jmf,
-                  const Int ic1,
-                  const Int jc1,
-                  const Int jcf,
-                  const Int kc)
+  inline void red(const int iz1,
+                  const int iz2,
+                  const int jz1,
+                  const int jz2,
+                  const int jm1,
+                  const int jm2,
+                  const int jmf,
+                  const int ic1,
+                  const int jc1,
+                  const int jcf,
+                  const int kc)
   {
-    Int l, j, i;
-    Doub vx;
-    Int loff = jc1 - jm1, ic = ic1;
+    int l, j, i;
+    double vx;
+    int loff = jc1 - jm1, ic = ic1;
     for (j = jz1; j < jz2; j++)
     {
       for (l = jm1; l < jm2; l++)

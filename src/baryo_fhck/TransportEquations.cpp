@@ -246,7 +246,7 @@ double TransportEquations::GetWMass(const std::vector<double> &vev,
   return 0;
 }
 
-std::vector<std::vector<double>> TransportEquations::CalculateCollisionMatrix(
+MatDoub TransportEquations::CalculateCollisionMatrix(
     const double &mW,
     const std::vector<double> &FermionMasses,
     const std::vector<double> &BosonMasses)
@@ -266,9 +266,9 @@ std::vector<std::vector<double>> TransportEquations::CalculateCollisionMatrix(
   const double D0t = (*Kfac)(K_type::D0, P_type::fermion, mTop);
   const double D0b = (*Kfac)(K_type::D0, P_type::fermion, mBot);
 
-  const double K0t = Tstar; // TODO: fix
-  const double K0b = Tstar; // TODO: fix
-  const double K0h = Tstar; // TODO: fix
+  const double K0t = 1.; // TODO: fix
+  const double K0b = 1.; // TODO: fix
+  const double K0h = 1.; // TODO: fix
 
   const double GammaTotTop =
       (*Kfac)(K_type::K4, P_type::fermion, mTop) /
@@ -280,77 +280,58 @@ std::vector<std::vector<double>> TransportEquations::CalculateCollisionMatrix(
       (*Kfac)(K_type::K4, P_type::boson, mHiggs) /
       ((*Kfac)(K_type::D0, P_type::boson, mHiggs) * (20 / Tstar)); // TODO: fix
 
-  const double GammaM      = pow(mTop, 2) / (63 * Tstar);
-  const double GammaY      = 4.2e-3 * Tstar;
-  const double GammaW      = GammaTotHiggs;
-  const double GammaTildeY = 4.9e-4 * Tstar;
-  const double GammaH      = mW * mW / (50 * Tstar); // TODO: fix
+  const double GammaM       = pow(mTop, 2) / (63 * Tstar);
+  const double GammaY       = 4.2e-3 * Tstar;
+  const double GammaW       = GammaTotHiggs;
+  const double GammaTildeSS = 4.9e-4 * Tstar;
+  const double GammaTildeY  = 4.9e-4 * Tstar;
+  const double GammaH       = mW * mW / (50 * Tstar); // TODO: fix
 
-  std::vector<std::vector<double>> Gamma = {
-      {(GammaM + GammaW + GammaY + (1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       (-GammaM - GammaY + (-1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       (-GammaW + (1 + 9 * D0b) * GammaY) * K0t,
-       0,
-       GammaY * K0t,
-       0},
-      {-0.1 * (GammaM + GammaW + GammaY + (1 + 9 * D0t) * GammaY) * K0t,
-       -GammaTotTop,
-       -0.1 * (-GammaM - GammaY + (-1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       -0.1 * (-GammaW + (1 + 9 * D0b) * GammaY) * K0t,
-       0,
-       -0.1 * GammaY * K0t,
-       0},
-      {(-GammaM - GammaY - (1 + 9 * D0t) * GammaY) * K0b,
-       0,
-       (GammaM + 2 * GammaY - (-1 + 9 * D0t) * GammaY) * K0b,
-       0,
-       (-GammaY - (1 + 9 * D0b) * GammaY) * K0b,
-       0,
-       -2 * GammaY * K0b,
-       0},
-      {-0.1 * (-GammaM - GammaY - (1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       -0.1 * (GammaM + 2 * GammaY - (-1 + 9 * D0t) * GammaY) * K0t,
-       -GammaTotTop,
-       -0.1 * (-GammaY - (1 + 9 * D0b) * GammaY) * K0t,
-       0,
-       0.2 * GammaY * K0t,
-       0},
-      {(-GammaW + (1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       (-GammaY + (-1 + 9 * D0t) * GammaY) * K0t,
-       0,
-       (GammaW + GammaY + (1 + 9 * D0b) * GammaY) * K0t,
-       0,
-       GammaY * K0t,
-       0},
-      {-0.1 * (-GammaW + (1 + 9 * D0t) * GammaY) * K0b,
-       0,
-       -0.1 * (-GammaY + (-1 + 9 * D0t) * GammaY) * K0b,
-       0,
-       -0.1 * (GammaW + GammaY + (1 + 9 * D0b) * GammaY) * K0b,
-       -GammaTotBot,
-       -0.1 * GammaY * K0b,
-       0},
-      {GammaTildeY * K0h,
-       0,
-       -2 * GammaTildeY * K0h,
-       0,
-       GammaTildeY * K0h,
-       0,
-       (GammaH + 2 * GammaTildeY) * K0h,
-       0},
-      {-0.1 * GammaTildeY * K0h,
-       0,
-       0.2 * GammaTildeY * K0h,
-       0,
-       -0.1 * GammaTildeY * K0h,
-       0,
-       -0.1 * (GammaH + 2 * GammaTildeY) * K0h,
-       -GammaTotHiggs}};
+  MatDoub Gamma(8, 8, 0.);
+  Gamma[0][0] = (GammaM + GammaW + GammaY + (1 + 9 * D0t) * GammaY) * K0t;
+  Gamma[0][2] = (-GammaM - GammaY + (-1 + 9 * D0t) * GammaY) * K0t;
+  Gamma[0][4] = (-GammaW + (1 + 9 * D0b) * GammaY) * K0t;
+  Gamma[0][6] = GammaY * K0t;
+
+  Gamma[1][0] = -Ki->vw * Gamma[0][0];
+  Gamma[1][1] = -GammaTotTop;
+  Gamma[1][2] = -Ki->vw * Gamma[0][2];
+  Gamma[1][4] = -Ki->vw * Gamma[0][4];
+  Gamma[1][6] = -Ki->vw * Gamma[0][6];
+
+  Gamma[2][0] = (-GammaM - GammaY - (1 + 9 * D0t) * GammaY) * K0t;
+  Gamma[2][2] = (GammaM + 2 * GammaY + (1 - 9 * D0t) * GammaY) * K0t;
+  Gamma[2][4] = (-GammaY - (1 + 9 * D0b) * GammaY) * K0t;
+  Gamma[2][6] = -2 * GammaY * K0t;
+
+  Gamma[3][0] = -Ki->vw * Gamma[2][0];
+  Gamma[3][2] = -Ki->vw * Gamma[2][2];
+  Gamma[3][3] = -GammaTotTop;
+  Gamma[3][0] = -Ki->vw * Gamma[2][4];
+  Gamma[3][6] = -Ki->vw * Gamma[2][6];
+
+  Gamma[4][0] = (-GammaW + (1 + 9 * D0t) * GammaY) * K0b;
+  Gamma[4][2] = (-GammaY + (-1 + 9 * D0t) * GammaY) * K0b;
+  Gamma[4][4] = (GammaW + GammaY + (1 + 9 * D0b) * GammaY) * K0b;
+  Gamma[4][6] = GammaY * K0b;
+
+  Gamma[5][0] = -Ki->vw * Gamma[4][0];
+  Gamma[5][2] = -Ki->vw * Gamma[4][2];
+  Gamma[5][0] = -Ki->vw * Gamma[4][4];
+  Gamma[5][5] = -GammaTotBot;
+  Gamma[5][6] = -Ki->vw * Gamma[4][6];
+
+  Gamma[6][0] = GammaTildeY * K0h;
+  Gamma[6][2] = -2 * GammaTildeY * K0h;
+  Gamma[6][4] = GammaTildeY * K0h;
+  Gamma[6][6] = (GammaH + 2 * GammaTildeY) * K0h;
+
+  Gamma[7][0] = -Ki->vw * Gamma[6][0];
+  Gamma[7][2] = -Ki->vw * Gamma[6][2];
+  Gamma[7][0] = -Ki->vw * Gamma[6][4];
+  Gamma[7][6] = -Ki->vw * Gamma[6][6];
+  Gamma[7][7] = -GammaTotHiggs;
+
   return Gamma;
 }
 
@@ -452,7 +433,7 @@ void TransportEquations::Equations(const double &z,
   }
 
   // Gamma = deltaC - m2' B
-  const std::vector<std::vector<double>> CollisiontMatrix =
+  const MatDoub CollisiontMatrix =
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
@@ -479,7 +460,7 @@ void TransportEquations::SolveTransportEquation()
   Equations(-1, MtildeM1, StildeM1);
   Equations(1, MtildeP1, StildeP1);
 
-  for (double z = -10; z < 10; z += 1. / 1000.)
+  for (double z = -1.5; z < 1.5; z += 1. / 1000.)
   {
     // Compute Mtilde and Stilde
     if (z < -1)
@@ -503,9 +484,9 @@ void TransportEquations::SolveTransportEquation()
   // Construct Difeq object (S_j,n matrix)
   Difeq difeq(zList, nFermions, nBosons, MTildeList, STildeList);
 
-  Doub itmax = 30;
-  Doub conv  = 1e-10;
-  Doub slowc = 1e-3;
+  double itmax = 30;
+  double conv  = 1e-10;
+  double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
   VecInt indexv(2 * (nFermions + nBosons));
   indexv[0] = 0;
@@ -516,7 +497,7 @@ void TransportEquations::SolveTransportEquation()
   indexv[5] = 6;
   indexv[6] = 3;
   indexv[7] = 7;
-  Int NB    = 4;
+  int NB    = 4;
   MatDoub y(2 * (nFermions + nBosons), zList.size(), (double)0.);
   Solvde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
