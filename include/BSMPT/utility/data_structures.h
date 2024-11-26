@@ -62,8 +62,8 @@ public:
   size_t rows();
   size_t cols();
   void resize(const size_t newn, const size_t newm);
+  void zero();
   MatDoub &operator=(MatDoub &a);
-  MatDoub &operator=(MatDoub a);
   double *operator[](const size_t i);
   const double *operator[](const size_t i) const;
   ~MatDoub();

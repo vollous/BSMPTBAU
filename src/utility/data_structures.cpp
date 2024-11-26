@@ -235,6 +235,12 @@ void MatDoub::resize(const size_t newn, const size_t newm)
   }
 }
 
+void MatDoub::zero(){
+  for(size_t i = 0; i < nrows; i++)
+    for(size_t j = 0; j < ncols; j++)
+      v[i][j] = 0.;
+}
+
 MatDoub &MatDoub::operator=(MatDoub &a)
 {
   size_t i, j, nel;
@@ -262,7 +268,7 @@ MatDoub &MatDoub::operator=(MatDoub &a)
   return *this;
 }
 
-MatDoub &MatDoub::operator=(MatDoub a)
+/* MatDoub &MatDoub::operator=(MatDoub a)
 {
   size_t i, j, nel;
   if (this != &a)
@@ -287,7 +293,7 @@ MatDoub &MatDoub::operator=(MatDoub a)
         v[i][j] = a[i][j];
   }
   return *this;
-}
+} */
 double *MatDoub::operator[](const size_t i)
 {
   return v[i];

@@ -11,22 +11,22 @@ using BSMPT::Delta;
 struct Difeq
 {
   // List of z coordinates on the grid
-  const std::vector<double> &z;
+  VecDoub &z;
   // Number of fermion and number of bosons
   const int &nFermions, &nBosons;
   // Tensor with  A^-1 Gamma for each k
-  const std::vector<std::vector<std::vector<double>>> &MTilde;
+  const Mat3DDoub &MTilde;
   // Matrix Stilde = A^-1 * S (source) for each k
-  const std::vector<std::vector<double>> &STilde;
+  const MatDoub &STilde;
 
   Difeq(
       // z list
-      std::vector<double> &z_In,
+      VecDoub &z_In,
       // Number of fermions and bosons
       const int &nFermions_In,
       const int &nBosons_In,
-      const std::vector<std::vector<std::vector<double>>> &MTilde_In,
-      const std::vector<std::vector<double>> &STilde_In)
+      const Mat3DDoub &MTilde_In,
+      const MatDoub &STilde_In)
       : z(z_In)
       , nFermions(nFermions_In)
       , nBosons(nBosons_In)
@@ -49,7 +49,7 @@ struct Difeq
     (void)isf;
     const int nP = nFermions + nBosons;
     double temp;
-    s = MatDoub(s.rows(), s.cols(), (double)0.); // Set matrix s = 0
+    s.zero(); // Set matrix s = 0
     if (k == k1)
     {
       // Boundary conditions mu = 0 on first boundary

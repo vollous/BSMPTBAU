@@ -82,7 +82,7 @@ public:
    * @brief Store the Zs from the solution from the relaxation method
    *
    */
-  std::optional<std::vector<double>> SolutionZ;
+  std::optional<VecDoub> SolutionZ;
   /**
    * @brief Store the solution from the relaxation method
    *
@@ -276,8 +276,8 @@ public:
    * @return std::vector<std::vector<double>> Collision matrix
    */
   MatDoub CalculateCollisionMatrix(const double &mW,
-                                   const std::vector<double> &FermionMasses,
-                                   const std::vector<double> &BosonMasses);
+                                   VecDoub &FermionMasses,
+                                   VecDoub &BosonMasses);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its
@@ -316,9 +316,7 @@ public:
    * @param Mtilde \f$ A^{-1} \Gamma \f$
    * @param Stilde \f$ A^{-1}\right( \deltaC - m^2' B \left) \f$
    */
-  void Equations(const double &z,
-                 std::vector<std::vector<double>> &Mtilde,
-                 std::vector<double> &Stilde);
+  void Equations(const double &z, MatDoub &Mtilde, VecDoub &Stilde);
 
   /**
    * @brief Solve the transport equation using the shooting method. Runge Kutta
