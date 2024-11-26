@@ -87,6 +87,7 @@ void TransportEquations::Initialize()
 
   Ki   = std::make_unique<Kinfo>(Tstar, vwall);
   Kfac = std::make_unique<Kfactor>(Ki, true);
+  nFB2 = 2 * (nFermions + nBosons);
 }
 
 void TransportEquations::SetNumberOfSteps(const int &num)
@@ -334,12 +335,59 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   return Gamma;
 }
 
+MatDoub TransportEquations::calc_Ainv(const double &m, const P_type &type)
+{
+  MatDoub res(2, 2);
+  const double fD1 = (*Kfac)(K_type::D1, type, m);
+  const double fD2 = (*Kfac)(K_type::D2, type, m);
+  const double fR  = -Ki->vw;
+  res[0][0]        = fR / (fD2 - fD1 * fR);
+  res[0][1]        = -1 / (fD2 - fD1 * fR);
+  res[1][0]        = fD2 / (fD2 - fD1 * fR);
+  res[1][1]        = -fD1 / (fD2 - fD1 * fR);
+  return res;
+}
+
+MatDoub TransportEquations::calc_m2B(const double &m,
+                                     const double &dm2,
+                                     const P_type &type)
+{
+  MatDoub res(2, 2);
+  const double fRbar = (*Kfac)(K_type::Rbar, type, m);
+  const double fQ1   = (*Kfac)(K_type::Q1, type, m);
+  const double fQ2   = (*Kfac)(K_type::Q2, type, m);
+  res[0][0]          = Ki->gamw * Ki->vw * fQ1 * dm2;
+  res[1][0]          = Ki->gamw * Ki->vw * fQ2 * dm2;
+  res[1][1]          = fRbar * dm2;
+  return res;
+}
+
+VecDoub TransportEquations::calc_source(const double &m,
+                                        const double &dm2,
+                                        const double &dth,
+                                        const double &d2th,
+                                        const P_type &type)
+{
+  VecDoub res(2);
+  const double fQ8o1 = (*Kfac)(K_type::Q8o1, type, m);
+  const double fQ8o2 = (*Kfac)(K_type::Q8o2, type, m);
+  const double fQ9o1 = (*Kfac)(K_type::Q9o1, type, m);
+  const double fQ9o2 = (*Kfac)(K_type::Q9o2, type, m);
+
+  res[0] =
+      Ki->vw * Ki->gamw *
+      ((dm2 * dth + m * m * d2th) * fQ8o1 - dm2 * m * m * dth * fQ9o1); // S1
+  res[1] =
+      Ki->vw * Ki->gamw *
+      ((dm2 * dth + m * m * d2th) * fQ8o2 - dm2 * m * m * dth * fQ9o2); // S2
+  return res;
+}
+
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde)
 {
-  const int nF2  = 2 * nFermions;             // Clearer code
-  const int nFB2 = 2 * (nBosons + nFermions); // Twice number of particles
+  const int nF2 = 2 * nFermions; // Clearer code
 
   MatDoub Ainverse(nFB2, nFB2, 0.); // Store A^-1
 
@@ -347,8 +395,9 @@ void TransportEquations::Equations(const double &z,
 
   MatDoub m2B(nFB2, nFB2, 0.); // m2' B;
 
-  Stilde = S;        // A^-1 * Source vector
-  Mtilde = Ainverse; // Store A^-1 * M
+  Stilde.zero(); // A^-1 * Source vector
+  Mtilde.zero(); // Store A^-1 * M
+
   // Quark matrix
   Eigen::MatrixXcd MIJQuarks =
       modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(Vev(z, 0)));
@@ -367,36 +416,25 @@ void TransportEquations::Equations(const double &z,
     // Calculate fermionic masses
     GetFermionMass(z, fermion, esQuark, m2, m2prime, thetaprime, theta2prime);
     FermionMasses[fermion] = m2;
-    // Set variables
-    const double fD1      = (*Kfac)(K_type::D1, P_type::fermion, sqrt(m2));
-    const double fD2      = (*Kfac)(K_type::D2, P_type::fermion, sqrt(m2));
-    const double fR       = -Ki->vw;
-    const double fRbar    = (*Kfac)(K_type::Rbar, P_type::fermion, sqrt(m2));
-    const double fQ1      = (*Kfac)(K_type::Q1, P_type::fermion, sqrt(m2));
-    const double fQ2      = (*Kfac)(K_type::Q2, P_type::fermion, sqrt(m2));
-    const double fm2prime = m2prime;
-    const double fQ8o1    = (*Kfac)(K_type::Q8o1, P_type::fermion, sqrt(m2));
-    const double fQ8o2    = (*Kfac)(K_type::Q8o2, P_type::fermion, sqrt(m2));
-    const double fQ9o1    = (*Kfac)(K_type::Q9o1, P_type::fermion, sqrt(m2));
-    const double fQ9o2    = (*Kfac)(K_type::Q9o2, P_type::fermion, sqrt(m2));
 
     // Calculate A inverse for fermion
-    Ainverse[2 * fermion][2 * fermion]         = fR / (fD2 - fD1 * fR);
-    Ainverse[2 * fermion][2 * fermion + 1]     = -1 / (fD2 - fD1 * fR);
-    Ainverse[2 * fermion + 1][2 * fermion]     = fD2 / (fD2 - fD1 * fR);
-    Ainverse[2 * fermion + 1][2 * fermion + 1] = -fD1 / (fD2 - fD1 * fR);
-    // Source terms
-    S[2 * fermion] = Ki->vw * Ki->gamw *
-                     ((m2prime * thetaprime + m2 * theta2prime) * fQ8o1 -
-                      m2prime * m2 * thetaprime * fQ9o1); // S1
+    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::fermion));
+    Ainverse[2 * fermion][2 * fermion]         = tempA[0][0];
+    Ainverse[2 * fermion][2 * fermion + 1]     = tempA[0][1];
+    Ainverse[2 * fermion + 1][2 * fermion]     = tempA[1][0];
+    Ainverse[2 * fermion + 1][2 * fermion + 1] = tempA[1][1];
 
-    S[2 * fermion + 1] = Ki->vw * Ki->gamw *
-                         ((m2prime * thetaprime + m2 * theta2prime) * fQ8o2 -
-                          m2prime * m2 * thetaprime * fQ9o2); // S2
-    // Calculate Gamma = deltaC - m2'B
-    m2B[2 * fermion][2 * fermion]         = Ki->gamw * Ki->vw * fQ1 * fm2prime;
-    m2B[2 * fermion + 1][2 * fermion]     = Ki->gamw * Ki->vw * fQ2 * fm2prime;
-    m2B[2 * fermion + 1][2 * fermion + 1] = fRbar * fm2prime;
+    // Calculate m2'B for fermion
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    m2B[2 * fermion][2 * fermion]         = tempB[0][0];
+    m2B[2 * fermion + 1][2 * fermion]     = tempB[1][0];
+    m2B[2 * fermion + 1][2 * fermion + 1] = tempB[1][1];
+
+    // Source terms
+    VecDoub tempS(calc_source(
+        sqrt(m2), m2prime, thetaprime, theta2prime, P_type::fermion));
+    S[2 * fermion]     = tempS[0];
+    S[2 * fermion + 1] = tempS[1];
   }
 
   // Bosons
@@ -407,25 +445,19 @@ void TransportEquations::Equations(const double &z,
     m2                 = 0;
     m2prime            = 0;
     BosonMasses[boson] = m2;
-    // Set variables
-    const double bD1      = (*Kfac)(K_type::D1, P_type::boson, sqrt(m2));
-    const double bD2      = (*Kfac)(K_type::D2, P_type::boson, sqrt(m2));
-    const double bR       = -Ki->vw;
-    const double bRbar    = (*Kfac)(K_type::Rbar, P_type::boson, sqrt(m2));
-    const double bQ1      = (*Kfac)(K_type::Q1, P_type::boson, sqrt(m2));
-    const double bQ2      = (*Kfac)(K_type::Q2, P_type::boson, sqrt(m2));
-    const double bm2prime = m2prime;
+
     // Calculate A inverse for bosons
-    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson]     = bR / (bD2 - bD1 * bR);
-    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson + 1] = -1 / (bD2 - bD1 * bR);
-    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson] = bD2 / (bD2 - bD1 * bR);
-    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] =
-        -bD1 / (bD2 - bD1 * bR);
-    // Calculate Gamma = deltaC - m2'B
-    m2B[nF2 + 2 * boson][nF2 + 2 * boson] = Ki->gamw * Ki->vw * bQ1 * bm2prime;
-    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson] =
-        Ki->gamw * Ki->vw * bQ2 * bm2prime;
-    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = bRbar * bm2prime;
+    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::boson));
+    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson]         = tempA[0][0];
+    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson + 1]     = tempA[0][1];
+    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempA[1][0];
+    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempA[1][1];
+
+    // Calculate m2'B
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    m2B[nF2 + 2 * boson][nF2 + 2 * boson]         = tempB[0][0];
+    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempB[1][0];
+    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempB[1][1];
   }
 
   // Gamma = deltaC - m2' B
@@ -451,11 +483,11 @@ void TransportEquations::SolveTransportEquation()
   double step    = (zmax - zmin) / ((double)Npoints - 1.);
 
   VecDoub zList(Npoints);
-  MatDoub STildeList(Npoints, 8);
-  Mat3DDoub MTildeList(Npoints, 8, 8);
+  MatDoub STildeList(Npoints, nFB2);
+  Mat3DDoub MTildeList(Npoints, nFB2, nFB2);
 
-  MatDoub Mtilde, MtildeM1, MtildeP1;
-  VecDoub Stilde, StildeM1, StildeP1;
+  MatDoub Mtilde(nFB2, nFB2), MtildeM1(nFB2, nFB2), MtildeP1(nFB2, nFB2);
+  VecDoub Stilde(nFB2), StildeM1(nFB2), StildeP1(nFB2);
 
   Equations(-1, MtildeM1, StildeM1);
   Equations(1, MtildeP1, StildeP1);
@@ -479,10 +511,10 @@ void TransportEquations::SolveTransportEquation()
 
     // Save the Mtilde and Stilde
     zList[i] = zcur;
-    for (size_t j = 0; j < 8; j++)
+    for (size_t j = 0; j < nFB2; j++)
     {
       STildeList[i][j] = Stilde[j];
-      for (size_t k = 0; k < 8; k++)
+      for (size_t k = 0; k < nFB2; k++)
         MTildeList[i][j][k] = Mtilde[j][k];
     }
   }
@@ -493,7 +525,7 @@ void TransportEquations::SolveTransportEquation()
   double conv  = 1e-10;
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
-  VecInt indexv(2 * (nFermions + nBosons));
+  VecInt indexv(nFB2);
   indexv[0] = 0;
   indexv[1] = 4;
   indexv[2] = 1;
@@ -503,7 +535,7 @@ void TransportEquations::SolveTransportEquation()
   indexv[6] = 3;
   indexv[7] = 7;
   int NB    = 4;
-  MatDoub y(2 * (nFermions + nBosons), zList.size(), (double)0.);
+  MatDoub y(nFB2, zList.size(), 0.);
   Solvde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
   // Store the solution

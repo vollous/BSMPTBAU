@@ -102,6 +102,12 @@ public:
   int nBosons = 1;
 
   /**
+   * @brief Number of equations
+   *
+   */
+  size_t nFB2;
+
+  /**
    * @brief Number of steps in space
    *
    */
@@ -270,16 +276,6 @@ public:
   std::vector<double> Vev(const double &z, const int &diff = 0);
 
   /**
-   * @brief Calculate the collision matrix \f$ \deltaC^{1/2} \f$
-   *
-   * @param z distance to the bubble wall.
-   * @return std::vector<std::vector<double>> Collision matrix
-   */
-  MatDoub CalculateCollisionMatrix(const double &mW,
-                                   VecDoub &FermionMasses,
-                                   VecDoub &BosonMasses);
-
-  /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its
    * derivatives
    *
@@ -308,6 +304,50 @@ public:
    * @return double W boson mass
    */
   double GetWMass(const std::vector<double> &vev, const double &T) const;
+
+  /**
+   * @brief Calculate the collision matrix \f$ \deltaC^{1/2} \f$
+   *
+   * @param z distance to the bubble wall.
+   * @return MatDoub Collision matrix
+   */
+  MatDoub CalculateCollisionMatrix(const double &mW,
+                                   VecDoub &FermionMasses,
+                                   VecDoub &BosonMasses);
+  /**
+   * @brief Calculate the 2x2 submatrix of Ainv for 1 particle
+   *
+   * @param m mass of the particle
+   * @param type type of particle e.g. fermion/boson
+   * @return MatDoub of Ainv
+   */
+  MatDoub calc_Ainv(const double &m, const P_type &type);
+
+  /**
+   * @brief Calculate the 2x2 submatrix of m2'B for 1 particle
+   *
+   * @param m mass of the particle
+   * @param dm2 derivative of the squared particle mass
+   * @param type type of particle e.g. fermion/boson
+   * @return MatDoub of m2'B
+   */
+  MatDoub calc_m2B(const double &m, const double &dm2, const P_type &type);
+
+  /**
+   * @brief Calculate the souce term S for 1 particle
+   *
+   * @param m mass of the particle
+   * @param dm2 derivative of the squared particle mass
+   * @param dth derivative of theta
+   * @param d2th second derivative theta 
+   * @param type type of particle e.g. fermion/boson
+   * @return VecDoub source term
+   */
+  VecDoub calc_source(const double &m,
+                      const double &dm2,
+                      const double &dth,
+                      const double &d2th,
+                      const P_type &type);
 
   /**
    * @brief Calculate the equations

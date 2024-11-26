@@ -100,6 +100,12 @@ size_t VecDoub::size()
   return nn;
 }
 
+void VecDoub::zero()
+{
+  for (size_t i = 0; i < nn; i++)
+    v[i] = 0.;
+}
+
 VecDoub &VecDoub::operator=(VecDoub &a)
 {
   if (this != &a)
@@ -235,9 +241,10 @@ void MatDoub::resize(const size_t newn, const size_t newm)
   }
 }
 
-void MatDoub::zero(){
-  for(size_t i = 0; i < nrows; i++)
-    for(size_t j = 0; j < ncols; j++)
+void MatDoub::zero()
+{
+  for (size_t i = 0; i < nrows; i++)
+    for (size_t j = 0; j < ncols; j++)
       v[i][j] = 0.;
 }
 
