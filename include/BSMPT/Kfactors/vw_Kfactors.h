@@ -11,6 +11,7 @@ namespace BSMPT
 enum K_type
 {
   N0,
+  K0,
   Rbar,
   K4,
   D0,

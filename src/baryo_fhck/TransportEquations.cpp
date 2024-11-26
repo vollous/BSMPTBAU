@@ -266,9 +266,9 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double D0t = (*Kfac)(K_type::D0, P_type::fermion, mTop);
   const double D0b = (*Kfac)(K_type::D0, P_type::fermion, mBot);
 
-  const double K0t = 1.; // TODO: fix
-  const double K0b = 1.; // TODO: fix
-  const double K0h = 1.; // TODO: fix
+  const double K0t = (*Kfac)(K_type::K0, P_type::fermion, mTop); // TODO: fix
+  const double K0b = (*Kfac)(K_type::K0, P_type::fermion, mBot); // TODO: fix
+  const double K0h = (*Kfac)(K_type::K0, P_type::boson, mHiggs); // TODO: fix
 
   const double GammaTotTop =
       (*Kfac)(K_type::K4, P_type::fermion, mTop) /

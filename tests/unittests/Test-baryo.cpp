@@ -41,7 +41,7 @@ TEST_CASE("Check example_point_C2HDM", "[baryo1]")
   std::shared_ptr<BSMPT::CoexPhases> coex =
       std::make_shared<BSMPT::CoexPhases>(vac.CoexPhasesList[0]);
 
-  TransportEquations transport(modelPointer, coex, 0.5, coex->crit_temp);
+  TransportEquations transport(modelPointer, coex, 0.01, coex->crit_temp);
 
   transport.SolveTransportEquation();
 

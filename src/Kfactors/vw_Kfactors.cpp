@@ -20,8 +20,7 @@ double f0w(const double w, const double s, const int diff)
 double N0int::operator()(const double u)
 {
   const double w = x + (1 - u) / u;
-  return 4 * M_PI * Ki->Tc * Ki->Tc * Ki->Tc * std::sqrt(w * w - x * x) * w *
-         f0w(w, s, 0) / (u * u);
+  return std::sqrt(w * w - x * x) * w * f0w(w, s, 0) / (u * u);
 }
 
 double Rbarint::operator()(const double u)
@@ -215,13 +214,22 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   {
     N0int integrand(Ki, statistic, x);
     const double est = kronrod_61(integrand, 0., 1.);
-    return h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
+    return 4. * M_PI * Ki->Tc * Ki->Tc * Ki->Tc *
+           h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
+  }
+  case K_type::K0:
+  {
+    N0int integrand(Ki, statistic, x);
+    const double est = kronrod_61(integrand, 0., 1.);
+    return 6. / (M_PI * M_PI) *
+           h_adap_gauss_kronrod_15(integrand, 0., 1., est, 1e-4);
   }
   case K_type::Rbar:
   {
     N0int integrand1(Ki, statistic, x);
     const double est1 = kronrod_61(integrand1, 0., 1.);
-    const double res1 = h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
+    const double res1 = 4. * M_PI * Ki->Tc * Ki->Tc * Ki->Tc *
+                        h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
     Rbarint integrand2(Ki, statistic, x);
     const double est2 = kronrod_61(integrand2, 0., 1.);
     const double res2 = h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
