@@ -19,7 +19,7 @@ public:
   VecInt(const VecInt &a);
   size_t size();
   void print();
-  VecInt &operator=(VecInt &a);
+  VecInt &operator=(const VecInt &a);
   int &operator[](const size_t i);
   const int &operator[](const size_t i) const;
   ~VecInt();
@@ -39,7 +39,7 @@ public:
   size_t size();
   void zero();
   void print();
-  VecDoub &operator=(VecDoub &a);
+  VecDoub &operator=(const VecDoub &a);
   double &operator[](const size_t i);
   const double &operator[](const size_t i) const;
   ~VecDoub();
@@ -64,7 +64,7 @@ public:
   size_t cols();
   void resize(const size_t newn, const size_t newm);
   void zero();
-  MatDoub &operator=(MatDoub &a);
+  MatDoub &operator=(const MatDoub &a);
   double *operator[](const size_t i);
   const double *operator[](const size_t i) const;
   ~MatDoub();

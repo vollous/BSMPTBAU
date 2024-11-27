@@ -34,7 +34,7 @@ size_t VecInt::size()
   return nn;
 }
 
-VecInt &VecInt::operator=(VecInt &a)
+VecInt &VecInt::operator=(const VecInt &a)
 {
   if (this != &a)
   {
@@ -106,7 +106,7 @@ void VecDoub::zero()
     v[i] = 0.;
 }
 
-VecDoub &VecDoub::operator=(VecDoub &a)
+VecDoub &VecDoub::operator=(const VecDoub &a)
 {
   if (this != &a)
   {
@@ -157,6 +157,7 @@ MatDoub::MatDoub(const size_t n, const size_t m, const bool is_unit)
     , ncols(m)
     , v(n > 0 ? new double *[n] : nullptr)
 {
+  (void)is_unit;
   size_t i, j, nel = m * n;
   if (v) v[0] = nel > 0 ? new double[nel] : nullptr;
   for (i = 1; i < n; i++)
@@ -223,7 +224,7 @@ size_t MatDoub::cols()
 
 void MatDoub::resize(const size_t newn, const size_t newm)
 {
-  int i, nel;
+  size_t i, nel;
   if (newn != nrows || newm != ncols)
   {
     if (v != nullptr)
@@ -248,7 +249,7 @@ void MatDoub::zero()
       v[i][j] = 0.;
 }
 
-MatDoub &MatDoub::operator=(MatDoub &a)
+MatDoub &MatDoub::operator=(const MatDoub &a)
 {
   size_t i, j, nel;
   if (this != &a)
@@ -326,7 +327,7 @@ Mat3DDoub::Mat3DDoub(const size_t n, const size_t m, const size_t k)
     , kk(k)
     , v(new double **[n])
 {
-  int i, j;
+  size_t i, j;
   v[0]    = new double *[n * m];
   v[0][0] = new double[n * m * k];
   for (j = 1; j < m; j++)
