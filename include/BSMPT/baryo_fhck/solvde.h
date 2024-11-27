@@ -103,19 +103,22 @@ struct Solvde
       std::cout << std::setw(13) << err;
       std::cout << std::setw(12) << fac << std::endl;
 
-      if (err < conv and it > 3) return;
-    }
-    // Save individual iteration of the path
-    std::string str = "output_" + std::to_string(1) + ".tsv";
-    std::ofstream out(str);
-    for (size_t i = 0; i < difeq.z.size(); i++)
-    {
-      out << difeq.z[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
-          << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
-          << y[6][i] << "\t" << y[7][i] << "\n";
-    }
-    out.close();
+      if (err < conv and it > 3)
+      {
+        // Save individual iteration of the path
+        std::string str = "output_" + std::to_string(1) + ".tsv";
+        std::ofstream out(str);
+        for (size_t i = 0; i < difeq.z.size(); i++)
+        {
+          out << difeq.z[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t"
+              << y[2][i] << "\t" << y[3][i] << "\t" << y[4][i] << "\t"
+              << y[5][i] << "\t" << y[6][i] << "\t" << y[7][i] << "\n";
+        }
+        out.close();
 
+        return;
+      }
+    }
     // throw("Too many iterations in solvde");
   }
 

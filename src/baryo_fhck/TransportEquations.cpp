@@ -476,13 +476,31 @@ void TransportEquations::Equations(const double &z,
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
+VecDoub TransportEquations::MakeDistribution(const double xmax,
+                                             const size_t npoints)
+{
+  VecDoub res(2 * npoints);
+  double lim  = pow(10, -xmax);
+  double step = (1 - lim) / (double)npoints;
+  for (size_t i = 0; i < npoints; i++)
+  {
+    double temp = lim + i * step;
+    res[i]      = log10(temp);
+  }
+  for (size_t i = 1; i <= npoints; i++)
+  {
+    double temp          = 1 - i * step;
+    res[npoints + i - 1] = -log10(temp);
+  }
+  return res;
+}
+
 void TransportEquations::SolveTransportEquation()
 {
-  double zmin = -1.5, zmax = 1.5;
-  size_t Npoints = 3000;
-  double step    = (zmax - zmin) / ((double)Npoints - 1.);
+  double zmax    = 5;
+  size_t Npoints = 1000;
+  VecDoub zList(MakeDistribution(zmax, Npoints / 2));
 
-  VecDoub zList(Npoints);
   MatDoub STildeList(Npoints, nFB2);
   Mat3DDoub MTildeList(Npoints, nFB2, nFB2);
 
@@ -494,23 +512,21 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t i = 0; i < Npoints; i++)
   {
-    double zcur = zmin + (double)i * step;
     // Compute Mtilde and Stilde
-    if (zcur < -1)
+    if (zList[i] < -1)
     {
       Mtilde = MtildeM1;
       Stilde = StildeM1;
     }
-    else if (zcur > 1)
+    else if (zList[i] > 1)
     {
       Mtilde = MtildeP1;
       Stilde = StildeP1;
     }
     else
-      Equations(zcur, Mtilde, Stilde);
+      Equations(zList[i], Mtilde, Stilde);
 
     // Save the Mtilde and Stilde
-    zList[i] = zcur;
     for (size_t j = 0; j < nFB2; j++)
     {
       STildeList[i][j] = Stilde[j];

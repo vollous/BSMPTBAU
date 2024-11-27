@@ -339,7 +339,7 @@ public:
    * @param m mass of the particle
    * @param dm2 derivative of the squared particle mass
    * @param dth derivative of theta
-   * @param d2th second derivative theta 
+   * @param d2th second derivative theta
    * @param type type of particle e.g. fermion/boson
    * @return VecDoub source term
    */
@@ -370,6 +370,12 @@ public:
    *
    */
   void RelaxationMethod();
+
+  /**
+   * @brief Distributes the points used in the relaxation method
+   *
+   */
+  VecDoub MakeDistribution(const double xmax, const size_t npoints);
 
   /**
    * @brief Solve the transport equations.
