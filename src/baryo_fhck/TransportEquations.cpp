@@ -595,12 +595,12 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * D0t) / 2. * Solution.value()[0][i]; // tL
     r += (1 + 4 * D0b) / 2. * Solution.value()[4][i]; // bL
     r += 2. * D0b * Solution.value()[2][i];           // tR
-    r *=
-        min(1.,
-            2.4 * Gsph / Tstar *
-                exp(-40 *
-                    modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev)) /
-                    Tstar)); // f_sph(z)
+    r *= min(
+        1.,
+        2.4 * Gsph / Tstar *
+            exp(-40 *
+                modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev), 0.) /
+                Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * Ki->vw * Ki->gamw)); // exp(-45 G_sph |z| / 4 vw gammaw)
     // Save in list to pass to integrator
