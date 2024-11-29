@@ -597,7 +597,7 @@ void TransportEquations::CalculateBAU()
     r += 2. * D0b * Solution.value()[2][i];           // tR
     r *= min(
         1.,
-        2.4 * Gsph / Tstar *
+        2.4 * Tstar / Gsph *
             exp(-40 *
                 modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev), 0.) /
                 Tstar)); // f_sph(z)
