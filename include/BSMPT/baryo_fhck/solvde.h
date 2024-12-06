@@ -84,7 +84,7 @@ public:
       for (int j = 0; j < ne; j++)
       {
         jv = indexv[j];
-        for (k = 1; k < m -1; k++)
+        for (k = 1; k < m - 1; k++)
           y[j][k] -= fac * c[jv][0][k];
       }
       std::cout << std::setw(6) << it;
@@ -106,11 +106,7 @@ public:
    * @param jc1
    * @param k
    */
-  void pinvs(const int ie1,
-             int ie2,
-             const int je1,
-             const int jc1,
-             const int k)
+  void pinvs(const int ie1, int ie2, const int je1, const int jc1, const int k)
   {
     int jpiv, jp, jcoff, irow, ipiv, icoff;
     int je2;
