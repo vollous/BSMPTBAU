@@ -39,14 +39,10 @@ struct Difeq
                const int k1,
                const int k2,
                const int jsf,
-               const int is1,
-               const int isf,
                VecInt &indexv,
                MatDoub &s,
                MatDoub &y)
   {
-    (void)is1;
-    (void)isf;
     const int nP = nFermions + nBosons;
     double temp;
     s.zero(); // Set matrix s = 0

@@ -552,16 +552,26 @@ void TransportEquations::SolveTransportEquation()
   indexv[7] = 7;
   int NB    = 4;
   MatDoub y(nFB2, zList.size(), 0.);
-  Solvde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
+  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
+
+  std::string str = "test.csv";
+  std::ofstream res(str);
+  for (size_t i = 0; i < zList.size(); i++)
+  {
+    res << zList[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
+        << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
+        << y[6][i] << "\t" << y[7][i] << "\n";
+  }
+  res.close();
 
   // Store the solution
   SolutionZ = zList;
   Solution  = y;
 
-  PrintTransportEquation(80, "tL", "mu", 5);
-  PrintTransportEquation(80, "tR", "mu", 5);
-  PrintTransportEquation(80, "bL", "mu", 5);
-  PrintTransportEquation(80, "h", "mu", 5);
+  // PrintTransportEquation(80, "tL", "mu", 5);
+  // PrintTransportEquation(80, "tR", "mu", 5);
+  // PrintTransportEquation(80, "bL", "mu", 5);
+  // PrintTransportEquation(80, "h", "mu", 5);
 
   CalculateBAU();
 }
