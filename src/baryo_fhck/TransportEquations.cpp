@@ -479,27 +479,21 @@ void TransportEquations::Equations(const double &z,
 VecDoub TransportEquations::MakeDistribution(const double xmax,
                                              const size_t npoints)
 {
-  VecDoub res(2 * npoints);
-  double lim  = pow(10, -xmax);
-  double step = (1 - lim) / (double)npoints;
+  VecDoub res(npoints);
+
   for (size_t i = 0; i < npoints; i++)
   {
-    double temp = lim + i * step;
-    res[i]      = log10(temp);
-  }
-  for (size_t i = 1; i <= npoints; i++)
-  {
-    double temp          = 1 - i * step;
-    res[npoints + i - 1] = -log10(temp);
+    double temp = pow(((i - npoints / 2.)) / (npoints / 2.), 3) * M_PI / 4.;
+    res[i]      = xmax * tan(temp);
   }
   return res;
 }
 
 void TransportEquations::SolveTransportEquation()
 {
-  double zmax    = 2;
-  size_t Npoints = 1000;
-  VecDoub zList(MakeDistribution(zmax, Npoints / 2));
+  double zmax    = 3;
+  size_t Npoints = 2000;
+  VecDoub zList(MakeDistribution(zmax, Npoints));
 
   MatDoub STildeList(Npoints, nFB2);
   Mat3DDoub MTildeList(Npoints, nFB2, nFB2);
