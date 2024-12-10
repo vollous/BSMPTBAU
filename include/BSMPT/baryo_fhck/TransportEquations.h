@@ -28,6 +28,28 @@ enum class VevProfileMode
   TunnelPath
 };
 
+/**
+ * @brief Status of the FHCK baryo calculation
+ *
+ */
+enum class FHCKStatus
+{
+  NotSet,
+  Success,
+  SmallIntegrationRegion,
+  UnphysicalBoundary
+};
+
+/**
+ * @brief Convert FHCK baryo into strings
+ *
+ */
+const std::unordered_map<FHCKStatus, std::string> FHCKStatusToString{
+    {FHCKStatus::NotSet, "not_set"},
+    {FHCKStatus::Success, "success"},
+    {FHCKStatus::SmallIntegrationRegion, "small_integration_region"},
+    {FHCKStatus::UnphysicalBoundary, "unphysical_boundary"}};
+
 class TransportEquations
 {
 public:
@@ -36,6 +58,12 @@ public:
    *
    */
   std::optional<double> BAUEta;
+
+  /**
+   * @brief Status of the FHCK baryo calculation
+   *
+   */
+  FHCKStatus Status = FHCKStatus::NotSet;
 
   /**
    * @brief modelPointer for the used parameter point
@@ -119,6 +147,13 @@ public:
    *
    */
   double LwMultiplier = 100.;
+
+  /**
+   * @brief Threshold for which the length of the S vector must be smaller. If
+   * not then the integration region must be inscreased.
+   *
+   */
+  double STildeThreshold = 1e-10;
 
   /**
    * @brief False vacuum
@@ -355,6 +390,20 @@ public:
                       const double &dth,
                       const double &d2th,
                       const P_type &type);
+
+  /**
+   * @brief Check if the boundary have enough decaying modes for the solution to
+   * exist.
+   *
+   * @param MtildeM \f$ M \f$ matrix at the z-negative boundary.
+   * @param StildeM \f$ S \f$ vector at the z-negative boundary.
+   * @param MtildeP \f$ M \f$ matrix at the z-positive boundary.
+   * @param StildeP \f$ S \f$ vector at the z-positive boundary.
+   */
+  void CheckBoundary(const MatDoub &MtildeM,
+                     const VecDoub &StildeM,
+                     const MatDoub &MtildeP,
+                     const VecDoub &StildeP);
 
   /**
    * @brief Calculate the equations

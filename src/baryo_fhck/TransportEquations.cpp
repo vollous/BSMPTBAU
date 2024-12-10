@@ -489,6 +489,65 @@ VecDoub TransportEquations::MakeDistribution(const double xmax,
   return res;
 }
 
+void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
+                                       const VecDoub &StildeM,
+                                       const MatDoub &MtildeP,
+                                       const VecDoub &StildeP)
+{
+  double STildeLength(0);
+  size_t NumberOfNonDecayingModes(0);
+  stringstream ss;
+
+  Eigen::MatrixXcd EigenMtildeM(nFB2, nFB2);
+  Eigen::MatrixXcd EigenMtildeP(nFB2, nFB2);
+
+  for (size_t i = 0; i < nFB2; i++)
+  {
+    STildeLength += pow(StildeM[i], 2);
+    STildeLength += pow(StildeP[i], 2);
+    for (size_t j = 0; j < nFB2; j++)
+    {
+      EigenMtildeM(i, j) = MtildeM[i][j];
+      EigenMtildeP(i, j) = MtildeP[i][j];
+    }
+  }
+
+  // Checking if S vector are small enough
+  STildeLength = sqrt(STildeLength);
+  STildeLength /= 2. * nFB2;
+
+  if (STildeLength > STildeThreshold)
+  {
+    Status = FHCKStatus::SmallIntegrationRegion;
+    ss << "\033[31mThe integration region is too small, increase "
+          "LwMultiplier.\033[0m\n";
+  }
+
+  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverM(EigenMtildeM);
+  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverP(EigenMtildeP);
+
+  // Number of modes that have to be set to zero
+  for (auto ev : EigenSolverM.eigenvalues())
+    if (ev.real() >= 0) NumberOfNonDecayingModes++;
+  for (auto ev : EigenSolverP.eigenvalues())
+    if (ev.real() >= 0) NumberOfNonDecayingModes++;
+
+  ss << "There are " << NumberOfNonDecayingModes
+     << " modes that have to be set to zero at the boundaries.";
+
+  if (NumberOfNonDecayingModes > nFB2)
+  {
+    ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy the "
+          "boundary "
+          "conditions of mu = u = 0.\033[0m\n";
+    Status = FHCKStatus::UnphysicalBoundary;
+  }
+  else
+    ss << " \033[92mSuccess.\033[0m";
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
+}
+
 void TransportEquations::SolveTransportEquation()
 {
   VecDoub zList(MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
@@ -496,25 +555,35 @@ void TransportEquations::SolveTransportEquation()
   MatDoub STildeList(NumberOfSteps, nFB2);
   Mat3DDoub MTildeList(NumberOfSteps, nFB2, nFB2);
 
-  MatDoub Mtilde(nFB2, nFB2), MtildeM1(nFB2, nFB2), MtildeP1(nFB2, nFB2);
-  VecDoub Stilde(nFB2), StildeM1(nFB2), StildeP1(nFB2);
+  MatDoub Mtilde(nFB2, nFB2), MtildeM(nFB2, nFB2), MtildeP(nFB2, nFB2);
+  VecDoub Stilde(nFB2), StildeM(nFB2), StildeP(nFB2);
 
-  Equations(-1, MtildeM1, StildeM1);
-  Equations(1, MtildeP1, StildeP1);
+  Equations(-1, MtildeM, StildeM);
+  Equations(1, MtildeP, StildeP);
+
+  CheckBoundary(MtildeM, StildeM, MtildeP, StildeP);
+  if (Status != FHCKStatus::NotSet)
+  {
+    Logger::Write(
+        LoggingLevel::FHCK,
+        "\033[31mTransport equation unable to be computed. Status code : " +
+            FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
+    return;
+  }
 
   for (size_t i = 1; i < NumberOfSteps; i++)
   {
     // Compute Mtilde and Stilde
     double zc = (zList[i] + zList[i - 1]) / 2.;
-    if (zc < -1)
+    if (zc < -1) // TODO: Fix this, too specific.
     {
-      Mtilde = MtildeM1;
-      Stilde = StildeM1;
+      Mtilde = MtildeM;
+      Stilde = StildeM;
     }
     else if (zc > 1)
     {
-      Mtilde = MtildeP1;
-      Stilde = StildeP1;
+      Mtilde = MtildeP;
+      Stilde = StildeP;
     }
     else
       Equations(zc, Mtilde, Stilde);
