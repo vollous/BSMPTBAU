@@ -491,12 +491,10 @@ VecDoub TransportEquations::MakeDistribution(const double xmax,
 
 void TransportEquations::SolveTransportEquation()
 {
-  double zmax    = 3;
-  size_t Npoints = 2000;
-  VecDoub zList(MakeDistribution(zmax, Npoints));
+  VecDoub zList(MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
 
-  MatDoub STildeList(Npoints, nFB2);
-  Mat3DDoub MTildeList(Npoints, nFB2, nFB2);
+  MatDoub STildeList(NumberOfSteps, nFB2);
+  Mat3DDoub MTildeList(NumberOfSteps, nFB2, nFB2);
 
   MatDoub Mtilde(nFB2, nFB2), MtildeM1(nFB2, nFB2), MtildeP1(nFB2, nFB2);
   VecDoub Stilde(nFB2), StildeM1(nFB2), StildeP1(nFB2);
@@ -504,7 +502,7 @@ void TransportEquations::SolveTransportEquation()
   Equations(-1, MtildeM1, StildeM1);
   Equations(1, MtildeP1, StildeP1);
 
-  for (size_t i = 1; i < Npoints; i++)
+  for (size_t i = 1; i < NumberOfSteps; i++)
   {
     // Compute Mtilde and Stilde
     double zc = (zList[i] + zList[i - 1]) / 2.;

@@ -111,7 +111,14 @@ public:
    * @brief Number of steps in space
    *
    */
-  int NumberOfSteps = 101;
+  size_t NumberOfSteps = 2000;
+
+  /**
+   * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
+   * LwMultiplier * Lw \f$
+   *
+   */
+  double LwMultiplier = 100.;
 
   /**
    * @brief False vacuum
