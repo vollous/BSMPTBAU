@@ -39,7 +39,7 @@ var searchData=
   ['kfac_36',['Kfac',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a84ac163fa39e5c55759c99ee7dd1047c',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['kfactor_37',['Kfactor',['../classBSMPT_1_1Kfactor.html',1,'BSMPT']]],
   ['kfactor_5fgrid_2ecpp_38',['Kfactor_grid.cpp',['../Kfactor__grid_8cpp.html',1,'']]],
-  ['kfactors_39',['Kfactors',['../md_Changelog.html#autotoc_md38',1,'']]],
+  ['kfactors_39',['Kfactors',['../md_Changelog.html#autotoc_md40',1,'']]],
   ['kfactors_2ecpp_40',['Kfactors.cpp',['../Kfactors_8cpp.html',1,'']]],
   ['kfactors_2eh_41',['Kfactors.h',['../Kfactors_8h.html',1,'']]],
   ['kfactorsinterpolatedgsl_2ecpp_42',['KfactorsinterpolatedGSL.cpp',['../KfactorsinterpolatedGSL_8cpp.html',1,'']]],

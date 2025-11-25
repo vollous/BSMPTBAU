@@ -32,7 +32,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.0.7</span>
+   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.1.4</span>
    </div>
    <div id="projectbrief">BSMPT - Beyond the Standard Model Phase Transitions : A C++ package for the computation of the EWPT in BSM models</div>
   </td>
@@ -98,7 +98,6 @@ $(document).ready(function(){initNavTree('namespaceBSMPT.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
@@ -110,18 +109,14 @@ $(document).ready(function(){initNavTree('namespaceBSMPT.html',''); initResizabl
 <p>This classes calculates the Bounce action of the potential with a set temperature.  
 <a href="namespaceBSMPT.html#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceBSMPT_1_1ModelID" id="r_namespaceBSMPT_1_1ModelID"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT_1_1ModelID.html">ModelID</a></td></tr>
-<tr class="memdesc:namespaceBSMPT_1_1ModelID"><td class="mdescLeft">&#160;</td><td class="mdescRight">operator &lt;&lt; overload for the model parameter <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1BounceActionInt.html">BounceActionInt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1BounceSolution.html">BounceSolution</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classBSMPT_1_1BounceSolution.html" title="BounceSolution class that handles the calculation of the bounce solution as well as the calculation o...">BounceSolution</a> class that handles the calculation of the bounce solution as well as the calculation of the charateristic temperature scales.  <a href="classBSMPT_1_1BounceSolution.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1BPLParameters.html">BPLParameters</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1BSMPTLogger.html">BSMPTLogger</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classBSMPT_1_1BSMPTLogger.html" title="The BSMPTLogger class.">BSMPTLogger</a> class.  <a href="classBSMPT_1_1BSMPTLogger.html#details">More...</a><br /></td></tr>
@@ -135,6 +130,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1D0int.html">D0int</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1D2int.html">D2int</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1DBPLParameters.html">DBPLParameters</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1GravitationalWave.html">GravitationalWave</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,6 +303,17 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a548174fac1d1e5e7bf7f17893d37e80d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible results for the GW and bounce_sol class. <br /></td></tr>
 <tr class="separator:a548174fac1d1e5e7bf7f17893d37e80d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f2a6b7efc9d6695e40543d323613ee0" id="r_a5f2a6b7efc9d6695e40543d323613ee0"><td class="memItemLeft" align="right" valign="top"><a id="a5f2a6b7efc9d6695e40543d323613ee0" name="a5f2a6b7efc9d6695e40543d323613ee0"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0">TransitionTemperature</a> { <br />
+&#160;&#160;<b>NotSet</b>
+, <b>ApproxNucleation</b>
+, <b>Nucleation</b>
+, <b>Percolation</b>
+, <br />
+&#160;&#160;<b>Completion</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:a5f2a6b7efc9d6695e40543d323613ee0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible transitions temperatures. <br /></td></tr>
+<tr class="separator:a5f2a6b7efc9d6695e40543d323613ee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbd5a73c8a0693dd74b9a29eb4c18804" id="r_afbd5a73c8a0693dd74b9a29eb4c18804"><td class="memItemLeft" align="right" valign="top"><a id="afbd5a73c8a0693dd74b9a29eb4c18804" name="afbd5a73c8a0693dd74b9a29eb4c18804"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>LoggingLevel</b> { <br />
 &#160;&#160;<b>None</b>
 , <b>Default</b>
@@ -351,21 +359,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a32961c0d441ecf5a0efc0b9d90d011c3" id="r_a32961c0d441ecf5a0efc0b9d90d011c3"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structBSMPT_1_1resultErrorPair.html">resultErrorPair</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a32961c0d441ecf5a0efc0b9d90d011c3">Nintegrate_SNR</a> (<a class="el" href="classBSMPT_1_1GravitationalWave.html">GravitationalWave</a> &amp;obj, const double fmin, const double fmax)</td></tr>
 <tr class="memdesc:a32961c0d441ecf5a0efc0b9d90d011c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nintegrate_SNR Numerical integration of SNR integral.  <br /></td></tr>
 <tr class="separator:a32961c0d441ecf5a0efc0b9d90d011c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b678276e0d36d575a0178597bc42c76" id="r_a3b678276e0d36d575a0178597bc42c76"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a3b678276e0d36d575a0178597bc42c76">Getkappa_sw</a> (const double &amp;alpha, const double &amp;vwall, const double &amp;Csound)</td></tr>
-<tr class="memdesc:a3b678276e0d36d575a0178597bc42c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get efficiency factor kappa_sw for sound waves.  <br /></td></tr>
-<tr class="separator:a3b678276e0d36d575a0178597bc42c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb98912da0f4260c6b2e4bb01d50e04a" id="r_afb98912da0f4260c6b2e4bb01d50e04a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#afb98912da0f4260c6b2e4bb01d50e04a">GetK_sw</a> (const double &amp;alpha, const double &amp;vwall, const double &amp;Csound)</td></tr>
-<tr class="memdesc:afb98912da0f4260c6b2e4bb01d50e04a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get K for sound waves.  <br /></td></tr>
-<tr class="separator:afb98912da0f4260c6b2e4bb01d50e04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac44eee436eefaf58947177c7486824bf" id="r_ac44eee436eefaf58947177c7486824bf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ac44eee436eefaf58947177c7486824bf">GetHR</a> (const double &amp;invTimeScale, const double &amp;vwall, const double &amp;Csound)</td></tr>
-<tr class="memdesc:ac44eee436eefaf58947177c7486824bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get HR for sound waves.  <br /></td></tr>
-<tr class="separator:ac44eee436eefaf58947177c7486824bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe2fb7fb63b7fc37b93b8c5ee63b4bfc" id="r_abe2fb7fb63b7fc37b93b8c5ee63b4bfc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#abe2fb7fb63b7fc37b93b8c5ee63b4bfc">GetK_turb</a> (const double &amp;alpha, const double &amp;kappa)</td></tr>
-<tr class="memdesc:abe2fb7fb63b7fc37b93b8c5ee63b4bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get K for turbulence.  <br /></td></tr>
-<tr class="separator:abe2fb7fb63b7fc37b93b8c5ee63b4bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac876dec7723b41917122dc0257ed6218" id="r_ac876dec7723b41917122dc0257ed6218"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ac876dec7723b41917122dc0257ed6218">IsFluidTurnoverApproxOne</a> (const double &amp;HR, const double &amp;K)</td></tr>
-<tr class="memdesc:ac876dec7723b41917122dc0257ed6218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine fluid turnover time regime.  <br /></td></tr>
-<tr class="separator:ac876dec7723b41917122dc0257ed6218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a262e8a2fd662acd243c9af74c2d839e9" id="r_a262e8a2fd662acd243c9af74c2d839e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a262e8a2fd662acd243c9af74c2d839e9">GetK_sw</a> (const double &amp;alpha, const double &amp;kappa_sw)</td></tr>
+<tr class="memdesc:a262e8a2fd662acd243c9af74c2d839e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kinetic energy fraction \( K \).  <br /></td></tr>
+<tr class="separator:a262e8a2fd662acd243c9af74c2d839e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a604031b3fc8b722e4a77afa4cd84ad43" id="r_a604031b3fc8b722e4a77afa4cd84ad43"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a604031b3fc8b722e4a77afa4cd84ad43">GetHstar0</a> (const double &amp;temp, const double &amp;gstar)</td></tr>
+<tr class="memdesc:a604031b3fc8b722e4a77afa4cd84ad43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the Hubble rate at transition time refshifted to today.  <br /></td></tr>
+<tr class="separator:a604031b3fc8b722e4a77afa4cd84ad43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4aaa2e7c075b89bbcf138eeece28cc9" id="r_ae4aaa2e7c075b89bbcf138eeece28cc9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ae4aaa2e7c075b89bbcf138eeece28cc9">GetKtilde</a> (const double &amp;alpha)</td></tr>
+<tr class="memdesc:ae4aaa2e7c075b89bbcf138eeece28cc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get \( \tilde{K} = \frac{\alpha}{1+\alpha}\).  <br /></td></tr>
+<tr class="separator:ae4aaa2e7c075b89bbcf138eeece28cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad22040f6dedf5d23b0246634722cbf09" id="r_ad22040f6dedf5d23b0246634722cbf09"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ad22040f6dedf5d23b0246634722cbf09">GetHtauSH</a> (const double HR, const double K_sw)</td></tr>
+<tr class="memdesc:ad22040f6dedf5d23b0246634722cbf09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate \( H_*\tau_\text{sh} = H_* R_* / \sqrt{\bar v_f^2} \).  <br /></td></tr>
+<tr class="separator:ad22040f6dedf5d23b0246634722cbf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5966b9a6da86a03a52b79e58928c9b5" id="r_ac5966b9a6da86a03a52b79e58928c9b5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ac5966b9a6da86a03a52b79e58928c9b5">GetHtauSW</a> (const double HR, const double K_sw)</td></tr>
+<tr class="memdesc:ac5966b9a6da86a03a52b79e58928c9b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate \( H_*\tau_\text{sw} = \min(1,H_*\tau_\text{sh}) \).  <br /></td></tr>
+<tr class="separator:ac5966b9a6da86a03a52b79e58928c9b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10b493e35a63b9e48a1aff704d2af38" id="r_aa10b493e35a63b9e48a1aff704d2af38"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#aa10b493e35a63b9e48a1aff704d2af38">GetYpsilon</a> (const double HR, const double K_sw)</td></tr>
+<tr class="memdesc:aa10b493e35a63b9e48a1aff704d2af38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate \(
+\Upsilon=1-\frac{1}{\sqrt{1+2H_{\ast}\tau_{\mathrm{sw}}}} \) from <a href="https://arxiv.org/abs/1903.09642">https://arxiv.org/abs/1903.09642</a>.  <br /></td></tr>
+<tr class="separator:aa10b493e35a63b9e48a1aff704d2af38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a959d3fff405ba87317bc0bd68cd13fe0" id="r_a959d3fff405ba87317bc0bd68cd13fe0"><td class="memItemLeft" align="right" valign="top"><a id="a959d3fff405ba87317bc0bd68cd13fe0" name="a959d3fff405ba87317bc0bd68cd13fe0"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>f0w</b> (const double w, const double s, const int diff)</td></tr>
 <tr class="separator:a959d3fff405ba87317bc0bd68cd13fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,10 +412,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>f0w</b> (const doub
 <tr class="separator:a7ef27f7780c7d96480ff01a91dc88a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5dd574f107251ff284bc79473d4c5c5" id="r_ac5dd574f107251ff284bc79473d4c5c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#ac5dd574f107251ff284bc79473d4c5c5">almost_the_same</a> (const std::vector&lt; double &gt; &amp;a, const std::vector&lt; double &gt; &amp;b, const bool &amp;allow_for_sign_flip=false, const double &amp;rel_precision=0.01, const double &amp;num_zero=1e-10)</td></tr>
 <tr class="separator:ac5dd574f107251ff284bc79473d4c5c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6f80a02afc15ea2ed023b14038f9d36" id="r_af6f80a02afc15ea2ed023b14038f9d36"><td class="memItemLeft" align="right" valign="top"><a id="af6f80a02afc15ea2ed023b14038f9d36" name="af6f80a02afc15ea2ed023b14038f9d36"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ShowInputError</b> ()</td></tr>
-<tr class="memdesc:af6f80a02afc15ea2ed023b14038f9d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">ShowInputError shows all the available models in the terminal. <br /></td></tr>
-<tr class="separator:af6f80a02afc15ea2ed023b14038f9d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f7a6e0bc281f72955810d5e61ef2a26" id="r_a3f7a6e0bc281f72955810d5e61ef2a26"><td class="memItemLeft" align="right" valign="top"><a id="a3f7a6e0bc281f72955810d5e61ef2a26" name="a3f7a6e0bc281f72955810d5e61ef2a26"></a>
 const std::complex&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>II</b> (0, 1)</td></tr>
 <tr class="memdesc:a3f7a6e0bc281f72955810d5e61ef2a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">imaginary number i <br /></td></tr>
@@ -420,12 +428,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetLogger</b> (const 
 <tr class="memitem:a4dec9f9f006e9b948047594578298009" id="r_a4dec9f9f006e9b948047594578298009"><td class="memItemLeft" align="right" valign="top"><a id="a4dec9f9f006e9b948047594578298009" name="a4dec9f9f006e9b948047594578298009"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetLogger</b> (const std::vector&lt; std::string &gt; &amp;args)</td></tr>
 <tr class="separator:a4dec9f9f006e9b948047594578298009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c20b7a437ed80792bc18e44668605c2" id="r_a6c20b7a437ed80792bc18e44668605c2"><td class="memItemLeft" align="right" valign="top"><a id="a6c20b7a437ed80792bc18e44668605c2" name="a6c20b7a437ed80792bc18e44668605c2"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const ModelID::ModelIDs &amp;Model)</td></tr>
+<tr class="memdesc:a6c20b7a437ed80792bc18e44668605c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">operator &lt;&lt; overload for the model parameter <br /></td></tr>
+<tr class="separator:a6c20b7a437ed80792bc18e44668605c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d3fdbfc7b4f3e3d170f2fd5b094fdc3" id="r_a5d3fdbfc7b4f3e3d170f2fd5b094fdc3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a5d3fdbfc7b4f3e3d170f2fd5b094fdc3">NablaNumerical</a> (const std::vector&lt; double &gt; &amp;phi, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;f, const double &amp;eps)</td></tr>
 <tr class="memdesc:a5d3fdbfc7b4f3e3d170f2fd5b094fdc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical method to calculate the gradient of a function f using finite differences method.  <br /></td></tr>
 <tr class="separator:a5d3fdbfc7b4f3e3d170f2fd5b094fdc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fa2d0b5e797e27d8021e222c2522c85" id="r_a2fa2d0b5e797e27d8021e222c2522c85"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a2fa2d0b5e797e27d8021e222c2522c85">HessianNumerical</a> (const std::vector&lt; double &gt; &amp;phi, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V, double eps)</td></tr>
 <tr class="memdesc:a2fa2d0b5e797e27d8021e222c2522c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical method to calculate the potential's (or other functions's) hessian matrix using finite differences method.  <br /></td></tr>
 <tr class="separator:a2fa2d0b5e797e27d8021e222c2522c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6f80a02afc15ea2ed023b14038f9d36" id="r_af6f80a02afc15ea2ed023b14038f9d36"><td class="memItemLeft" align="right" valign="top"><a id="af6f80a02afc15ea2ed023b14038f9d36" name="af6f80a02afc15ea2ed023b14038f9d36"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ShowInputError</b> ()</td></tr>
+<tr class="memdesc:af6f80a02afc15ea2ed023b14038f9d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">ShowInputError shows all the available models in the terminal. <br /></td></tr>
+<tr class="separator:af6f80a02afc15ea2ed023b14038f9d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19358c50de5990badb12ca083ddff645" id="r_a19358c50de5990badb12ca083ddff645"><td class="memTemplParams" colspan="2">template&lt;typename key , typename value &gt; </td></tr>
+<tr class="memitem:a19358c50de5990badb12ca083ddff645"><td class="memTemplItemLeft" align="right" valign="top">std::unordered_map&lt; value, key &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a19358c50de5990badb12ca083ddff645">InvertMap</a> (const std::unordered_map&lt; key, value &gt; &amp;originalMap, const std::string &amp;errorOnDuplicateValue)</td></tr>
+<tr class="memdesc:a19358c50de5990badb12ca083ddff645"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts a map.  <br /></td></tr>
+<tr class="separator:a19358c50de5990badb12ca083ddff645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68d199b1c37b6807ce1cfb6c57c0721b" id="r_a68d199b1c37b6807ce1cfb6c57c0721b"><td class="memItemLeft" align="right" valign="top"><a id="a68d199b1c37b6807ce1cfb6c57c0721b" name="a68d199b1c37b6807ce1cfb6c57c0721b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>StringStartsWith</b> (const std::string &amp;str, const std::string &amp;prefix)</td></tr>
 <tr class="memdesc:a68d199b1c37b6807ce1cfb6c57c0721b"><td class="mdescLeft">&#160;</td><td class="mdescRight">StringStartsWith checks if str starts with prefix. <br /></td></tr>
@@ -506,12 +526,6 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:adcb7a745c3dcbb7dac3319dc94f792f1" id="r_adcb7a745c3dcbb7dac3319dc94f792f1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#adcb7a745c3dcbb7dac3319dc94f792f1">EllipIntSecond</a> (const double &amp;x)</td></tr>
 <tr class="memdesc:adcb7a745c3dcbb7dac3319dc94f792f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incomplete elliptic integral of the second kind of x with a different parameterization and k^2 = -2.  <br /></td></tr>
 <tr class="separator:adcb7a745c3dcbb7dac3319dc94f792f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c20b7a437ed80792bc18e44668605c2" id="r_a6c20b7a437ed80792bc18e44668605c2"><td class="memItemLeft" align="right" valign="top"><a id="a6c20b7a437ed80792bc18e44668605c2" name="a6c20b7a437ed80792bc18e44668605c2"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="namespaceBSMPT_1_1ModelID.html#a5f777ff3c379602f5d554d87edc7dc3a">ModelID::ModelIDs</a> &amp;Model)</td></tr>
-<tr class="separator:a6c20b7a437ed80792bc18e44668605c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81ad5e54211841dd33b4e4edd53b5b9e" id="r_a81ad5e54211841dd33b4e4edd53b5b9e"><td class="memItemLeft" align="right" valign="top"><a id="a81ad5e54211841dd33b4e4edd53b5b9e" name="a81ad5e54211841dd33b4e4edd53b5b9e"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ModelIDToString</b> (const <a class="el" href="namespaceBSMPT_1_1ModelID.html#a5f777ff3c379602f5d554d87edc7dc3a">ModelID::ModelIDs</a> &amp;Model)</td></tr>
-<tr class="separator:a81ad5e54211841dd33b4e4edd53b5b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a015912790aa1621295b47972dab49e6a" id="r_a015912790aa1621295b47972dab49e6a"><td class="memItemLeft" align="right" valign="top"><a id="a015912790aa1621295b47972dab49e6a" name="a015912790aa1621295b47972dab49e6a"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>inner_integrand</b> (double Temp, void *params)</td></tr>
 <tr class="separator:a015912790aa1621295b47972dab49e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -527,6 +541,19 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>snr_integrand</b> (
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a91ad11bce102573e2bf3dc6f38b6742b" id="r_a91ad11bce102573e2bf3dc6f38b6742b"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a91ad11bce102573e2bf3dc6f38b6742b">TGstarLowT</a></td></tr>
+<tr class="memdesc:a91ad11bce102573e2bf3dc6f38b6742b"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of temperatures below T = 214 GeV for the gstar spline construction.  <br /></td></tr>
+<tr class="separator:a91ad11bce102573e2bf3dc6f38b6742b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e13f5048ce976481cdc43c8e354a1f2" id="r_a0e13f5048ce976481cdc43c8e354a1f2"><td class="memItemLeft" align="right" valign="top"><a id="a0e13f5048ce976481cdc43c8e354a1f2" name="a0e13f5048ce976481cdc43c8e354a1f2"></a>
+const std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>TGstarHighT</b></td></tr>
+<tr class="memdesc:a0e13f5048ce976481cdc43c8e354a1f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of temperatures above T = 214 GeV for the gstar spline construction. <br /></td></tr>
+<tr class="separator:a0e13f5048ce976481cdc43c8e354a1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e805f343e6197f75b74a9084886107f" id="r_a2e805f343e6197f75b74a9084886107f"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a2e805f343e6197f75b74a9084886107f">GstarLowT</a></td></tr>
+<tr class="memdesc:a2e805f343e6197f75b74a9084886107f"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of gstar below T = 214 GeV for the gstar spline construction.  <br /></td></tr>
+<tr class="separator:a2e805f343e6197f75b74a9084886107f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed1026b6652750ec98bc980465e6e1c" id="r_a9ed1026b6652750ec98bc980465e6e1c"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a9ed1026b6652750ec98bc980465e6e1c">GstarHighT</a></td></tr>
+<tr class="memdesc:a9ed1026b6652750ec98bc980465e6e1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of gstar above T = 214 GeV for the gstar spline construction.  <br /></td></tr>
+<tr class="separator:a9ed1026b6652750ec98bc980465e6e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a429cace82521dd303e0345dbb2c455a3" id="r_a429cace82521dd303e0345dbb2c455a3"><td class="memItemLeft" align="right" valign="top"><a id="a429cace82521dd303e0345dbb2c455a3" name="a429cace82521dd303e0345dbb2c455a3"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>EmptyValue</b> = NAN</td></tr>
 <tr class="memdesc:a429cace82521dd303e0345dbb2c455a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value to be store in the columns without any values. <br /></td></tr>
@@ -541,21 +568,17 @@ const double&#160;</td><td class="memItemRight" valign="bottom"><b>EmptyValue</b
 <tr class="memdesc:acb500da436ef43b545bef9b67416dc79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusTracingToString to strins.  <br /></td></tr>
 <tr class="separator:acb500da436ef43b545bef9b67416dc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa48f18bd7dfad2abcc403b9fc1856179" id="r_aa48f18bd7dfad2abcc403b9fc1856179"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; <a class="el" href="namespaceBSMPT.html#a572a958ee192b7b00500562c3f1c8b4f">StatusCoexPair</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#aa48f18bd7dfad2abcc403b9fc1856179">StatusCoexPairToString</a></td></tr>
-<tr class="memdesc:aa48f18bd7dfad2abcc403b9fc1856179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusCoexPairToString to strins.  <br /></td></tr>
+<tr class="memdesc:aa48f18bd7dfad2abcc403b9fc1856179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusCoexPairToString to strings.  <br /></td></tr>
 <tr class="separator:aa48f18bd7dfad2abcc403b9fc1856179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bc44fd742c15dec10dc9adcb7f000b8" id="r_a0bc44fd742c15dec10dc9adcb7f000b8"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; <a class="el" href="namespaceBSMPT.html#a6103b25f2b801f1256cf73a2547bc5ac">StatusCrit</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a0bc44fd742c15dec10dc9adcb7f000b8">StatusCritToString</a></td></tr>
-<tr class="memdesc:a0bc44fd742c15dec10dc9adcb7f000b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusCritToString to strins.  <br /></td></tr>
+<tr class="memdesc:a0bc44fd742c15dec10dc9adcb7f000b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusCritToString to strings.  <br /></td></tr>
 <tr class="separator:a0bc44fd742c15dec10dc9adcb7f000b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59ffeaf27d0c6c4e3feee752e3e1bc7e" id="r_a59ffeaf27d0c6c4e3feee752e3e1bc7e"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; <a class="el" href="namespaceBSMPT.html#a7b277da28fbdd0f751d0e06826fe9201">StatusTemperature</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a59ffeaf27d0c6c4e3feee752e3e1bc7e">StatusTemperatureToString</a></td></tr>
-<tr class="memdesc:a59ffeaf27d0c6c4e3feee752e3e1bc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusTemperature to strins.  <br /></td></tr>
+<tr class="memdesc:a59ffeaf27d0c6c4e3feee752e3e1bc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusTemperature to strings.  <br /></td></tr>
 <tr class="separator:a59ffeaf27d0c6c4e3feee752e3e1bc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ed11b3f677e44dfdcb5d0be9d7e048e" id="r_a4ed11b3f677e44dfdcb5d0be9d7e048e"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; <a class="el" href="namespaceBSMPT.html#a548174fac1d1e5e7bf7f17893d37e80d">StatusGW</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a4ed11b3f677e44dfdcb5d0be9d7e048e">StatusGWToString</a></td></tr>
-<tr class="memdesc:a4ed11b3f677e44dfdcb5d0be9d7e048e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusGWToString to strins.  <br /></td></tr>
+<tr class="memdesc:a4ed11b3f677e44dfdcb5d0be9d7e048e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map to convert StatusGWToString to strings.  <br /></td></tr>
 <tr class="separator:a4ed11b3f677e44dfdcb5d0be9d7e048e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada024e6f414467cfebfc6c6b49459056" id="r_ada024e6f414467cfebfc6c6b49459056"><td class="memItemLeft" align="right" valign="top"><a id="ada024e6f414467cfebfc6c6b49459056" name="ada024e6f414467cfebfc6c6b49459056"></a>
-const bool&#160;</td><td class="memItemRight" valign="bottom"><b>C_UseParwani</b> = false</td></tr>
-<tr class="memdesc:ada024e6f414467cfebfc6c6b49459056"><td class="mdescLeft">&#160;</td><td class="mdescRight">C_UseParwani Use the Parwani Method instead of Arnold-Espinosa. <br /></td></tr>
-<tr class="separator:ada024e6f414467cfebfc6c6b49459056"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b3a829fa1c864f44450da9df8771d64" id="r_a1b3a829fa1c864f44450da9df8771d64"><td class="memItemLeft" align="right" valign="top"><a id="a1b3a829fa1c864f44450da9df8771d64" name="a1b3a829fa1c864f44450da9df8771d64"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>C_PT</b> = 0</td></tr>
 <tr class="memdesc:a1b3a829fa1c864f44450da9df8771d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">C_PT Lower threshold to stop the EWPT calculation. <br /></td></tr>
@@ -572,6 +595,10 @@ const double&#160;</td><td class="memItemRight" valign="bottom"><b>C_CWcbGB</b> 
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>C_CWcbHiggs</b> = 1.5</td></tr>
 <tr class="memdesc:a668e05fb73b3d4ccb9bfa1bb8a623b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">C_CWcbHiggs constant used in the CW potential for Higgs bosons. <br /></td></tr>
 <tr class="separator:a668e05fb73b3d4ccb9bfa1bb8a623b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada024e6f414467cfebfc6c6b49459056" id="r_ada024e6f414467cfebfc6c6b49459056"><td class="memItemLeft" align="right" valign="top"><a id="ada024e6f414467cfebfc6c6b49459056" name="ada024e6f414467cfebfc6c6b49459056"></a>
+const bool&#160;</td><td class="memItemRight" valign="bottom"><b>C_UseParwani</b> = false</td></tr>
+<tr class="memdesc:ada024e6f414467cfebfc6c6b49459056"><td class="mdescLeft">&#160;</td><td class="mdescRight">C_UseParwani Use the Parwani Method instead of Arnold-Espinosa. <br /></td></tr>
+<tr class="separator:ada024e6f414467cfebfc6c6b49459056"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa22b6e21d416bf9c0575943396b81556" id="r_aa22b6e21d416bf9c0575943396b81556"><td class="memItemLeft" align="right" valign="top"><a id="aa22b6e21d416bf9c0575943396b81556" name="aa22b6e21d416bf9c0575943396b81556"></a>
 const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> = &quot;\t&quot;</td></tr>
 <tr class="memdesc:aa22b6e21d416bf9c0575943396b81556"><td class="mdescLeft">&#160;</td><td class="mdescRight">seperator used to write into output files <br /></td></tr>
@@ -829,7 +856,7 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 <p>Incomplete elliptic integral of the second kind of x with a different parameterization and k^2 = -2. </p>
 <p>\( \text{EllipIntSecond}(x) = -i E(i \phi, 2) = \int_0^\phi
 \sqrt{1+2\sinh^2{\theta}}\,d\theta \)</p>
-<p><a href="https://en.wikipedia.org/wiki">https://en.wikipedia.org/wiki</a>&lt;/Elliptic_integralIncomplete_elliptic_integral_of_the_second_kind <a href="https://mathworld.wolfram.com/EllipticIntegraloftheSecondKind.html">https://mathworld.wolfram.com/EllipticIntegraloftheSecondKind.html</a></p>
+<p><a href="https://en.wikipedia.org/wiki">https://en.wikipedia.org/wiki</a>&lt;/Elliptic_integral#Incomplete_elliptic_integral_of_the_second_kind <a href="https://mathworld.wolfram.com/EllipticIntegraloftheSecondKind.html">https://mathworld.wolfram.com/EllipticIntegraloftheSecondKind.html</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>real argument </td></tr>
@@ -840,29 +867,23 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 
 </div>
 </div>
-<a id="ac44eee436eefaf58947177c7486824bf" name="ac44eee436eefaf58947177c7486824bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac44eee436eefaf58947177c7486824bf">&#9670;&#160;</a></span>GetHR()</h2>
+<a id="a604031b3fc8b722e4a77afa4cd84ad43" name="a604031b3fc8b722e4a77afa4cd84ad43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a604031b3fc8b722e4a77afa4cd84ad43">&#9670;&#160;</a></span>GetHstar0()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double BSMPT::GetHR </td>
+          <td class="memname">double BSMPT::GetHstar0 </td>
           <td>(</td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>invTimeScale</em>, </td>
+          <td class="paramname"><em>temp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>vwall</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>Csound</em>&#160;</td>
+          <td class="paramname"><em>gstar</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -872,12 +893,48 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
       </table>
 </div><div class="memdoc">
 
-<p>Get HR for sound waves. </p>
+<p>Calculate the Hubble rate at transition time refshifted to today. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">invTimeScale</td><td>beta/H, inverse time scale </td></tr>
-    <tr><td class="paramname">vwall</td><td>bubble wall velocity </td></tr>
-    <tr><td class="paramname">Csound</td><td>speed of sound </td></tr>
+    <tr><td class="paramname">temp</td><td>transition temperature </td></tr>
+    <tr><td class="paramname">gstar</td><td>effective d.o.f. at transition time </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad22040f6dedf5d23b0246634722cbf09" name="ad22040f6dedf5d23b0246634722cbf09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad22040f6dedf5d23b0246634722cbf09">&#9670;&#160;</a></span>GetHtauSH()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::GetHtauSH </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>HR</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>K_sw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate \( H_*\tau_\text{sh} = H_* R_* / \sqrt{\bar v_f^2} \). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HR</td><td></td></tr>
+    <tr><td class="paramname">K_sw</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -885,8 +942,46 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 
 </div>
 </div>
-<a id="afb98912da0f4260c6b2e4bb01d50e04a" name="afb98912da0f4260c6b2e4bb01d50e04a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb98912da0f4260c6b2e4bb01d50e04a">&#9670;&#160;</a></span>GetK_sw()</h2>
+<a id="ac5966b9a6da86a03a52b79e58928c9b5" name="ac5966b9a6da86a03a52b79e58928c9b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5966b9a6da86a03a52b79e58928c9b5">&#9670;&#160;</a></span>GetHtauSW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::GetHtauSW </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>HR</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>K_sw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate \( H_*\tau_\text{sw} = \min(1,H_*\tau_\text{sh}) \). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HR</td><td></td></tr>
+    <tr><td class="paramname">K_sw</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+
+</div>
+</div>
+<a id="a262e8a2fd662acd243c9af74c2d839e9" name="a262e8a2fd662acd243c9af74c2d839e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a262e8a2fd662acd243c9af74c2d839e9">&#9670;&#160;</a></span>GetK_sw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -901,13 +996,7 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>vwall</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>Csound</em>&#160;</td>
+          <td class="paramname"><em>kappa_sw</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -917,12 +1006,11 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
       </table>
 </div><div class="memdoc">
 
-<p>Get K for sound waves. </p>
+<p>Get the kinetic energy fraction \( K \). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">alpha</td><td>strength of the phase transition </td></tr>
-    <tr><td class="paramname">vwall</td><td>bubble wall velocity </td></tr>
-    <tr><td class="paramname">Csound</td><td>speed of sound </td></tr>
+    <tr><td class="paramname">kappa_sw</td><td>efficiency factor </td></tr>
   </table>
   </dd>
 </dl>
@@ -930,82 +1018,26 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 
 </div>
 </div>
-<a id="abe2fb7fb63b7fc37b93b8c5ee63b4bfc" name="abe2fb7fb63b7fc37b93b8c5ee63b4bfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe2fb7fb63b7fc37b93b8c5ee63b4bfc">&#9670;&#160;</a></span>GetK_turb()</h2>
+<a id="ae4aaa2e7c075b89bbcf138eeece28cc9" name="ae4aaa2e7c075b89bbcf138eeece28cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4aaa2e7c075b89bbcf138eeece28cc9">&#9670;&#160;</a></span>GetKtilde()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double BSMPT::GetK_turb </td>
+          <td class="memname">double BSMPT::GetKtilde </td>
           <td>(</td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>alpha</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>alpha</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>kappa</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get K for turbulence. </p>
+<p>Get \( \tilde{K} = \frac{\alpha}{1+\alpha}\). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">alpha</td><td>strength of the phase transition </td></tr>
-    <tr><td class="paramname">kappa</td><td>turbulence efficiency factor </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
-
-</div>
-</div>
-<a id="a3b678276e0d36d575a0178597bc42c76" name="a3b678276e0d36d575a0178597bc42c76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b678276e0d36d575a0178597bc42c76">&#9670;&#160;</a></span>Getkappa_sw()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double BSMPT::Getkappa_sw </td>
-          <td>(</td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>alpha</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>vwall</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>Csound</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get efficiency factor kappa_sw for sound waves. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">alpha</td><td>strength of the phase transition </td></tr>
-    <tr><td class="paramname">vwall</td><td>bubble wall velocity </td></tr>
-    <tr><td class="paramname">Csound</td><td>speed of sound </td></tr>
   </table>
   </dd>
 </dl>
@@ -1030,6 +1062,45 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 
 <p>GetSMConstants returns a set of SM contants as indicated by the sources described for each parameter. </p>
 <dl class="section return"><dt>Returns</dt><dd>The SM Constants used by default in <a class="el" href="namespaceBSMPT.html" title="This classes calculates the Bounce action of the potential with a set temperature.">BSMPT</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa10b493e35a63b9e48a1aff704d2af38" name="aa10b493e35a63b9e48a1aff704d2af38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa10b493e35a63b9e48a1aff704d2af38">&#9670;&#160;</a></span>GetYpsilon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::GetYpsilon </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>HR</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>K_sw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate \(
+\Upsilon=1-\frac{1}{\sqrt{1+2H_{\ast}\tau_{\mathrm{sw}}}} \) from <a href="https://arxiv.org/abs/1903.09642">https://arxiv.org/abs/1903.09642</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HR</td><td></td></tr>
+    <tr><td class="paramname">K_sw</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
 </div>
 </div>
@@ -1112,23 +1183,25 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
 
 </div>
 </div>
-<a id="ac876dec7723b41917122dc0257ed6218" name="ac876dec7723b41917122dc0257ed6218"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac876dec7723b41917122dc0257ed6218">&#9670;&#160;</a></span>IsFluidTurnoverApproxOne()</h2>
+<a id="a19358c50de5990badb12ca083ddff645" name="a19358c50de5990badb12ca083ddff645"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19358c50de5990badb12ca083ddff645">&#9670;&#160;</a></span>InvertMap()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename key , typename value &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool BSMPT::IsFluidTurnoverApproxOne </td>
+          <td class="memname">std::unordered_map&lt; value, key &gt; BSMPT::InvertMap </td>
           <td>(</td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>HR</em>, </td>
+          <td class="paramtype">const std::unordered_map&lt; key, value &gt; &amp;&#160;</td>
+          <td class="paramname"><em>originalMap</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>K</em>&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>errorOnDuplicateValue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1138,15 +1211,20 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> 
       </table>
 </div><div class="memdoc">
 
-<p>Determine fluid turnover time regime. </p>
+<p>Inverts a map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">HR</td><td>mean bubble separation </td></tr>
-    <tr><td class="paramname">K</td><td>fraction of the kinetic energy in the fluid </td></tr>
+    <tr><td class="paramname">originalMap</td><td>Map to be inverted </td></tr>
+    <tr><td class="paramname">errorOnDuplicateValue</td><td>Error message on duplicate value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if H*tauSH approx. 1, false if smaller than 1 </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the new map would have duplicate keys </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1804,6 +1882,72 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a9ed1026b6652750ec98bc980465e6e1c" name="a9ed1026b6652750ec98bc980465e6e1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed1026b6652750ec98bc980465e6e1c">&#9670;&#160;</a></span>GstarHighT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; double &gt; BSMPT::GstarHighT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    62.206582722053376, 62.818439158552,    63.59172964605013,</div>
+<div class="line">    64.37453928407265,  65.00771947954463,  67.60333468656336,</div>
+<div class="line">    70.64748495865959,  75.65755196355316,  78.29428716211838,</div>
+<div class="line">    80.23374557134463,  81.81984661378124,  83.02996532165592,</div>
+<div class="line">    83.4373024994812,   84.25798173219995,  85.08673306675854,</div>
+<div class="line">    85.08673306675854,  85.92363589937597,  85.92363589937597,</div>
+<div class="line">    86.34516915210169,  87.19444981010426,  88.48405910790844,</div>
+<div class="line">    89.3543776292553,   91.12077991416442,  92.46845978663792,</div>
+<div class="line">    94.29642281411095,  95.69107056836124,  97.10634521704075,</div>
+<div class="line">    99.02599229669757,  100.4905905672094,  101.47900388225708,</div>
+<div class="line">    102.97988228935156, 103.99277997720792, 104.50295874635492,</div>
+<div class="line">    105.01564040441929, 105.01564040441929, 105.5308372303379,</div>
+<div class="line">    105.5308372303379,  106.04856156328714, 106.04856156328714,</div>
+<div class="line">    106.04856156328714, 106.56882580297788, 106.56882580297788,</div>
+<div class="line">    106.56882580297788}</div>
+</div><!-- fragment -->
+<p>List of gstar above T = 214 GeV for the gstar spline construction. </p>
+
+</div>
+</div>
+<a id="a2e805f343e6197f75b74a9084886107f" name="a2e805f343e6197f75b74a9084886107f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e805f343e6197f75b74a9084886107f">&#9670;&#160;</a></span>GstarLowT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; double &gt; BSMPT::GstarLowT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    3.3658815697017945, 3.3658815697017945, 3.3658815697017945,</div>
+<div class="line">    3.3658815697017945, 3.3658815697017945, 3.3658815697017945,</div>
+<div class="line">    3.382394267186192,  3.44925913850577,   3.604577854567564,</div>
+<div class="line">    3.822602965197697,  4.27802539351597,   4.764333184219352,</div>
+<div class="line">    5.331952737656886,  6.145013594907718,  6.978839481614777,</div>
+<div class="line">    8.003765717673069,  8.826780724311218,  9.49911872220214,</div>
+<div class="line">    9.926860119530184,  10.172762254077623, 10.373862535520988,</div>
+<div class="line">    10.578938268487402, 10.63083754174351,  10.63083754174351,</div>
+<div class="line">    10.68299142793866,  10.68299142793866,  10.68299142793866,</div>
+<div class="line">    10.68299142793866,  10.73540117617992,  10.73540117617992,</div>
+<div class="line">    10.840993285899073, 11.329158741258215, 12.312023528515777,</div>
+<div class="line">    13.249833303981136, 14.259076274235422, 15.34519352280245,</div>
+<div class="line">    16.273357000034707, 17.257661016595303, 18.66329455082922,</div>
+<div class="line">    19.88925385896985,  22.042043732847453, 25.0329609011362,</div>
+<div class="line">    29.70989855975818,  34.91719271493002,  39.84970215186929,</div>
+<div class="line">    45.70210860743502,  51.52387306128587,  54.37357461507157,</div>
+<div class="line">    57.10075759279219,  60.40653896580118,  62.206582722053376}</div>
+</div><!-- fragment -->
+<p>List of gstar below T = 214 GeV for the gstar spline construction. </p>
+
+</div>
+</div>
 <a id="aa48f18bd7dfad2abcc403b9fc1856179" name="aa48f18bd7dfad2abcc403b9fc1856179"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa48f18bd7dfad2abcc403b9fc1856179">&#9670;&#160;</a></span>StatusCoexPairToString</h2>
 
@@ -1820,7 +1964,7 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">    {StatusCoexPair::Success, <span class="stringliteral">&quot;success&quot;</span>},</div>
 <div class="line">    {StatusCoexPair::NoCoexPairs, <span class="stringliteral">&quot;no_coex_pair&quot;</span>}}</div>
 </div><!-- fragment -->
-<p>Map to convert StatusCoexPairToString to strins. </p>
+<p>Map to convert StatusCoexPairToString to strings. </p>
 
 </div>
 </div>
@@ -1842,7 +1986,7 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">    {StatusCrit::TrueLower, <span class="stringliteral">&quot;true_lower&quot;</span>},</div>
 <div class="line">    {StatusCrit::Failure, <span class="stringliteral">&quot;failure&quot;</span>}}</div>
 </div><!-- fragment -->
-<p>Map to convert StatusCritToString to strins. </p>
+<p>Map to convert StatusCritToString to strings. </p>
 
 </div>
 </div>
@@ -1863,7 +2007,7 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">    {StatusEWSR::Failure, <span class="stringliteral">&quot;failure&quot;</span>},</div>
 <div class="line">    {StatusEWSR::NotBFB, <span class="stringliteral">&quot;non_bfb&quot;</span>},</div>
 <div class="line">    {StatusEWSR::FlatRegion, <span class="stringliteral">&quot;flat_region&quot;</span>},</div>
-<div class="line">    {StatusEWSR::EWSymNonRes, <span class="stringliteral">&quot;ew_syum_non_res&quot;</span>},</div>
+<div class="line">    {StatusEWSR::EWSymNonRes, <span class="stringliteral">&quot;ew_sym_non_res&quot;</span>},</div>
 <div class="line">    {StatusEWSR::EWSymRes, <span class="stringliteral">&quot;ew_sym_res&quot;</span>}}</div>
 </div><!-- fragment -->
 <p>Map to convert StatusEWSRToString to strins. </p>
@@ -1886,7 +2030,7 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">    {StatusGW::Success, <span class="stringliteral">&quot;success&quot;</span>},</div>
 <div class="line">    {StatusGW::Failure, <span class="stringliteral">&quot;failure&quot;</span>}}</div>
 </div><!-- fragment -->
-<p>Map to convert StatusGWToString to strins. </p>
+<p>Map to convert StatusGWToString to strings. </p>
 
 </div>
 </div>
@@ -1927,7 +2071,7 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">                              {StatusTemperature::NotMet, <span class="stringliteral">&quot;not_met&quot;</span>},</div>
 <div class="line">                              {StatusTemperature::NaN, <span class="stringliteral">&quot;nan&quot;</span>}}</div>
 </div><!-- fragment -->
-<p>Map to convert StatusTemperature to strins. </p>
+<p>Map to convert StatusTemperature to strings. </p>
 
 </div>
 </div>
@@ -1951,6 +2095,40 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
 <div class="line">    {StatusTracing::Failure, <span class="stringliteral">&quot;failure&quot;</span>}}</div>
 </div><!-- fragment -->
 <p>Map to convert StatusTracingToString to strins. </p>
+
+</div>
+</div>
+<a id="a91ad11bce102573e2bf3dc6f38b6742b" name="a91ad11bce102573e2bf3dc6f38b6742b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91ad11bce102573e2bf3dc6f38b6742b">&#9670;&#160;</a></span>TGstarLowT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; double &gt; BSMPT::TGstarLowT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    0.0108082473294362, 0.0132544853422679, 0.0164130719537513,</div>
+<div class="line">    0.0209254644188534, 0.0261650469874882, 0.0353608915871512,</div>
+<div class="line">    0.046869041923142,  0.0586047057131341, 0.0691293458424012,</div>
+<div class="line">    0.0792016405019255, 0.0943373221629979, 0.1080824732943627,</div>
+<div class="line">    0.1238303225656814, 0.1460686320364992, 0.1739828052930365,</div>
+<div class="line">    0.2154434690031886, 0.2667843426133424, 0.3434511531723047,</div>
+<div class="line">    0.4378750611447019, 0.5215543573159431, 0.6779905314017075,</div>
+<div class="line">    0.8813485195214554, 1.191103133283008,  1.5634817887726846,</div>
+<div class="line">    2.1336045265014154, 2.9116221936174886, 3.97334355690884,</div>
+<div class="line">    5.422221006501592,  7.399430787258669,  10.1962111033439,</div>
+<div class="line">    13.38388753173759,  19.740522782917267, 27.467464089622723,</div>
+<div class="line">    35.70611636765516,  45.5226827550731,   59.176857481888305,</div>
+<div class="line">    74.71670675868081,  89.86415560660353,  107.03747731285716,</div>
+<div class="line">    117.95869461538555, 129.99422244132464, 144.656366672378,</div>
+<div class="line">    159.41590374559996, 172.30065159280497, 180.87725821807484,</div>
+<div class="line">    189.88078244652633, 201.27853758499404, 205.22784597889367,</div>
+<div class="line">    211.29757595204444, 213.3604526501413,  214.0}</div>
+</div><!-- fragment -->
+<p>List of temperatures below T = 214 GeV for the gstar spline construction. </p>
 
 </div>
 </div>

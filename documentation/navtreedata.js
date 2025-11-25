@@ -34,58 +34,59 @@ var NAVTREE =
         [ "Unit tests", "index.html#autotoc_md6", null ],
         [ "Development", "index.html#autotoc_md7", null ]
       ] ],
-      [ "How to add a new model:", "index.html#autotoc_md9", [
-        [ "Generate the C++ code for a model", "index.html#autotoc_md10", null ]
+      [ "How to include BSMPT in another program", "index.html#autotoc_md9", null ],
+      [ "How to add a new model:", "index.html#autotoc_md11", [
+        [ "Generate the C++ code for a model", "index.html#autotoc_md12", null ]
       ] ],
-      [ "Executables", "index.html#autotoc_md11", [
-        [ "MinimaTracer", "index.html#autotoc_md12", null ],
-        [ "CalcTemps", "index.html#autotoc_md13", null ],
-        [ "CalcGW", "index.html#autotoc_md14", null ],
-        [ "PotPlotter", "index.html#autotoc_md15", null ],
-        [ "Test", "index.html#autotoc_md16", null ],
-        [ "BSMPT", "index.html#autotoc_md17", null ],
-        [ "CalcCT", "index.html#autotoc_md18", null ],
-        [ "NLOVEV", "index.html#autotoc_md19", null ],
-        [ "VEVEVO", "index.html#autotoc_md20", null ],
-        [ "TripleHiggsCouplingNLO", "index.html#autotoc_md21", null ],
-        [ "CalculateEWBG", "index.html#autotoc_md22", null ],
-        [ "PlotEWBG_vw", "index.html#autotoc_md23", null ],
-        [ "PlotEWBG_nL", "index.html#autotoc_md24", null ]
+      [ "Executables", "index.html#autotoc_md13", [
+        [ "MinimaTracer", "index.html#autotoc_md14", null ],
+        [ "CalcTemps", "index.html#autotoc_md15", null ],
+        [ "CalcGW", "index.html#autotoc_md16", null ],
+        [ "PotPlotter", "index.html#autotoc_md17", null ],
+        [ "Test", "index.html#autotoc_md18", null ],
+        [ "BSMPT", "index.html#autotoc_md19", null ],
+        [ "CalcCT", "index.html#autotoc_md20", null ],
+        [ "NLOVEV", "index.html#autotoc_md21", null ],
+        [ "VEVEVO", "index.html#autotoc_md22", null ],
+        [ "TripleHiggsCouplingNLO", "index.html#autotoc_md23", null ],
+        [ "CalculateEWBG", "index.html#autotoc_md24", null ],
+        [ "PlotEWBG_vw", "index.html#autotoc_md25", null ],
+        [ "PlotEWBG_nL", "index.html#autotoc_md26", null ]
       ] ],
-      [ "Changelog", "md_Changelog.html#autotoc_md25", null ],
-      [ "2022/XX: Release of v2.4.0", "md_Changelog.html#autotoc_md26", null ],
-      [ "2022/04: Release of v2.3.3", "md_Changelog.html#autotoc_md27", null ],
-      [ "2021/10/20: Release of v2.3.2", "md_Changelog.html#autotoc_md28", null ],
-      [ "2021/09/23: Release of v2.3.1", "md_Changelog.html#autotoc_md29", null ],
-      [ "2021/08/30: Release of v2.3", "md_Changelog.html#autotoc_md30", null ],
-      [ "2021/05/06: Release of v2.2", "md_Changelog.html#autotoc_md31", null ],
-      [ "2020/01/03: Release of v2.1", "md_Changelog.html#autotoc_md32", null ],
-      [ "2020/07/06: Release of v2.0", "md_Changelog.html#autotoc_md33", [
-        [ "New Physics", "md_Changelog.html#autotoc_md34", [
-          [ "Baryo", "md_Changelog.html#autotoc_md35", null ],
-          [ "WallThickness", "md_Changelog.html#autotoc_md36", null ],
-          [ "ThermalFunctions", "md_Changelog.html#autotoc_md37", null ],
-          [ "Kfactors", "md_Changelog.html#autotoc_md38", null ],
-          [ "Minimizer", "md_Changelog.html#autotoc_md39", null ]
+      [ "Changelog", "md_Changelog.html#autotoc_md27", null ],
+      [ "2022/XX: Release of v2.4.0", "md_Changelog.html#autotoc_md28", null ],
+      [ "2022/04: Release of v2.3.3", "md_Changelog.html#autotoc_md29", null ],
+      [ "2021/10/20: Release of v2.3.2", "md_Changelog.html#autotoc_md30", null ],
+      [ "2021/09/23: Release of v2.3.1", "md_Changelog.html#autotoc_md31", null ],
+      [ "2021/08/30: Release of v2.3", "md_Changelog.html#autotoc_md32", null ],
+      [ "2021/05/06: Release of v2.2", "md_Changelog.html#autotoc_md33", null ],
+      [ "2020/01/03: Release of v2.1", "md_Changelog.html#autotoc_md34", null ],
+      [ "2020/07/06: Release of v2.0", "md_Changelog.html#autotoc_md35", [
+        [ "New Physics", "md_Changelog.html#autotoc_md36", [
+          [ "Baryo", "md_Changelog.html#autotoc_md37", null ],
+          [ "WallThickness", "md_Changelog.html#autotoc_md38", null ],
+          [ "ThermalFunctions", "md_Changelog.html#autotoc_md39", null ],
+          [ "Kfactors", "md_Changelog.html#autotoc_md40", null ],
+          [ "Minimizer", "md_Changelog.html#autotoc_md41", null ]
         ] ],
-        [ "Models", "md_Changelog.html#autotoc_md40", null ],
-        [ "BSMPT as a package", "md_Changelog.html#autotoc_md41", null ],
-        [ "Changes in Test", "md_Changelog.html#autotoc_md42", null ],
-        [ "Changes in the Installation Routine", "md_Changelog.html#autotoc_md43", null ],
-        [ "Differences in how to include a new model", "md_Changelog.html#autotoc_md44", null ]
+        [ "Models", "md_Changelog.html#autotoc_md42", null ],
+        [ "BSMPT as a package", "md_Changelog.html#autotoc_md43", null ],
+        [ "Changes in Test", "md_Changelog.html#autotoc_md44", null ],
+        [ "Changes in the Installation Routine", "md_Changelog.html#autotoc_md45", null ],
+        [ "Differences in how to include a new model", "md_Changelog.html#autotoc_md46", null ]
       ] ],
-      [ "2019/12/11: Release of v1.1.2", "md_Changelog.html#autotoc_md45", null ],
-      [ "2019/10/07: Release of v1.1", "md_Changelog.html#autotoc_md46", null ],
-      [ "2019/09/27", "md_Changelog.html#autotoc_md47", null ],
-      [ "2019/08/05", "md_Changelog.html#autotoc_md48", null ],
-      [ "2018/11/06", "md_Changelog.html#autotoc_md49", null ],
-      [ "2018/09/25", "md_Changelog.html#autotoc_md50", null ],
-      [ "2018/07/11", "md_Changelog.html#autotoc_md51", null ],
-      [ "2018/07/02", "md_Changelog.html#autotoc_md52", null ],
-      [ "2018/06/25", "md_Changelog.html#autotoc_md53", null ],
-      [ "2018/04/23", "md_Changelog.html#autotoc_md54", null ],
-      [ "2018/03/30", "md_Changelog.html#autotoc_md55", null ],
-      [ "2018/03/07: v1.0", "md_Changelog.html#autotoc_md56", null ]
+      [ "2019/12/11: Release of v1.1.2", "md_Changelog.html#autotoc_md47", null ],
+      [ "2019/10/07: Release of v1.1", "md_Changelog.html#autotoc_md48", null ],
+      [ "2019/09/27", "md_Changelog.html#autotoc_md49", null ],
+      [ "2019/08/05", "md_Changelog.html#autotoc_md50", null ],
+      [ "2018/11/06", "md_Changelog.html#autotoc_md51", null ],
+      [ "2018/09/25", "md_Changelog.html#autotoc_md52", null ],
+      [ "2018/07/11", "md_Changelog.html#autotoc_md53", null ],
+      [ "2018/07/02", "md_Changelog.html#autotoc_md54", null ],
+      [ "2018/06/25", "md_Changelog.html#autotoc_md55", null ],
+      [ "2018/04/23", "md_Changelog.html#autotoc_md56", null ],
+      [ "2018/03/30", "md_Changelog.html#autotoc_md57", null ],
+      [ "2018/03/07: v1.0", "md_Changelog.html#autotoc_md58", null ]
     ] ],
     [ "Test List", "test.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -123,14 +124,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BSMPT_8cpp.html",
-"Minimizer_8h.html#af3175c2bdc228d061d1d2f85eb9086f9a4dba472e9d47efc54ad2968cecc1b950",
-"classBSMPT_1_1Baryo_1_1gen__fluid.html#a7fce9bc5464f2efa493159bbc85959e9",
-"classBSMPT_1_1BounceSolution.html#a3f1ded8bb630912de49019df4c673678",
-"classBSMPT_1_1Class__Potential__Origin.html#a519a313f4beca7c3c36dfd265f2441de",
-"classBSMPT_1_1MinimumTracer.html",
-"classBSMPT_1_1parser.html#a756058edbd154eed8ca3c9ebfd74e7f0",
-"md_Changelog.html#autotoc_md39",
-"structBSMPT_1_1ISMConstants.html#a8ac415c1401199721b2741a55e82dc9c"
+"NegativeBosonSpline_8h.html",
+"classBSMPT_1_1Baryo_1_1gen__fluid.html#acb8694da69c9ce74671b0f0c13890c76",
+"classBSMPT_1_1BounceSolution.html#a3e0b5ccc5267c03a1c7b810df9d6d377",
+"classBSMPT_1_1Class__Potential__Origin.html#a37fb5103b26272a63e88219ba06427bb",
+"classBSMPT_1_1Class__Potential__Origin.html#af46b793fb2a42eb2c015dddabb3c1cf3",
+"classBSMPT_1_1Q8o2int2.html",
+"gen__func__fluid_8h.html#a762fa7df4493970be1610c7ecfa60281",
+"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#af6ceeafeaa4b7cbd47fb4455c2fe6c35",
+"transport__equations_8h.html#ac605c862b875984970d57d46e9916251"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

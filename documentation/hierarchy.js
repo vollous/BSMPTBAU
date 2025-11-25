@@ -5,6 +5,7 @@ var hierarchy =
     [ "tk::internal::band_matrix", "classtk_1_1internal_1_1band__matrix.html", null ],
     [ "BSMPT::BounceActionInt", "classBSMPT_1_1BounceActionInt.html", null ],
     [ "BSMPT::BounceSolution", "classBSMPT_1_1BounceSolution.html", null ],
+    [ "BSMPT::BPLParameters", "structBSMPT_1_1BPLParameters.html", null ],
     [ "BSMPT::BSMPTLogger", "classBSMPT_1_1BSMPTLogger.html", null ],
     [ "BSMPT::Baryo::Calc_eta", "classBSMPT_1_1Baryo_1_1Calc__eta.html", null ],
     [ "BSMPT::Baryo::Calc_Gam_M", "classBSMPT_1_1Baryo_1_1Calc__Gam__M.html", null ],
@@ -31,6 +32,7 @@ var hierarchy =
     [ "cvspline", "classcvspline.html", null ],
     [ "BSMPT::D0int", "classBSMPT_1_1D0int.html", null ],
     [ "BSMPT::D2int", "classBSMPT_1_1D2int.html", null ],
+    [ "BSMPT::DBPLParameters", "structBSMPT_1_1DBPLParameters.html", null ],
     [ "Difeq", "structDifeq.html", null ],
     [ "Catch::EventListenerBase", null, [
       [ "MyListener", "structMyListener.html", null ]
