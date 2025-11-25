@@ -23,6 +23,7 @@ on:
       - '**.hpp'
       - '**CMakeLists.txt'
       - 'conanfile.py'
+      - '.github/workflows/codecov.yml'
   workflow_dispatch:
 
 concurrency:
@@ -31,11 +32,11 @@ concurrency:
   
 jobs:  
   coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip-ci')"
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
           persist-credentials: false
     - name: Get number of CPU cores
@@ -44,20 +45,23 @@ jobs:
     - name : installPackages
       run : sudo apt-get update && sudo apt-get install --no-install-recommends --yes lcov
    
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
         architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
     - name: Install conan
       run: pip install conan>2
+
     - run: python3 Setup.py --options EnableCoverage=True CompileBaryo=True UseVectorization=False --build-missing
 
     - name: Set cmake preset name
       run: python3 .github/GetProfile.py
 
     - run: cmake --preset $GeneratedCMakeProfile
+    
     - name: compile
       run: cmake --build --preset $GeneratedCMakeProfile -j${{ steps.cpu-cores.outputs.count }}
+    
     - name: Generate Coverage
       run: cmake --build --preset $GeneratedCMakeProfile -j${{ steps.cpu-cores.outputs.count }} -t coverage
     - name: Upload coverage

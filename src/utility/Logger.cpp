@@ -155,4 +155,9 @@ void BSMPTLogger::Disable()
   mCurrentSetup.clear();
 }
 
+void BSMPTLogger::RestoreDefaultLevels()
+{
+  mCurrentSetup = mDefaultSetup;
+}
+
 } // namespace BSMPT

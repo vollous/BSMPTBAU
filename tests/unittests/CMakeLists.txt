@@ -20,9 +20,15 @@ target_link_libraries(
           ThermalFunctions
           BounceSolution
           TransitionTracer
-          GW
-          Baryo
-          BaryoFHCK)
+          GW)
+
+if(BSMPTBuildExecutables)
+  target_sources(GenericTests PRIVATE CheckExecutables.cpp)
+  target_compile_definitions(GenericTests
+                             PRIVATE BASE_PATH="${CMAKE_SOURCE_DIR}")
+
+endif()
+
 target_compile_features(GenericTests PUBLIC cxx_std_17)
 
 include(Catch)

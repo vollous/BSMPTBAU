@@ -85,11 +85,12 @@ private:
   void SetLevel(const std::map<LoggingLevel, bool> &level);
   void SetLevel(LoggingLevel level, bool enable);
   void Disable();
+  void RestoreDefaultLevels();
 
   std::ostream mOstream;
   std::ofstream mfilestream;
 
-  std::map<LoggingLevel, bool> mCurrentSetup{
+  const std::map<LoggingLevel, bool> mDefaultSetup{
       {LoggingLevel::Default, true},
       {LoggingLevel::EWBGDetailed, false},
       {LoggingLevel::ProgDetailed, false},
@@ -100,6 +101,8 @@ private:
       {LoggingLevel::GWDetailed, false},
       {LoggingLevel::FHCK, false},
       {LoggingLevel::Debug, false}};
+
+  std::map<LoggingLevel, bool> mCurrentSetup = mDefaultSetup;
 };
 
 class Logger
@@ -142,6 +145,8 @@ public:
   }
 
   static void Disable() { Instance().Disable(); }
+
+  static void RestoreDefaultLevels() { Instance().RestoreDefaultLevels(); }
 
 private:
   static BSMPTLogger &Instance()
