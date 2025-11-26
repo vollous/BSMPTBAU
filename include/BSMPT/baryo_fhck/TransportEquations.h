@@ -455,7 +455,7 @@ public:
   void PrintTransportEquation(const int &size,
                               const std::string &Particle,
                               const std::string &MuOrU,
-                              const double &multiplier = 3);
+                              const double &multiplier = 1);
 };
 } // namespace FHCK
 } // namespace Baryo

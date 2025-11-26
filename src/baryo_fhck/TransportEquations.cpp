@@ -551,6 +551,8 @@ void TransportEquations::SolveTransportEquation()
 {
   VecDoub zList(MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
 
+  Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw.value()));
+
   MatDoub STildeList(NumberOfSteps, nFB2);
   Mat3DDoub MTildeList(NumberOfSteps, nFB2, nFB2);
 
@@ -630,10 +632,10 @@ void TransportEquations::SolveTransportEquation()
   SolutionZ = zList;
   Solution  = y;
 
-  // PrintTransportEquation(80, "tL", "mu", 5);
-  // PrintTransportEquation(80, "tR", "mu", 5);
-  // PrintTransportEquation(80, "bL", "mu", 5);
-  // PrintTransportEquation(80, "h", "mu", 5);
+  PrintTransportEquation(120, "tL", "mu", 100);
+  PrintTransportEquation(120, "tR", "mu", 100);
+  PrintTransportEquation(120, "bL", "mu", 100);
+  PrintTransportEquation(120, "h", "mu", 100);
 
   CalculateBAU();
 }
