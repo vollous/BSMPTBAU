@@ -5,6 +5,9 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck")
 set(header
+    ${header_path}/difeq.h
+    ${header_path}/difeq_tunneling_path.h
+    ${header_path}/difeq_transport_equations.h
     ${header_path}/TransportEquations.h
     ${header_path}/BubbleWallProfile.h)
 
