@@ -57,12 +57,11 @@ TransportEquations::TransportEquations(
 TransportEquations::TransportEquations(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
     const std::shared_ptr<BounceSolution> &Bounce_in,
-    const int &which_transition_temp,
     const VevProfileMode &Mode_in)
 {
   modelPointer = pointer_in;
   Bounce       = Bounce_in;
-  Tstar        = Bounce->CalcTransitionTemp(which_transition_temp);
+  Tstar        = Bounce->GetTransitionTemp();
   vwall        = Bounce->vwall;
   VevProfile   = Mode_in;
   Initialize();

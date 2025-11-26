@@ -271,7 +271,6 @@ public:
   TransportEquations(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
       const std::shared_ptr<BounceSolution> &Bounce_in,
-      const int &which_transition_temp,
       const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
 
   /**
