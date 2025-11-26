@@ -20,7 +20,9 @@ target_link_libraries(
           ThermalFunctions
           BounceSolution
           TransitionTracer
-          GW)
+          GW
+          BaryoFHCK
+          )
 
 if(BSMPTBuildExecutables)
   target_sources(GenericTests PRIVATE CheckExecutables.cpp)

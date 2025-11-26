@@ -12,8 +12,10 @@ set(header
     ${header_path}/const_velocity_spline.h
     ${header_path}/NumericalDerivatives.h
     ${header_path}/ModelIDs.h
-    ${header_path}/settings.h)
-set(src utility.cpp Logger.cpp parser.cpp const_velocity_spline.cpp
+    ${header_path}/settings.h
+    ${header_path}/data_structures.h)
+
+set(src utility.cpp Logger.cpp parser.cpp const_velocity_spline.cpp data_structures.cpp
         NumericalDerivatives.cpp ModelIDs.cpp)
 add_library(Utility ${header} ${src})
 target_include_directories(Utility PUBLIC ${BSMPT_SOURCE_DIR}/include
