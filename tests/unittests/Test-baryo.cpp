@@ -13,7 +13,7 @@ using Approx = Catch::Approx;
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/utility/utility.h>
 
-TEST_CASE("Check example_point_C2HDM", "[baryo1]")
+TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
@@ -52,7 +52,8 @@ TEST_CASE("Check example_point_C2HDM", "[baryo1]")
   REQUIRE(1 == 1);
 }
 
-TEST_CASE("Domain Wall lambda^4", "[baryo111]")
+
+TEST_CASE("Domain Wall lambda^4", "[baryoFHCK]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
