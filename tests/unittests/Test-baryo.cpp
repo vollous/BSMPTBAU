@@ -51,3 +51,65 @@ TEST_CASE("Check example_point_C2HDM", "[baryo1]")
 
   REQUIRE(1 == 1);
 }
+
+TEST_CASE("Domain Wall lambda^4", "[baryo111]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+
+  SetLogger({"--logginglevel::complete=true"});
+
+  size_t dim                      = 1;
+  double eps                      = 0.01;
+  size_t NumberOfSteps            = 10000;
+  std::vector<double> FalseVacuum = {-1};
+  std::vector<double> TrueVacuum  = {1};
+  double itmax                    = 100;
+  double conv                     = 1e-10;
+  double slowc                    = 1;
+  int NB                          = dim;
+  VecDoub zList(NumberOfSteps);
+  VecDoub scalv(zList.size(), 1);
+  VecInt indexv(2 * dim);
+  for (size_t i = 0; i < 2 * dim; i++)
+    indexv[i] = i;
+
+  double m   = 0.;
+  double lam = 1;
+
+  std::function<std::vector<double>(std::vector<double>)> dV =
+      [=](auto const &arg)
+  {
+    return std::vector<double>(
+        {-((m - 4 * lam * arg[0]) * (-1 + pow(arg[0], 2)))});
+  };
+  std::function<std::vector<std::vector<double>>(std::vector<double>)> Hessian =
+      [=](auto const &arg)
+  {
+    return std::vector<std::vector<double>>(
+        {{-2 * m * arg[0] + 10 * lam * pow(arg[0], 2) +
+          2 * lam * (-2 + pow(arg[0], 2))}});
+  };
+
+  // Initial solution
+  MatDoub y(dim * 2, zList.size(), 0.);
+  y.zero();
+  for (size_t i = 0; i < NumberOfSteps; i++)
+  {
+    double temp =
+        pow(((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.), 3) *
+        M_PI / 4.;
+    zList[i] = 10 * tan(temp);
+
+    y[0][i] = 0;
+    y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + cos(sqrt(2) * zList[i]) / 10.);
+  }
+
+  Difeq_DomainWall difeq_domainwall(dim, zList, dV, Hessian);
+  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq_domainwall);
+
+  exit(0);
+
+  REQUIRE(1 == 1);
+}
+

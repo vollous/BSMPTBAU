@@ -1,6 +1,7 @@
 #pragma once
 
-#include <BSMPT/baryo_fhck/difeq_tunneling_path.h>
+#include <BSMPT/baryo_fhck/difeq_bubble_profile.h>
+#include <BSMPT/baryo_fhck/difeq_domain_wall.h>
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/models/SMparam.h>
