@@ -33,7 +33,11 @@ var hierarchy =
     [ "BSMPT::D0int", "classBSMPT_1_1D0int.html", null ],
     [ "BSMPT::D2int", "classBSMPT_1_1D2int.html", null ],
     [ "BSMPT::DBPLParameters", "structBSMPT_1_1DBPLParameters.html", null ],
-    [ "Difeq", "structDifeq.html", null ],
+    [ "Difeq", "structDifeq.html", [
+      [ "Difeq_BubbleProfile", "structDifeq__BubbleProfile.html", null ],
+      [ "Difeq_DomainWall", "structDifeq__DomainWall.html", null ],
+      [ "Difeq_TransportEquation", "structDifeq__TransportEquation.html", null ]
+    ] ],
     [ "Catch::EventListenerBase", null, [
       [ "MyListener", "structMyListener.html", null ]
     ] ],
