@@ -84,7 +84,7 @@ public:
       for (int j = 0; j < ne; j++)
       {
         jv = indexv[j];
-        for (k = 1; k < m - 1; k++)
+        for (k = 0; k < m; k++)
           y[j][k] -= fac * c[jv][0][k];
       }
       std::cout << std::setw(6) << it;
