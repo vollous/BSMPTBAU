@@ -555,6 +555,7 @@ void TransportEquations::SolveTransportEquation()
 
   MatDoub STildeList(NumberOfSteps, nFB2);
   Mat3DDoub MTildeList(NumberOfSteps, nFB2, nFB2);
+  std::vector<VecMat> ODE;
 
   MatDoub Mtilde(nFB2, nFB2), MtildeM(nFB2, nFB2), MtildeP(nFB2, nFB2);
   VecDoub Stilde(nFB2), StildeM(nFB2), StildeP(nFB2);
@@ -572,10 +573,11 @@ void TransportEquations::SolveTransportEquation()
     return;
   }
 
-  for (size_t i = 1; i < NumberOfSteps; i++)
+  for (size_t i = 0 /* previously 1*/; i < NumberOfSteps; i++)
   {
     // Compute Mtilde and Stilde
-    double zc = (zList[i] + zList[i - 1]) / 2.;
+    // double zc = (zList[i] + zList[i - 1]) / 2.;
+    double zc = -5. + (i + 1.) * 10. / (double)(NumberOfSteps + 1);
     if (zc < -1) // TODO: Fix this, too specific.
     {
       Mtilde = MtildeM;
@@ -588,15 +590,21 @@ void TransportEquations::SolveTransportEquation()
     }
     else
       Equations(zc, Mtilde, Stilde);
+    ODE.push_back(VecMat(Stilde, Mtilde));
 
     // Save the Mtilde and Stilde
-    for (size_t j = 0; j < nFB2; j++)
+    /* for (size_t j = 0; j < nFB2; j++)
     {
       STildeList[i][j] = Stilde[j];
       for (size_t k = 0; k < nFB2; k++)
         MTildeList[i][j][k] = Mtilde[j][k];
-    }
+    } */
   }
+  VecDoub y1(nFB2, 0.);
+  VecDoub y2(nFB2, 0.);
+  std::cout << "solving:\n";
+  Lin1ODEBVPSolver solve(ODE, -5., 5., y1, y2);
+  exit(1);
   // Construct Difeq object (S_j,n matrix)
   Difeq_TransportEquation difeq(
       zList, nFermions, nBosons, MTildeList, STildeList);

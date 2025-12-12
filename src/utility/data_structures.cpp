@@ -373,3 +373,58 @@ Mat3DDoub::~Mat3DDoub()
     delete[] (v);
   }
 }
+
+VecDoub operator*(const double &a, VecDoub &b){
+  VecDoub res(b);
+  for(size_t i = 0; i < b.size(); i++)
+    res[i] *= a;
+  return res;
+}
+
+VecDoub operator*(VecDoub &a, const double &b){
+  return b * a;
+}
+
+VecDoub operator+(VecDoub &a, VecDoub &b){
+  VecDoub res(a);
+  for(size_t i = 0; i < a.size(); i++)
+    res[i] += b[i];
+  return res;
+}
+
+VecDoub operator-(VecDoub &a, VecDoub &b){
+  VecDoub res(a);
+  for(size_t i = 0; i < a.size(); i++)
+    res[i] -= b[i];
+  return res;
+}
+
+VecDoub operator*(MatDoub &a, VecDoub &b){
+  int n = a.rows();
+  int m = a.cols();
+  VecDoub res(n, 0.);
+  for (int i = 0; i < n; i++)
+      for (int j = 0; j < m; j++)
+          res[i] += a[i][j] * b[j];
+  return res;
+}
+
+MatDoub operator+(MatDoub &a, MatDoub &b){
+  MatDoub res(a);
+  for (size_t i = 0; i < a.rows(); i++)
+      for (size_t j = 0; j < a.cols(); j++)
+          res[i][j] += b[i][j];
+  return res;
+}
+
+MatDoub operator*(const double &a, MatDoub &b){
+  MatDoub res(b);
+  for(size_t i = 0; i < b.rows(); i++)
+    for(size_t j = 0; j < b.cols(); j++)
+      res[i][j] *= a;
+  return res;
+}
+
+MatDoub operator*(MatDoub &a, const double &b){
+  return b * a;
+}

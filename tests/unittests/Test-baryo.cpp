@@ -6,6 +6,7 @@ using Approx = Catch::Approx;
 // #include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_fhck/BubbleWallProfile.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
+#include <BSMPT/baryo_fhck/solvde2.h>
 #include <BSMPT/utility/NumericalDerivatives.h>
 // #include <BSMPT/baryo_fhck/solvde.h>
 // #include <BSMPT/gravitational_waves/gw.h>
@@ -29,6 +30,25 @@ TEST_CASE("Check example_point_C2HDM", "[baryo1]")
                                                 /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
+
+  /* std::vector<VecMat> ODE;
+  VecDoub D(2, 0);
+  MatDoub B(2, 2);
+  B[0][0] = 1.;
+  B[0][1] = 2.;
+  B[1][0] = -3.;
+  B[1][1] = 1.;
+  for (size_t i = 0; i < 99; i++)
+    ODE.push_back(VecMat(D, B));
+  VecDoub y1(2);
+  y1[0] = 1.;
+  y1[1] = -1.;
+  VecDoub y2(2);
+  y2[0] = -3.50919;
+  y2[1] = -0.0317347;
+  Lin1ODEBVPSolver solve(ODE, 0., 1., y1, y2); 
+  exit(1); */
+
   SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =

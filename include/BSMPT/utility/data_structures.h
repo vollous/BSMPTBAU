@@ -86,3 +86,26 @@ public:
   size_t dim3();
   ~Mat3DDoub();
 };
+
+template<class T>
+inline void SWAP(T &a, T &b) {
+    T dum = a;
+    a = b;
+    b = dum;
+}
+
+VecDoub operator*(const double &a, VecDoub &b);
+
+VecDoub operator*(VecDoub &a, const double &b);
+
+VecDoub operator+(VecDoub &a, VecDoub &b);
+
+VecDoub operator-(VecDoub &a, VecDoub &b);
+
+VecDoub operator*(MatDoub &a, VecDoub &b);
+
+MatDoub operator+(MatDoub &a, MatDoub &b);
+
+MatDoub operator*(const double &a, MatDoub &b);
+
+MatDoub operator*(MatDoub &a, const double &b);

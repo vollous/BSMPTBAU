@@ -4,6 +4,7 @@
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_fhck/difeq_transport_equations.h>
 #include <BSMPT/baryo_fhck/solvde.h>
+#include <BSMPT/baryo_fhck/solvde2.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
@@ -140,7 +141,7 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 2000;
+  size_t NumberOfSteps = 3000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
@@ -286,12 +287,25 @@ public:
       const std::shared_ptr<GravitationalWave> &GW_in,
       const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
 
+
   /**
    * @brief Create the VEV vectors and initalize **Ki()** and **Kfac()**
    * objects.
    *
    */
   void Initialize();
+
+  /**
+   * @brief Returns the number of dimensions of the transport system
+   *
+   */
+  size_t GetDim();
+  
+  /**
+   * @brief Returns the number of dimensions of the transport system
+   *
+   */
+  size_t GetBoundaryVals(const size_t &boundary);
 
   /**
    * @brief Set the number of intergrations steps and initialize again.
