@@ -141,7 +141,7 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 3000;
+  size_t NumberOfSteps = 6000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$

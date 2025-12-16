@@ -577,7 +577,7 @@ void TransportEquations::SolveTransportEquation()
   {
     // Compute Mtilde and Stilde
     // double zc = (zList[i] + zList[i - 1]) / 2.;
-    double zc = -5. + (i + 1.) * 10. / (double)(NumberOfSteps + 1);
+    double zc = -3.4 + (i + 1.) * 6.8 / (double)(NumberOfSteps + 1);
     if (zc < -1) // TODO: Fix this, too specific.
     {
       Mtilde = MtildeM;
@@ -593,17 +593,32 @@ void TransportEquations::SolveTransportEquation()
     ODE.push_back(VecMat(Stilde, Mtilde));
 
     // Save the Mtilde and Stilde
-    /* for (size_t j = 0; j < nFB2; j++)
+    for (size_t j = 0; j < nFB2; j++)
     {
       STildeList[i][j] = Stilde[j];
       for (size_t k = 0; k < nFB2; k++)
         MTildeList[i][j][k] = Mtilde[j][k];
-    } */
+    }
   }
   VecDoub y1(nFB2, 0.);
   VecDoub y2(nFB2, 0.);
   std::cout << "solving:\n";
-  Lin1ODEBVPSolver solve(ODE, -5., 5., y1, y2);
+  Lin1ODEBVPSolver solve(ODE, -3.4, 3.4, y1, y2);
+  VecDoub rhs(8, 0.), lhs(8, 0.), error(8, 0.);
+  for (size_t i = 1; i < NumberOfSteps - 1; i++)
+  {
+    lhs = VecDoub(8, 0.);
+    rhs = VecDoub(8, 0.);
+    for (size_t j = 0; j < 8; j++){
+      lhs[j] = (ODE[i + 1].vec[j] - ODE[i - 1].vec[j]) / (2. * 6.8 / (double)(NumberOfSteps + 1));
+      for (size_t k = 0; k < 8; k++) {
+        rhs[j] += MTildeList[i][j][k] * ODE[i].vec[k];
+      }
+      rhs[j] += STildeList[i][j];
+      error[j] += std::abs(lhs[j] - rhs[j]);
+    }
+  }
+  std::cout << error[0] << "\n";
   exit(1);
   // Construct Difeq object (S_j,n matrix)
   Difeq_TransportEquation difeq(
@@ -626,15 +641,28 @@ void TransportEquations::SolveTransportEquation()
   MatDoub y(nFB2, zList.size(), 0.);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
-  std::string str = "test.csv";
+  /* std::string str = "test.csv";
   std::ofstream res(str);
-  for (size_t i = 0; i < zList.size(); i++)
+  VecDoub rhs(8, 0.), lhs(8, 0.), error(8, 0.);
+  for (size_t i = 1; i < zList.size() - 1; i++)
   {
+    lhs = VecDoub(8, 0.);
+    rhs = VecDoub(8, 0.);
+    for (size_t j = 0; j < 8; j++) {
+      lhs[j] = (y[j][i] - y[j][i - 1]) / (zList[i] - zList[i - 1]);
+      for (size_t k = 0; k < 8; k++) {
+        rhs[j] += MTildeList[i][j][k] * y[k][i] ;
+      }
+      rhs[j] += STildeList[i][j];
+      error[j] += std::abs(lhs[j] - rhs[j]);
+    }
+
     res << zList[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
         << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
         << y[6][i] << "\t" << y[7][i] << "\n";
   }
-  res.close();
+  std::cout << error[0] << "\n";
+  res.close(); */
 
   // Store the solution
   SolutionZ = zList;
