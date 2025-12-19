@@ -374,10 +374,10 @@ VecDoub TransportEquations::calc_source(const double &m,
   const double fQ9o2 = (*Kfac)(K_type::Q9o2, type, m);
 
   res[0] =
-      Ki->vw * Ki->gamw *
+      -Ki->vw * Ki->gamw *
       ((dm2 * dth + m * m * d2th) * fQ8o1 - dm2 * m * m * dth * fQ9o1); // S1
   res[1] =
-      Ki->vw * Ki->gamw *
+      -Ki->vw * Ki->gamw *
       ((dm2 * dth + m * m * d2th) * fQ8o2 - dm2 * m * m * dth * fQ9o2); // S2
   return res;
 }
