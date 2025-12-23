@@ -116,9 +116,9 @@ Inheritance diagram for Difeq_BubbleProfile:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8a5bd57ef331ec38331a8a5fe8b8a22d" id="r_a8a5bd57ef331ec38331a8a5fe8b8a22d"><td class="memItemLeft" align="right" valign="top"><a id="a8a5bd57ef331ec38331a8a5fe8b8a22d" name="a8a5bd57ef331ec38331a8a5fe8b8a22d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Difeq_BubbleProfile</b> (const size_t &amp;dim_In, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;z_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In)</td></tr>
-<tr class="separator:a8a5bd57ef331ec38331a8a5fe8b8a22d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7f3b80e0f8c40fefa709fc6a8705904" id="r_ad7f3b80e0f8c40fefa709fc6a8705904"><td class="memItemLeft" align="right" valign="top"><a id="ad7f3b80e0f8c40fefa709fc6a8705904" name="ad7f3b80e0f8c40fefa709fc6a8705904"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Difeq_BubbleProfile</b> (const size_t &amp;dim_In, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;z_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const ProfileSolverMode &amp;mode_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In)</td></tr>
+<tr class="separator:ad7f3b80e0f8c40fefa709fc6a8705904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f5b4e62d0517b67452103280630527a" id="r_a4f5b4e62d0517b67452103280630527a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDifeq__BubbleProfile.html#a4f5b4e62d0517b67452103280630527a">smatrix</a> (const int k, const int k1, const int k2, const int jsf, <a class="el" href="classVecInt.html">VecInt</a> &amp;indexv, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;s, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
 <tr class="separator:a4f5b4e62d0517b67452103280630527a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -130,6 +130,15 @@ const size_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>dim</b>
 <tr class="memitem:a5c93c668d7d859dc5dc96128a8ad8a29" id="r_a5c93c668d7d859dc5dc96128a8ad8a29"><td class="memItemLeft" align="right" valign="top"><a id="a5c93c668d7d859dc5dc96128a8ad8a29" name="a5c93c668d7d859dc5dc96128a8ad8a29"></a>
 <a class="el" href="classVecDoub.html">VecDoub</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 <tr class="separator:a5c93c668d7d859dc5dc96128a8ad8a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86661b945f2f4d26a98cd5c68548840b" id="r_a86661b945f2f4d26a98cd5c68548840b"><td class="memItemLeft" align="right" valign="top"><a id="a86661b945f2f4d26a98cd5c68548840b" name="a86661b945f2f4d26a98cd5c68548840b"></a>
+const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>TrueVacuum</b></td></tr>
+<tr class="separator:a86661b945f2f4d26a98cd5c68548840b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a853e7b75a08d29c76afd0abcf5b80e47" id="r_a853e7b75a08d29c76afd0abcf5b80e47"><td class="memItemLeft" align="right" valign="top"><a id="a853e7b75a08d29c76afd0abcf5b80e47" name="a853e7b75a08d29c76afd0abcf5b80e47"></a>
+const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>FalseVacuum</b></td></tr>
+<tr class="separator:a853e7b75a08d29c76afd0abcf5b80e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af95b16492420b6a9ab297a1c11e15d04" id="r_af95b16492420b6a9ab297a1c11e15d04"><td class="memItemLeft" align="right" valign="top"><a id="af95b16492420b6a9ab297a1c11e15d04" name="af95b16492420b6a9ab297a1c11e15d04"></a>
+const ProfileSolverMode &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="separator:af95b16492420b6a9ab297a1c11e15d04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d8ae9b504b59c7b71b6ba4e75b65dcf" id="r_a9d8ae9b504b59c7b71b6ba4e75b65dcf"><td class="memItemLeft" align="right" valign="top"><a id="a9d8ae9b504b59c7b71b6ba4e75b65dcf" name="a9d8ae9b504b59c7b71b6ba4e75b65dcf"></a>
 const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>dV</b></td></tr>
 <tr class="separator:a9d8ae9b504b59c7b71b6ba4e75b65dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
