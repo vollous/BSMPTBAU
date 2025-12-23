@@ -14,8 +14,9 @@ namespace BSMPT
 {
 namespace Baryo
 {
+
 void CalculateBubbleWallProfile(
     std::vector<std::vector<double>> &path,
     const std::function<std::vector<double>(std::vector<double>)> &dV);
-}
+} // namespace Baryo
 } // namespace BSMPT
