@@ -156,13 +156,13 @@ struct Difeq_BubbleProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + indexv[n]]     = -Delta(j, n);                  // 1
-          s[j][1 * dim + indexv[n]]     = -1. / 2. * dz * hessian[j][n]; // 3
-          s[j][2 * dim + indexv[n] + 1] = Delta(j, n);                   // 5
-          s[j][3 * dim + indexv[n] + 1] = -1. / 2. * dz * hessian[j][n]; // 7
+          s[j][0 * dim + n]     = -Delta(j, n);                  // 1
+          s[j][1 * dim + n]     = -1. / 2. * dz * hessian[j][n]; // 3
+          s[j][2 * dim + n + 1] = Delta(j, n);                   // 5
+          s[j][3 * dim + n + 1] = -1. / 2. * dz * hessian[j][n]; // 7
         }
-        s[j][1 * dim + indexv[dim]]     = dz / 2. * y[j][k - 1]; // 11
-        s[j][3 * dim + 1 + indexv[dim]] = dz / 2. * y[j][k];     // 16
+        s[j][2 * dim]     = dz / 2. * y[j][k - 1]; // 11
+        s[j][4 * dim + 1] = dz / 2. * y[j][k];     // 16
         //  Equations for E(k,k-1)
         s[j][jsf] = y[j][k] - y[j][k - 1] - dz * dv[j];
       }
@@ -172,10 +172,10 @@ struct Difeq_BubbleProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[dim + j][0 * dim + indexv[n]]     = -dz / 2. * Delta(j, n); // 2
-          s[dim + j][1 * dim + indexv[n]]     = -Delta(j, n);           // 4
-          s[dim + j][2 * dim + indexv[n] + 1] = -dz / 2. * Delta(j, n); // 6
-          s[dim + j][3 * dim + indexv[n] + 1] = Delta(j, n);            // 8
+          s[dim + j][0 * dim + n]     = -dz / 2. * Delta(j, n); // 2
+          s[dim + j][1 * dim + n]     = -Delta(j, n);           // 4
+          s[dim + j][2 * dim + n + 1] = -dz / 2. * Delta(j, n); // 6
+          s[dim + j][3 * dim + n + 1] = Delta(j, n);            // 8
         }
         s[dim + j][2 * dim]     = 0; // 12
         s[dim + j][4 * dim + 1] = 0; // 17
@@ -186,15 +186,15 @@ struct Difeq_BubbleProfile : Difeq
       // j = 2 * dim -> eta
       for (size_t n = 0; n < dim; n++)
       {
-        s[dim + dim][0 * dim + indexv[n]]     = 0; // 9
-        s[dim + dim][1 * dim + indexv[n]]     = 0; // 10
-        s[dim + dim][2 * dim + indexv[n] + 1] = 0; // 14
-        s[dim + dim][3 * dim + indexv[n] + 1] = 0; // 15
+        s[2 * dim][0 * dim + n]     = 0; // 9
+        s[2 * dim][1 * dim + n]     = 0; // 10
+        s[2 * dim][2 * dim + 1 + n] = 0; // 14
+        s[2 * dim][3 * dim + 1 + n] = 0; // 15
       }
-      s[dim + dim][2 * dim]     = -1; // 13
-      s[dim + dim][4 * dim + 1] = 1;  // 18
-                                      //  Equations for E(k,k-1) for eta
-      s[dim + dim][jsf] = y[dim + dim][k] - y[dim + dim][k - 1];
+      s[2 * dim][2 * dim]     = -1; // 13
+      s[2 * dim][4 * dim + 1] = 1;  // 18
+                                    //  Equations for E(k,k-1) for eta
+      s[2 * dim][jsf] = y[2 * dim][k] - y[2 * dim][k - 1];
     }
   }
 };
