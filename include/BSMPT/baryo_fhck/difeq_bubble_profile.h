@@ -148,8 +148,8 @@ struct Difeq_BubbleProfile : Difeq
       std::vector<double> point; // middle point (phi(k) + phi(k-1)) / 2
       for (size_t j = 0; j < dim; j++)
         point.push_back((y[dim + j][k] + y[dim + j][k - 1]) / 2);
-      std::vector<double> dv                   = dV(point);
-      std::vector<std::vector<double>> hessian = Hessian(point);
+      const std::vector<double> dv                   = dV(point);
+      const std::vector<std::vector<double>> hessian = Hessian(point);
 
       // 0 <= j < dim -> phi'(z)
       for (size_t j = 0; j < dim; j++)
