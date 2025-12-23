@@ -112,9 +112,6 @@ struct Difeq_BubbleProfile : Difeq
         s[dim + dim][2 * dim + 1 + indexv[0]] = 1.0;
         // B0
         s[dim + dim][jsf] = y[0][0];
-        std::cout << "\nPrint matrix\n";
-        printmatrix(s);
-        std::cout << "\nPrint matrix\n";
       }
     }
     else if (k > k2 - 1)
