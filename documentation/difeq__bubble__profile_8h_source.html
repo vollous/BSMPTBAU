@@ -264,13 +264,13 @@ $(document).ready(function(){initNavTree('difeq__bubble__profile_8h_source.html'
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>      {</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; dim; n++)</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>          s[j][0 * dim + indexv[n]]     = -Delta(j, n);                  <span class="comment">// 1</span></div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>          s[j][1 * dim + indexv[n]]     = -1. / 2. * dz * hessian[j][n]; <span class="comment">// 3</span></div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>          s[j][2 * dim + indexv[n] + 1] = Delta(j, n);                   <span class="comment">// 5</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>          s[j][3 * dim + indexv[n] + 1] = -1. / 2. * dz * hessian[j][n]; <span class="comment">// 7</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>          s[j][0 * dim + n]     = -Delta(j, n);                  <span class="comment">// 1</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>          s[j][1 * dim + n]     = -1. / 2. * dz * hessian[j][n]; <span class="comment">// 3</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>          s[j][2 * dim + n + 1] = Delta(j, n);                   <span class="comment">// 5</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>          s[j][3 * dim + n + 1] = -1. / 2. * dz * hessian[j][n]; <span class="comment">// 7</span></div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        }</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        s[j][1 * dim + indexv[dim]]     = dz / 2. * y[j][k - 1]; <span class="comment">// 11</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        s[j][3 * dim + 1 + indexv[dim]] = dz / 2. * y[j][k];     <span class="comment">// 16</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        s[j][2 * dim]     = dz / 2. * y[j][k - 1]; <span class="comment">// 11</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        s[j][4 * dim + 1] = dz / 2. * y[j][k];     <span class="comment">// 16</span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="comment">//  Equations for E(k,k-1)</span></div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        s[j][jsf] = y[j][k] - y[j][k - 1] - dz * dv[j];</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>      }</div>
@@ -280,10 +280,10 @@ $(document).ready(function(){initNavTree('difeq__bubble__profile_8h_source.html'
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>      {</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; dim; n++)</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        {</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>          s[dim + j][0 * dim + indexv[n]]     = -dz / 2. * Delta(j, n); <span class="comment">// 2</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>          s[dim + j][1 * dim + indexv[n]]     = -Delta(j, n);           <span class="comment">// 4</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>          s[dim + j][2 * dim + indexv[n] + 1] = -dz / 2. * Delta(j, n); <span class="comment">// 6</span></div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>          s[dim + j][3 * dim + indexv[n] + 1] = Delta(j, n);            <span class="comment">// 8</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>          s[dim + j][0 * dim + n]     = -dz / 2. * Delta(j, n); <span class="comment">// 2</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>          s[dim + j][1 * dim + n]     = -Delta(j, n);           <span class="comment">// 4</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>          s[dim + j][2 * dim + n + 1] = -dz / 2. * Delta(j, n); <span class="comment">// 6</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>          s[dim + j][3 * dim + n + 1] = Delta(j, n);            <span class="comment">// 8</span></div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        }</div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        s[dim + j][2 * dim]     = 0; <span class="comment">// 12</span></div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        s[dim + j][4 * dim + 1] = 0; <span class="comment">// 17</span></div>
@@ -294,15 +294,15 @@ $(document).ready(function(){initNavTree('difeq__bubble__profile_8h_source.html'
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>      <span class="comment">// j = 2 * dim -&gt; eta</span></div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; dim; n++)</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>      {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        s[dim + dim][0 * dim + indexv[n]]     = 0; <span class="comment">// 9</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        s[dim + dim][1 * dim + indexv[n]]     = 0; <span class="comment">// 10</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        s[dim + dim][2 * dim + indexv[n] + 1] = 0; <span class="comment">// 14</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        s[dim + dim][3 * dim + indexv[n] + 1] = 0; <span class="comment">// 15</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        s[2 * dim][0 * dim + n]     = 0; <span class="comment">// 9</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        s[2 * dim][1 * dim + n]     = 0; <span class="comment">// 10</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        s[2 * dim][2 * dim + 1 + n] = 0; <span class="comment">// 14</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        s[2 * dim][3 * dim + 1 + n] = 0; <span class="comment">// 15</span></div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>      }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>      s[dim + dim][2 * dim]     = -1; <span class="comment">// 13</span></div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>      s[dim + dim][4 * dim + 1] = 1;  <span class="comment">// 18</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                                      <span class="comment">//  Equations for E(k,k-1) for eta</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>      s[dim + dim][jsf] = y[dim + dim][k] - y[dim + dim][k - 1];</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>      s[2 * dim][2 * dim]     = -1; <span class="comment">// 13</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>      s[2 * dim][4 * dim + 1] = 1;  <span class="comment">// 18</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                                    <span class="comment">//  Equations for E(k,k-1) for eta</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>      s[2 * dim][jsf] = y[2 * dim][k] - y[2 * dim][k - 1];</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  }</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>};</div>
