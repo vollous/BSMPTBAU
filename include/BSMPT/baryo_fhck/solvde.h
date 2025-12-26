@@ -120,7 +120,23 @@ public:
       big = 0.0;
       for (int j = je1; j < je2; j++)
         if (abs(s[i][j]) > big) big = abs(s[i][j]);
-      if (big == 0.0) throw("Singular matrix - row all 0, in pinvs");
+      if (big == 0.0)
+      {
+        std::cout << "Singular matrix in pinvs with k = " << k
+                  << " with rows= (" << ie1 << ",\t" << ie2 << ")\n";
+
+        std::cout << "Singular matrix in pinvs with k = " << k
+                  << " with columns= (" << je1 << ",\t" << je2 << ")\n";
+        std::cout << "\n\n";
+        for (int ii = ie1; ii < ie2; ii++)
+        {
+          for (int jj = je1; jj < je2; jj++)
+            std::cout << s[ii][jj] << "\t";
+          std::cout << "\n";
+        }
+        std::cout << "\n\n";
+        throw("Singular matrix - row all 0, in pinvs");
+      }
       pscl[i - ie1]  = 1.0 / big;
       indxr[i - ie1] = 0;
     }
