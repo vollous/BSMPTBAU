@@ -90,12 +90,12 @@ struct Difeq_BubbleProfile : Difeq
         for (size_t field = 0; field < dim; field++)
         {
           // Sn at the first boundary
-          s[dim + field][2 * dim + 1 + indexv[field]] = 1.0;
+          s[dim + field][2 * dim + 1 + field] = 1.0;
           // B0
           s[dim + field][jsf] = y[field][0];
         }
         // Sn at the first boundary
-        s[dim + dim][2 * dim + 1 + indexv[dim]] = 1.0;
+        s[dim + dim][3 * dim + 1] = 1.0;
         // B0
         s[dim + dim][jsf] = y[dim][0] + 1.0;
       }
@@ -104,12 +104,12 @@ struct Difeq_BubbleProfile : Difeq
         for (size_t field = 0; field < dim; field++)
         {
           // Sn at the first boundary
-          s[dim + field][2 * dim + indexv[field]] = 1.0;
+          s[dim + field][2 * dim + 1 + field] = 1.0;
           // B0
           s[dim + field][jsf] = y[dim + field][0] - TrueVacuum[field];
         }
         // Sn at the first boundary
-        s[dim + dim][2 * dim + 1 + indexv[0]] = 1.0;
+        s[dim + dim][3 * dim + 1] = 1.0;
         // B0
         s[dim + dim][jsf] = y[0][0];
       }
@@ -122,7 +122,7 @@ struct Difeq_BubbleProfile : Difeq
         for (size_t field = 0; field < dim; field++)
         {
           // Sn at the last boundary
-          s[field][2 * dim + 1 + indexv[field]] = 1.0;
+          s[field][2 * dim + 1 + field] = 1.0;
           // C0
           s[field][jsf] = y[field][k2 - 1];
         }
@@ -133,7 +133,7 @@ struct Difeq_BubbleProfile : Difeq
         for (size_t field = 0; field < dim; field++)
         {
           // Sn at the last boundary
-          s[field][2 * dim + 1 + dim + indexv[field]] = 1.0;
+          s[field][3 * dim + 1 + field] = 1.0;
           // C0
           s[field][jsf] = y[dim + field][k2 - 1] - FalseVacuum[field];
         }
@@ -192,6 +192,16 @@ struct Difeq_BubbleProfile : Difeq
       s[2 * dim][4 * dim + 1] = 1;  // 18
                                     //  Equations for E(k,k-1) for eta
       s[2 * dim][jsf] = y[2 * dim][k] - y[2 * dim][k - 1];
+      MatDoub ss = s;
+      int neq    = 2 * dim + 1;
+      for (size_t j = 0; j < neq; j++)
+      {
+        for (size_t n = 0; n < neq; n++)
+        {
+          s[j][n]       = ss[j][indexv[n]];
+          s[j][neq + n] = ss[j][neq + indexv[n]];
+        }
+      }
     }
   }
 };
