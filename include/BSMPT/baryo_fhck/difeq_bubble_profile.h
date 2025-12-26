@@ -62,16 +62,16 @@ struct Difeq_BubbleProfile : Difeq
     myfile.close();
   }
 
-  /*void printmatrix(const MatDoub &ss)
+  void printmatrix(const MatDoub &ss)
   {
-    size_t ne = 2 * dim;
+    size_t ne = 2 * dim + 1;
     for (size_t i = 0; i < ne; i++)
     {
       for (size_t j = 0; j < 2 * ne + 1; j++)
-        std::cout << ss[i][j] << "\t";
+        std::cout << std::setprecision(10) << ss[i][j] << "\t";
       std::cout << "\n";
     }
-  }*/
+  }
 
   void smatrix(const int k,
                const int k1,
