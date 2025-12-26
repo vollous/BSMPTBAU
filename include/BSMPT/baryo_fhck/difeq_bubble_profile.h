@@ -192,8 +192,8 @@ struct Difeq_BubbleProfile : Difeq
       s[2 * dim][4 * dim + 1] = 1;  // 18
                                     //  Equations for E(k,k-1) for eta
       s[2 * dim][jsf] = y[2 * dim][k] - y[2 * dim][k - 1];
-      MatDoub ss = s;
-      int neq    = 2 * dim + 1;
+      MatDoub ss      = s;
+      int neq         = 2 * dim + 1;
       for (size_t j = 0; j < neq; j++)
       {
         for (size_t n = 0; n < neq; n++)
