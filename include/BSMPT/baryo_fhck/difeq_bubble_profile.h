@@ -153,9 +153,11 @@ struct Difeq_BubbleProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + n]     = -Delta(j, n);                  // 1
-          s[j][1 * dim + n]     = -1. / 2. * dz * hessian[j][n]; // 3
-          s[j][2 * dim + n + 1] = Delta(j, n);                   // 5
+          s[j][0 * dim + n] =
+              -Delta(j, n) * (1 - dz / 2 * y[2 * dim][k - 1]); // 1
+          s[j][1 * dim + n] = -1. / 2. * dz * hessian[j][n];   // 3
+          s[j][2 * dim + n + 1] =
+              Delta(j, n) * (1 + dz / 2 * y[2 * dim][k]);        // 5
           s[j][3 * dim + n + 1] = -1. / 2. * dz * hessian[j][n]; // 7
         }
         s[j][2 * dim]     = dz / 2. * y[j][k - 1]; // 11
