@@ -97,7 +97,7 @@ struct Difeq_BubbleProfile : Difeq
         // Sn at the first boundary
         s[dim + dim][3 * dim + 1] = 1.0;
         // B0
-        s[dim + dim][jsf] = y[dim][0] + 1.0;
+        s[dim + dim][jsf] = y[dim][0] - TrueVacuum[0];
       }
       else if (mode == ProfileSolverMode::Field)
       {
