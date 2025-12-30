@@ -205,7 +205,7 @@ $(document).ready(function(){initNavTree('difeq__bubble__profile_8h_source.html'
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="comment">// Sn at the first boundary</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        s[dim + dim][3 * dim + 1] = 1.0;</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="comment">// B0</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        s[dim + dim][jsf] = y[dim][0] + 1.0;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        s[dim + dim][jsf] = y[dim][0] - TrueVacuum[0];</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      }</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (mode == ProfileSolverMode::Field)</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      {</div>
