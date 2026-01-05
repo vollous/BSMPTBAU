@@ -7,13 +7,14 @@ var searchData=
   ['eps_4',['eps',['../classBSMPT_1_1BounceActionInt.html#a69e90221e7b5b887ae3fd7553e82493b',1,'BSMPT::BounceActionInt']]],
   ['epsturb_5',['epsturb',['../classBSMPT_1_1BounceSolution.html#adb0a1026ce5b6ba5762426a0e12b46e1',1,'BSMPT::BounceSolution']]],
   ['equations_6',['Equations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a400b738fb0871e6c1c68e51c65a15980',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['eta_5fintegrand_5ffunc_7',['eta_integrand_func',['../transport__equations_8h.html#ac605c862b875984970d57d46e9916251',1,'BSMPT::Baryo']]],
-  ['etainterface_8',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['ewptreturntype_9',['EWPTReturnType',['../structBSMPT_1_1Minimizer_1_1EWPTReturnType.html',1,'BSMPT::Minimizer']]],
-  ['ewsbvev_10',['EWSBVEV',['../classBSMPT_1_1Class__Potential__Origin.html#a11e63f35ce4569aaf9dfc7cc5fa3d6d4',1,'BSMPT::Class_Potential_Origin']]],
-  ['exactsolution_11',['ExactSolution',['../classBSMPT_1_1BounceActionInt.html#a424e464f9c73844c1b2bda179a45cc33',1,'BSMPT::BounceActionInt']]],
-  ['exactsolutionfromminimum_12',['ExactSolutionFromMinimum',['../classBSMPT_1_1BounceActionInt.html#ac931386046500da9c0d225143d1ddda8',1,'BSMPT::BounceActionInt']]],
-  ['exactsolutionlin_13',['ExactSolutionLin',['../classBSMPT_1_1BounceActionInt.html#ac12f8388f128a27fa120fd9fa05db29d',1,'BSMPT::BounceActionInt']]],
-  ['exactsolutionthreshold_14',['ExactSolutionThreshold',['../classBSMPT_1_1BounceActionInt.html#a095ef140bf0243f9808721aae53c4039',1,'BSMPT::BounceActionInt']]],
-  ['executables_15',['Executables',['../index.html#autotoc_md13',1,'']]]
+  ['eta_7',['eta',['../structDifeq__VacuumProfile.html#a5d2f6b5845d3f780ab16f01da3c02069',1,'Difeq_VacuumProfile']]],
+  ['eta_5fintegrand_5ffunc_8',['eta_integrand_func',['../transport__equations_8h.html#ac605c862b875984970d57d46e9916251',1,'BSMPT::Baryo']]],
+  ['etainterface_9',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['ewptreturntype_10',['EWPTReturnType',['../structBSMPT_1_1Minimizer_1_1EWPTReturnType.html',1,'BSMPT::Minimizer']]],
+  ['ewsbvev_11',['EWSBVEV',['../classBSMPT_1_1Class__Potential__Origin.html#a11e63f35ce4569aaf9dfc7cc5fa3d6d4',1,'BSMPT::Class_Potential_Origin']]],
+  ['exactsolution_12',['ExactSolution',['../classBSMPT_1_1BounceActionInt.html#a424e464f9c73844c1b2bda179a45cc33',1,'BSMPT::BounceActionInt']]],
+  ['exactsolutionfromminimum_13',['ExactSolutionFromMinimum',['../classBSMPT_1_1BounceActionInt.html#ac931386046500da9c0d225143d1ddda8',1,'BSMPT::BounceActionInt']]],
+  ['exactsolutionlin_14',['ExactSolutionLin',['../classBSMPT_1_1BounceActionInt.html#ac12f8388f128a27fa120fd9fa05db29d',1,'BSMPT::BounceActionInt']]],
+  ['exactsolutionthreshold_15',['ExactSolutionThreshold',['../classBSMPT_1_1BounceActionInt.html#a095ef140bf0243f9808721aae53c4039',1,'BSMPT::BounceActionInt']]],
+  ['executables_16',['Executables',['../index.html#autotoc_md13',1,'']]]
 ];
