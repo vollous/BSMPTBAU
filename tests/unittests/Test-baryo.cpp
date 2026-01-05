@@ -71,7 +71,7 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCK]")
   int NB                          = dim;
   ProfileSolverMode mode          = ProfileSolverMode::Field;
   VecDoub zList(NumberOfSteps);
-  VecDoub scalv(2 * dim, 246.22);
+  VecDoub scalv(2 * dim, 1);
 
   VecInt indexv(2 * dim);
   for (size_t i = 0; i < 2 * dim; i++)
@@ -114,8 +114,6 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCK]")
   Difeq_VacuumProfile difeq_domainwall(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq_domainwall);
-
-  exit(0);
 
   REQUIRE(1 == 1);
 }
