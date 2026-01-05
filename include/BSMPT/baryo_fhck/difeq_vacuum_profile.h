@@ -5,36 +5,123 @@
 #include <BSMPT/baryo_fhck/difeq.h>
 #include <BSMPT/utility/utility.h>
 #include <fstream>
+#include <gsl/gsl_spline.h>
 
 using BSMPT::Delta;
 
-struct Difeq_DomainWall : Difeq
+enum class ProfileSolverMode
 {
-  // Dimension of VEV space
+  Field,
+  Deriv
+};
+
+struct Difeq_VacuumProfile : Difeq
+{
+  /**
+   * @brief How to solve the equations
+   *
+   */
+  const ProfileSolverMode &mode;
+  /**
+   * @brief Dimension of VEV space
+   *
+   */
   const size_t &dim;
-  // List of z coordinates on the grid
+  /**
+   * @brief List of the z grid of points
+   *
+   */
   VecDoub &z;
-  // Gradient
+  /**
+   * @brief True and False Vacuum
+   *
+   */
+  const std::vector<double> &TrueVacuum, &FalseVacuum;
+  /**
+   * @brief Potential
+   *
+   */
+  const std::function<double(std::vector<double>)> &V;
+  /**
+   * @brief Gradient
+   *
+   */
   const std::function<std::vector<double>(std::vector<double>)> &dV;
-  // Hessian
+  /**
+   * @brief Hessian
+   *
+   */
   const std::function<std::vector<std::vector<double>>(std::vector<double>)>
       &Hessian;
+  /**
+   * @brief Friction coefficient
+   * - 0 if V(True) = V(False) -> Domain Wall
+   * - > 0 if V(True) < V(False) -> Bubble Wall
+   */
+  double eta = 0;
+  /**
+   * @brief V(False) - V(True)
+   *
+   */
+  double DeltaV;
 
-  Difeq_DomainWall(
+  Difeq_VacuumProfile(
+      // Solver mode
+      const ProfileSolverMode &mode_In,
       // Dimension of VEV space
       const size_t &dim_In,
       // z list
       VecDoub &z_In,
+      // True
+      const std::vector<double> &TrueVacuum_In,
+      // False
+      const std::vector<double> &FalseVacuum_In,
+      // Potential
+      const std::function<double(std::vector<double>)> &V_In,
       // Gradient
       const std::function<std::vector<double>(std::vector<double>)> &dV_In,
       // Hessian
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In)
-      : dim(dim_In)
+      : mode(mode_In)
+      , dim(dim_In)
       , z(z_In)
+      , TrueVacuum(TrueVacuum_In)
+      , FalseVacuum(FalseVacuum_In)
+      , V(V_In)
       , dV(dV_In)
       , Hessian(Hessian_In)
+      , DeltaV(V(FalseVacuum) - V(TrueVacuum))
   {
+  }
+
+  void calc_eta(MatDoub &y)
+  {
+    const size_t n = y.cols();
+
+    gsl_interp_accel *acc = gsl_interp_accel_alloc();
+    gsl_spline *spline    = gsl_spline_alloc(gsl_interp_cspline, n);
+
+    std::vector<double> zz, phigrad;
+    for (size_t k = 0; k < y.cols(); k++)
+    {
+      zz.push_back(z[k]);
+      double t = 0;
+      for (int j = 0; j < dim; j++)
+      {
+        t += pow(y[j][k], 2);
+      }
+      phigrad.push_back(t);
+    }
+
+    gsl_spline_init(spline, zz.data(), phigrad.data(), n);
+    double EnergyDissipated =
+        gsl_spline_eval_integ(spline, zz.front(), zz.back(), acc);
+
+    gsl_spline_free(spline);
+    gsl_interp_accel_free(acc);
+
+    eta = DeltaV / EnergyDissipated;
   }
 
   void smatrix(const int k,
@@ -48,6 +135,8 @@ struct Difeq_DomainWall : Difeq
     s.zero(); // Set matrix s = 0
     if (k == k1)
     {
+      // Calculate eta before anything else
+      calc_eta(y);
       // Boundary conditions dv/dz = 0 on first boundary
       for (size_t field = 0; field < dim; field++)
       {
@@ -82,13 +171,14 @@ struct Difeq_DomainWall : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + indexv[n]] = -Delta(j, n);                  // 1
-          s[j][1 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n]; // 3
-          s[j][2 * dim + indexv[n]] = Delta(j, n);                   // 5
-          s[j][3 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n]; // 7
+          s[j][0 * dim + indexv[n]] = -Delta(j, n) * (1 - dz * eta / 2); // 1
+          s[j][1 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n];     // 3
+          s[j][2 * dim + indexv[n]] = Delta(j, n) * (1 + dz * eta / 2);  // 5
+          s[j][3 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n];     // 7
         }
         //  Equations for E(k,k-1)
-        s[j][jsf] = y[j][k] - y[j][k - 1] - dz * dv[j];
+        s[j][jsf] = y[j][k] - y[j][k - 1] -
+                    dz * (dv[j] - eta * (y[j][k] + y[j][k - 1]) / 2);
       }
 
       // dim <= j < 2 * dim -> phi(z)

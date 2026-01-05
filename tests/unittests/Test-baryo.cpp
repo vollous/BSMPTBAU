@@ -62,22 +62,29 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCK]")
 
   size_t dim                      = 1;
   double eps                      = 0.01;
-  size_t NumberOfSteps            = 10000;
-  std::vector<double> FalseVacuum = {-1};
-  std::vector<double> TrueVacuum  = {1};
-  double itmax                    = 100;
-  double conv                     = 1e-10;
+  size_t NumberOfSteps            = 100000;
+  std::vector<double> TrueVacuum  = {-1};
+  std::vector<double> FalseVacuum = {1};
+  double itmax                    = 20;
+  double conv                     = 1e-8;
   double slowc                    = 1;
   int NB                          = dim;
+  ProfileSolverMode mode          = ProfileSolverMode::Field;
   VecDoub zList(NumberOfSteps);
-  VecDoub scalv(zList.size(), 1);
+  VecDoub scalv(2 * dim, 246.22);
+
   VecInt indexv(2 * dim);
   for (size_t i = 0; i < 2 * dim; i++)
     indexv[i] = i;
 
-  double m   = 0.;
+  double m   = 0;
   double lam = 1;
 
+  std::function<double(std::vector<double>)> V = [=](auto const &arg)
+  {
+    return lam * pow(arg[0], 2) * (-2 + pow(arg[0], 2)) +
+           m * (arg[0] - pow(arg[0], 3) / 3.);
+  };
   std::function<std::vector<double>(std::vector<double>)> dV =
       [=](auto const &arg)
   {
@@ -97,16 +104,15 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCK]")
   y.zero();
   for (size_t i = 0; i < NumberOfSteps; i++)
   {
-    double temp =
-        pow(((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.), 3) *
-        M_PI / 4.;
-    zList[i] = 10 * tan(temp);
+    double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
+    zList[i]    = 10 * temp;
 
-    y[0][i] = 0;
-    y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + cos(sqrt(2) * zList[i]) / 10.);
+    y[0][i] = sqrt(2) * pow(cosh(sqrt(2) * zList[i]), -2);
+    y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
   }
 
-  Difeq_DomainWall difeq_domainwall(dim, zList, dV, Hessian);
+  Difeq_VacuumProfile difeq_domainwall(
+      mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq_domainwall);
 
   exit(0);
