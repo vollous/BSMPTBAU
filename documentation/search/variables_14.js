@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['v_0',['v',['../classBSMPT_1_1BounceActionInt.html#a32ec54d4799c94ce10ddd8f1f83fc910',1,'BSMPT::BounceActionInt::V'],['../structDifeq__VacuumProfile.html#a52c2c1c4eae25ca4c4c1aceffbca2781',1,'Difeq_VacuumProfile::V']]],
+  ['v_0',['v',['../structDifeq__VacuumProfile.html#a52c2c1c4eae25ca4c4c1aceffbca2781',1,'Difeq_VacuumProfile::V'],['../classBSMPT_1_1BounceActionInt.html#a32ec54d4799c94ce10ddd8f1f83fc910',1,'BSMPT::BounceActionInt::V']]],
   ['vc_1',['vc',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a74ca3d82e662d96cc44f301dc347c02b',1,'BSMPT::Baryo::GSL_integration_mubl::vc'],['../structBSMPT_1_1Minimizer_1_1GSLPlaneReturn.html#ab600f952753e746f45874d7fc50b7ccf',1,'BSMPT::Minimizer::GSLPlaneReturn::vc']]],
   ['vcj_2',['vCJ',['../classBSMPT_1_1BounceSolution.html#aca1c4d65e0361d689fc7be8bcf012d1e',1,'BSMPT::BounceSolution']]],
   ['vcritical_3',['vcritical',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#acb8694da69c9ce74671b0f0c13890c76',1,'BSMPT::Baryo::gen_fluid']]],

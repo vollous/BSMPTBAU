@@ -10,7 +10,7 @@ var searchData=
   ['solution_7',['Solution',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#abe70e022a0b6ace134fe3da1b2ccdb71',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['solutionlist_8',['SolutionList',['../classBSMPT_1_1BounceSolution.html#a1f1621c008192b518a9b88f315b31802',1,'BSMPT::BounceSolution']]],
   ['solutionz_9',['SolutionZ',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad6ff1726b96b32f9ff41eb1016dd9307',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['spline_10',['spline',['../classBSMPT_1_1BounceActionInt.html#abc4330ab52d72bb7a0a9a2ae55267021',1,'BSMPT::BounceActionInt::Spline'],['../structBSMPT_1_1Wall_1_1GSL__params.html#a194b2a4b191df826bacb697601fbabb6',1,'BSMPT::Wall::GSL_params::spline'],['../structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html#a8eda7cd124ca249f4294ae60cfbd8e80',1,'BSMPT::Baryo::GSL_mubl_interpolation::spline']]],
+  ['spline_10',['spline',['../structBSMPT_1_1Wall_1_1GSL__params.html#a194b2a4b191df826bacb697601fbabb6',1,'BSMPT::Wall::GSL_params::spline'],['../structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html#a8eda7cd124ca249f4294ae60cfbd8e80',1,'BSMPT::Baryo::GSL_mubl_interpolation::spline'],['../classBSMPT_1_1BounceActionInt.html#abc4330ab52d72bb7a0a9a2ae55267021',1,'BSMPT::BounceActionInt::Spline']]],
   ['splines_11',['splines',['../classcvspline.html#af6d349042847597008ba750c52f8c1ee',1,'cvspline']]],
   ['stateof1dintegration_12',['StateOf1DIntegration',['../classBSMPT_1_1BounceActionInt.html#a94fed28e7da1fa31fc2d832e6262203a',1,'BSMPT::BounceActionInt']]],
   ['stateofbounceactionint_13',['StateOfBounceActionInt',['../classBSMPT_1_1BounceActionInt.html#a5a45d485ea861cdf709c5dc035f370ba',1,'BSMPT::BounceActionInt']]],

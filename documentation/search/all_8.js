@@ -20,7 +20,7 @@ var searchData=
   ['difeq_5ftransportequation_17',['Difeq_TransportEquation',['../structDifeq__TransportEquation.html',1,'']]],
   ['difeq_5fvacuumprofile_18',['Difeq_VacuumProfile',['../structDifeq__VacuumProfile.html',1,'']]],
   ['differences_20in_20how_20to_20include_20a_20new_20model_19',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
-  ['dim_20',['dim',['../structDifeq__VacuumProfile.html#a83a049e2b1ef682b5e4fb61d24da0ffb',1,'Difeq_VacuumProfile::dim'],['../classBSMPT_1_1BounceActionInt.html#a01159002c3d65f5cc0f6a17bc9a20800',1,'BSMPT::BounceActionInt::dim'],['../classcvspline.html#a2a84285059eb1be60bb1b5552729ae97',1,'cvspline::dim']]],
+  ['dim_20',['dim',['../classBSMPT_1_1BounceActionInt.html#a01159002c3d65f5cc0f6a17bc9a20800',1,'BSMPT::BounceActionInt::dim'],['../classcvspline.html#a2a84285059eb1be60bb1b5552729ae97',1,'cvspline::dim'],['../structDifeq__VacuumProfile.html#a83a049e2b1ef682b5e4fb61d24da0ffb',1,'Difeq_VacuumProfile::dim']]],
   ['display_5fresults_21',['display_results',['../Kfactors_8h.html#ae7d4995137551a4f88236793111ee69a',1,'BSMPT::Kfactors']]],
   ['distribution_5ff0_22',['distribution_f0',['../Kfactors_8h.html#a3a12382cb6aa4fa878ea8dde4d046dff',1,'BSMPT::Kfactors']]],
   ['dl_23',['dl',['../classcvspline.html#a6d1c75d9b856e77b7a3a0c3f05eb5e38',1,'cvspline']]],
@@ -35,5 +35,5 @@ var searchData=
   ['dq_32',['Dq',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140',1,'BSMPT::Baryo::gen_fluid']]],
   ['dt_33',['Dt',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2314e9e4aad61d6263e146346cc7a0c6',1,'BSMPT::Baryo::gen_fluid']]],
   ['dtau_34',['Dtau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2fad2a6c0f10a3c95b7ec065eb144959',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dv_35',['dv',['../structDifeq__VacuumProfile.html#af8e5dd7eadb5cce334391476e64bc542',1,'Difeq_VacuumProfile::dV'],['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV']]]
+  ['dv_35',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structDifeq__VacuumProfile.html#af8e5dd7eadb5cce334391476e64bc542',1,'Difeq_VacuumProfile::dV']]]
 ];

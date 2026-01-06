@@ -11,5 +11,6 @@ var dir_0c6045b0f970cfe494fe8b5f57adf53e =
     [ "ThermalFunctions", "dir_35c6df0130574d3276c158a24f1d775a.html", "dir_35c6df0130574d3276c158a24f1d775a" ],
     [ "transition_tracer", "dir_a25b3ed1f868bb261f2e7569e55a3f89.html", "dir_a25b3ed1f868bb261f2e7569e55a3f89" ],
     [ "utility", "dir_42f92aa599596c3e880b77b8c92e1c27.html", "dir_42f92aa599596c3e880b77b8c92e1c27" ],
+    [ "vacuum_profile", "dir_362d28137d28c303913c6b5b58d23af4.html", "dir_362d28137d28c303913c6b5b58d23af4" ],
     [ "WallThickness", "dir_8e2c28763356c82f332c7ba3ecccdf40.html", "dir_8e2c28763356c82f332c7ba3ecccdf40" ]
 ];
