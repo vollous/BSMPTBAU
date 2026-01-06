@@ -141,24 +141,51 @@ struct Difeq_VacuumProfile : Difeq
     {
       // Calculate eta before anything else
       calc_eta(y);
-      // Boundary conditions dv/dz = 0 on first boundary
-      for (size_t field = 0; field < dim; field++)
+      if (mode == ProfileSolverMode::Deriv)
       {
-        // Sn at the first boundary
-        s[dim + field][2 * dim + field] = 1.0;
-        // B0
-        s[dim + field][jsf] = y[field][0];
+        // Boundary conditions dv/dz = 0 on first boundary
+        for (size_t field = 0; field < dim; field++)
+        {
+          // Sn at the first boundary
+          s[dim + field][2 * dim + field] = 1.0;
+          // B0
+          s[dim + field][jsf] = y[field][0];
+        }
+      }
+      else if (mode == ProfileSolverMode::Field)
+      {
+        for (size_t field = 0; field < dim; field++)
+        {
+          // Sn at the first boundary
+          s[dim + field][3 * dim + field] = 1.0;
+          // B0
+          s[dim + field][jsf] = y[dim + field][0] - TrueVacuum[field];
+        }
       }
     }
     else if (k > k2 - 1)
     {
-      // Boundary conditionsd dv/dz = 0 on second boundary
-      for (size_t field = 0; field < dim; field++)
+      if (mode == ProfileSolverMode::Deriv)
       {
-        // Sn at the last boundary
-        s[field][2 * dim + field] = 1.0;
-        // C0
-        s[field][jsf] = y[field][k2 - 1];
+        // Boundary conditionsd dv/dz = 0 on second boundary
+        for (size_t field = 0; field < dim; field++)
+        {
+          // Sn at the last boundary
+          s[field][2 * dim + field] = 1.0;
+          // C0
+          s[field][jsf] = y[field][k2 - 1];
+        }
+      }
+      else if (mode == ProfileSolverMode::Field)
+      {
+        // Fix the fields at |z| -> Infinity
+        for (size_t field = 0; field < dim; field++)
+        {
+          // Sn at the last boundary
+          s[field][3 * dim + field] = 1.0;
+          // C0
+          s[field][jsf] = y[dim + field][k2 - 1] - FalseVacuum[field];
+        }
       }
     }
     else
