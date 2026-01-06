@@ -9,6 +9,10 @@
 
 using BSMPT::Delta;
 
+/**
+ * @brief Modes of solving the field equation
+ *
+ */
 enum class ProfileSolverMode
 {
   Field,
@@ -141,7 +145,7 @@ struct Difeq_VacuumProfile : Difeq
       for (size_t field = 0; field < dim; field++)
       {
         // Sn at the first boundary
-        s[dim + field][2 * dim + indexv[field]] = 1.0;
+        s[dim + field][2 * dim + field] = 1.0;
         // B0
         s[dim + field][jsf] = y[field][0];
       }
@@ -152,7 +156,7 @@ struct Difeq_VacuumProfile : Difeq
       for (size_t field = 0; field < dim; field++)
       {
         // Sn at the last boundary
-        s[field][2 * dim + indexv[field]] = 1.0;
+        s[field][2 * dim + field] = 1.0;
         // C0
         s[field][jsf] = y[field][k2 - 1];
       }
@@ -171,10 +175,10 @@ struct Difeq_VacuumProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + indexv[n]] = -Delta(j, n) * (1 + dz * eta / 2); // 1
-          s[j][1 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n];     // 3
-          s[j][2 * dim + indexv[n]] = Delta(j, n) * (1 - dz * eta / 2);  // 5
-          s[j][3 * dim + indexv[n]] = -1. / 2. * dz * hessian[j][n];     // 7
+          s[j][0 * dim + n] = -Delta(j, n) * (1 + dz * eta / 2); // 1
+          s[j][1 * dim + n] = -1. / 2. * dz * hessian[j][n];     // 3
+          s[j][2 * dim + n] = Delta(j, n) * (1 - dz * eta / 2);  // 5
+          s[j][3 * dim + n] = -1. / 2. * dz * hessian[j][n];     // 7
         }
         //  Equations for E(k,k-1)
         s[j][jsf] = y[j][k] - y[j][k - 1] -
@@ -186,14 +190,24 @@ struct Difeq_VacuumProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[dim + j][0 * dim + indexv[n]] = -dz / 2. * Delta(j, n); // 2
-          s[dim + j][1 * dim + indexv[n]] = -Delta(j, n);           // 4
-          s[dim + j][2 * dim + indexv[n]] = -dz / 2. * Delta(j, n); // 6
-          s[dim + j][3 * dim + indexv[n]] = Delta(j, n);            // 8
+          s[dim + j][0 * dim + n] = -dz / 2. * Delta(j, n); // 2
+          s[dim + j][1 * dim + n] = -Delta(j, n);           // 4
+          s[dim + j][2 * dim + n] = -dz / 2. * Delta(j, n); // 6
+          s[dim + j][3 * dim + n] = Delta(j, n);            // 8
         }
         //  Equations for E(k,k-1)
         s[dim + j][jsf] = y[dim + j][k] - y[dim + j][k - 1] -
                           dz * (y[j][k] + y[j][k - 1]) / 2;
+      }
+    }
+    // Reorder columns
+    MatDoub ss = s;
+    for (size_t j = 0; j < 2 * dim; j++)
+    {
+      for (size_t n = 0; n < 2 * dim; n++)
+      {
+        s[j][n]           = ss[j][indexv[n]];
+        s[j][2 * dim + n] = ss[j][2 * dim + indexv[n]];
       }
     }
   }
