@@ -2,7 +2,7 @@
  * @file
  */
 
-#include <BSMPT/baryo_fhck/BubbleWallProfile.h>
+#include <BSMPT/vacuum_profile/BubbleWallProfile.h>
 
 namespace BSMPT
 {

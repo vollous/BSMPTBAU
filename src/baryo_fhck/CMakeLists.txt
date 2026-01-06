@@ -5,15 +5,11 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck")
 set(header
-    ${header_path}/difeq.h
-    ${header_path}/difeq_vacuum_profile.h
     ${header_path}/difeq_transport_equations.h
-    ${header_path}/TransportEquations.h
-    ${header_path}/BubbleWallProfile.h)
+    ${header_path}/TransportEquations.h)
 
 set(src
-    TransportEquations.cpp
-    BubbleWallProfile.cpp)
+    TransportEquations.cpp)
 
 add_library(BaryoFHCK ${header} ${src})
 target_link_libraries(
@@ -27,7 +23,8 @@ target_link_libraries(
          Baryo
          Boost::boost
          BounceSolution
-         GW)
+         GW
+         VacuumProfile)
 # target_compile_options(BaryoFHCK PUBLIC ${OpenMP_CXX_FLAGS})
 target_include_directories(BaryoFHCK PUBLIC ${BSMPT_SOURCE_DIR}/include)
 target_compile_features(BaryoFHCK PUBLIC cxx_std_17)

@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <BSMPT/baryo_fhck/difeq.h>
-#include <BSMPT/utility/data_structures.h>
+#include <BSMPT/utility/relaxation/difeq.h>
 #include <fstream>
 
 class RelaxOde

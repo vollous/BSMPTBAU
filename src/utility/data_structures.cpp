@@ -1,4 +1,4 @@
-#include <BSMPT/utility/data_structures.h>
+#include <BSMPT/utility/relaxation/data_structures.h>
 
 VecInt::VecInt() : nn(0), v(nullptr)
 {

@@ -13,7 +13,9 @@ set(header
     ${header_path}/NumericalDerivatives.h
     ${header_path}/ModelIDs.h
     ${header_path}/settings.h
-    ${header_path}/data_structures.h)
+    ${header_path}/relaxation/data_structures.h
+    ${header_path}/relaxation/difeq.h
+    ${header_path}/relaxation/solvde.h)
 
 set(src utility.cpp Logger.cpp parser.cpp const_velocity_spline.cpp data_structures.cpp
         NumericalDerivatives.cpp ModelIDs.cpp)

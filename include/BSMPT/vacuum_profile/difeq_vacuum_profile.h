@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <BSMPT/baryo_fhck/difeq.h>
+#include <BSMPT/utility/relaxation/difeq.h>
 #include <BSMPT/utility/utility.h>
 #include <fstream>
 #include <gsl/gsl_spline.h>

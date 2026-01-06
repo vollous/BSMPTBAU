@@ -3,11 +3,11 @@
 
 using Approx = Catch::Approx;
 
-// #include <BSMPT/Kfactors/vw_Kfactors.h>
-#include <BSMPT/baryo_fhck/BubbleWallProfile.h>
+#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/utility/NumericalDerivatives.h>
-// #include <BSMPT/baryo_fhck/solvde.h>
+#include <BSMPT/vacuum_profile/BubbleWallProfile.h>
+// #include <BSMPT/vacuum_profile/solvde.h>
 // #include <BSMPT/gravitational_waves/gw.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/models/IncludeAllModels.h>

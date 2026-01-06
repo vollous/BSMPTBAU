@@ -1,10 +1,10 @@
 #pragma once
 
-#include <BSMPT/baryo_fhck/difeq_vacuum_profile.h>
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/models/SMparam.h>
 #include <BSMPT/utility/utility.h>
+#include <BSMPT/vacuum_profile/difeq_vacuum_profile.h>
 #include <iostream>
 #include <string>
 #include <vector>

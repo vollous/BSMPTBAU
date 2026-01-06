@@ -33,6 +33,7 @@ add_subdirectory(transition_tracer)
 add_subdirectory(bounce_solution)
 add_subdirectory(gravitational_waves)
 add_subdirectory(baryo_fhck)
+add_subdirectory(vacuum_profile)
 
 # ==============================Utility==================================
 

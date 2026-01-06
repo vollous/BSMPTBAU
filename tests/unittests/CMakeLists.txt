@@ -22,6 +22,7 @@ target_link_libraries(
           TransitionTracer
           GW
           BaryoFHCK
+          VacuumProfile
           )
 
 if(BSMPTBuildExecutables)
