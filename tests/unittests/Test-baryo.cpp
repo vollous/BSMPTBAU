@@ -89,7 +89,8 @@ TEST_CASE("VEV Profile", "[baryo123]")
   y.zero();
   VecDoub scalv(zList.size(), 246.22);
   VecInt indexv(2 * dim);
-  ProfileSolverMode mode                       = ProfileSolverMode::Field;
+  VacuumProfile::ProfileSolverMode mode =
+      VacuumProfile::ProfileSolverMode::Field;
   std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
   {
     // Potential wrapper
@@ -116,7 +117,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
     }
   }
 
-  Difeq_VacuumProfile difeq_vacuumprofile(
+  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
 
   for (int i = 0; i < 2 * dim; i++)
@@ -146,7 +147,8 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
   double conv                     = 1e-8;
   double slowc                    = 1;
   int NB                          = dim;
-  ProfileSolverMode mode          = ProfileSolverMode::Deriv;
+  VacuumProfile::ProfileSolverMode mode =
+      VacuumProfile::ProfileSolverMode::Deriv;
   VecDoub zList(NumberOfSteps);
   VecDoub scalv(2 * dim, 1);
 
@@ -161,7 +163,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
                  /* dont update last element*/
                  (i < 2 * dim) *
                  /* reordeing only necessary for dirichlet */
-                 (mode == ProfileSolverMode::Field);
+                 (mode == VacuumProfile::ProfileSolverMode::Field);
   }
 
   double m   = 0;
@@ -198,16 +200,10 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
     y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
   }
 
-  Difeq_VacuumProfile difeq_vacuumprofile(
+  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
-  RelaxOde solvde(itmax,
-                  conv,
-                  slowc,
-                  scalv,
-                  indexv,
-                  NB,
-                  y,
-                  difeq_domdifeq_vacuumprofileainwall);
+  RelaxOde solvde(
+      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
 
   REQUIRE(1 == 1);
 }
@@ -228,7 +224,8 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
   double conv                     = 1e-8;
   double slowc                    = 1;
   int NB                          = dim;
-  ProfileSolverMode mode          = ProfileSolverMode::Field;
+  VacuumProfile::ProfileSolverMode mode =
+      VacuumProfile::ProfileSolverMode::Field;
   VecDoub zList(NumberOfSteps);
   VecDoub scalv(2 * dim, 1);
 
@@ -243,7 +240,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
                  /* dont update last element*/
                  (i < 2 * dim) *
                  /* reordeing only necessary for dirichlet */
-                 (mode == ProfileSolverMode::Field);
+                 (mode == VacuumProfile::ProfileSolverMode::Field);
   }
 
   double m   = 0.1;
@@ -280,7 +277,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
     y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
   }
 
-  Difeq_VacuumProfile difeq_vacuumprofile(
+  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);

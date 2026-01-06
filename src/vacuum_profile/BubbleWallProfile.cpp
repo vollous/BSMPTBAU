@@ -6,7 +6,7 @@
 
 namespace BSMPT
 {
-namespace Baryo
+namespace VacuumProfile
 {
 void CalculateBubbleWallProfile(
     std::vector<std::vector<double>> &path,
@@ -19,5 +19,5 @@ void CalculateBubbleWallProfile(
   exit(0);
 }
 
-} // namespace Baryo
+} // namespace VacuumProfile
 } // namespace BSMPT
