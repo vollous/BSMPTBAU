@@ -10,7 +10,7 @@ var searchData=
   ['debyegauge_7',['DebyeGauge',['../classBSMPT_1_1Class__Potential__Origin.html#a1cec0ba505a3046333469cc18a7ae278',1,'BSMPT::Class_Potential_Origin']]],
   ['debyehiggs_8',['DebyeHiggs',['../classBSMPT_1_1Class__Potential__Origin.html#ab3fd89752dd217bf39a1fb7ee6ef4fe9',1,'BSMPT::Class_Potential_Origin']]],
   ['delta_9',['delta',['../namespaceBSMPT.html#af120c3a683e0fa86053a82db2a79a54b',1,'BSMPT::Delta()'],['../structBSMPT_1_1ISMConstants.html#a4a6512f57aa352ec019cec8b405fdbe9',1,'BSMPT::ISMConstants::delta']]],
-  ['deltav_10',['DeltaV',['../structDifeq__VacuumProfile.html#a8c483c8dae535537794eaa5ddd2f85a6',1,'Difeq_VacuumProfile']]],
+  ['deltav_10',['DeltaV',['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html#a087f71bd297f354a3801dc912384dffe',1,'BSMPT::VacuumProfile::Difeq_VacuumProfile']]],
   ['dependencies_11',['Dependencies',['../index.html#autotoc_md4',1,'']]],
   ['deriv_12',['deriv',['../classcvspline.html#afbca014758a4aa92592306e38f9906c6',1,'cvspline']]],
   ['detailed_13',['build - detailed',['../index.html#autotoc_md5',1,'']]],
@@ -18,9 +18,9 @@ var searchData=
   ['dh_15',['Dh',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a758b5b217796ae68603657e304cf99fd',1,'BSMPT::Baryo::gen_fluid']]],
   ['difeq_16',['Difeq',['../structDifeq.html',1,'']]],
   ['difeq_5ftransportequation_17',['Difeq_TransportEquation',['../structDifeq__TransportEquation.html',1,'']]],
-  ['difeq_5fvacuumprofile_18',['Difeq_VacuumProfile',['../structDifeq__VacuumProfile.html',1,'']]],
+  ['difeq_5fvacuumprofile_18',['Difeq_VacuumProfile',['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html',1,'BSMPT::VacuumProfile']]],
   ['differences_20in_20how_20to_20include_20a_20new_20model_19',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
-  ['dim_20',['dim',['../classBSMPT_1_1BounceActionInt.html#a01159002c3d65f5cc0f6a17bc9a20800',1,'BSMPT::BounceActionInt::dim'],['../classcvspline.html#a2a84285059eb1be60bb1b5552729ae97',1,'cvspline::dim'],['../structDifeq__VacuumProfile.html#a83a049e2b1ef682b5e4fb61d24da0ffb',1,'Difeq_VacuumProfile::dim']]],
+  ['dim_20',['dim',['../classBSMPT_1_1BounceActionInt.html#a01159002c3d65f5cc0f6a17bc9a20800',1,'BSMPT::BounceActionInt::dim'],['../classcvspline.html#a2a84285059eb1be60bb1b5552729ae97',1,'cvspline::dim'],['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html#aeaabec4b307193e2ae7e577e17d41764',1,'BSMPT::VacuumProfile::Difeq_VacuumProfile::dim']]],
   ['display_5fresults_21',['display_results',['../Kfactors_8h.html#ae7d4995137551a4f88236793111ee69a',1,'BSMPT::Kfactors']]],
   ['distribution_5ff0_22',['distribution_f0',['../Kfactors_8h.html#a3a12382cb6aa4fa878ea8dde4d046dff',1,'BSMPT::Kfactors']]],
   ['dl_23',['dl',['../classcvspline.html#a6d1c75d9b856e77b7a3a0c3f05eb5e38',1,'cvspline']]],
@@ -35,5 +35,5 @@ var searchData=
   ['dq_32',['Dq',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140',1,'BSMPT::Baryo::gen_fluid']]],
   ['dt_33',['Dt',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2314e9e4aad61d6263e146346cc7a0c6',1,'BSMPT::Baryo::gen_fluid']]],
   ['dtau_34',['Dtau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2fad2a6c0f10a3c95b7ec065eb144959',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dv_35',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structDifeq__VacuumProfile.html#af8e5dd7eadb5cce334391476e64bc542',1,'Difeq_VacuumProfile::dV']]]
+  ['dv_35',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html#a850d938d41c85e639538f3b8038b2f6e',1,'BSMPT::VacuumProfile::Difeq_VacuumProfile::dV']]]
 ];

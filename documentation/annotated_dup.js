@@ -50,6 +50,9 @@ var annotated_dup =
       [ "ThermalFunctions", null, [
         [ "ThermalCoefficientCalculator", "classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator.html", "classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator" ]
       ] ],
+      [ "VacuumProfile", null, [
+        [ "Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html", "structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile" ]
+      ] ],
       [ "Wall", null, [
         [ "GSL_params", "structBSMPT_1_1Wall_1_1GSL__params.html", "structBSMPT_1_1Wall_1_1GSL__params" ]
       ] ],
@@ -114,7 +117,6 @@ var annotated_dup =
     [ "cvspline", "classcvspline.html", "classcvspline" ],
     [ "Difeq", "structDifeq.html", null ],
     [ "Difeq_TransportEquation", "structDifeq__TransportEquation.html", null ],
-    [ "Difeq_VacuumProfile", "structDifeq__VacuumProfile.html", "structDifeq__VacuumProfile" ],
     [ "Mat3DDoub", "classMat3DDoub.html", null ],
     [ "MatDoub", "classMatDoub.html", null ],
     [ "MyListener", "structMyListener.html", null ],

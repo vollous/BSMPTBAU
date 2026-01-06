@@ -2,7 +2,7 @@ var searchData=
 [
   ['h_0',['h',['../classBSMPT_1_1GravitationalWave.html#a2f7647ac27c5464ca68fa49dcc5c536f',1,'BSMPT::GravitationalWave']]],
   ['h2omsens_1',['h2OmSens',['../namespaceBSMPT.html#a2cfd79038f04a64f01fd5bc3803f2744',1,'BSMPT']]],
-  ['hessian_2',['hessian',['../classBSMPT_1_1BounceActionInt.html#acb378b0fcb71d59f60ff85311273cd73',1,'BSMPT::BounceActionInt::Hessian'],['../structDifeq__VacuumProfile.html#af048d2bcb0b5c649984756fe386a2cee',1,'Difeq_VacuumProfile::Hessian']]],
+  ['hessian_2',['hessian',['../classBSMPT_1_1BounceActionInt.html#acb378b0fcb71d59f60ff85311273cd73',1,'BSMPT::BounceActionInt::Hessian'],['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html#ae6e9d2a8b1311a0d843bc1b2480184a4',1,'BSMPT::VacuumProfile::Difeq_VacuumProfile::Hessian']]],
   ['hessianct_3',['HessianCT',['../classBSMPT_1_1Class__Potential__Origin.html#ae702abe1bd93771de6bc23413aeaef64',1,'BSMPT::Class_Potential_Origin']]],
   ['hessiandiagonalshift_4',['HessianDiagonalShift',['../classBSMPT_1_1MinimumTracer.html#accbd029a8c5f473f4c169ee06076b2df',1,'BSMPT::MinimumTracer']]],
   ['hessiannumerical_5',['HessianNumerical',['../namespaceBSMPT.html#a2fa2d0b5e797e27d8021e222c2522c85',1,'BSMPT']]],

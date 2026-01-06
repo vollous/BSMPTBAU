@@ -7,7 +7,7 @@ var searchData=
   ['eps_4',['eps',['../classBSMPT_1_1BounceActionInt.html#a69e90221e7b5b887ae3fd7553e82493b',1,'BSMPT::BounceActionInt']]],
   ['epsturb_5',['epsturb',['../classBSMPT_1_1BounceSolution.html#adb0a1026ce5b6ba5762426a0e12b46e1',1,'BSMPT::BounceSolution']]],
   ['equations_6',['Equations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a400b738fb0871e6c1c68e51c65a15980',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['eta_7',['eta',['../structDifeq__VacuumProfile.html#a5d2f6b5845d3f780ab16f01da3c02069',1,'Difeq_VacuumProfile']]],
+  ['eta_7',['eta',['../structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html#a8b571a34e01cff12b0f51bc939a1cae6',1,'BSMPT::VacuumProfile::Difeq_VacuumProfile']]],
   ['eta_5fintegrand_5ffunc_8',['eta_integrand_func',['../transport__equations_8h.html#ac605c862b875984970d57d46e9916251',1,'BSMPT::Baryo']]],
   ['etainterface_9',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['ewptreturntype_10',['EWPTReturnType',['../structBSMPT_1_1Minimizer_1_1EWPTReturnType.html',1,'BSMPT::Minimizer']]],
