@@ -6,10 +6,10 @@
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/vacuum_profile")
 set(header
     ${header_path}/difeq_vacuum_profile.h
-    ${header_path}/BubbleWallProfile.h)
+    ${header_path}/vacuum_profile.h)
 
 set(src
-    BubbleWallProfile.cpp)
+    vacuum_profile.cpp)
 
 add_library(VacuumProfile ${header} ${src})
 target_link_libraries(
