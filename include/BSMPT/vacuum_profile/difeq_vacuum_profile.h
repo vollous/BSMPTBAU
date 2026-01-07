@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <BSMPT/utility/Logger.h>
 #include <BSMPT/utility/relaxation/difeq.h>
 #include <BSMPT/utility/utility.h>
 #include <fstream>

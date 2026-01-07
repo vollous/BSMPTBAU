@@ -3,6 +3,7 @@
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/models/SMparam.h>
+#include <BSMPT/utility/Logger.h>
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/difeq_vacuum_profile.h>
 #include <iostream>

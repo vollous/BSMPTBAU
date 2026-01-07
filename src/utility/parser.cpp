@@ -104,6 +104,14 @@ parser::parser(const bool &enable_column_output)
                "gravitational wave calculation output",
                "false",
                false);
+  add_argument("logginglevel::vacuumprofiledetailed",
+               "vacuum profile calculation output",
+               "false",
+               false);
+  add_argument("logginglevel::fhckdetailed",
+               "baryogenesis using FHCK calculation output",
+               "false",
+               false);
   add_argument("logginglevel::complete",
                "enable all except minimizer output",
                "false",
@@ -276,7 +284,7 @@ void parser::print_help() const
   ss << mHeader << std::endl;
   ss_end << "The following options for the Logger are available:\n\n";
 
-  int size_first_column  = 37;
+  int size_first_column  = 40;
   int size_second_column = 10;
   if (extra_column_output)
   {

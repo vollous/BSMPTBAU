@@ -30,6 +30,7 @@ static std::map<std::string, LoggingLevel> LoggingPrefixes{
     {"--logginglevel::bouncedetailed=", LoggingLevel::BounceDetailed},
     {"--logginglevel::gwdetailed=", LoggingLevel::GWDetailed},
     {"--logginglevel::fhck=", LoggingLevel::FHCK},
+    {"--logginglevel::vacuumprofile=", LoggingLevel::VacuumProfile},
     {"--logginglevel::complete=", LoggingLevel::Complete}};
 
 void ShowLoggerHelp()

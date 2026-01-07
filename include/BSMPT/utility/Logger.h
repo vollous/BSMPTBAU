@@ -33,6 +33,7 @@ enum class LoggingLevel
   TransitionDetailed,
   GWDetailed,
   FHCK,
+  VacuumProfile,
   BounceDetailed,
   ProgDetailed,
   EWBGDetailed,
@@ -100,6 +101,7 @@ private:
       {LoggingLevel::BounceDetailed, false},
       {LoggingLevel::GWDetailed, false},
       {LoggingLevel::FHCK, false},
+      {LoggingLevel::VacuumProfile, false},
       {LoggingLevel::Debug, false}};
 
   std::map<LoggingLevel, bool> mCurrentSetup = mDefaultSetup;
