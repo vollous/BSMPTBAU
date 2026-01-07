@@ -5,13 +5,12 @@ using Approx = Catch::Approx;
 
 #include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
-#include <BSMPT/utility/NumericalDerivatives.h>
-#include <BSMPT/vacuum_profile/BubbleWallProfile.h>
-// #include <BSMPT/vacuum_profile/solvde.h>
-// #include <BSMPT/gravitational_waves/gw.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/models/IncludeAllModels.h>
+#include <BSMPT/utility/NumericalDerivatives.h>
 #include <BSMPT/utility/utility.h>
+#include <BSMPT/vacuum_profile/vacuum_profile.h>
+
 
 TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 {
@@ -89,8 +88,8 @@ TEST_CASE("VEV Profile", "[baryo123]")
   y.zero();
   VecDoub scalv(zList.size(), 246.22);
   VecInt indexv(2 * dim);
-  VacuumProfile::ProfileSolverMode mode =
-      VacuumProfile::ProfileSolverMode::Field;
+  VacuumProfileNS::ProfileSolverMode mode =
+      VacuumProfileNS::ProfileSolverMode::Field;
   std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
   {
     // Potential wrapper
@@ -117,7 +116,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
     }
   }
 
-  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
+  VacuumProfileNS::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
 
   for (int i = 0; i < 2 * dim; i++)
@@ -135,6 +134,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
+  using namespace VacuumProfileNS;
 
   SetLogger({"--logginglevel::complete=true"});
 
@@ -147,11 +147,11 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
   double conv                     = 1e-8;
   double slowc                    = 1;
   int NB                          = dim;
-  VacuumProfile::ProfileSolverMode mode =
-      VacuumProfile::ProfileSolverMode::Deriv;
+  ProfileSolverMode mode          = ProfileSolverMode::Deriv;
   VecDoub zList(NumberOfSteps);
   VecDoub scalv(2 * dim, 1);
-
+  std::vector<double> z(NumberOfSteps);
+  std::vector<std::vector<double>> path;
   VecInt indexv(2 * dim + 1);
   for (size_t i = 0; i < 2 * dim + 1; i++)
   {
@@ -163,7 +163,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
                  /* dont update last element*/
                  (i < 2 * dim) *
                  /* reordeing only necessary for dirichlet */
-                 (mode == VacuumProfile::ProfileSolverMode::Field);
+                 (mode == ProfileSolverMode::Field);
   }
 
   double m   = 0;
@@ -224,8 +224,8 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
   double conv                     = 1e-8;
   double slowc                    = 1;
   int NB                          = dim;
-  VacuumProfile::ProfileSolverMode mode =
-      VacuumProfile::ProfileSolverMode::Field;
+  VacuumProfileNS::ProfileSolverMode mode =
+      VacuumProfileNS::ProfileSolverMode::Field;
   VecDoub zList(NumberOfSteps);
   VecDoub scalv(2 * dim, 1);
 
@@ -240,7 +240,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
                  /* dont update last element*/
                  (i < 2 * dim) *
                  /* reordeing only necessary for dirichlet */
-                 (mode == VacuumProfile::ProfileSolverMode::Field);
+                 (mode == VacuumProfileNS::ProfileSolverMode::Field);
   }
 
   double m   = 0.1;
@@ -277,7 +277,7 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
     y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
   }
 
-  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
+  VacuumProfileNS::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);

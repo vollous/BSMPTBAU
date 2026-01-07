@@ -11,7 +11,7 @@ using BSMPT::Delta;
 
 namespace BSMPT
 {
-namespace VacuumProfile
+namespace VacuumProfileNS
 {
 /**
  * @brief Modes of solving the field equation
@@ -115,7 +115,7 @@ struct Difeq_VacuumProfile : Difeq
     {
       zz.push_back(z[k]);
       double t = 0;
-      for (int j = 0; j < dim; j++)
+      for (size_t j = 0; j < dim; j++)
       {
         t += pow(y[j][k], 2);
       }
@@ -145,7 +145,7 @@ struct Difeq_VacuumProfile : Difeq
     {
       // Calculate eta before anything else
       calc_eta(y);
-      if (mode == VacuumProfile::ProfileSolverMode::Deriv)
+      if (mode == ProfileSolverMode::Deriv)
       {
         // Boundary conditions dv/dz = 0 on first boundary
         for (size_t field = 0; field < dim; field++)
@@ -156,7 +156,7 @@ struct Difeq_VacuumProfile : Difeq
           s[dim + field][jsf] = y[field][0];
         }
       }
-      else if (mode == VacuumProfile::ProfileSolverMode::Field)
+      else if (mode == ProfileSolverMode::Field)
       {
         for (size_t field = 0; field < dim; field++)
         {
@@ -169,7 +169,7 @@ struct Difeq_VacuumProfile : Difeq
     }
     else if (k > k2 - 1)
     {
-      if (mode == VacuumProfile::ProfileSolverMode::Deriv)
+      if (mode == ProfileSolverMode::Deriv)
       {
         // Boundary conditionsd dv/dz = 0 on second boundary
         for (size_t field = 0; field < dim; field++)
@@ -180,7 +180,7 @@ struct Difeq_VacuumProfile : Difeq
           s[field][jsf] = y[field][k2 - 1];
         }
       }
-      else if (mode == VacuumProfile::ProfileSolverMode::Field)
+      else if (mode == ProfileSolverMode::Field)
       {
         // Fix the fields at |z| -> Infinity
         for (size_t field = 0; field < dim; field++)
@@ -243,5 +243,5 @@ struct Difeq_VacuumProfile : Difeq
     }
   }
 };
-} // namespace VacuumProfile
+} // namespace VacuumProfileNS
 } // namespace BSMPT
