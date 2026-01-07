@@ -1,7 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a":[4,0,1,6,0,1],
-"NegativeBosonSpline_8cpp.html#abfde607bc1595b6eeccd62be17afbb8f":[4,0,1,6,0,2],
 "NegativeBosonSpline_8cpp.html#ae7be2f10cd4525049e5abd8460b3eabb":[4,0,1,6,0,0],
 "NegativeBosonSpline_8h.html":[4,0,0,0,8,0],
 "NegativeBosonSpline_8h.html#a062ab089c6d9fefd5a4799a23a446b9a":[4,0,0,0,8,0,2],
@@ -80,8 +78,8 @@ var NAVTREEINDEX1 =
 "classAsciiPlotter.html":[3,0,2],
 "classBSMPT_1_1BSMPTLogger.html":[3,0,0,10],
 "classBSMPT_1_1BSMPTLogger.html":[2,0,0,3],
-"classBSMPT_1_1BSMPTLogger.html#a3a1ed14027fa3dd50799034db1a40a36":[2,0,0,3,1],
 "classBSMPT_1_1BSMPTLogger.html#a3a1ed14027fa3dd50799034db1a40a36":[3,0,0,10,1],
+"classBSMPT_1_1BSMPTLogger.html#a3a1ed14027fa3dd50799034db1a40a36":[2,0,0,3,1],
 "classBSMPT_1_1BSMPTLogger.html#a67ab115f5019af93ce0f46e95376896c":[3,0,0,10,0],
 "classBSMPT_1_1BSMPTLogger.html#a67ab115f5019af93ce0f46e95376896c":[2,0,0,3,0],
 "classBSMPT_1_1Baryo_1_1Calc__Gam__M.html":[3,0,0,0,4],
@@ -249,5 +247,7 @@ var NAVTREEINDEX1 =
 "classBSMPT_1_1Baryo_1_1gen__fluid.html#a8e6ebb54a5d9eb32b17a4ee9e36ea029":[3,0,0,0,8,20],
 "classBSMPT_1_1Baryo_1_1gen__fluid.html#a9a519256de836f75ef20deae1bb97206":[3,0,0,0,8,34],
 "classBSMPT_1_1Baryo_1_1gen__fluid.html#a9f897e49015422bd3ccc87a8b3079394":[3,0,0,0,8,22],
-"classBSMPT_1_1Baryo_1_1gen__fluid.html#aa945e1f94c066d2649fd231cb89b4129":[3,0,0,0,8,6]
+"classBSMPT_1_1Baryo_1_1gen__fluid.html#aa945e1f94c066d2649fd231cb89b4129":[3,0,0,0,8,6],
+"classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140":[3,0,0,0,8,14],
+"classBSMPT_1_1Baryo_1_1gen__fluid.html#ab6577c3c9c983c927e096668341fa5c8":[3,0,0,0,8,1]
 };
