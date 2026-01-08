@@ -73,14 +73,18 @@ double Kernel::operator()(const KernelType K,
   break;
   case KernelType::Q8o:
   {
-    KernelIntw integrand(1, 0, l - 2, l, vw, gamw, statistic, x);
+    KernelIntw integrand(1, structure, l - 2, l, vw, gamw, statistic, x);
     res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
   }
   break;
   case KernelType::Q9o:
   {
-    KernelIntw integrand(1, 0, l, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    double k1, k2, estimate;
+    KernelIntw integrand1(1, structure, l - 2, l + 2, vw, gamw, statistic, x);
+    KernelIntw integrand2(2, structure, l - 2, l + 1, vw, gamw, statistic, x);
+    k1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8);
+    k2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8);
+    res *= (k1 - gamw * k2) / 4.;
   }
   break;
 

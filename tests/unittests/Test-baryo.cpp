@@ -27,9 +27,9 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       ParticleType PType = (type == 0 ? Fermion : Boson);
       std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
       std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
-      Kernel Kern(l);
+      Kernel Kern(l, 2);
 
-      std::cout << "D-Kernel\n";
+      /* std::cout << "D-Kernel\n";
       {
         std::string str = path + "D" + std::to_string(l) + suffix;
         std::ofstream file(str);
@@ -40,10 +40,10 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           file << x << "\t" << Kern(KernelType::D, PType, x, vw) << "\n";
         };
         file.close();
-      }
+      } */
       if (l != 0)
       {
-        std::cout << "Q-Kernel\n";
+        /* std::cout << "Q-Kernel\n";
         {
           std::string str = path + "Q" + std::to_string(l) + suffix;
           std::ofstream file(str);
@@ -64,6 +64,19 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             double x = -8 + i;
             x        = pow(10, x);
             file << x << "\t" << Kern(KernelType::Q8o, PType, x, vw) << "\n";
+          };
+          file.close();
+        } */
+        std::cout << "Q9o-Kernel\n";
+        {
+          std::string str = path + "Q9o" + std::to_string(l) + suffix;
+          std::ofstream file(str);
+          for (double i = 0.; i < 10.01; i += 0.1)
+          {
+            double x = -8 + i;
+            x        = pow(10, x);
+            std::cout << x << "\n";
+            file << x << "\t" << Kern(KernelType::Q9o, PType, x, vw) << "\n";
           };
           file.close();
         }
