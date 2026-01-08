@@ -164,7 +164,7 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double &Lw_In);
+      const double &Lw);
 
   /**
    * @brief Construct a new Vacuum Profile object

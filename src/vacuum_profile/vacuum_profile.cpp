@@ -105,5 +105,46 @@ VacuumProfile::VacuumProfile(
   LoadPath(z_In, path_In);
 }
 
+VacuumProfile::VacuumProfile(
+    // Dimension of VEV space
+    const size_t &dim_In,
+    // True
+    const std::vector<double> &TrueVacuum_In,
+    // False
+    const std::vector<double> &FalseVacuum_In,
+    // Potential
+    const std::function<double(std::vector<double>)> &V_In,
+    // Gradient
+    const std::function<std::vector<double>(std::vector<double>)> &dV_In,
+    // Hessian
+    const std::function<std::vector<std::vector<double>>(std::vector<double>)>
+        &Hessian_In,
+    // Bubble width
+    const double &Lw)
+    : dim(dim_In)
+    , TrueVacuum(TrueVacuum_In)
+    , FalseVacuum(FalseVacuum_In)
+    , V(V_In)
+    , dV(dV_In)
+    , Hessian(Hessian_In)
+{
+  // temporary variables
+  std::vector<std::vector<double>> path;
+  std::vector<double> vev_k(dim), zpath;
+  // Use the kink to calculate a first approximation
+  for (size_t k = 0; k < NumberOfSteps; k++)
+  {
+    // uniformly distributed between -10 Lw and 10 Lw
+    const double zk = (-10. + (20.) * k / (NumberOfSteps - 1.)) * Lw;
+    for (size_t i = 0; i < dim; i++)
+      vev_k.at(i) =
+          TrueVacuum.at(i) +
+          (1. + tanh(zk / Lw)) / 2. * (FalseVacuum.at(i) - TrueVacuum.at(i));
+    zpath.push_back(zk);
+    path.push_back(vev_k);
+  }
+  LoadPath(zpath, path);
+}
+
 } // namespace VacuumProfileNS
 } // namespace BSMPT

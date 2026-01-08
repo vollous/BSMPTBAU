@@ -139,11 +139,8 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCKdomain]")
   SetLogger({"--logginglevel::complete=true"});
 
   size_t dim                      = 1;
-  size_t NumberOfSteps            = 10000;
   std::vector<double> TrueVacuum  = {-1};
   std::vector<double> FalseVacuum = {1};
-  std::vector<double> z(NumberOfSteps);
-  std::vector<std::vector<double>> path;
 
   double m   = 0;
   double lam = 1;
@@ -167,16 +164,8 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCKdomain]")
           2 * lam * (-2 + pow(arg[0], 2))}});
   };
 
-  // Initial solution
-  for (size_t i = 0; i < NumberOfSteps; i++)
-  {
-    double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
-    z[i]        = 10 * temp;
-    path.push_back({tanh(sqrt(2) * z[i]) * (1 + sin(sqrt(2) * z[i]) / 10.)});
-  }
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
 
-  VacuumProfile vacuumprofile(
-      dim, TrueVacuum, FalseVacuum, V, dV, Hessian, z, path);
   vacuumprofile.CalculateProfile();
 
   REQUIRE(1 == 1);
@@ -190,11 +179,8 @@ TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
   SetLogger({"--logginglevel::complete=true"});
 
   size_t dim                      = 1;
-  size_t NumberOfSteps            = 10000;
   std::vector<double> TrueVacuum  = {-1};
   std::vector<double> FalseVacuum = {1};
-  std::vector<double> z(NumberOfSteps);
-  std::vector<std::vector<double>> path;
 
   double m   = 0.1;
   double lam = 1;
@@ -218,16 +204,7 @@ TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
           2 * lam * (-2 + pow(arg[0], 2))}});
   };
 
-  // Initial solution
-  for (size_t i = 0; i < NumberOfSteps; i++)
-  {
-    double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
-    z[i]        = 10 * temp;
-    path.push_back({tanh(sqrt(2) * z[i]) * (1 + sin(sqrt(2) * z[i]) / 10.)});
-  }
-
-  VacuumProfile vacuumprofile(
-      dim, TrueVacuum, FalseVacuum, V, dV, Hessian, z, path);
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
   vacuumprofile.CalculateProfile();
 
   REQUIRE(1 == 1);
