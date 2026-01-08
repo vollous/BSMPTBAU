@@ -34,7 +34,7 @@ var hierarchy =
     [ "BSMPT::D2int", "classBSMPT_1_1D2int.html", null ],
     [ "BSMPT::DBPLParameters", "structBSMPT_1_1DBPLParameters.html", null ],
     [ "Difeq", "structDifeq.html", [
-      [ "BSMPT::VacuumProfile::Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfile_1_1Difeq__VacuumProfile.html", null ],
+      [ "BSMPT::VacuumProfileNS::Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html", null ],
       [ "Difeq_TransportEquation", "structDifeq__TransportEquation.html", null ]
     ] ],
     [ "Catch::EventListenerBase", null, [
@@ -104,6 +104,7 @@ var hierarchy =
     [ "BSMPT::Baryo::FHCK::TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", null ],
     [ "BSMPT::user_input", "structBSMPT_1_1user__input.html", null ],
     [ "BSMPT::Vacuum", "structBSMPT_1_1Vacuum.html", null ],
+    [ "BSMPT::VacuumProfileNS::VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html", null ],
     [ "VecDoub", "classVecDoub.html", null ],
     [ "VecInt", "classVecInt.html", null ]
 ];

@@ -23,7 +23,7 @@ var searchData=
   ['num_5fpoints_20',['num_points',['../classcvspline.html#ad317910143f05b599d4db438da3c4d61',1,'cvspline::num_points'],['../structBSMPT_1_1Vacuum.html#a70fac0ee7c733d7303213f72c3832d1f',1,'BSMPT::Vacuum::num_points']]],
   ['num_5fvev_21',['num_vev',['../classBSMPT_1_1TransitionTracer.html#a1a972b6fe1f8318ba7c5a038ee30d138',1,'BSMPT::TransitionTracer']]],
   ['numberofinitialscantemperatures_22',['NumberOfInitialScanTemperatures',['../classBSMPT_1_1BounceSolution.html#a088fc30cb625626a293e0c47825b9ac2',1,'BSMPT::BounceSolution']]],
-  ['numberofsteps_23',['NumberOfSteps',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6650cb0a9ad4a9b42bd330734a2b7af2',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['numberofsteps_23',['numberofsteps',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6650cb0a9ad4a9b42bd330734a2b7af2',1,'BSMPT::Baryo::FHCK::TransportEquations::NumberOfSteps'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae9496c3dd0d37d52e7c74fe5cfe26421',1,'BSMPT::VacuumProfileNS::VacuumProfile::NumberOfSteps']]],
   ['numberpathknots_24',['NumberPathKnots',['../classBSMPT_1_1BounceActionInt.html#a1537015cb4a851b7cb4b79f9d3c75edd',1,'BSMPT::BounceActionInt']]],
   ['nvev_25',['nvev',['../structBSMPT_1_1Minimizer_1_1PointerContainerMinPlane.html#a1268463f9599877a3d48bb061f28a018',1,'BSMPT::Minimizer::PointerContainerMinPlane::nVEV'],['../classBSMPT_1_1Class__Potential__Origin.html#a02f00f70f83e5ddcfc1e85744fe86e58',1,'BSMPT::Class_Potential_Origin::nVEV'],['../structBSMPT_1_1Wall_1_1GSL__params.html#af328fd3781947bd22923ef5e73827efd',1,'BSMPT::Wall::GSL_params::nVEV']]]
 ];

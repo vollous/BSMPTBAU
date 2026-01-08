@@ -7,6 +7,7 @@ var searchData=
   ['leptonmassmatrix_4',['LeptonMassMatrix',['../classBSMPT_1_1Class__Potential__Origin.html#af46b793fb2a42eb2c015dddabb3c1cf3',1,'BSMPT::Class_Potential_Origin']]],
   ['li2_5',['Li2',['../namespaceBSMPT.html#a9b7ee9ad848ad4f37479dd595602f1cc',1,'BSMPT']]],
   ['lin_5fabs_5fderiv_6',['lin_abs_deriv',['../classcvspline.html#ae2e6704ac38588ce28c56b67322e513f',1,'cvspline']]],
-  ['locateminimum_7',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4',1,'BSMPT::MinimumTracer']]],
-  ['logisticfunction_8',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]]
+  ['loadpath_7',['LoadPath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['locateminimum_8',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4',1,'BSMPT::MinimumTracer']]],
+  ['logisticfunction_9',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]]
 ];
