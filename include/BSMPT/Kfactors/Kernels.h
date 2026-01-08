@@ -79,25 +79,20 @@ public:
 class Q9KernelInty
 {
 private:
-  const int k, structure, n, m;
+  const int structure, l;
   const double vw, gamw, s, x;
   double w, pwt;
+  double pre1, pre2;
 
 public:
-  double pre;
-
-  Q9KernelInty(const int k_in,
-               const int structure_in,
-               const int n_in,
-               const int m_in,
+  Q9KernelInty(const int structure_in,
+               const int l_in,
                const double vw_in,
                const double gamw_in,
                const double s_in,
                const double x_in)
-      : k(k_in)
-      , structure(structure_in)
-      , n(n_in)
-      , m(m_in)
+      : structure(structure_in)
+      , l(l_in)
       , vw(vw_in)
       , gamw(gamw_in)
       , s(s_in)

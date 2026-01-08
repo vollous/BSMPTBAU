@@ -42,6 +42,24 @@ double KernelIntw::operator()(const double u)
          (u * u);
 }
 
+void Q9KernelInty::set_all(const double u)
+{
+  w    = x + (1 - u) / u;
+  pwt  = std::sqrt(w * w - x * x);
+  pre1 = pwt * f0(w, s, 1);
+  pre2 = pwt * gamw * f0(w, s, 2);
+}
+
+double Q9KernelInty::operator()(const double y)
+{
+  const double pzt = gamw * (y * pwt - w * vw);
+  const double Et  = gamw * (w - vw * y * pwt);
+  double V         = 1;
+  if (structure >= 1) V *= 1. / std::sqrt(1. + x * x / (pzt * pzt));
+  if (structure >= 2) V = V * V / std::sqrt(1. - x * x / (w * w));
+  return pow(pzt, l - 2) / pow(Et, l + 1) * V * (1. - gamw / Et);
+}
+
 double Kernel::operator()(const KernelType K,
                           const ParticleType P,
                           const double x,
