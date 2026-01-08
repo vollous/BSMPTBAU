@@ -164,7 +164,7 @@ TEST_CASE("Domain Wall lambda^4", "[baryoFHCKdomain]")
           2 * lam * (-2 + pow(arg[0], 2))}});
   };
 
-  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian);
 
   vacuumprofile.CalculateProfile();
 
@@ -204,7 +204,7 @@ TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
           2 * lam * (-2 + pow(arg[0], 2))}});
   };
 
-  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian);
   vacuumprofile.CalculateProfile();
 
   REQUIRE(1 == 1);
