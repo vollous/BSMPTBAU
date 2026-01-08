@@ -19,26 +19,55 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
 
   std::string path = "kernels/";
 
-  for (int type = 0; type <= 1; type++)
+  for (int l = 0; l <= 10; l++)
   {
-    ParticleType PType = (type == 0 ? Fermion : Boson);
-    std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
-    std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
-    for (int l = 0; l <= 10; l++)
+    std::cout << "Current moment: " << l << "\n\n";
+    for (int type = 0; type <= 1; type++)
     {
-      std::cout << l << "\n";
+      ParticleType PType = (type == 0 ? Fermion : Boson);
+      std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
+      std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
       Kernel Kern(l);
-      std::string str = path + "D" + std::to_string(l) + suffix;
-      std::ofstream file(str);
 
-      for (double i = 0.; i < 10.01; i += 0.1)
+      std::cout << "D-Kernel\n";
       {
-        double x = -8 + i;
-        x        = pow(10, x);
-        file << x << "\t" << Kern(KernelType::D, PType, x, vw) << "\n";
-      };
-
-      file.close();
+        std::string str = path + "D" + std::to_string(l) + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 10.01; i += 0.1)
+        {
+          double x = -8 + i;
+          x        = pow(10, x);
+          file << x << "\t" << Kern(KernelType::D, PType, x, vw) << "\n";
+        };
+        file.close();
+      }
+      if (l != 0)
+      {
+        std::cout << "Q-Kernel\n";
+        {
+          std::string str = path + "Q" + std::to_string(l) + suffix;
+          std::ofstream file(str);
+          for (double i = 0.; i < 10.01; i += 0.1)
+          {
+            double x = -8 + i;
+            x        = pow(10, x);
+            file << x << "\t" << Kern(KernelType::Q, PType, x, vw) << "\n";
+          };
+          file.close();
+        }
+        std::cout << "Q8o-Kernel\n";
+        {
+          std::string str = path + "Q8o" + std::to_string(l) + suffix;
+          std::ofstream file(str);
+          for (double i = 0.; i < 10.01; i += 0.1)
+          {
+            double x = -8 + i;
+            x        = pow(10, x);
+            file << x << "\t" << Kern(KernelType::Q8o, PType, x, vw) << "\n";
+          };
+          file.close();
+        }
+      }
     }
   }
 
