@@ -117,9 +117,7 @@ struct Difeq_VacuumProfile : Difeq
       zz.push_back(z[k]);
       double t = 0;
       for (size_t j = 0; j < dim; j++)
-      {
         t += pow(y[j][k], 2);
-      }
       phigrad.push_back(t);
     }
 

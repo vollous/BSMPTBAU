@@ -130,7 +130,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
   REQUIRE(1 == 1);
 }
 
-TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
+TEST_CASE("Domain Wall lambda^4", "[baryoFHCKdomain]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
@@ -139,32 +139,11 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
   SetLogger({"--logginglevel::complete=true"});
 
   size_t dim                      = 1;
-  double eps                      = 0.01;
   size_t NumberOfSteps            = 10000;
   std::vector<double> TrueVacuum  = {-1};
   std::vector<double> FalseVacuum = {1};
-  double itmax                    = 20;
-  double conv                     = 1e-8;
-  double slowc                    = 1;
-  int NB                          = dim;
-  ProfileSolverMode mode          = ProfileSolverMode::Deriv;
-  VecDoub zList(NumberOfSteps);
-  VecDoub scalv(2 * dim, 1);
   std::vector<double> z(NumberOfSteps);
   std::vector<std::vector<double>> path;
-  VecInt indexv(2 * dim + 1);
-  for (size_t i = 0; i < 2 * dim + 1; i++)
-  {
-    // 0 1 2 3 4 ...
-    indexv[i] = i;
-    // switch index of field and deriv
-    // 0 1 2 3 4 -> 2 3 0 1 4
-    indexv[i] += dim * ((i < dim) * 2 - 1) *
-                 /* dont update last element*/
-                 (i < 2 * dim) *
-                 /* reordeing only necessary for dirichlet */
-                 (mode == ProfileSolverMode::Field);
-  }
 
   double m   = 0;
   double lam = 1;
@@ -189,59 +168,33 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
   };
 
   // Initial solution
-  MatDoub y(dim * 2, zList.size(), 0.);
-  y.zero();
   for (size_t i = 0; i < NumberOfSteps; i++)
   {
     double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
-    zList[i]    = 10 * temp;
-
-    y[0][i] = sqrt(2) * pow(cosh(sqrt(2) * zList[i]), -2);
-    y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
+    z[i]        = 10 * temp;
+    path.push_back({tanh(sqrt(2) * z[i]) * (1 + sin(sqrt(2) * z[i]) / 10.)});
   }
 
-  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
-      mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
-  RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
+  VacuumProfile vacuumprofile(
+      dim, TrueVacuum, FalseVacuum, V, dV, Hessian, z, path);
+  vacuumprofile.CalculateProfile();
 
   REQUIRE(1 == 1);
 }
-
-TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
+TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
+  using namespace VacuumProfileNS;
 
   SetLogger({"--logginglevel::complete=true"});
 
   size_t dim                      = 1;
-  double eps                      = 0.01;
   size_t NumberOfSteps            = 10000;
   std::vector<double> TrueVacuum  = {-1};
   std::vector<double> FalseVacuum = {1};
-  double itmax                    = 20;
-  double conv                     = 1e-8;
-  double slowc                    = 1;
-  int NB                          = dim;
-  VacuumProfileNS::ProfileSolverMode mode =
-      VacuumProfileNS::ProfileSolverMode::Field;
-  VecDoub zList(NumberOfSteps);
-  VecDoub scalv(2 * dim, 1);
-
-  VecInt indexv(2 * dim + 1);
-  for (size_t i = 0; i < 2 * dim + 1; i++)
-  {
-    // 0 1 2 3 4 ...
-    indexv[i] = i;
-    // switch index of field and deriv
-    // 0 1 2 3 4 -> 2 3 0 1 4
-    indexv[i] += dim * ((i < dim) * 2 - 1) *
-                 /* dont update last element*/
-                 (i < 2 * dim) *
-                 /* reordeing only necessary for dirichlet */
-                 (mode == VacuumProfileNS::ProfileSolverMode::Field);
-  }
+  std::vector<double> z(NumberOfSteps);
+  std::vector<std::vector<double>> path;
 
   double m   = 0.1;
   double lam = 1;
@@ -266,21 +219,16 @@ TEST_CASE("Domain Wall lambda^4 Mode=Field", "[baryoFHCKdomain]")
   };
 
   // Initial solution
-  MatDoub y(dim * 2, zList.size(), 0.);
-  y.zero();
   for (size_t i = 0; i < NumberOfSteps; i++)
   {
     double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
-    zList[i]    = 10 * temp;
-
-    y[0][i] = sqrt(2) * pow(cosh(sqrt(2) * zList[i]), -2);
-    y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
+    z[i]        = 10 * temp;
+    path.push_back({tanh(sqrt(2) * z[i]) * (1 + sin(sqrt(2) * z[i]) / 10.)});
   }
 
-  VacuumProfileNS::Difeq_VacuumProfile difeq_vacuumprofile(
-      mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
-  RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
+  VacuumProfile vacuumprofile(
+      dim, TrueVacuum, FalseVacuum, V, dV, Hessian, z, path);
+  vacuumprofile.CalculateProfile();
 
   REQUIRE(1 == 1);
 }

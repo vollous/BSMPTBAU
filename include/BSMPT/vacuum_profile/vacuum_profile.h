@@ -4,6 +4,7 @@
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/models/SMparam.h>
 #include <BSMPT/utility/Logger.h>
+#include <BSMPT/utility/relaxation/solvde.h>
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/difeq_vacuum_profile.h>
 #include <iostream>
@@ -25,42 +26,61 @@ struct VacuumProfile
    *
    */
   ProfileSolverMode mode = ProfileSolverMode::Deriv;
+
   /**
    * @brief Dimension of VEV space
    *
    */
   const size_t &dim;
+
+  /**
+   * @brief Number of steps in \f$ z \f$
+   *
+   */
+  size_t NumberOfSteps = 1000;
+
   /**
    * @brief True and False Vacuum
    *
    */
   const std::vector<double> &TrueVacuum, &FalseVacuum;
+
   /**
    * @brief Potential
    *
    */
   const std::function<double(std::vector<double>)> &V;
+
   /**
    * @brief Gradient
    *
    */
   const std::function<std::vector<double>(std::vector<double>)> &dV;
+
   /**
    * @brief Hessian
    *
    */
   const std::function<std::vector<std::vector<double>>(std::vector<double>)>
       &Hessian;
+
   /**
    * @brief z positions corresponding to the path knots
    *
    */
-  std::vector<double> z;
+  VecDoub z;
+
   /**
-   * @brief Tunneling
+   * @brief Path that the solver takes
    *
    */
-  std::vector<std::vector<double>> &path;
+  MatDoub y;
+
+  /**
+   * @brief Scale of each field. Used for the solver
+   *
+   */
+  VecDoub scalv;
 
   /**
    * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but putting
@@ -68,6 +88,23 @@ struct VacuumProfile
    *
    */
   void CenterPath();
+
+  /**
+   * @brief Calculate the order of the fields to pass to the numerical solver
+   *
+   * @param mode solver mode
+   * @return VecInt reordering
+   */
+  VecInt Calcindexv();
+
+  /**
+   * @brief Load path -> z, y
+   *
+   * @param z_In \f$ z \f$ positions
+   * @param path_In field position at \f$ z \f$
+   */
+  void LoadPath(const std::vector<double> &z_In,
+                const std::vector<std::vector<double>> &path_In);
 
   /**
    * @brief Calculate the vacuum profile
