@@ -1,0 +1,93 @@
+#include <BSMPT/Kfactors/Kernels.h>
+
+namespace BSMPT
+{
+
+double f0(const double x, const double s, const int diff)
+{
+  if (x > 100) return std::pow(-1, diff) * std::exp(-x);
+  double res        = 0.;
+  const double expw = std::exp(-x / 2.);
+  if (diff == 0)
+    res += expw / (1 / expw + s * expw);
+  else if (diff == 1)
+    res -= 1 / std::pow(1 / expw + s * expw, 2);
+  else if (diff == 2)
+    res += (1 / expw - s * expw) / std::pow(1 / expw + s * expw, 3);
+  return res;
+}
+
+void KernelInty::set_all(const double u)
+{
+  w   = x + (1 - u) / u;
+  pwt = std::sqrt(w * w - x * x);
+  pre = pwt * f0(w, s, k);
+}
+
+double KernelInty::operator()(const double y)
+{
+  const double pzt = gamw * (y * pwt - w * vw);
+  const double Et  = gamw * (w - vw * y * pwt);
+  double V         = 1;
+  if (structure >= 1) V *= 1. / std::sqrt(1. + x * x / (pzt * pzt));
+  if (structure >= 2) V = V * V / std::sqrt(1. - x * x / (w * w));
+  return std::pow(pzt, n) / std::pow(Et, m - 1) * V;
+}
+
+double KernelIntw::operator()(const double u)
+{
+  Integrand.set_all(u);
+  if (std::abs(Integrand.pre) == 0.) return 0.;
+  return Integrand.pre * adap_gauss_kronrod_15(Integrand, -1, 1, 1e-8) /
+         (u * u);
+}
+
+double Kernel::operator()(const KernelType K,
+                          const ParticleType P,
+                          const double x,
+                          const double vw)
+{
+  const double statistic = (P == ParticleType::Fermion ? 1. : -1.);
+  double gamw            = 1. / std::sqrt(1. - vw * vw);
+  double res             = -3 / (M_PI * M_PI * gamw);
+
+  switch (K)
+  {
+  case KernelType::D:
+  {
+    KernelIntw integrand(1, 0, l, l, vw, gamw, statistic, x);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+  }
+  break;
+  case KernelType::Q:
+  {
+    KernelIntw integrand(2, 0, l - 1, l, vw, gamw, statistic, x);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+  }
+  break;
+  case KernelType::Qe:
+  {
+    KernelIntw integrand(1, 0, l - 1, l, vw, gamw, statistic, x);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+  }
+  break;
+  case KernelType::Q8o:
+  {
+    KernelIntw integrand(1, 0, l - 2, l, vw, gamw, statistic, x);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+  }
+  break;
+  case KernelType::Q9o:
+  {
+    KernelIntw integrand(1, 0, l, l, vw, gamw, statistic, x);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+  }
+  break;
+
+  default: std::cout << "This kernel type is not supported\n"; break;
+  }
+
+  return res;
+}
+
+} // namespace BSMPT

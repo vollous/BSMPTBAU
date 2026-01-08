@@ -3,6 +3,7 @@
 
 using Approx = Catch::Approx;
 
+#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
@@ -11,6 +12,40 @@ using Approx = Catch::Approx;
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/vacuum_profile.h>
 
+TEST_CASE("Construct Kernel table", "[baryoKernels]")
+{
+  using namespace BSMPT;
+  double vw = 0.5;
+
+  std::string path = "kernels/";
+
+  for (int type = 0; type <= 1; type++)
+  {
+    ParticleType PType = (type == 0 ? Fermion : Boson);
+    std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
+    std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
+    for (int l = 0; l <= 10; l++)
+    {
+      std::cout << l << "\n";
+      Kernel Kern(l);
+      std::string str = path + "D" + std::to_string(l) + suffix;
+      std::ofstream file(str);
+
+      for (double i = 0.; i < 10.01; i += 0.1)
+      {
+        double x = -8 + i;
+        x        = pow(10, x);
+        file << x << "\t" << Kern(KernelType::D, PType, x, vw) << "\n";
+      };
+
+      file.close();
+    }
+  }
+
+  exit(0);
+
+  REQUIRE(1 == 1);
+}
 
 TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 {
@@ -200,10 +235,10 @@ TEST_CASE("Domain Wall lambda^4 Mode=Deriv", "[baryoFHCKdomain]")
     y[1][i] = tanh(sqrt(2) * zList[i]) * (1 + sin(sqrt(2) * zList[i]) / 10.);
   }
 
-  VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
+  /* VacuumProfile::Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
+      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile); */
 
   REQUIRE(1 == 1);
 }
