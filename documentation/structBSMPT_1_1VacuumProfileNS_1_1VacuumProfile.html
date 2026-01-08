@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('structBSMPT_1_1VacuumProfileNS_1_1Vacu
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">BSMPT::VacuumProfileNS::VacuumProfile Struct Reference</div></div>
@@ -131,6 +132,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculateProfile</b> 
 <tr class="memitem:ae284510f7b35953f2b1bd4768f19fc46" id="r_ae284510f7b35953f2b1bd4768f19fc46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae284510f7b35953f2b1bd4768f19fc46">VacuumProfile</a> (const size_t &amp;dim_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In, std::vector&lt; double &gt; &amp;z_In, std::vector&lt; std::vector&lt; double &gt; &gt; &amp;path_In)</td></tr>
 <tr class="memdesc:ae284510f7b35953f2b1bd4768f19fc46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a> Profile object.  <br /></td></tr>
 <tr class="separator:ae284510f7b35953f2b1bd4768f19fc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a1c8b5953d43763ad9f70a1fc54a8129f" id="r_a1c8b5953d43763ad9f70a1fc54a8129f"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a1c8b5953d43763ad9f70a1fc54a8129f">CalculateWidth</a> (const std::vector&lt; double &gt; &amp;<a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6104bb10f8a2978cf2ee5e811c1d7fdf">TrueVacuum</a>, const std::vector&lt; double &gt; &amp;FalseVacuum, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;<a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3f0fd9345e734f275f458df843d04100">V</a>)</td></tr>
+<tr class="memdesc:a1c8b5953d43763ad9f70a1fc54a8129f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the bubble width using a rought approximation \( L_w =
+\frac{v_c}{\sqrt{8 V_b}} \).  <br /></td></tr>
+<tr class="separator:a1c8b5953d43763ad9f70a1fc54a8129f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -418,6 +426,63 @@ const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::ve
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classVecInt.html">VecInt</a> reordering </dd></dl>
+
+</div>
+</div>
+<a id="a1c8b5953d43763ad9f70a1fc54a8129f" name="a1c8b5953d43763ad9f70a1fc54a8129f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c8b5953d43763ad9f70a1fc54a8129f">&#9670;&#160;</a></span>CalculateWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::VacuumProfileNS::VacuumProfile::CalculateWidth </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>TrueVacuum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>FalseVacuum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the bubble width using a rought approximation \( L_w =
+\frac{v_c}{\sqrt{8 V_b}} \). </p>
+<dl class="section return"><dt>Returns</dt><dd>double</dd></dl>
+<p>Calculate the bubble width using a rought approximation \( L_w =
+\frac{v_c}{\sqrt{8 V_b}} \). Algorithm from BSMPTv2 on the straight line</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TrueVacuum</td><td>True vacuum </td></tr>
+    <tr><td class="paramname">FalseVacuum</td><td>False vacuum </td></tr>
+    <tr><td class="paramname">V</td><td>Potential </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
 </div>
 </div>

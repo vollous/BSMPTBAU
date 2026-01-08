@@ -4,7 +4,6 @@ var searchData=
   ['emptyvalue_1',['EmptyValue',['../namespaceBSMPT.html#a429cace82521dd303e0345dbb2c455a3',1,'BSMPT']]],
   ['eps_2',['eps',['../classBSMPT_1_1BounceActionInt.html#a69e90221e7b5b887ae3fd7553e82493b',1,'BSMPT::BounceActionInt']]],
   ['epsturb_3',['epsturb',['../classBSMPT_1_1BounceSolution.html#adb0a1026ce5b6ba5762426a0e12b46e1',1,'BSMPT::BounceSolution']]],
-  ['eta_4',['eta',['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#afff20aa81ffc9a21e4aae6fda32302a0',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile']]],
-  ['etainterface_5',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['exactsolutionthreshold_6',['ExactSolutionThreshold',['../classBSMPT_1_1BounceActionInt.html#a095ef140bf0243f9808721aae53c4039',1,'BSMPT::BounceActionInt']]]
+  ['etainterface_4',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['exactsolutionthreshold_5',['ExactSolutionThreshold',['../classBSMPT_1_1BounceActionInt.html#a095ef140bf0243f9808721aae53c4039',1,'BSMPT::BounceActionInt']]]
 ];

@@ -119,9 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a242613d704ad9e130c5bc984f8785f55" id="r_a242613d704ad9e130c5bc984f8785f55"><td class="memItemLeft" align="right" valign="top"><a id="a242613d704ad9e130c5bc984f8785f55" name="a242613d704ad9e130c5bc984f8785f55"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Difeq_VacuumProfile</b> (const ProfileSolverMode &amp;mode_In, const size_t &amp;dim_In, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;z_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In)</td></tr>
 <tr class="separator:a242613d704ad9e130c5bc984f8785f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e5eb912e6f2812957d21b753e93bf4e" id="r_a7e5eb912e6f2812957d21b753e93bf4e"><td class="memItemLeft" align="right" valign="top"><a id="a7e5eb912e6f2812957d21b753e93bf4e" name="a7e5eb912e6f2812957d21b753e93bf4e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calc_eta</b> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
-<tr class="separator:a7e5eb912e6f2812957d21b753e93bf4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3b4e94d3b7a469623dd3c88b259d049" id="r_aa3b4e94d3b7a469623dd3c88b259d049"><td class="memItemLeft" align="right" valign="top"><a id="aa3b4e94d3b7a469623dd3c88b259d049" name="aa3b4e94d3b7a469623dd3c88b259d049"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>calc_mu</b> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
+<tr class="separator:aa3b4e94d3b7a469623dd3c88b259d049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad2a702e956b5862902b28d5dc5af049" id="r_aad2a702e956b5862902b28d5dc5af049"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#aad2a702e956b5862902b28d5dc5af049">smatrix</a> (const int k, const int k1, const int k2, const int jsf, <a class="el" href="classVecInt.html">VecInt</a> &amp;indexv, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;s, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
 <tr class="separator:aad2a702e956b5862902b28d5dc5af049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -158,9 +158,9 @@ const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)
 const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Hessian</b></td></tr>
 <tr class="memdesc:abb15021d415bdf059ff81f42b22575e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hessian. <br /></td></tr>
 <tr class="separator:abb15021d415bdf059ff81f42b22575e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afff20aa81ffc9a21e4aae6fda32302a0" id="r_afff20aa81ffc9a21e4aae6fda32302a0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#afff20aa81ffc9a21e4aae6fda32302a0">eta</a> = 0</td></tr>
-<tr class="memdesc:afff20aa81ffc9a21e4aae6fda32302a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friction coefficient.  <br /></td></tr>
-<tr class="separator:afff20aa81ffc9a21e4aae6fda32302a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4c5d8c7bde52c3964bd3d53e411b5fa" id="r_af4c5d8c7bde52c3964bd3d53e411b5fa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa">mu</a> = 0</td></tr>
+<tr class="memdesc:af4c5d8c7bde52c3964bd3d53e411b5fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friction coefficient.  <br /></td></tr>
+<tr class="separator:af4c5d8c7bde52c3964bd3d53e411b5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a386f7896a56da19a0d8e4c1d663b8996" id="r_a386f7896a56da19a0d8e4c1d663b8996"><td class="memItemLeft" align="right" valign="top"><a id="a386f7896a56da19a0d8e4c1d663b8996" name="a386f7896a56da19a0d8e4c1d663b8996"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>DeltaV</b></td></tr>
 <tr class="memdesc:a386f7896a56da19a0d8e4c1d663b8996"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#a1459538fb2ddc3ea684f2914d7dc17be" title="Potential.">V(False)</a> - <a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#a1459538fb2ddc3ea684f2914d7dc17be" title="Potential.">V(True)</a> <br /></td></tr>
@@ -236,14 +236,14 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>DeltaV</b></td></tr
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="afff20aa81ffc9a21e4aae6fda32302a0" name="afff20aa81ffc9a21e4aae6fda32302a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afff20aa81ffc9a21e4aae6fda32302a0">&#9670;&#160;</a></span>eta</h2>
+<a id="af4c5d8c7bde52c3964bd3d53e411b5fa" name="af4c5d8c7bde52c3964bd3d53e411b5fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4c5d8c7bde52c3964bd3d53e411b5fa">&#9670;&#160;</a></span>mu</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double BSMPT::VacuumProfileNS::Difeq_VacuumProfile::eta = 0</td>
+          <td class="memname">double BSMPT::VacuumProfileNS::Difeq_VacuumProfile::mu = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
