@@ -30,8 +30,9 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
 {
   if (z_In.size() != path_In.size())
     throw("z and path have different lengths.");
-  z = VecDoub(z_In.size(), 0.);
-  y = MatDoub(dim * 2, z.size(), 0.);
+  scalv = VecDoub(2 * dim, -1);
+  z     = VecDoub(z_In.size(), 0.);
+  y     = MatDoub(dim * 2, z.size(), 0.);
   for (size_t k = 0; k < path_In.size(); k++)
   {
     // load z position
@@ -44,18 +45,21 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
       if (k != 0 and k != path_In.size() - 1) // ignore first and last point
         y[i][k] = (path_In[k + 1][i] - path_In[k - 1][i]) /
                   (z_In[k + 1] - z_In[k - 1]);
+      // calculate scale of quantities
+      if (abs(y[i][k]) > scalv[i]) scalv[i] = abs(y[i][k]);
+      if (abs(y[dim + i][k]) > scalv[dim + i])
+        scalv[dim + i] = abs(y[dim + i][k]);
     }
   }
 }
 
 void VacuumProfile::CalculateProfile()
 {
-  size_t itmax  = 10;
-  double conv   = 1e-8;
-  double slowc  = 1;
-  size_t NB     = dim;
-  mode          = ProfileSolverMode::Field;
-  scalv         = VecDoub(2 * dim, 1);
+  size_t itmax = 10;
+  double conv  = 1e-8;
+  double slowc = 1;
+  mode         = ProfileSolverMode::Field;
+
   VecInt indexv = Calcindexv();
   std::stringstream ss;
 
@@ -68,7 +72,7 @@ void VacuumProfile::CalculateProfile()
   Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, z, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
+      itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
 
   ss << "\neta = \t" << difeq_vacuumprofile.eta << "\n";
 
