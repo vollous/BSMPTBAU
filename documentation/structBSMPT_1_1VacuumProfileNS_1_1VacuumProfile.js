@@ -1,7 +1,7 @@
 var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
 [
     [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a32961e254b93a0aea9f7787b83a0e096", null ],
-    [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a11a429c808e0b8d163fb8987bbdf9f75", null ],
+    [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a146c75f3076165eeaccfc1e290270e16", null ],
     [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae284510f7b35953f2b1bd4768f19fc46", null ],
     [ "Calcindexv", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f", null ],
     [ "CalculateProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a522654ef006a9662691e06d3a6eb0cca", null ],
