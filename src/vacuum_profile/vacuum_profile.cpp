@@ -74,11 +74,35 @@ void VacuumProfile::CalculateProfile()
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
 
-  ss << "\neta = \t" << difeq_vacuumprofile.eta << "\n";
+  ss << "\nη = \t" << difeq_vacuumprofile.eta << "\n";
 
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
+double VacuumProfile::CalculateWidth(
+    const std::vector<double> &TrueVacuum,
+    const std::vector<double> &FalseVacuum,
+    const std::function<double(std::vector<double>)> &V)
+{
+  size_t NumberPointsBarrier = 100;
+
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Estimating Lw using a rough approximation");
+
+  const double vc     = BSMPT::L2NormVector(TrueVacuum - FalseVacuum);
+  const double Vtrue  = V(TrueVacuum);
+  const double Vfalse = V(FalseVacuum);
+  double Vb           = -1.;
+  for (size_t k = 0; k < NumberPointsBarrier; k++)
+  {
+    const double Vk = V(TrueVacuum + (double)k / (NumberPointsBarrier - 1.) *
+                                         (FalseVacuum - TrueVacuum));
+    Vb              = std::max(Vb, std::max(abs(Vtrue - Vk), abs(Vfalse - Vk)));
+  }
+  const double Lw = vc / sqrt(8 * Vb);
+
+  return Lw;
+}
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
     const size_t &dim_In,
@@ -134,6 +158,7 @@ VacuumProfile::VacuumProfile(
   std::vector<std::vector<double>> path;
   std::vector<double> vev_k(dim), zpath;
   // Use the kink to calculate a first approximation
+  Logger::Write(LoggingLevel::VacuumProfile, "Lw = " + std::to_string(Lw));
   for (size_t k = 0; k < NumberOfSteps; k++)
   {
     // uniformly distributed between -10 Lw and 10 Lw
@@ -147,6 +172,28 @@ VacuumProfile::VacuumProfile(
   }
   LoadPath(zpath, path);
 }
+
+VacuumProfile::VacuumProfile(
+    // Dimension of VEV space
+    const size_t &dim_In,
+    // True
+    const std::vector<double> &TrueVacuum_In,
+    // False
+    const std::vector<double> &FalseVacuum_In,
+    // Potential
+    const std::function<double(std::vector<double>)> &V_In,
+    // Gradient
+    const std::function<std::vector<double>(std::vector<double>)> &dV_In,
+    // Hessian
+    const std::function<std::vector<std::vector<double>>(std::vector<double>)>
+        &Hessian_In)
+    : VacuumProfile(dim_In,
+                    TrueVacuum_In,
+                    FalseVacuum_In,
+                    V_In,
+                    dV_In,
+                    Hessian_In,
+                    CalculateWidth(TrueVacuum_In, FalseVacuum_In, V_In)) {};
 
 } // namespace VacuumProfileNS
 } // namespace BSMPT

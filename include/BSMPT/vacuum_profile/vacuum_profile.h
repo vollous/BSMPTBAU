@@ -98,6 +98,27 @@ struct VacuumProfile
   VecInt Calcindexv();
 
   /**
+   * @brief Calculate the bubble width using a rought approximation \f$ L_w =
+   * \frac{v_c}{\sqrt{8 V_b}} \f$
+   *
+   * @return double
+   */
+
+  /**
+   * @brief Calculate the bubble width using a rought approximation \f$ L_w =
+   * \frac{v_c}{\sqrt{8 V_b}} \f$. Algorithm from BSMPTv2 on the straight line
+   *
+   * @param TrueVacuum True vacuum
+   * @param FalseVacuum False vacuum
+   * @param V Potential
+   * @return double
+   */
+  static double
+  CalculateWidth(const std::vector<double> &TrueVacuum,
+                 const std::vector<double> &FalseVacuum,
+                 const std::function<double(std::vector<double>)> &V);
+
+  /**
    * @brief Load path -> z, y
    *
    * @param z_In \f$ z \f$ positions
