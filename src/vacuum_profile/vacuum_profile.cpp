@@ -12,15 +12,13 @@ namespace VacuumProfileNS
 VecInt VacuumProfile::Calcindexv()
 {
   VecInt indexv(2 * dim);
-  for (size_t i = 0; i < 2 * dim + 1; i++)
+  for (size_t i = 0; i < 2 * dim; i++)
   {
     // 0 1 2 3 4 5...
     indexv[i] = i;
     // switch index of field and deriv
     // 0 1 2 3 4 5-> 3 4 5 1 2 3
     indexv[i] += dim * ((i < dim) * 2 - 1) *
-                 /* dont update last element*/
-                 (i < 2 * dim) *
                  /* reordeing only necessary for dirichlet */
                  (mode == ProfileSolverMode::Field);
   }

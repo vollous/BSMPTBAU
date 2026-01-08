@@ -209,3 +209,50 @@ TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
 
   REQUIRE(1 == 1);
 }
+
+TEST_CASE("Test indexv", "[baryoFHCK]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  using namespace VacuumProfileNS;
+
+  size_t dim = 4;
+  std::vector<double> TrueVacuum(dim, -1);
+  std::vector<double> FalseVacuum(dim, 1);
+
+  std::function<double(std::vector<double>)> V;
+  std::function<std::vector<double>(std::vector<double>)> dV;
+  std::function<std::vector<std::vector<double>>(std::vector<double>)> Hessian;
+
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
+
+  VecInt indexv, indexvField(8), indexvDeriv(8);
+
+  indexvDeriv[0] = 0;
+  indexvDeriv[1] = 1;
+  indexvDeriv[2] = 2;
+  indexvDeriv[3] = 3;
+  indexvDeriv[4] = 4;
+  indexvDeriv[5] = 5;
+  indexvDeriv[6] = 6;
+  indexvDeriv[7] = 7;
+
+  indexvField[0] = 4;
+  indexvField[1] = 5;
+  indexvField[2] = 6;
+  indexvField[3] = 7;
+  indexvField[4] = 0;
+  indexvField[5] = 1;
+  indexvField[6] = 2;
+  indexvField[7] = 3;
+
+  vacuumprofile.mode = VacuumProfileNS::ProfileSolverMode::Field;
+  indexv             = vacuumprofile.Calcindexv();
+  for (size_t i = 0; i < 2 * dim; i++)
+    CHECK(indexv[i] == indexvField[i]);
+
+  vacuumprofile.mode = VacuumProfileNS::ProfileSolverMode::Deriv;
+  indexv             = vacuumprofile.Calcindexv();
+  for (size_t i = 0; i < 2 * dim; i++)
+    CHECK(indexv[i] == indexvDeriv[i]);
+}
