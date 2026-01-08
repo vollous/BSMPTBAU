@@ -74,7 +74,7 @@ void VacuumProfile::CalculateProfile()
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
 
-  ss << "\nη = \t" << difeq_vacuumprofile.eta << "\n";
+  ss << "\nμ = \t" << difeq_vacuumprofile.mu << "\n";
 
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
