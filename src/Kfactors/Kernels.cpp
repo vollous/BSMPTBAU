@@ -6,15 +6,29 @@ namespace BSMPT
 double f0(const double x, const double s, const int diff)
 {
   if (x > 100) return std::pow(-1, diff) * std::exp(-x);
-  double res        = 0.;
+  if (x < 1e-3)
+  {
+    if (diff == 0)
+    {
+      if (s == 1.)
+        return 0.5 - x / 4.;
+      else
+        return 1. / x - 0.5 + x / 12.;
+    }
+    else if (diff == 1)
+      return -0.25 + x * x / 16.;
+    else if (diff == 2)
+      return x / 8. - x * x * x / 24.;
+  }
+
   const double expw = std::exp(-x / 2.);
   if (diff == 0)
-    res += expw / (1 / expw + s * expw);
+    return expw / (1. / expw + s * expw);
   else if (diff == 1)
-    res -= 1 / std::pow(1 / expw + s * expw, 2);
+    return -1. / std::pow(1. / expw + s * expw, 2);
   else if (diff == 2)
-    res += (1 / expw - s * expw) / std::pow(1 / expw + s * expw, 3);
-  return res;
+    return (1. / expw - s * expw) / std::pow(1. / expw + s * expw, 3);
+  return 0.;
 }
 
 void KernelInty::set_all(const double u)
@@ -57,7 +71,15 @@ double Q9KernelInty::operator()(const double y)
   double V         = 1;
   if (structure >= 1) V *= 1. / std::sqrt(1. + x * x / (pzt * pzt));
   if (structure >= 2) V = V * V / std::sqrt(1. - x * x / (w * w));
-  return pow(pzt, l - 2) / pow(Et, l + 1) * V * (1. - gamw / Et);
+  return pow(pzt, l - 2) / pow(Et, l + 1) * V * (pre1 - pre2 * Et);
+}
+
+double Q9KernelIntw::operator()(const double u)
+{
+  Integrand.set_all(u);
+  if ((std::abs(Integrand.pre1) == 0.) && (std::abs(Integrand.pre2) == 0.))
+    return 0.;
+  return adap_gauss_kronrod_15(Integrand, -1, 1, 1e-8) / (u * u);
 }
 
 double Kernel::operator()(const KernelType K,
@@ -97,12 +119,12 @@ double Kernel::operator()(const KernelType K,
   break;
   case KernelType::Q9o:
   {
-    double k1, k2, estimate;
-    KernelIntw integrand1(1, structure, l - 2, l + 2, vw, gamw, statistic, x);
-    KernelIntw integrand2(2, structure, l - 2, l + 1, vw, gamw, statistic, x);
-    k1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8);
-    k2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8);
-    res *= (k1 - gamw * k2) / 4.;
+    Q9KernelIntw integrand(structure, l, vw, gamw, statistic, x);
+    /* KernelIntw integrand1(1, structure, l - 2, l + 2, vw, gamw, statistic,
+    x); KernelIntw integrand2(2, structure, l - 2, l + 1, vw, gamw, statistic,
+    x); k1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8); k2 =
+    adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8); */
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 4.;
   }
   break;
 

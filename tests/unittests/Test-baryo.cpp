@@ -15,11 +15,9 @@ using Approx = Catch::Approx;
 TEST_CASE("Construct Kernel table", "[baryoKernels]")
 {
   using namespace BSMPT;
-  double vw = 0.5;
-
   std::string path = "kernels/";
 
-  for (int l = 0; l <= 10; l++)
+  for (int l = 0; l <= 2; l++)
   {
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
@@ -29,7 +27,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
       Kernel Kern(l, 2);
 
-      /* std::cout << "D-Kernel\n";
+      std::cout << "D-Kernel\n";
       {
         std::string str = path + "D" + std::to_string(l) + suffix;
         std::ofstream file(str);
@@ -37,10 +35,19 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
         {
           double x = -8 + i;
           x        = pow(10, x);
-          file << x << "\t" << Kern(KernelType::D, PType, x, vw) << "\n";
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::D, PType, x, 0.1) << "\n";
+          else
+            for (double j = 0.; j < 5.01; j += 0.064)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::D, PType, x, vw) << "\n";
+            }
         };
         file.close();
-      } */
+      }
       if (l != 0)
       {
         /* std::cout << "Q-Kernel\n";
@@ -67,7 +74,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           };
           file.close();
         } */
-        std::cout << "Q9o-Kernel\n";
+        /* std::cout << "Q9o-Kernel\n";
         {
           std::string str = path + "Q9o" + std::to_string(l) + suffix;
           std::ofstream file(str);
@@ -79,7 +86,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             file << x << "\t" << Kern(KernelType::Q9o, PType, x, vw) << "\n";
           };
           file.close();
-        }
+        } */
       }
     }
   }

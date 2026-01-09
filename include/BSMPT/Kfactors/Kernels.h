@@ -82,9 +82,10 @@ private:
   const int structure, l;
   const double vw, gamw, s, x;
   double w, pwt;
-  double pre1, pre2;
 
 public:
+  double pre1, pre2;
+
   Q9KernelInty(const int structure_in,
                const int l_in,
                const double vw_in,
@@ -100,6 +101,23 @@ public:
   void set_all(const double u);
   double operator()(const double y);
   ~Q9KernelInty() {};
+};
+
+class Q9KernelIntw
+{
+private:
+  Q9KernelInty Integrand;
+
+public:
+  Q9KernelIntw(const int structure_in,
+               const int l_in,
+               const double vw_in,
+               const double gamw_in,
+               const double s_in,
+               const double x_in)
+      : Integrand(structure_in, l_in, vw_in, gamw_in, s_in, x_in) {};
+  double operator()(const double u);
+  ~Q9KernelIntw() {};
 };
 
 class Kernel
