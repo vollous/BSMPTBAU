@@ -83,7 +83,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
   double conv                     = 1e-10;
   double slowc                    = 1e-2;
   int NB                          = 4;
-  VecDoub zList(NumberOfSteps);
+  std::vector<double> zList(NumberOfSteps);
   MatDoub y(dim * 2, zList.size(), 0.);
   y.zero();
   VecDoub scalv(zList.size(), 246.22);

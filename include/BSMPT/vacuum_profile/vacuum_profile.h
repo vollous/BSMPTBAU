@@ -68,7 +68,7 @@ struct VacuumProfile
    * @brief z positions corresponding to the path knots
    *
    */
-  VecDoub z;
+  std::vector<double> z;
 
   /**
    * @brief Path that the solver takes
@@ -83,7 +83,27 @@ struct VacuumProfile
   VecDoub scalv;
 
   /**
-   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but putting
+   * @brief
+   *
+   */
+  std::vector<tk::spline> splines;
+
+  /**
+   * @brief Generate the splines wih the fields
+   *
+   */
+  void GenerateSplines();
+
+  /**
+   * @brief Calculates the vacuum profile at positon z
+   *
+   * @param z position
+   */
+  std::vector<double> GetVev(const double &zz);
+
+  /**
+   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but
+   * putting
    * \f$ \max \left\{\frac{d\vec\phi}{dz}\right\}^2 \f$ at \f$ z = 0 \f$
    *
    */

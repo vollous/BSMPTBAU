@@ -40,7 +40,7 @@ struct Difeq_VacuumProfile : Difeq
    * @brief List of the z grid of points
    *
    */
-  VecDoub &z;
+  std::vector<double> &z;
   /**
    * @brief True and False Vacuum
    *
@@ -80,7 +80,7 @@ struct Difeq_VacuumProfile : Difeq
       // Dimension of VEV space
       const size_t &dim_In,
       // z list
-      VecDoub &z_In,
+      std::vector<double> &z_In,
       // True
       const std::vector<double> &TrueVacuum_In,
       // False
