@@ -108,6 +108,13 @@ $(document).ready(function(){initNavTree('structBSMPT_1_1VacuumProfileNS_1_1Vacu
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aad8f93b2f7bb5df550ae7eddd5428766" id="r_aad8f93b2f7bb5df550ae7eddd5428766"><td class="memItemLeft" align="right" valign="top"><a id="aad8f93b2f7bb5df550ae7eddd5428766" name="aad8f93b2f7bb5df550ae7eddd5428766"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateSplines</b> ()</td></tr>
+<tr class="memdesc:aad8f93b2f7bb5df550ae7eddd5428766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the splines wih the fields. <br /></td></tr>
+<tr class="separator:aad8f93b2f7bb5df550ae7eddd5428766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d243adf76ce8963b44266efc90aa20f" id="r_a3d243adf76ce8963b44266efc90aa20f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3d243adf76ce8963b44266efc90aa20f">GetVev</a> (const double &amp;zz)</td></tr>
+<tr class="memdesc:a3d243adf76ce8963b44266efc90aa20f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the vacuum profile at positon z.  <br /></td></tr>
+<tr class="separator:a3d243adf76ce8963b44266efc90aa20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6af919c4dcd59cfde4561e3003e257bd" id="r_a6af919c4dcd59cfde4561e3003e257bd"><td class="memItemLeft" align="right" valign="top"><a id="a6af919c4dcd59cfde4561e3003e257bd" name="a6af919c4dcd59cfde4561e3003e257bd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CenterPath</b> ()</td></tr>
 <tr class="memdesc:a6af919c4dcd59cfde4561e3003e257bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relocate the vacuum profile "center" to \( z = 0 \) but putting \( \max \left\{\frac{d\vec\phi}{dz}\right\}^2 \) at \( z = 0 \). <br /></td></tr>
@@ -172,10 +179,10 @@ const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)
 const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Hessian</b></td></tr>
 <tr class="memdesc:a1df16074c80e48fe4a93cdafb7606189"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hessian. <br /></td></tr>
 <tr class="separator:a1df16074c80e48fe4a93cdafb7606189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a185b0ca9379218a75a4e8dff60caf6ea" id="r_a185b0ca9379218a75a4e8dff60caf6ea"><td class="memItemLeft" align="right" valign="top"><a id="a185b0ca9379218a75a4e8dff60caf6ea" name="a185b0ca9379218a75a4e8dff60caf6ea"></a>
-<a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
-<tr class="memdesc:a185b0ca9379218a75a4e8dff60caf6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">z positions corresponding to the path knots <br /></td></tr>
-<tr class="separator:a185b0ca9379218a75a4e8dff60caf6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f1f83f8ab72a4284421c2879d84b190" id="r_a6f1f83f8ab72a4284421c2879d84b190"><td class="memItemLeft" align="right" valign="top"><a id="a6f1f83f8ab72a4284421c2879d84b190" name="a6f1f83f8ab72a4284421c2879d84b190"></a>
+std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
+<tr class="memdesc:a6f1f83f8ab72a4284421c2879d84b190"><td class="mdescLeft">&#160;</td><td class="mdescRight">z positions corresponding to the path knots <br /></td></tr>
+<tr class="separator:a6f1f83f8ab72a4284421c2879d84b190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e1f2b3518dbf1380402ebb888648f12" id="r_a6e1f2b3518dbf1380402ebb888648f12"><td class="memItemLeft" align="right" valign="top"><a id="a6e1f2b3518dbf1380402ebb888648f12" name="a6e1f2b3518dbf1380402ebb888648f12"></a>
 <a class="el" href="classMatDoub.html">MatDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>y</b></td></tr>
 <tr class="memdesc:a6e1f2b3518dbf1380402ebb888648f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path that the solver takes. <br /></td></tr>
@@ -184,6 +191,9 @@ const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::ve
 <a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>scalv</b></td></tr>
 <tr class="memdesc:a0864a265463322240559d5e1a2da12bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale of each field. Used for the solver. <br /></td></tr>
 <tr class="separator:a0864a265463322240559d5e1a2da12bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af724f5c409dd24d0cc46bf0afe3da8cb" id="r_af724f5c409dd24d0cc46bf0afe3da8cb"><td class="memItemLeft" align="right" valign="top"><a id="af724f5c409dd24d0cc46bf0afe3da8cb" name="af724f5c409dd24d0cc46bf0afe3da8cb"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>splines</b></td></tr>
+<tr class="separator:af724f5c409dd24d0cc46bf0afe3da8cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a32961e254b93a0aea9f7787b83a0e096" name="a32961e254b93a0aea9f7787b83a0e096"></a>
@@ -483,6 +493,32 @@ const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::ve
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+
+</div>
+</div>
+<a id="a3d243adf76ce8963b44266efc90aa20f" name="a3d243adf76ce8963b44266efc90aa20f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d243adf76ce8963b44266efc90aa20f">&#9670;&#160;</a></span>GetVev()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; double &gt; BSMPT::VacuumProfileNS::VacuumProfile::GetVev </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>zz</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the vacuum profile at positon z. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">z</td><td>position </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

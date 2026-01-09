@@ -116,9 +116,9 @@ Inheritance diagram for BSMPT::VacuumProfileNS::Difeq_VacuumProfile:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a242613d704ad9e130c5bc984f8785f55" id="r_a242613d704ad9e130c5bc984f8785f55"><td class="memItemLeft" align="right" valign="top"><a id="a242613d704ad9e130c5bc984f8785f55" name="a242613d704ad9e130c5bc984f8785f55"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Difeq_VacuumProfile</b> (const ProfileSolverMode &amp;mode_In, const size_t &amp;dim_In, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;z_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In)</td></tr>
-<tr class="separator:a242613d704ad9e130c5bc984f8785f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea1841b0c7c5def807fd02dd4142bc1" id="r_adea1841b0c7c5def807fd02dd4142bc1"><td class="memItemLeft" align="right" valign="top"><a id="adea1841b0c7c5def807fd02dd4142bc1" name="adea1841b0c7c5def807fd02dd4142bc1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Difeq_VacuumProfile</b> (const ProfileSolverMode &amp;mode_In, const size_t &amp;dim_In, std::vector&lt; double &gt; &amp;z_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In)</td></tr>
+<tr class="separator:adea1841b0c7c5def807fd02dd4142bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3b4e94d3b7a469623dd3c88b259d049" id="r_aa3b4e94d3b7a469623dd3c88b259d049"><td class="memItemLeft" align="right" valign="top"><a id="aa3b4e94d3b7a469623dd3c88b259d049" name="aa3b4e94d3b7a469623dd3c88b259d049"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>calc_mu</b> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
 <tr class="separator:aa3b4e94d3b7a469623dd3c88b259d049"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,10 +135,10 @@ const ProfileSolverMode &amp;&#160;</td><td class="memItemRight" valign="bottom"
 const size_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>dim</b></td></tr>
 <tr class="memdesc:aa8f94e935dc3c16f276ab2c4d61bdc37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of VEV space. <br /></td></tr>
 <tr class="separator:aa8f94e935dc3c16f276ab2c4d61bdc37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe4ec440c74ea4a14c8b9deffedbe868" id="r_afe4ec440c74ea4a14c8b9deffedbe868"><td class="memItemLeft" align="right" valign="top"><a id="afe4ec440c74ea4a14c8b9deffedbe868" name="afe4ec440c74ea4a14c8b9deffedbe868"></a>
-<a class="el" href="classVecDoub.html">VecDoub</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
-<tr class="memdesc:afe4ec440c74ea4a14c8b9deffedbe868"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of the z grid of points. <br /></td></tr>
-<tr class="separator:afe4ec440c74ea4a14c8b9deffedbe868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0db25cb8b6418610ef442d22f94ea6" id="r_a9b0db25cb8b6418610ef442d22f94ea6"><td class="memItemLeft" align="right" valign="top"><a id="a9b0db25cb8b6418610ef442d22f94ea6" name="a9b0db25cb8b6418610ef442d22f94ea6"></a>
+std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
+<tr class="memdesc:a9b0db25cb8b6418610ef442d22f94ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of the z grid of points. <br /></td></tr>
+<tr class="separator:a9b0db25cb8b6418610ef442d22f94ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4d6c344ba33607136da78b3c1e097af" id="r_ac4d6c344ba33607136da78b3c1e097af"><td class="memItemLeft" align="right" valign="top"><a id="ac4d6c344ba33607136da78b3c1e097af" name="ac4d6c344ba33607136da78b3c1e097af"></a>
 const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>TrueVacuum</b></td></tr>
 <tr class="memdesc:ac4d6c344ba33607136da78b3c1e097af"><td class="mdescLeft">&#160;</td><td class="mdescRight">True and False <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a>. <br /></td></tr>

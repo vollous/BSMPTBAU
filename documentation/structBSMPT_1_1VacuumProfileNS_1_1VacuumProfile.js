@@ -6,6 +6,8 @@ var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
     [ "Calcindexv", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f", null ],
     [ "CalculateProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a522654ef006a9662691e06d3a6eb0cca", null ],
     [ "CenterPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd", null ],
+    [ "GenerateSplines", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aad8f93b2f7bb5df550ae7eddd5428766", null ],
+    [ "GetVev", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3d243adf76ce8963b44266efc90aa20f", null ],
     [ "LoadPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf", null ],
     [ "dim", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aa20d38e981c63c4607d54b88a1631e69", null ],
     [ "dV", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6", null ],
@@ -16,5 +18,5 @@ var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
     [ "TrueVacuum", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6104bb10f8a2978cf2ee5e811c1d7fdf", null ],
     [ "V", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3f0fd9345e734f275f458df843d04100", null ],
     [ "y", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6e1f2b3518dbf1380402ebb888648f12", null ],
-    [ "z", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a185b0ca9379218a75a4e8dff60caf6ea", null ]
+    [ "z", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6f1f83f8ab72a4284421c2879d84b190", null ]
 ];

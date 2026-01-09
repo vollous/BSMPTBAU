@@ -8,5 +8,5 @@ var structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile =
     [ "mu", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa", null ],
     [ "TrueVacuum", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#ac4d6c344ba33607136da78b3c1e097af", null ],
     [ "V", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#a1459538fb2ddc3ea684f2914d7dc17be", null ],
-    [ "z", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#afe4ec440c74ea4a14c8b9deffedbe868", null ]
+    [ "z", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#a9b0db25cb8b6418610ef442d22f94ea6", null ]
 ];
