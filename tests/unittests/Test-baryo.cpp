@@ -17,7 +17,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   using namespace BSMPT;
   std::string path = "kernels/";
 
-  for (int l = 0; l <= 2; l++)
+  /* for (int l = 0; l <= 2; l++)
   {
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
@@ -109,6 +109,31 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           }
         }
       }
+    }
+  } */
+  for (int type = 0; type <= 1; type++)
+  {
+    Kernel Kern(0, 0);
+    ParticleType PType = (type == 0 ? Fermion : Boson);
+    std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
+    std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
+    std::cout << "Rbar-Kernel\n";
+    {
+      std::string str = path + "Rbar" + suffix;
+      std::ofstream file(str);
+      for (double i = 0.; i < 7.01; i += 0.1)
+      {
+        double x = -5 + i;
+        x        = pow(10, x);
+        for (double j = 0.; j < 5.01; j += 0.064)
+        {
+          double vw = -5. + j;
+          vw        = pow(10, vw);
+          file << x << "\t" << vw << "\t" << Kern(KernelType::Rb, PType, x, vw)
+               << "\n";
+        }
+      }
+      file.close();
     }
   }
 

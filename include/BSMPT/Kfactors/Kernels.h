@@ -15,6 +15,7 @@ enum KernelType
   Qe,
   Q8o,
   Q9o,
+  Rb
 };
 
 enum ParticleType
@@ -118,6 +119,44 @@ public:
       : Integrand(structure_in, l_in, vw_in, gamw_in, s_in, x_in) {};
   double operator()(const double u);
   ~Q9KernelIntw() {};
+};
+
+class N0Int
+{
+private:
+  const double vw, gamw, s, x;
+
+public:
+  N0Int(const double vw_in,
+        const double gamw_in,
+        const double s_in,
+        const double x_in)
+      : vw(vw_in)
+      , gamw(gamw_in)
+      , s(s_in)
+      , x(x_in)
+  {
+  }
+  double operator()(const double u);
+  ~N0Int() {};
+};
+
+class RbarInt
+{
+private:
+  const double vw, gamw, s, x;
+
+public:
+  RbarInt(const double vw_in,
+          const double gamw_in,
+          const double s_in,
+          const double x_in)
+      : vw(vw_in)
+      , gamw(gamw_in)
+      , s(s_in)
+      , x(x_in) {};
+  double operator()(const double u);
+  ~RbarInt() {};
 };
 
 class Kernel

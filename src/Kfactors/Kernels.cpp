@@ -28,7 +28,7 @@ double KernelInty::operator()(const double y)
 {
   const double pzt = gamw * (y * pwt - w * vw);
   const double Et  = gamw * (w - vw * y * pwt);
-  double V = pwt;
+  double V         = pwt;
   if (structure == 0)
     V = pwt;
   else if (structure == 1)
@@ -70,6 +70,20 @@ double Q9KernelIntw::operator()(const double u)
   if ((std::abs(Integrand.pre1) == 0.) && (std::abs(Integrand.pre2) == 0.))
     return 0.;
   return adap_gauss_kronrod_15(Integrand, -1, 1, 1e-8) / (u * u);
+}
+
+double N0Int::operator()(const double u)
+{
+  const double w = x + (1 - u) / u;
+  return std::sqrt(w * w - x * x) * w * f0(w, s, 0) / (u * u);
+}
+
+double RbarInt::operator()(const double u)
+{
+  const double w   = x + (1 - u) / u;
+  const double pwt = std::sqrt(w * w - x * x);
+  return M_PI / (gamw * gamw) * log(std::abs((pwt - vw * w) / (pwt + vw * w))) *
+         f0(w, s, 0) / (u * u);
 }
 
 double Kernel::operator()(const KernelType K,
@@ -115,6 +129,16 @@ double Kernel::operator()(const KernelType K,
     x); k1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8); k2 =
     adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8); */
     res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 4.;
+  }
+  break;
+  case KernelType::Rb:
+  {
+    N0Int integrand1(vw, gamw, statistic, x);
+    const double res1 =
+        4. * M_PI * adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8);
+    RbarInt integrand2(vw, gamw, statistic, x);
+    const double res2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8);
+    return res2 / res1;
   }
   break;
 
