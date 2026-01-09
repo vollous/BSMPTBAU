@@ -129,7 +129,7 @@ var searchData=
   ['calculatewidth_126',['CalculateWidth',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a1c8b5953d43763ad9f70a1fc54a8129f',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
   ['calculatexishell_127',['CalculateXiShell',['../classBSMPT_1_1GravitationalWave.html#a2d8b21bc0588c36ec773cf75941eea97',1,'BSMPT::GravitationalWave']]],
   ['calcwhichminimizer_128',['CalcWhichMinimizer',['../Minimizer_8h.html#aa0c9d80c331aebfa6c08b1f7d8a9c588',1,'BSMPT::Minimizer']]],
-  ['centerpath_129',['CenterPath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['centerpath_129',['centerpath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd',1,'BSMPT::VacuumProfileNS::VacuumProfile::CenterPath()'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff',1,'BSMPT::VacuumProfileNS::VacuumProfile::CenterPath(double &amp;center)']]],
   ['changelog_130',['changelog',['../md_Changelog.html#autotoc_md27',1,'Changelog'],['../md_Changelog.html',1,'Changelog']]],
   ['changes_20in_20test_131',['Changes in Test',['../md_Changelog.html#autotoc_md44',1,'']]],
   ['changes_20in_20the_20installation_20routine_132',['Changes in the Installation Routine',['../md_Changelog.html#autotoc_md45',1,'']]],

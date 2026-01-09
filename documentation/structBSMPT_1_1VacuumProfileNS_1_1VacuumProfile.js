@@ -6,6 +6,7 @@ var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
     [ "Calcindexv", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f", null ],
     [ "CalculateProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a522654ef006a9662691e06d3a6eb0cca", null ],
     [ "CenterPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd", null ],
+    [ "CenterPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff", null ],
     [ "GenerateSplines", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aad8f93b2f7bb5df550ae7eddd5428766", null ],
     [ "GetVev", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3d243adf76ce8963b44266efc90aa20f", null ],
     [ "LoadPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf", null ],
