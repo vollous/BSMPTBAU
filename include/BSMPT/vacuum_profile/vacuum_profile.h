@@ -5,6 +5,7 @@
 #include <BSMPT/models/SMparam.h>
 #include <BSMPT/utility/Logger.h>
 #include <BSMPT/utility/relaxation/solvde.h>
+#include <BSMPT/utility/spline/spline.h>
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/difeq_vacuum_profile.h>
 #include <iostream>
@@ -16,6 +17,13 @@ namespace BSMPT
 namespace VacuumProfileNS
 {
 
+enum class VacuumProfileStatus
+{
+  Unset,
+  Failed,
+  Success
+};
+
 struct VacuumProfile
 {
   /**
@@ -26,6 +34,12 @@ struct VacuumProfile
    *
    */
   ProfileSolverMode mode = ProfileSolverMode::Deriv;
+
+  /**
+   * @brief State of the vacuum profile
+   *
+   */
+  VacuumProfileStatus status = VacuumProfileStatus::Unset;
 
   /**
    * @brief Dimension of VEV space

@@ -76,6 +76,8 @@ void VacuumProfile::CalculateProfile()
 
   ss << "\nμ = \t" << difeq_vacuumprofile.mu << "\n";
 
+  status = VacuumProfileStatus::Success;
+
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
@@ -103,6 +105,42 @@ double VacuumProfile::CalculateWidth(
 
   return Lw;
 }
+
+void VacuumProfile::GenerateSplines()
+{
+  splines.clear();
+  for (size_t i = 0; i < dim; i++)
+  {
+    std::vector<double> phi;
+    for (size_t k = 0; k < NumberOfSteps; k++)
+      phi.push_back(y[dim + i][k]);
+    tk::spline s(z,
+                 phi,
+                 tk::spline::cspline,
+                 false,
+                 tk::spline::not_a_knot,
+                 0.0,
+                 tk::spline::not_a_knot,
+                 0.0);
+    splines.push_back(s);
+  }
+}
+
+std::vector<double> VacuumProfile::GetVev(const double &zz)
+{
+  if (status != VacuumProfileStatus::Success)
+  {
+    Logger::Write(LoggingLevel::VacuumProfile,
+                  "Vacuum profile calculation failed. Do not call GetVev(z)");
+    return std::vector<double>(dim, 0); // return 0, ..., 0
+  }
+  std::vector<double> r;
+  for (size_t i = 0; i < dim; i++)
+    r.push_back(splines.at(i)(zz));
+  return r;
+}
+
+
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
     const size_t &dim_In,
