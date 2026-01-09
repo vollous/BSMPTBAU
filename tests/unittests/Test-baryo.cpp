@@ -31,9 +31,9 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       {
         std::string str = path + "D" + std::to_string(l) + suffix;
         std::ofstream file(str);
-        for (double i = 0.; i < 10.01; i += 0.1)
+        for (double i = 0.; i < 7.01; i += 0.1)
         {
-          double x = -8 + i;
+          double x = -5 + i;
           x        = pow(10, x);
           if (l == 0)
             file << x << "\t" << Kern(KernelType::D, PType, x, 0.1) << "\n";
@@ -45,48 +45,69 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
               file << x << "\t" << vw << "\t"
                    << Kern(KernelType::D, PType, x, vw) << "\n";
             }
-        };
+        }
         file.close();
       }
       if (l != 0)
       {
-        /* std::cout << "Q-Kernel\n";
+        std::cout << "Q-Kernel\n";
         {
           std::string str = path + "Q" + std::to_string(l) + suffix;
           std::ofstream file(str);
-          for (double i = 0.; i < 10.01; i += 0.1)
+          for (double i = 0.; i < 7.01; i += 0.1)
           {
-            double x = -8 + i;
+            double x = -5 + i;
             x        = pow(10, x);
-            file << x << "\t" << Kern(KernelType::Q, PType, x, vw) << "\n";
-          };
+            for (double j = 0.; j < 5.01; j += 0.064)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::Q, PType, x, vw) << "\n";
+            }
+          }
           file.close();
         }
-        std::cout << "Q8o-Kernel\n";
+        if (PType == fermion)
         {
-          std::string str = path + "Q8o" + std::to_string(l) + suffix;
-          std::ofstream file(str);
-          for (double i = 0.; i < 10.01; i += 0.1)
+          std::cout << "Q8o-Kernel\n";
           {
-            double x = -8 + i;
-            x        = pow(10, x);
-            file << x << "\t" << Kern(KernelType::Q8o, PType, x, vw) << "\n";
-          };
-          file.close();
-        } */
-        /* std::cout << "Q9o-Kernel\n";
-        {
-          std::string str = path + "Q9o" + std::to_string(l) + suffix;
-          std::ofstream file(str);
-          for (double i = 0.; i < 10.01; i += 0.1)
+            std::string str = path + "Q8o" + std::to_string(l) + suffix;
+            std::ofstream file(str);
+            for (double i = 0.; i < 7.01; i += 0.1)
+            {
+              double x = -5 + i;
+              x        = pow(10, x);
+              for (double j = 0.; j < 5.01; j += 0.064)
+              {
+                double vw = -5. + j;
+                vw        = pow(10, vw);
+                file << x << "\t" << vw << "\t"
+                     << Kern(KernelType::Q8o, PType, x, vw) << "\n";
+              }
+            }
+            file.close();
+          }
+          std::cout << "Q9o-Kernel\n";
           {
-            double x = -8 + i;
-            x        = pow(10, x);
-            std::cout << x << "\n";
-            file << x << "\t" << Kern(KernelType::Q9o, PType, x, vw) << "\n";
-          };
-          file.close();
-        } */
+            std::string str = path + "Q9o" + std::to_string(l) + suffix;
+            std::ofstream file(str);
+            for (double i = 0.; i < 7.01; i += 0.1)
+            {
+              double x = -5 + i;
+              x        = pow(10, x);
+              std::cout << x << "\n";
+              for (double j = 0.; j < 5.01; j += 0.064)
+              {
+                double vw = -5. + j;
+                vw        = pow(10, vw);
+                file << x << "\t" << vw << "\t"
+                     << Kern(KernelType::Q9o, PType, x, vw) << "\n";
+              }
+            }
+            file.close();
+          }
+        }
       }
     }
   }

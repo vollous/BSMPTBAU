@@ -5,21 +5,7 @@ namespace BSMPT
 
 double f0(const double x, const double s, const int diff)
 {
-  if (x > 100) return std::pow(-1, diff) * std::exp(-x);
-  if (x < 1e-3)
-  {
-    if (diff == 0)
-    {
-      if (s == 1.)
-        return 0.5 - x / 4.;
-      else
-        return 1. / x - 0.5 + x / 12.;
-    }
-    else if (diff == 1)
-      return -0.25 + x * x / 16.;
-    else if (diff == 2)
-      return x / 8. - x * x * x / 24.;
-  }
+  if (x > 50) return std::pow(-1, diff) * std::exp(-x);
 
   const double expw = std::exp(-x / 2.);
   if (diff == 0)
@@ -35,16 +21,20 @@ void KernelInty::set_all(const double u)
 {
   w   = x + (1 - u) / u;
   pwt = std::sqrt(w * w - x * x);
-  pre = pwt * f0(w, s, k);
+  pre = f0(w, s, k);
 }
 
 double KernelInty::operator()(const double y)
 {
   const double pzt = gamw * (y * pwt - w * vw);
   const double Et  = gamw * (w - vw * y * pwt);
-  double V         = 1;
-  if (structure >= 1) V *= 1. / std::sqrt(1. + x * x / (pzt * pzt));
-  if (structure >= 2) V = V * V / std::sqrt(1. - x * x / (w * w));
+  double V = pwt;
+  if (structure == 0)
+    V = pwt;
+  else if (structure == 1)
+    V = pwt / std::sqrt(1. + x * x / (pzt * pzt));
+  else if (structure == 2)
+    V = w * pzt * pzt / (pzt * pzt + x * x);
   return std::pow(pzt, n) / std::pow(Et, m - 1) * V;
 }
 
