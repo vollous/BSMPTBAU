@@ -15,6 +15,7 @@ var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
     [ "mode", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a68d7e0837d16d04c9acb5338e8f38b91", null ],
     [ "NumberOfSteps", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae9496c3dd0d37d52e7c74fe5cfe26421", null ],
     [ "scalv", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0864a265463322240559d5e1a2da12bc", null ],
+    [ "status", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a5f4212fd06f1a319bd5a20dac0889043", null ],
     [ "TrueVacuum", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6104bb10f8a2978cf2ee5e811c1d7fdf", null ],
     [ "V", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3f0fd9345e734f275f458df843d04100", null ],
     [ "y", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6e1f2b3518dbf1380402ebb888648f12", null ],
