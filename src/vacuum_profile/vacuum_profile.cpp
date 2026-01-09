@@ -77,6 +77,7 @@ void VacuumProfile::CalculateProfile()
   ss << "\nμ = \t" << difeq_vacuumprofile.mu << "\n";
 
   status = VacuumProfileStatus::Success;
+  GenerateSplines();
 
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
@@ -140,6 +141,40 @@ std::vector<double> VacuumProfile::GetVev(const double &zz)
   return r;
 }
 
+void VacuumProfile::CenterPath()
+{
+  double center;
+  CenterPath(center);
+}
+
+void VacuumProfile::CenterPath(double &center)
+{
+  GenerateSplines();
+  // locate maximum of dphi/dz
+  double max_dphidz = -1;
+  for (size_t k = 0; k < NumberOfSteps; k++)
+  {
+    double dphidz = 0;
+    for (size_t i = 0; i < dim; i++)
+      dphidz += pow(y[i][k], 2);
+    if (dphidz > max_dphidz)
+    {
+      center     = z[k];
+      max_dphidz = dphidz;
+    }
+  }
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Current center at z = \t" + std::to_string(center) +
+                    ". Centering path!");
+
+  std::vector<std::vector<double>> new_path;
+  for (const double &zk : z)
+  {
+    new_path.push_back(GetVev(zk + center));
+  }
+  LoadPath(z, new_path);
+  if (status == VacuumProfileStatus::Success) GenerateSplines();
+}
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space

@@ -124,6 +124,15 @@ struct VacuumProfile
   void CenterPath();
 
   /**
+   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but
+   * putting
+   * \f$ \max \left\{\frac{d\vec\phi}{dz}\right\}^2 \f$ at \f$ z = 0 \f$
+   *
+   * @param center calculated old center
+   */
+  void CenterPath(double &center);
+
+  /**
    * @brief Calculate the order of the fields to pass to the numerical solver
    *
    * @param mode solver mode
