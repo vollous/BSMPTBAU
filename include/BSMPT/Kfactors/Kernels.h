@@ -10,12 +10,13 @@ namespace BSMPT
 
 enum KernelType
 {
+  K,
   D,
   Q,
   Qe,
   Q8o,
   Q9o,
-  Rb
+  Rb,
 };
 
 enum ParticleType
@@ -169,7 +170,7 @@ public:
   Kernel(const int l_in, const int structure_in)
       : l(l_in)
       , structure(structure_in) {};
-  double operator()(const KernelType K,
+  double operator()(const KernelType Kern,
                     const ParticleType P,
                     const double x,
                     const double vw);

@@ -86,7 +86,7 @@ double RbarInt::operator()(const double u)
          f0(w, s, 0) / (u * u);
 }
 
-double Kernel::operator()(const KernelType K,
+double Kernel::operator()(const KernelType Kern,
                           const ParticleType P,
                           const double x,
                           const double vw)
@@ -95,8 +95,14 @@ double Kernel::operator()(const KernelType K,
   double gamw            = 1. / std::sqrt(1. - vw * vw);
   double res             = -3 / (M_PI * M_PI * gamw);
 
-  switch (K)
+  switch (Kern)
   {
+  case KernelType::K:
+  {
+    N0Int integrand(vw, gamw, statistic, x);
+    double K0 = 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+  }
+  break;
   case KernelType::D:
   {
     KernelIntw integrand(1, 0, l, l, vw, gamw, statistic, x);
@@ -124,10 +130,6 @@ double Kernel::operator()(const KernelType K,
   case KernelType::Q9o:
   {
     Q9KernelIntw integrand(structure, l, vw, gamw, statistic, x);
-    /* KernelIntw integrand1(1, structure, l - 2, l + 2, vw, gamw, statistic,
-    x); KernelIntw integrand2(2, structure, l - 2, l + 1, vw, gamw, statistic,
-    x); k1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8); k2 =
-    adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8); */
     res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 4.;
   }
   break;
