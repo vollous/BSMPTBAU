@@ -269,22 +269,22 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double K0b = (*Kfac)(K_type::K0, P_type::fermion, mBot); // TODO: fix
   const double K0h = (*Kfac)(K_type::K0, P_type::boson, mHiggs); // TODO: fix
 
-  const double GammaTotTop =
-      (*Kfac)(K_type::K4, P_type::fermion, mTop) /
-      ((*Kfac)(K_type::D0, P_type::fermion, mTop) * 6.); // TODO: fix
-  const double GammaTotBot =
-      (*Kfac)(K_type::K4, P_type::fermion, mBot) /
-      ((*Kfac)(K_type::D0, P_type::fermion, mBot) * 6.); // TODO: fix
+  const double GammaTotTop = (*Kfac)(K_type::K4, P_type::fermion, mTop) /
+                             ((*Kfac)(K_type::D0, P_type::fermion, mTop) * 6.) *
+                             Tstar; // TODO: fix
+  const double GammaTotBot = (*Kfac)(K_type::K4, P_type::fermion, mBot) /
+                             ((*Kfac)(K_type::D0, P_type::fermion, mBot) * 6.) *
+                             Tstar; // TODO: fix
   const double GammaTotHiggs =
       (*Kfac)(K_type::K4, P_type::boson, mHiggs) /
-      ((*Kfac)(K_type::D0, P_type::boson, mHiggs) * 20.); // TODO: fix
+      ((*Kfac)(K_type::D0, P_type::boson, mHiggs) * 20.) * Tstar; // TODO: fix
 
-  const double GammaM       = pow(mTop, 2) / 63.;
-  const double GammaY       = 4.2e-3;
+  const double GammaM       = pow(mTop, 2) / 63. * Tstar;
+  const double GammaY       = 4.2e-3 * Tstar;
   const double GammaW       = GammaTotHiggs;
-  const double GammaTildeSS = 4.9e-4;
+  const double GammaTildeSS = 4.9e-4 * Tstar;
   // const double GammaTildeY  = 4.9e-4 * Tstar; Not sure what this is
-  const double GammaH = mW * mW / 50.; // TODO: fix
+  const double GammaH = mW * mW / 50. * Tstar; // TODO: fix
 
   MatDoub Gamma(8, 8, 0.);
   Gamma[0][0] = (GammaM + GammaW + GammaY + (1 + 9 * D0t) * GammaTildeSS) * K0t;
