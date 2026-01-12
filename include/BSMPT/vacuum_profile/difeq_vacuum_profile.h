@@ -40,7 +40,7 @@ struct Difeq_VacuumProfile : Difeq
    * @brief List of the z grid of points
    *
    */
-  VecDoub &z;
+  std::vector<double> &z;
   /**
    * @brief True and False Vacuum
    *
@@ -67,7 +67,7 @@ struct Difeq_VacuumProfile : Difeq
    * - 0 if V(True) = V(False) -> Domain Wall
    * - > 0 if V(True) < V(False) -> Bubble Wall
    */
-  double eta = 0;
+  double mu = 0;
   /**
    * @brief V(False) - V(True)
    *
@@ -80,7 +80,7 @@ struct Difeq_VacuumProfile : Difeq
       // Dimension of VEV space
       const size_t &dim_In,
       // z list
-      VecDoub &z_In,
+      std::vector<double> &z_In,
       // True
       const std::vector<double> &TrueVacuum_In,
       // False
@@ -104,7 +104,7 @@ struct Difeq_VacuumProfile : Difeq
   {
   }
 
-  void calc_eta(MatDoub &y)
+  void calc_mu(MatDoub &y)
   {
     const size_t n = y.cols();
 
@@ -117,9 +117,7 @@ struct Difeq_VacuumProfile : Difeq
       zz.push_back(z[k]);
       double t = 0;
       for (size_t j = 0; j < dim; j++)
-      {
         t += pow(y[j][k], 2);
-      }
       phigrad.push_back(t);
     }
 
@@ -130,7 +128,7 @@ struct Difeq_VacuumProfile : Difeq
     gsl_spline_free(spline);
     gsl_interp_accel_free(acc);
 
-    eta = DeltaV / EnergyDissipated;
+    mu = DeltaV / EnergyDissipated;
   }
 
   void smatrix(const int k,
@@ -144,8 +142,8 @@ struct Difeq_VacuumProfile : Difeq
     s.zero(); // Set matrix s = 0
     if (k == k1)
     {
-      // Calculate eta before anything else
-      calc_eta(y);
+      // Calculate mu before anything else
+      calc_mu(y);
       if (mode == ProfileSolverMode::Deriv)
       {
         // Boundary conditions dv/dz = 0 on first boundary
@@ -207,14 +205,14 @@ struct Difeq_VacuumProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + n] = -Delta(j, n) * (1 + dz * eta / 2); // 1
-          s[j][1 * dim + n] = -1. / 2. * dz * hessian[j][n];     // 3
-          s[j][2 * dim + n] = Delta(j, n) * (1 - dz * eta / 2);  // 5
-          s[j][3 * dim + n] = -1. / 2. * dz * hessian[j][n];     // 7
+          s[j][0 * dim + n] = -Delta(j, n) * (1 + dz * mu / 2); // 1
+          s[j][1 * dim + n] = -1. / 2. * dz * hessian[j][n];    // 3
+          s[j][2 * dim + n] = Delta(j, n) * (1 - dz * mu / 2);  // 5
+          s[j][3 * dim + n] = -1. / 2. * dz * hessian[j][n];    // 7
         }
         //  Equations for E(k,k-1)
         s[j][jsf] = y[j][k] - y[j][k - 1] -
-                    dz * (dv[j] - eta * (y[j][k] + y[j][k - 1]) / 2);
+                    dz * (dv[j] - mu * (y[j][k] + y[j][k - 1]) / 2);
       }
 
       // dim <= j < 2 * dim -> phi(z)

@@ -4,6 +4,8 @@
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/models/SMparam.h>
 #include <BSMPT/utility/Logger.h>
+#include <BSMPT/utility/relaxation/solvde.h>
+#include <BSMPT/utility/spline/spline.h>
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/difeq_vacuum_profile.h>
 #include <iostream>
@@ -15,6 +17,13 @@ namespace BSMPT
 namespace VacuumProfileNS
 {
 
+enum class VacuumProfileStatus
+{
+  Unset,
+  Failed,
+  Success
+};
+
 struct VacuumProfile
 {
   /**
@@ -25,49 +34,141 @@ struct VacuumProfile
    *
    */
   ProfileSolverMode mode = ProfileSolverMode::Deriv;
+
+  /**
+   * @brief State of the vacuum profile
+   *
+   */
+  VacuumProfileStatus status = VacuumProfileStatus::Unset;
+
   /**
    * @brief Dimension of VEV space
    *
    */
   const size_t &dim;
+
+  /**
+   * @brief Number of steps in \f$ z \f$
+   *
+   */
+  size_t NumberOfSteps = 1000;
+
   /**
    * @brief True and False Vacuum
    *
    */
   const std::vector<double> &TrueVacuum, &FalseVacuum;
+
   /**
    * @brief Potential
    *
    */
   const std::function<double(std::vector<double>)> &V;
+
   /**
    * @brief Gradient
    *
    */
   const std::function<std::vector<double>(std::vector<double>)> &dV;
+
   /**
    * @brief Hessian
    *
    */
   const std::function<std::vector<std::vector<double>>(std::vector<double>)>
       &Hessian;
+
   /**
    * @brief z positions corresponding to the path knots
    *
    */
   std::vector<double> z;
-  /**
-   * @brief Tunneling
-   *
-   */
-  std::vector<std::vector<double>> &path;
 
   /**
-   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but putting
+   * @brief Path that the solver takes
+   *
+   */
+  MatDoub y;
+
+  /**
+   * @brief Scale of each field. Used for the solver
+   *
+   */
+  VecDoub scalv;
+
+  /**
+   * @brief
+   *
+   */
+  std::vector<tk::spline> splines;
+
+  /**
+   * @brief Generate the splines wih the fields
+   *
+   */
+  void GenerateSplines();
+
+  /**
+   * @brief Calculates the vacuum profile at positon z
+   *
+   * @param z position
+   */
+  std::vector<double> GetVev(const double &zz);
+
+  /**
+   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but
+   * putting
    * \f$ \max \left\{\frac{d\vec\phi}{dz}\right\}^2 \f$ at \f$ z = 0 \f$
    *
    */
   void CenterPath();
+
+  /**
+   * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but
+   * putting
+   * \f$ \max \left\{\frac{d\vec\phi}{dz}\right\}^2 \f$ at \f$ z = 0 \f$
+   *
+   * @param center calculated old center
+   */
+  void CenterPath(double &center);
+
+  /**
+   * @brief Calculate the order of the fields to pass to the numerical solver
+   *
+   * @param mode solver mode
+   * @return VecInt reordering
+   */
+  VecInt Calcindexv();
+
+  /**
+   * @brief Calculate the bubble width using a rought approximation \f$ L_w =
+   * \frac{v_c}{\sqrt{8 V_b}} \f$
+   *
+   * @return double
+   */
+
+  /**
+   * @brief Calculate the bubble width using a rought approximation \f$ L_w =
+   * \frac{v_c}{\sqrt{8 V_b}} \f$. Algorithm from BSMPTv2 on the straight line
+   *
+   * @param TrueVacuum True vacuum
+   * @param FalseVacuum False vacuum
+   * @param V Potential
+   * @return double
+   */
+  static double
+  CalculateWidth(const std::vector<double> &TrueVacuum,
+                 const std::vector<double> &FalseVacuum,
+                 const std::function<double(std::vector<double>)> &V);
+
+  /**
+   * @brief Load path -> z, y
+   *
+   * @param z_In \f$ z \f$ positions
+   * @param path_In field position at \f$ z \f$
+   */
+  void LoadPath(const std::vector<double> &z_In,
+                const std::vector<std::vector<double>> &path_In);
 
   /**
    * @brief Calculate the vacuum profile
@@ -127,7 +228,7 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double &Lw_In);
+      const double &Lw);
 
   /**
    * @brief Construct a new Vacuum Profile object
