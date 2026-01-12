@@ -27,7 +27,7 @@ double Rbarint::operator()(const double u)
 {
   const double w   = x + (1 - u) / u;
   const double pwt = std::sqrt(w * w - x * x);
-  return Ki->Tc * M_PI / (Ki->gamw * Ki->gamw) *
+  return M_PI / (Ki->gamw * Ki->gamw) *
          log(std::abs((pwt - Ki->vw * w) / (pwt + Ki->vw * w))) * f0w(w, s, 0) /
          (u * u);
 }
@@ -60,8 +60,8 @@ double D2int::operator()(const double u)
 double Q1int::operator()(const double u)
 {
   const double w = x + (1 - u) / u;
-  return -3 / (Ki->gamw * M_PI * M_PI * Ki->Tc * Ki->Tc) *
-         std::sqrt(w * w - x * x) * f0w(w, s, 2) / (u * u);
+  return -3 / (Ki->gamw * M_PI * M_PI) * std::sqrt(w * w - x * x) *
+         f0w(w, s, 2) / (u * u);
 }
 
 double Q2int::operator()(const double u)
@@ -69,7 +69,7 @@ double Q2int::operator()(const double u)
   const double w   = x + (1 - u) / u;
   const double vw2 = Ki->vw * Ki->vw;
   const double pwt = std::sqrt(w * w - x * x);
-  return 3 / (Ki->gamw * M_PI * M_PI * Ki->Tc * Ki->Tc * vw2) *
+  return 3 / (Ki->gamw * M_PI * M_PI * vw2) *
          (Ki->vw * pwt + (vw2 - 1) * w * atanh(Ki->vw * pwt / w)) *
          f0w(w, s, 2) / (u * u);
 }
@@ -206,7 +206,7 @@ double Q9o2int2::operator()(const double u)
 double
 Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
 {
-  const double x      = m / Ki->Tc;
+  const double x      = m /* / Ki->Tc */;
   const int statistic = (ptype == boson ? -1 : 1);
   switch (ktype)
   {
@@ -228,8 +228,8 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   {
     N0int integrand1(Ki, statistic, x);
     const double est1 = kronrod_61(integrand1, 0., 1.);
-    const double res1 = 4. * M_PI * Ki->Tc * Ki->Tc * Ki->Tc *
-                        h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
+    const double res1 =
+        4. * M_PI * h_adap_gauss_kronrod_15(integrand1, 0., 1., est1, 1e-4);
     Rbarint integrand2(Ki, statistic, x);
     const double est2 = kronrod_61(integrand2, 0., 1.);
     const double res2 = h_adap_gauss_kronrod_15(integrand2, 0., 1., est2, 1e-4);
@@ -287,13 +287,13 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
   {
     Q8o1int2 integrand(Ki, statistic, x);
     const double res = adap_gauss_kronrod_15(integrand, 0., 1., 1e-4);
-    return -3 / (2. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) * res;
+    return -3 / (2. * M_PI * M_PI * Ki->gamw) * res;
   }
   case K_type::Q8o2:
   {
     Q8o2int2 integrand(Ki, statistic, x);
     const double res = adap_gauss_kronrod_15(integrand, 0., 1., 1e-4);
-    return -3 / (2. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -2) * res;
+    return -3 / (2. * M_PI * M_PI * Ki->gamw) * res;
   }
   case K_type::Q9o1:
   {
@@ -302,7 +302,7 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
     Q9o1int2 integrand2(Ki, statistic, x, 2);
     const double res2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-4);
 
-    return -3 / (4. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * (res1 - res2);
+    return -3 / (4. * M_PI * M_PI * Ki->gamw) * (res1 - res2);
   }
   case K_type::Q9o2:
   {
@@ -311,7 +311,7 @@ Kfactor::operator()(const K_type ktype, const P_type ptype, const double m)
     const double res1 = adap_gauss_kronrod_15(integrand1, 0., 1., 1e-4);
     const double res2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-4);
 
-    return -3 / (4. * M_PI * M_PI * Ki->gamw) * pow(Ki->Tc, -4) * (res1 - res2);
+    return -3 / (4. * M_PI * M_PI * Ki->gamw) * (res1 - res2);
   }
 
   break;

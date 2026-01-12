@@ -166,8 +166,8 @@ void TransportEquations::GetFermionMass(
                modelPointer->MinimizeOrderVEV(EmptyVacuum))) *
           esQuark.eigenvectors().col(ind)) /
       esQuark.eigenvectors().col(ind).dot(esQuark.eigenvectors().col(ind));
-  m2      = std::abs(m * m); // m^2 of fermion
-  m2prime = std::abs(2. * mprime * m);
+  m2      = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
+  m2prime = std::abs(2. * mprime * m) / (Tstar * Tstar);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
@@ -279,7 +279,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       (*Kfac)(K_type::K4, P_type::boson, mHiggs) /
       ((*Kfac)(K_type::D0, P_type::boson, mHiggs) * (20 / Tstar)); // TODO: fix
 
-  const double GammaM       = pow(mTop, 2) / (63 * Tstar);
+  const double GammaM       = pow(mTop, 2) / 63. * Tstar;
   const double GammaY       = 4.2e-3 * Tstar;
   const double GammaW       = GammaTotHiggs;
   const double GammaTildeSS = 4.9e-4 * Tstar;
