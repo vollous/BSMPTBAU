@@ -8,6 +8,7 @@
 #include <BSMPT/gravitational_waves/gw.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/utility/relaxation/solvde.h>
+#include <BSMPT/utility/spline/spline.h>
 #include <BSMPT/utility/utility.h>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_interp.h>
@@ -76,6 +77,9 @@ public:
    *
    */
   double Tstar;
+
+  tk::spline D0b, D0f, D1b, D1f, D2b, D2f, Q1b, Q1f, Q2b, Q2f, Q8o1, Q8o2, Q9o1,
+      Q9o2, Rbarb, Rbarf, K0b, K0f, K4FHf, K4FHb;
 
   /**
    * @brief Bubble wall velocity
@@ -292,6 +296,15 @@ public:
    *
    */
   void Initialize();
+
+  tk::spline InterpolateKernel(const std::string &kernel_Name);
+
+  /**
+   * @brief Load all the Kernel functions and interpolate them
+   *
+   *
+   */
+  void BuildKernelInterpolation();
 
   /**
    * @brief Set the number of intergrations steps and initialize again.

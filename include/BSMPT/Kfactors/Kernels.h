@@ -17,6 +17,7 @@ enum KernelType
   Q8o,
   Q9o,
   Rb,
+  K4FH
 };
 
 enum ParticleType
@@ -158,6 +159,17 @@ public:
       , x(x_in) {};
   double operator()(const double u);
   ~RbarInt() {};
+};
+
+class K4Int
+{
+private:
+  const double s, x;
+
+public:
+  K4Int(const double s_in, const double x_in) : s(s_in), x(x_in) {}
+  double operator()(const double u);
+  ~K4Int() {};
 };
 
 class Kernel

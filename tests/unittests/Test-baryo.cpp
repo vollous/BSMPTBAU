@@ -16,8 +16,9 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
 {
   using namespace BSMPT;
   std::string path = "kernels/";
+  double vw_step   = 0.064;
 
-  /* for (int l = 0; l <= 2; l++)
+  for (int l = 0; l <= 2; l++)
   {
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
@@ -38,7 +39,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           if (l == 0)
             file << x << "\t" << Kern(KernelType::D, PType, x, 0.1) << "\n";
           else
-            for (double j = 0.; j < 5.01; j += 0.064)
+            for (double j = 0.; j < 5.01; j += vw_step)
             {
               double vw = -5. + j;
               vw        = pow(10, vw);
@@ -48,7 +49,42 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
         }
         file.close();
       }
-      if (l != 0)
+      std::cout << "K-Kernel\n";
+      {
+        std::string str = path + "K" + std::to_string(l) + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 7.01; i += 0.1)
+        {
+          double x = -5 + i;
+          x        = pow(10, x);
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::K, PType, x, 0.1) << "\n";
+          else if (l >= 2)
+            for (double j = 0.; j < 5.01; j += vw_step)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::D, PType, x, vw) << "\n";
+            }
+        }
+        file.close();
+      }
+      if (l == 0)
+      {
+        std::cout << "K4FH-Kernel\n";
+        std::string str = path + "K4FH" + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 7.01; i += 0.1)
+        {
+          double x = -5 + i;
+          x        = pow(10, x);
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::K4FH, PType, x, 0.1) << "\n";
+        }
+        file.close();
+      }
+      /* if (l != 0)
       {
         std::cout << "Q-Kernel\n";
         {
@@ -58,7 +94,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           {
             double x = -5 + i;
             x        = pow(10, x);
-            for (double j = 0.; j < 5.01; j += 0.064)
+            for (double j = 0.; j < 5.01; j += vw_step)
             {
               double vw = -5. + j;
               vw        = pow(10, vw);
@@ -78,7 +114,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             {
               double x = -5 + i;
               x        = pow(10, x);
-              for (double j = 0.; j < 5.01; j += 0.064)
+              for (double j = 0.; j < 5.01; j += vw_step)
               {
                 double vw = -5. + j;
                 vw        = pow(10, vw);
@@ -96,8 +132,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             {
               double x = -5 + i;
               x        = pow(10, x);
-              std::cout << x << "\n";
-              for (double j = 0.; j < 5.01; j += 0.064)
+              for (double j = 0.; j < 5.01; j += vw_step)
               {
                 double vw = -5. + j;
                 vw        = pow(10, vw);
@@ -108,9 +143,9 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             file.close();
           }
         }
-      }
+      } */
     }
-  } */
+  }
   for (int type = 0; type <= 1; type++)
   {
     Kernel Kern(0, 0);
@@ -125,7 +160,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       {
         double x = -5 + i;
         x        = pow(10, x);
-        for (double j = 0.; j < 5.01; j += 0.064)
+        for (double j = 0.; j < 5.01; j += vw_step)
         {
           double vw = -5. + j;
           vw        = pow(10, vw);
@@ -173,8 +208,15 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
       std::make_shared<BSMPT::CoexPhases>(vac.CoexPhasesList[0]);
 
   TransportEquations transport(modelPointer, coex, 0.01, coex->crit_temp);
-
+  // transport.BuildKernelInterpolation();
+  auto start = std::chrono::high_resolution_clock::now();
   transport.SolveTransportEquation();
+
+  auto end = std::chrono::high_resolution_clock::now();
+
+  // Calculate elapsed time
+  std::chrono::duration<double> duration = end - start;
+  std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 
   exit(0);
 
