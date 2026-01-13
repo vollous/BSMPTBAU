@@ -110,9 +110,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9b96fb917bd3ee9b36d8201bd0f8383e" id="r_a9b96fb917bd3ee9b36d8201bd0f8383e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9b96fb917bd3ee9b36d8201bd0f8383e">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Class__Potential__Origin.html">Class_Potential_Origin</a> &gt; &amp;pointer_in, const double &amp;vwall_in, const double &amp;Tstar_in, const std::vector&lt; double &gt; &amp;FalseVacuum_in, const std::vector&lt; double &gt; &amp;TrueVacuum_in)</td></tr>
 <tr class="memdesc:a9b96fb917bd3ee9b36d8201bd0f8383e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
 <tr class="separator:a9b96fb917bd3ee9b36d8201bd0f8383e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab37f757ca18a84d1a8175077a07bfe65" id="r_ab37f757ca18a84d1a8175077a07bfe65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab37f757ca18a84d1a8175077a07bfe65">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Class__Potential__Origin.html">Class_Potential_Origin</a> &gt; &amp;pointer_in, const std::shared_ptr&lt; <a class="el" href="structBSMPT_1_1CoexPhases.html">CoexPhases</a> &gt; &amp;CoexPhase_in, const double &amp;vwall_in, const double &amp;Tstar_in)</td></tr>
-<tr class="memdesc:ab37f757ca18a84d1a8175077a07bfe65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
-<tr class="separator:ab37f757ca18a84d1a8175077a07bfe65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c0ca15e7fc82add988a45da7761ca1" id="r_a55c0ca15e7fc82add988a45da7761ca1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a55c0ca15e7fc82add988a45da7761ca1">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Class__Potential__Origin.html">Class_Potential_Origin</a> &gt; &amp;pointer_in, const std::shared_ptr&lt; <a class="el" href="structBSMPT_1_1CoexPhases.html">CoexPhases</a> &gt; &amp;CoexPhase_in, const double &amp;vwall_in, const double &amp;Tstar_in, const VevProfileMode &amp;VevProfile_In=VevProfileMode::Kink)</td></tr>
+<tr class="memdesc:a55c0ca15e7fc82add988a45da7761ca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
+<tr class="separator:a55c0ca15e7fc82add988a45da7761ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a553ab3858669abb3620b953a5de7a9b5" id="r_a553ab3858669abb3620b953a5de7a9b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a553ab3858669abb3620b953a5de7a9b5">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Class__Potential__Origin.html">Class_Potential_Origin</a> &gt; &amp;pointer_in, const double &amp;vwall_in, const double &amp;Tstar_in, const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1BounceActionInt.html">BounceActionInt</a> &gt; &amp;ActionInt_in, const VevProfileMode &amp;Mode_in=VevProfileMode::TunnelPath)</td></tr>
 <tr class="memdesc:a553ab3858669abb3620b953a5de7a9b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
 <tr class="separator:a553ab3858669abb3620b953a5de7a9b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,6 +198,10 @@ FHCKStatus&#160;</td><td class="memItemRight" valign="bottom"><b>Status</b> = FH
 std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Class__Potential__Origin.html">Class_Potential_Origin</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>modelPointer</b></td></tr>
 <tr class="memdesc:accbe1335df9739ec2023d9ec1b18e100"><td class="mdescLeft">&#160;</td><td class="mdescRight">modelPointer for the used parameter point <br /></td></tr>
 <tr class="separator:accbe1335df9739ec2023d9ec1b18e100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c2890eb1a3618810298acf5904caa3a" id="r_a4c2890eb1a3618810298acf5904caa3a"><td class="memItemLeft" align="right" valign="top"><a id="a4c2890eb1a3618810298acf5904caa3a" name="a4c2890eb1a3618810298acf5904caa3a"></a>
+std::shared_ptr&lt; <a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html">VacuumProfileNS::VacuumProfile</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vacuumprofile</b></td></tr>
+<tr class="memdesc:a4c2890eb1a3618810298acf5904caa3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to the vacuum profile solver <br /></td></tr>
+<tr class="separator:a4c2890eb1a3618810298acf5904caa3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d1ee7de8a920efaf3b30c9ba58bf974" id="r_a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="memItemLeft" align="right" valign="top"><a id="a9d1ee7de8a920efaf3b30c9ba58bf974" name="a9d1ee7de8a920efaf3b30c9ba58bf974"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>Tstar</b></td></tr>
 <tr class="memdesc:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transition temperature. <br /></td></tr>
@@ -354,8 +358,8 @@ std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1GravitationalWave.html">Gr
 
 </div>
 </div>
-<a id="ab37f757ca18a84d1a8175077a07bfe65" name="ab37f757ca18a84d1a8175077a07bfe65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab37f757ca18a84d1a8175077a07bfe65">&#9670;&#160;</a></span>TransportEquations() <span class="overload">[2/5]</span></h2>
+<a id="a55c0ca15e7fc82add988a45da7761ca1" name="a55c0ca15e7fc82add988a45da7761ca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55c0ca15e7fc82add988a45da7761ca1">&#9670;&#160;</a></span>TransportEquations() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,7 +386,13 @@ std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1GravitationalWave.html">Gr
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>Tstar_in</em>&#160;</td>
+          <td class="paramname"><em>Tstar_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const VevProfileMode &amp;&#160;</td>
+          <td class="paramname"><em>VevProfile_In</em> = <code>VevProfileMode::Kink</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -399,6 +409,7 @@ std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1GravitationalWave.html">Gr
     <tr><td class="paramname">CoexPhase_in</td><td>Coexphase pointer </td></tr>
     <tr><td class="paramname">vwall_in</td><td>Wall velocity </td></tr>
     <tr><td class="paramname">Tstar_in</td><td>Transition temperature </td></tr>
+    <tr><td class="paramname">VevProfile_In</td><td>Solver mode. Default: kink solution </td></tr>
   </table>
   </dd>
 </dl>

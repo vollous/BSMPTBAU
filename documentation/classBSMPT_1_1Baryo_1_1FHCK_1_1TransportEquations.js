@@ -1,7 +1,7 @@
 var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
 [
     [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9b96fb917bd3ee9b36d8201bd0f8383e", null ],
-    [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab37f757ca18a84d1a8175077a07bfe65", null ],
+    [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a55c0ca15e7fc82add988a45da7761ca1", null ],
     [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a553ab3858669abb3620b953a5de7a9b5", null ],
     [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#afa298303272a2214eb760a99b365dc32", null ],
     [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#afa848ba56f9983377109780d9c8202ff", null ],
@@ -48,6 +48,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "Theta_True", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad1004be157ddf3e3432145b7d07eb45c", null ],
     [ "TrueVacuum", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac5c782c32ad18e29a33e3ab3b712a522", null ],
     [ "Tstar", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9d1ee7de8a920efaf3b30c9ba58bf974", null ],
+    [ "vacuumprofile", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4c2890eb1a3618810298acf5904caa3a", null ],
     [ "VevProfile", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a66cedc9f64fe7e3d2e18eb0b63dadd76", null ],
     [ "vwall", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac36946a624f04410b76d041bfe9afc96", null ]
 ];

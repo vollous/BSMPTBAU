@@ -88,7 +88,7 @@ var searchData=
   ['gettransitiontemp_85',['GetTransitionTemp',['../classBSMPT_1_1BounceSolution.html#ac57ad45d07739f73f36e6a9f1aa57684',1,'BSMPT::BounceSolution']]],
   ['getuseindexcol_86',['getUseIndexCol',['../classBSMPT_1_1Class__Potential__Origin.html#a71eedbca5ee57179d65123a27a979eca',1,'BSMPT::Class_Potential_Origin']]],
   ['getusevelocitytransportequations_87',['getUseVelocityTransportEquations',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a9f298e1640366d8547ad188689a1f82d',1,'BSMPT::Baryo::GSL_integration_mubl']]],
-  ['getvev_88',['GetVev',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3d243adf76ce8963b44266efc90aa20f',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['getvev_88',['GetVev',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#afdd5dfae1ed97b0dc0426aae92ba1694',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
   ['getvevcritical_89',['getVEVCritical',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a368af210871ad143d298e134bd98239a',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['getvevsym_90',['getVEVsym',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#afe3d98c7481a5858f526cc6c143bd901',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['getvw_91',['getvw',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a14d0ae51feac7dd0606b01dec7c583d2',1,'BSMPT::Baryo::GSL_integration_mubl']]],
