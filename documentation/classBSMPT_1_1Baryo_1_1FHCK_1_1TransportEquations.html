@@ -32,7 +32,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.1.7</span>
+   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.1.8</span>
    </div>
    <div id="projectbrief">BSMPT - Beyond the Standard Model Phase Transitions : A C++ package for the computation of the EWPT in BSM models</div>
   </td>
@@ -137,6 +137,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetEtaInterface</b> (
 <tr class="memdesc:a829f4356f0ede57197a25e70939be296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the VEV \( \vec{v} \) and derivatives \(
 \drac{d^n\vec{v}}{dz^n} \) at the positions z.  <br /></td></tr>
 <tr class="separator:a829f4356f0ede57197a25e70939be296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840ad2e6e0da381d6a4dfdc425d7a352" id="r_a840ad2e6e0da381d6a4dfdc425d7a352"><td class="memItemLeft" align="right" valign="top"><a id="a840ad2e6e0da381d6a4dfdc425d7a352" name="a840ad2e6e0da381d6a4dfdc425d7a352"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</b> ()</td></tr>
+<tr class="memdesc:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the quark masses splines. <br /></td></tr>
+<tr class="separator:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2ea72a5b1e7b737827901e16f2ddfb" id="r_aae2ea72a5b1e7b737827901e16f2ddfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aae2ea72a5b1e7b737827901e16f2ddfb">GetFermionMass</a> (const double &amp;z, const int &amp;fermion, const Eigen::ComplexEigenSolver&lt; Eigen::MatrixXcd &gt; &amp;esQuark, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
 <tr class="memdesc:aae2ea72a5b1e7b737827901e16f2ddfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
 <tr class="separator:aae2ea72a5b1e7b737827901e16f2ddfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,6 +302,13 @@ std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1BounceSolution.html">Bounc
 std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1GravitationalWave.html">GravitationalWave</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GW</b></td></tr>
 <tr class="memdesc:a58f41fac186d1737aec5dfb9471a0c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gravitational Wave object. <br /></td></tr>
 <tr class="separator:a58f41fac186d1737aec5dfb9471a0c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf57aa2815f55c94bfc73bec399f16e4" id="r_abf57aa2815f55c94bfc73bec399f16e4"><td class="memItemLeft" align="right" valign="top"><a id="abf57aa2815f55c94bfc73bec399f16e4" name="abf57aa2815f55c94bfc73bec399f16e4"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>FermionMassesRe</b></td></tr>
+<tr class="memdesc:abf57aa2815f55c94bfc73bec399f16e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splines to store the variation of the quark masses. <br /></td></tr>
+<tr class="separator:abf57aa2815f55c94bfc73bec399f16e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ebced129c193343570e59a703f3d5f" id="r_ab8ebced129c193343570e59a703f3d5f"><td class="memItemLeft" align="right" valign="top"><a id="ab8ebced129c193343570e59a703f3d5f" name="ab8ebced129c193343570e59a703f3d5f"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>FermionMassesIm</b></td></tr>
+<tr class="separator:ab8ebced129c193343570e59a703f3d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9b96fb917bd3ee9b36d8201bd0f8383e" name="a9b96fb917bd3ee9b36d8201bd0f8383e"></a>
