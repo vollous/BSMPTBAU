@@ -27,7 +27,8 @@ TransportEquations::TransportEquations(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
     const std::shared_ptr<CoexPhases> &CoexPhase_in,
     const double &vwall_in,
-    const double &Tstar_in)
+    const double &Tstar_in,
+    const VevProfileMode &VevProfile_In)
 {
   modelPointer = pointer_in;
   Tstar        = Tstar_in;
@@ -35,7 +36,7 @@ TransportEquations::TransportEquations(
   CoexPhase    = CoexPhase_in;
   FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
   TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
-  VevProfile   = VevProfileMode::Kink;
+  VevProfile   = VevProfile_In;
   Initialize();
   BuildKernelInterpolation();
 }
@@ -83,7 +84,37 @@ void TransportEquations::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
-  if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
+  SetEtaInterface();
+
+  if (VevProfile == VevProfileMode::TunnelPath)
+  {
+    const double &eps = 0.01;
+    // Calculate tunnel profile
+    std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
+    {
+      // Potential wrapper
+      std::vector<double> res = modelPointer->MinimizeOrderVEV(vev);
+      return modelPointer->VEff(res, Tstar);
+    };
+
+    std::function<std::vector<double>(std::vector<double>)> dV =
+        [=](auto const &arg) { return NablaNumerical(arg, V, eps); };
+    std::function<std::vector<std::vector<double>>(std::vector<double>)>
+        Hessian = [=](auto const &arg)
+    { return HessianNumerical(arg, V, eps); };
+
+    std::cout << "Lw values it\t" << Lw.value() << "\n";
+
+    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
+        modelPointer->get_NHiggs(),
+        TrueVacuum,
+        FalseVacuum,
+        V,
+        dV,
+        Hessian,
+        Lw.value());
+    vacuumprofile->CalculateProfile();
+  }
 
   gamwall = 1. / std::sqrt(1. - vwall * vwall);
 
@@ -241,9 +272,6 @@ void TransportEquations::SetNumberOfSteps(const int &num)
 
 void TransportEquations::SetEtaInterface()
 {
-  if (VevProfile != VevProfileMode::Kink)
-    throw("Cannot set theta is a non kink vev profile");
-
   auto config =
       std::pair<std::vector<bool>, int>{std::vector<bool>(5, true), 1};
   EtaInterface =
@@ -275,7 +303,7 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
   }
   else if (VevProfile == VevProfileMode::TunnelPath)
   {
-    return std::vector<double>(2, 0.0);
+    return vacuumprofile->GetVev(z, diff);
   }
 
   Logger::Write(LoggingLevel::FHCK, "Error! No VEV profile selected. - Vev()");

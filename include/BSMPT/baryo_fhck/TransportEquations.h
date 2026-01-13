@@ -7,9 +7,11 @@
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
+#include <BSMPT/utility/NumericalDerivatives.h>
 #include <BSMPT/utility/relaxation/solvde.h>
 #include <BSMPT/utility/spline/spline.h>
 #include <BSMPT/utility/utility.h>
+#include <BSMPT/vacuum_profile/vacuum_profile.h>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_interp.h>
 
@@ -71,6 +73,12 @@ public:
    * @brief modelPointer for the used parameter point
    */
   std::shared_ptr<Class_Potential_Origin> modelPointer;
+
+  /**
+   * @brief pointer to the vacuum profile solver
+   *
+   */
+  std::shared_ptr<VacuumProfileNS::VacuumProfile> vacuumprofile;
 
   /**
    * @brief Transition temperature
@@ -237,11 +245,14 @@ public:
    * @param CoexPhase_in Coexphase pointer
    * @param vwall_in Wall velocity
    * @param Tstar_in Transition temperature
+   * @param VevProfile_In Solver mode. Default: kink solution
    */
-  TransportEquations(const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-                     const std::shared_ptr<CoexPhases> &CoexPhase_in,
-                     const double &vwall_in,
-                     const double &Tstar_in);
+  TransportEquations(
+      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
+      const std::shared_ptr<CoexPhases> &CoexPhase_in,
+      const double &vwall_in,
+      const double &Tstar_in,
+      const VevProfileMode &VevProfile_In = VevProfileMode::Kink);
 
   /**
    * @brief Construct a new Transport Equations object

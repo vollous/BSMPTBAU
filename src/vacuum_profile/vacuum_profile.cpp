@@ -28,9 +28,12 @@ VecInt VacuumProfile::Calcindexv()
 void VacuumProfile::LoadPath(const std::vector<double> &z_In,
                              const std::vector<std::vector<double>> &path_In)
 {
+  std::stringstream ss;
+  ss << "Loading path into VacuumProfile...";
+
   if (z_In.size() != path_In.size())
     throw("z and path have different lengths.");
-  scalv = VecDoub(2 * dim, -1);
+  scalv = VecDoub(2 * dim, 1); // min of 1
   z     = std::vector<double>(z_In.size(), 0.);
   y     = MatDoub(dim * 2, z.size(), 0.);
   for (size_t k = 0; k < path_In.size(); k++)
@@ -51,14 +54,16 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
         scalv[dim + i] = abs(y[dim + i][k]);
     }
   }
+  ss << " \033[92mSuccess!\033[0m";
+  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
 void VacuumProfile::CalculateProfile()
 {
   size_t itmax = 10;
-  double conv  = 1e-8;
-  double slowc = 1;
-  mode         = ProfileSolverMode::Field;
+  double conv  = 1e-10;
+  double slowc = 1e-2;
+  mode         = ProfileSolverMode::Deriv;
 
   VecInt indexv = Calcindexv();
   std::stringstream ss;
@@ -68,13 +73,15 @@ void VacuumProfile::CalculateProfile()
 
   ss << "True vacuum = " << TrueVacuum << "\n";
   ss << "False vacuum = " << FalseVacuum << "\n";
+  ss << "VEV dimension = " << dim << "\n";
+  ss << "Calculating profile in z ∈ [" << z.front() << ", " << z.back() << "]";
 
   Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, z, TrueVacuum, FalseVacuum, V, dV, Hessian);
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
 
-  ss << "\nμ = \t" << difeq_vacuumprofile.mu << "\n";
+  ss << "\nμ = " << difeq_vacuumprofile.mu << "\n";
 
   status = VacuumProfileStatus::Success;
   GenerateSplines();
@@ -125,9 +132,10 @@ void VacuumProfile::GenerateSplines()
                  0.0);
     splines.push_back(s);
   }
+  Logger::Write(LoggingLevel::VacuumProfile, "Splined generated!");
 }
 
-std::vector<double> VacuumProfile::GetVev(const double &zz)
+std::vector<double> VacuumProfile::GetVev(const double &zz, const int &diff)
 {
   if (status != VacuumProfileStatus::Success)
   {
@@ -135,9 +143,32 @@ std::vector<double> VacuumProfile::GetVev(const double &zz)
                   "Vacuum profile calculation failed. Do not call GetVev(z)");
     return std::vector<double>(dim, 0); // return 0, ..., 0
   }
+  if (zz < z.front())
+  {
+    if (diff == 0)
+      return TrueVacuum;
+    else
+      return std::vector<double>(dim, 0.);
+  }
+  if (zz > z.back())
+  {
+    if (diff == 0)
+      return FalseVacuum;
+    else
+      return std::vector<double>(dim, 0.);
+  }
   std::vector<double> r;
   for (size_t i = 0; i < dim; i++)
-    r.push_back(splines.at(i)(zz));
+  {
+    if (diff == 0)
+    {
+      r.push_back(splines.at(i)(zz));
+    }
+    else
+    {
+      r.push_back(splines.at(i).deriv(diff, zz));
+    }
+  }
   return r;
 }
 
@@ -178,7 +209,7 @@ void VacuumProfile::CenterPath(double &center)
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False
@@ -206,7 +237,7 @@ VacuumProfile::VacuumProfile(
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False
@@ -219,7 +250,7 @@ VacuumProfile::VacuumProfile(
     const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian_In,
     // Bubble width
-    const double &Lw)
+    const double Lw)
     : dim(dim_In)
     , TrueVacuum(TrueVacuum_In)
     , FalseVacuum(FalseVacuum_In)
@@ -248,7 +279,7 @@ VacuumProfile::VacuumProfile(
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False
