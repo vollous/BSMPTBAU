@@ -4,7 +4,6 @@
 using Approx = Catch::Approx;
 
 #include <BSMPT/Kfactors/Kernels.h>
-#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/models/IncludeAllModels.h>

@@ -85,8 +85,8 @@ void TransportEquations::Initialize()
 
   if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
 
-  Ki   = std::make_unique<Kinfo>(Tstar, vwall);
-  Kfac = std::make_unique<Kfactor>(Ki, true);
+  gamwall = 1. / std::sqrt(1. - vwall * vwall);
+
   nFB2 = 2 * (nFermions + nBosons);
 }
 
@@ -430,54 +430,54 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   Gamma[0][4] = (-GammaW + (1 + 9 * D0B) * GammaTildeSS) * K0T;
   Gamma[0][6] = GammaY * K0T;
 
-  Gamma[1][0] = -Ki->vw * Gamma[0][0];
+  Gamma[1][0] = -vwall * Gamma[0][0];
   Gamma[1][1] = -GammaTotTop;
-  Gamma[1][2] = -Ki->vw * Gamma[0][2];
-  Gamma[1][4] = -Ki->vw * Gamma[0][4];
-  Gamma[1][6] = -Ki->vw * Gamma[0][6];
+  Gamma[1][2] = -vwall * Gamma[0][2];
+  Gamma[1][4] = -vwall * Gamma[0][4];
+  Gamma[1][6] = -vwall * Gamma[0][6];
 
   Gamma[2][0] = (-GammaM - GammaY - (1 + 9 * D0T) * GammaTildeSS) * K0T;
   Gamma[2][2] = (GammaM + 2 * GammaY + (1 - 9 * D0T) * GammaTildeSS) * K0T;
   Gamma[2][4] = (-GammaY - (1 + 9 * D0B) * GammaTildeSS) * K0T;
   Gamma[2][6] = -2 * GammaY * K0T;
 
-  Gamma[3][0] = -Ki->vw * Gamma[2][0];
-  Gamma[3][2] = -Ki->vw * Gamma[2][2];
+  Gamma[3][0] = -vwall * Gamma[2][0];
+  Gamma[3][2] = -vwall * Gamma[2][2];
   Gamma[3][3] = -GammaTotTop;
-  Gamma[3][4] = -Ki->vw * Gamma[2][4];
-  Gamma[3][6] = -Ki->vw * Gamma[2][6];
+  Gamma[3][4] = -vwall * Gamma[2][4];
+  Gamma[3][6] = -vwall * Gamma[2][6];
 
   Gamma[4][0] = (-GammaW + (1 + 9 * D0T) * GammaTildeSS) * K0B;
   Gamma[4][2] = (-GammaY + (-1 + 9 * D0T) * GammaTildeSS) * K0B;
   Gamma[4][4] = (GammaW + GammaY + (1 + 9 * D0B) * GammaTildeSS) * K0B;
   Gamma[4][6] = GammaY * K0B;
 
-  Gamma[5][0] = -Ki->vw * Gamma[4][0];
-  Gamma[5][2] = -Ki->vw * Gamma[4][2];
-  Gamma[5][4] = -Ki->vw * Gamma[4][4];
+  Gamma[5][0] = -vwall * Gamma[4][0];
+  Gamma[5][2] = -vwall * Gamma[4][2];
+  Gamma[5][4] = -vwall * Gamma[4][4];
   Gamma[5][5] = -GammaTotBot;
-  Gamma[5][6] = -Ki->vw * Gamma[4][6];
+  Gamma[5][6] = -vwall * Gamma[4][6];
 
   Gamma[6][0] = GammaY * K0h;
   Gamma[6][2] = -2 * GammaY * K0h;
   Gamma[6][4] = GammaY * K0h;
   Gamma[6][6] = (GammaH + 2 * GammaY) * K0h;
 
-  Gamma[7][0] = -Ki->vw * Gamma[6][0];
-  Gamma[7][2] = -Ki->vw * Gamma[6][2];
-  Gamma[7][4] = -Ki->vw * Gamma[6][4];
-  Gamma[7][6] = -Ki->vw * Gamma[6][6];
+  Gamma[7][0] = -vwall * Gamma[6][0];
+  Gamma[7][2] = -vwall * Gamma[6][2];
+  Gamma[7][4] = -vwall * Gamma[6][4];
+  Gamma[7][6] = -vwall * Gamma[6][6];
   Gamma[7][7] = -GammaTotHiggs;
 
   return Gamma;
 }
 
-MatDoub TransportEquations::calc_Ainv(const double &m, const P_type &type)
+MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
   MatDoub res(2, 2);
-  const double fD1 = (type == fermion ? D1f(m) : D1b(m));
-  const double fD2 = (type == fermion ? D2f(m) : D2b(m));
-  const double fR  = -Ki->vw;
+  const double fD1 = (type == Fermion ? D1f(m) : D1b(m));
+  const double fD2 = (type == Fermion ? D2f(m) : D2b(m));
+  const double fR  = -vwall;
   res[0][0]        = fR / (fD2 - fD1 * fR);
   res[0][1]        = -1 / (fD2 - fD1 * fR);
   res[1][0]        = fD2 / (fD2 - fD1 * fR);
@@ -487,15 +487,15 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const P_type &type)
 
 MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
-                                     const P_type &type)
+                                     const ParticleType &type)
 {
   MatDoub res(2, 2);
-  const double fRbar = (type == fermion ? Rbarf(m) : Rbarb(m));
-  const double fQ1   = (type == fermion ? Q1f(m) : Q1b(m));
-  const double fQ2   = (type == fermion ? Q2f(m) : Q2b(m));
+  const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
+  const double fQ1   = (type == Fermion ? Q1f(m) : Q1b(m));
+  const double fQ2   = (type == Fermion ? Q2f(m) : Q2b(m));
 
-  res[0][0] = Ki->gamw * Ki->vw * fQ1 * dm2;
-  res[1][0] = Ki->gamw * Ki->vw * fQ2 * dm2;
+  res[0][0] = gamwall * vwall * fQ1 * dm2;
+  res[1][0] = gamwall * vwall * fQ2 * dm2;
   res[1][1] = fRbar * dm2;
   return res;
 }
@@ -504,13 +504,13 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &dm2,
                                         const double &dth,
                                         const double &d2th,
-                                        const P_type &type)
+                                        const ParticleType &type)
 {
   VecDoub res(2);
-  res[0] = -Ki->vw * Ki->gamw *
+  res[0] = -vwall * gamwall *
            ((dm2 * dth + m * m * d2th) * Q8o1(m) -
             dm2 * m * m * dth * Q9o1(m)); // S1
-  res[1] = -Ki->vw * Ki->gamw *
+  res[1] = -vwall * gamwall *
            ((dm2 * dth + m * m * d2th) * Q8o2(m) -
             dm2 * m * m * dth * Q9o2(m)); // S2
   return res;
@@ -551,21 +551,21 @@ void TransportEquations::Equations(const double &z,
     FermionMasses[fermion] = m2;
 
     // Calculate A inverse for fermion
-    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::fermion));
+    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Fermion));
     Ainverse[2 * fermion][2 * fermion]         = tempA[0][0];
     Ainverse[2 * fermion][2 * fermion + 1]     = tempA[0][1];
     Ainverse[2 * fermion + 1][2 * fermion]     = tempA[1][0];
     Ainverse[2 * fermion + 1][2 * fermion + 1] = tempA[1][1];
 
     // Calculate m2'B for fermion
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
     m2B[2 * fermion][2 * fermion]         = tempB[0][0];
     m2B[2 * fermion + 1][2 * fermion]     = tempB[1][0];
     m2B[2 * fermion + 1][2 * fermion + 1] = tempB[1][1];
 
     // Source terms
     VecDoub tempS(calc_source(
-        sqrt(m2), m2prime, thetaprime, theta2prime, P_type::fermion));
+        sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
     S[2 * fermion]     = tempS[0];
     S[2 * fermion + 1] = tempS[1];
   }
@@ -580,14 +580,14 @@ void TransportEquations::Equations(const double &z,
     BosonMasses[boson] = m2;
 
     // Calculate A inverse for bosons
-    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::boson));
+    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Boson));
     Ainverse[nF2 + 2 * boson][nF2 + 2 * boson]         = tempA[0][0];
     Ainverse[nF2 + 2 * boson][nF2 + 2 * boson + 1]     = tempA[0][1];
     Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempA[1][0];
     Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempA[1][1];
 
     // Calculate m2'B
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
     m2B[nF2 + 2 * boson][nF2 + 2 * boson]         = tempB[0][0];
     m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempB[1][0];
     m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempB[1][1];
@@ -806,7 +806,7 @@ void TransportEquations::CalculateBAU()
                 modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev), 0.) /
                 Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
-             (4. * Ki->vw * Ki->gamw)); // exp(-45 G_sph |z| / 4 vw gammaw)
+             (4. * vwall * gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
@@ -848,7 +848,7 @@ void TransportEquations::CalculateBAU()
   // Results
   const double prefactor =
       405. * Gsph /
-      (4 * M_PI * M_PI * Ki->vw * Ki->gamw * 106.75 * Tstar); // TODO Fix gstas
+      (4 * M_PI * M_PI * vwall * gamwall * 106.75 * Tstar); // TODO Fix gstas
 
   result *= prefactor;
   // Save the result

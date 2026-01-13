@@ -12,7 +12,6 @@
  *
  */
 
-#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/transport_equations.h> // for GSL_integ...
 #include <BSMPT/minimizer/Minimizer.h>
@@ -56,9 +55,6 @@ std::vector<std::string> convert_input(int argc, char *argv[]);
 int main(int argc, char *argv[])
 try
 {
-  std::shared_ptr<Kinfo> Ki = std::make_unique<Kinfo>(100, 0.5);
-  Kfactor K(Ki, false);
-
   const auto SMConstants = GetSMConstants();
 
   auto argparser = prepare_parser();

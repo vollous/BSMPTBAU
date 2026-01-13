@@ -5,14 +5,13 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/Kfactors")
 set(header
-    ${header_path}/vw_Kfactors.h
     ${header_path}/Kernels.h
     ${header_path}/Kfactors.h ${header_path}/KfactorsinterpolatedGSL.h
     ${header_path}/Kfactors_grid/KtildeInterpolation.h
     ${header_path}/Kfactors_grid/Kfunctions_grid.h)
 
 set(src Kfunctions_grid_Part1.cpp Kfunctions_grid_Part2.cpp Kfactors.cpp
-        KfactorsinterpolatedGSL.cpp vw_Kfactors.cpp Kernels.cpp)
+        KfactorsinterpolatedGSL.cpp Kernels.cpp)
 
 add_library(Kfactors ${header} ${src})
 
