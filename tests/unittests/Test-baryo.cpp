@@ -42,7 +42,13 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
   std::shared_ptr<BSMPT::CoexPhases> coex =
       std::make_shared<BSMPT::CoexPhases>(vac.CoexPhasesList[0]);
 
-  TransportEquations transport(modelPointer, coex, 0.01, coex->crit_temp);
+
+  TransportEquations transport(
+      modelPointer,
+      coex,
+      0.01,
+      coex->crit_temp,
+      Baryo::FHCK::VevProfileMode::TunnelPath); // TODO: rename this
 
   transport.SolveTransportEquation();
 
@@ -74,7 +80,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
   modelPointer->initModel(example_point_C2HDM);
 
   size_t dim                      = 4;
-  double Tstar                    = 143.71;
+  double Tstar                    = 143.7102777;
   double eps                      = 0.01;
   size_t NumberOfSteps            = 1000;
   std::vector<double> FalseVacuum = {0, 0, 0, 0};
@@ -89,7 +95,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
   VecDoub scalv(zList.size(), 246.22);
   VecInt indexv(2 * dim);
   VacuumProfileNS::ProfileSolverMode mode =
-      VacuumProfileNS::ProfileSolverMode::Field;
+      VacuumProfileNS::ProfileSolverMode::Deriv;
   std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
   {
     // Potential wrapper
@@ -108,7 +114,7 @@ TEST_CASE("VEV Profile", "[baryo123]")
     zList[i]    = 1 * temp;
 
     const double fac  = (tanh(10 * zList[i]) + 1.) / 2.;
-    const double dfac = pow(cosh(zList[i]), -2) / 2.;
+    const double dfac = 10 * pow(cosh(10 * zList[i]), -2) / 2.;
     for (size_t d = 0; d < dim; d++)
     {
       y[d][i]       = FalseVacuum[d] * dfac + TrueVacuum[d] * (-dfac);

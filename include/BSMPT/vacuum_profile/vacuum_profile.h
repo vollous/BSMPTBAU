@@ -113,7 +113,7 @@ struct VacuumProfile
    *
    * @param z position
    */
-  std::vector<double> GetVev(const double &zz);
+  std::vector<double> GetVev(const double &zz, const int &diff = 0);
 
   /**
    * @brief Relocate the vacuum profile "center" to \f$ z = 0 \f$ but
