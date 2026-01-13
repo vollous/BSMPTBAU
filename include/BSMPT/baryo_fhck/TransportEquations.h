@@ -9,6 +9,7 @@
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/utility/NumericalDerivatives.h>
 #include <BSMPT/utility/relaxation/solvde.h>
+#include <BSMPT/utility/spline/spline.h>
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/vacuum_profile.h>
 #include <gsl/gsl_integration.h>
