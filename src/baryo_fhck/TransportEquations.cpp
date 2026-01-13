@@ -104,16 +104,19 @@ void TransportEquations::Initialize()
 
     std::cout << "Lw values it\t" << Lw.value() << "\n";
 
-    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
-        modelPointer->get_NHiggs(),
-        TrueVacuum,
-        FalseVacuum,
-        V,
-        dV,
-        Hessian,
-        Lw.value());
+    vacuumprofile =
+        std::make_unique<VacuumProfileNS::VacuumProfile>(FalseVacuum.size(),
+                                                         TrueVacuum,
+                                                         FalseVacuum,
+                                                         V,
+                                                         dV,
+                                                         Hessian,
+                                                         Lw.value());
     vacuumprofile->CalculateProfile();
   }
+
+  // Generate the fermion masses splines
+  GenerateFermionMass();
 
   Ki   = std::make_unique<Kinfo>(Tstar, vwall);
   Kfac = std::make_unique<Kfactor>(Ki, true);
@@ -167,6 +170,61 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
   return std::vector<double>();
 }
 
+void TransportEquations::GenerateFermionMass()
+{
+
+  size_t ind = (modelPointer->get_NQuarks() - 1);
+  std::vector<std::vector<double>> MassesReal, MassesImag;
+  for (auto z : vacuumprofile->z)
+  {
+    std::vector<double> MassReal, MassImag;
+
+    Eigen::MatrixXcd MIJQuarks =
+        modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(Vev(z)));
+    Eigen::ComplexEigenSolver<Eigen::MatrixXcd> esQuark(MIJQuarks);
+
+    for (auto m : esQuark.eigenvalues())
+    {
+      const int fac = 2 * (m.real() >= 0) - 1;
+      MassReal.push_back(m.real() / fac);
+      MassImag.push_back(m.imag() / fac);
+    }
+    MassesReal.push_back(MassReal);
+    MassesImag.push_back(MassImag);
+  }
+
+  MassesReal = Transpose(MassesReal);
+  MassesImag = Transpose(MassesImag);
+
+  for (auto MassProfile : MassesReal)
+    FermionMassesRe.push_back(tk::spline(vacuumprofile->z,
+                                         MassProfile,
+                                         tk::spline::cspline,
+                                         false,
+                                         tk::spline::not_a_knot,
+                                         0,
+                                         tk::spline::not_a_knot,
+                                         0));
+
+  for (auto MassProfile : MassesImag)
+    FermionMassesIm.push_back(tk::spline(vacuumprofile->z,
+                                         MassProfile,
+                                         tk::spline::cspline,
+                                         false,
+                                         tk::spline::not_a_knot,
+                                         0,
+                                         tk::spline::not_a_knot,
+                                         0));
+
+  AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
+
+  Plot.addPlot(vacuumprofile->z, MassesReal.at(ind), "Re(mt)", '*');
+  Plot.addPlot(vacuumprofile->z, MassesImag.at(ind), "Im(mt)", '.');
+  std::stringstream ss;
+  Plot.show(ss);
+  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
+}
+
 void TransportEquations::GetFermionMass(
     const double &z,
     const int &fermion,
@@ -178,24 +236,16 @@ void TransportEquations::GetFermionMass(
 {
   std::complex<double> m, mprime, mprimeprime;
   int ind = (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
-  m       = esQuark.eigenvalues()[ind];
-  mprime  = esQuark.eigenvectors().col(ind).dot(
-               (modelPointer->QuarkMassMatrix(
-                    modelPointer->MinimizeOrderVEV(Vev(z, 1))) -
-                modelPointer->QuarkMassMatrix(
-                    modelPointer->MinimizeOrderVEV(EmptyVacuum))) *
-               esQuark.eigenvectors().col(ind)) /
-           esQuark.eigenvectors().col(ind).dot(esQuark.eigenvectors().col(ind));
-  mprimeprime =
-      esQuark.eigenvectors().col(ind).dot(
-          (modelPointer->QuarkMassMatrix(
-               modelPointer->MinimizeOrderVEV(Vev(z, 1))) -
-           modelPointer->QuarkMassMatrix(
-               modelPointer->MinimizeOrderVEV(EmptyVacuum))) *
-          esQuark.eigenvectors().col(ind)) /
-      esQuark.eigenvectors().col(ind).dot(esQuark.eigenvectors().col(ind));
-  m2      = std::abs(m * m); // m^2 of fermion
-  m2prime = std::abs(2. * mprime * m);
+
+  m = std::complex<double>(FermionMassesRe.at(ind)(z),
+                           FermionMassesIm.at(ind)(z));
+
+  mprime      = std::complex<double>(FermionMassesRe.at(ind).deriv(1, z),
+                                FermionMassesIm.at(ind).deriv(1, z));
+  mprimeprime = std::complex<double>(FermionMassesRe.at(ind).deriv(2, z),
+                                     FermionMassesIm.at(ind).deriv(2, z));
+  m2          = std::abs(m * m); // m^2 of fermion
+  m2prime     = std::abs(2. * mprime * m);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
@@ -227,18 +277,27 @@ void TransportEquations::GetFermionMass(
   }
   else if (VevProfile == VevProfileMode::TunnelPath)
   {
-    // Deduce theta' and theta'' from the mass's phase
-    thetaprime = (m.real() * mprime.imag() - m.imag() * mprime.real()) /
-                 (pow(m.imag(), 2) + pow(m.real(), 2));
-    theta2prime = (pow(m.real(), 2) * (-2 * mprime.imag() * mprime.real() +
-                                       m.real() * mprimeprime.imag()) +
-                   pow(m.imag(), 2) * (2 * mprime.imag() * mprime.real() +
-                                       m.real() * mprimeprime.imag()) -
-                   pow(m.imag(), 3) * mprimeprime.real() -
-                   m.imag() * m.real() *
-                       (2 * pow(mprime.imag(), 2) - 2 * pow(mprime.real(), 2) +
-                        m.real() * mprimeprime.real())) /
-                  pow(pow(m.imag(), 2) + pow(m.real(), 2), 2);
+    if (pow(m.imag(), 2) + pow(m.real(), 2) == 0) // avoid 1/0
+    {
+      thetaprime  = 0.;
+      theta2prime = 0.;
+    }
+    else
+    {
+      // Deduce theta' and theta'' from the mass's phase
+      thetaprime = (m.real() * mprime.imag() - m.imag() * mprime.real()) /
+                   (pow(m.imag(), 2) + pow(m.real(), 2));
+      theta2prime =
+          (pow(m.real(), 2) * (-2 * mprime.imag() * mprime.real() +
+                               m.real() * mprimeprime.imag()) +
+           pow(m.imag(), 2) * (2 * mprime.imag() * mprime.real() +
+                               m.real() * mprimeprime.imag()) -
+           pow(m.imag(), 3) * mprimeprime.real() -
+           m.imag() * m.real() *
+               (2 * pow(mprime.imag(), 2) - 2 * pow(mprime.real(), 2) +
+                m.real() * mprimeprime.real())) /
+          pow(pow(m.imag(), 2) + pow(m.real(), 2), 2);
+    }
   }
 }
 

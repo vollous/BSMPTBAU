@@ -226,6 +226,12 @@ public:
   std::shared_ptr<GravitationalWave> GW;
 
   /**
+   * @brief Splines to store the variation of the quark masses
+   *
+   */
+  std::vector<tk::spline> FermionMassesRe, FermionMassesIm;
+
+  /**
    * @brief Construct a new Transport Equations object
    *
    * @param pointer_in Model pointer
@@ -327,6 +333,12 @@ public:
    * @return std::vector<double> result
    */
   std::vector<double> Vev(const double &z, const int &diff = 0);
+
+  /**
+   * @brief Generate the quark masses splines
+   *
+   */
+  void GenerateFermionMass();
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its
