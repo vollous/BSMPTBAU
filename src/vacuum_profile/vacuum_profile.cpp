@@ -178,7 +178,7 @@ void VacuumProfile::CenterPath(double &center)
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False
@@ -206,7 +206,7 @@ VacuumProfile::VacuumProfile(
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False
@@ -219,7 +219,7 @@ VacuumProfile::VacuumProfile(
     const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian_In,
     // Bubble width
-    const double &Lw)
+    const double Lw)
     : dim(dim_In)
     , TrueVacuum(TrueVacuum_In)
     , FalseVacuum(FalseVacuum_In)
@@ -248,7 +248,7 @@ VacuumProfile::VacuumProfile(
 
 VacuumProfile::VacuumProfile(
     // Dimension of VEV space
-    const size_t &dim_In,
+    const size_t dim_In,
     // True
     const std::vector<double> &TrueVacuum_In,
     // False

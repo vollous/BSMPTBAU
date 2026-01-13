@@ -45,7 +45,7 @@ struct VacuumProfile
    * @brief Dimension of VEV space
    *
    */
-  const size_t &dim;
+  const size_t dim;
 
   /**
    * @brief Number of steps in \f$ z \f$
@@ -189,7 +189,7 @@ struct VacuumProfile
    */
   VacuumProfile(
       // Dimension of VEV space
-      const size_t &dim_In,
+      const size_t dim_In,
       // True
       const std::vector<double> &TrueVacuum_In,
       // False
@@ -215,7 +215,7 @@ struct VacuumProfile
    */
   VacuumProfile(
       // Dimension of VEV space
-      const size_t &dim_In,
+      const size_t dim_In,
       // True
       const std::vector<double> &TrueVacuum_In,
       // False
@@ -228,7 +228,7 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double &Lw);
+      const double Lw);
 
   /**
    * @brief Construct a new Vacuum Profile object
@@ -244,7 +244,7 @@ struct VacuumProfile
    */
   VacuumProfile(
       // Dimension of VEV space
-      const size_t &dim_In,
+      const size_t dim_In,
       // True
       const std::vector<double> &TrueVacuum_In,
       // False
