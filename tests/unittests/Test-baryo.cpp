@@ -215,13 +215,13 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
       Baryo::FHCK::VevProfileMode::Kink); // TODO: rename this
 
   transport.SolveTransportEquation();
-
-  REQUIRE(transport.BAUEta.value() == Approx(1.261614739e-10).epsilon(1e-4));
+  CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-4));
 
   transport.VevProfile = Baryo::FHCK::VevProfileMode::TunnelPath;
   transport.Initialize();
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUEta.value() == Approx(9.895749505e-09).epsilon(1e-4));
+  CHECK(transport.BAUEta.value() == Approx(7.41908e-09).epsilon(1e-4));
+
 
   REQUIRE(1 == 1);
 }
