@@ -289,7 +289,7 @@ public:
    * @param theta2prime \f$ \theta'' \f$
    */
   void GetFermionMass(const double &z,
-                      const int &fermion,
+                      const size_t &fermion,
                       double &m2,
                       double &m2prime,
                       double &thetaprime,
