@@ -130,9 +130,9 @@ var NAVTREEINDEX =
 "classBSMPT_1_1Class__Potential__Origin.html#a35af6a9f82f4cde1f8a69bf5c0f0bff2",
 "classBSMPT_1_1Class__Potential__Origin.html#af46b793fb2a42eb2c015dddabb3c1cf3",
 "classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator.html#ae46d28dd890e109903e719b825420f83",
-"index.html#autotoc_md12",
-"structBSMPT_1_1DBPLParameters.html",
-"top__source_8h_source.html"
+"index.html#autotoc_md11",
+"structBSMPT_1_1CoexPhases.html#a9d2be5af57b80dc88bce3c14f813f593",
+"top__source_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

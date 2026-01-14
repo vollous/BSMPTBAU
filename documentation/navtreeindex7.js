@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"index.html#autotoc_md11":[2],
 "index.html#autotoc_md12":[2,0],
 "index.html#autotoc_md13":[3],
 "index.html#autotoc_md14":[3,0],
@@ -242,12 +243,11 @@ var NAVTREEINDEX7 =
 "structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html#a8bcb28f8aae28c056c8e7f9e43edd2a4":[3,0,0,0,10,2],
 "structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html#a8eda7cd124ca249f4294ae60cfbd8e80":[3,0,0,0,10,0],
 "structBSMPT_1_1Baryo_1_1push__back__state__and__time.html":[3,0,0,0,11],
-"structBSMPT_1_1CoexPhases.html":[3,0,0,12],
 "structBSMPT_1_1CoexPhases.html":[2,0,0,5],
-"structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d":[3,0,0,12,1],
+"structBSMPT_1_1CoexPhases.html":[3,0,0,12],
 "structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d":[2,0,0,5,1],
-"structBSMPT_1_1CoexPhases.html#a091daf391aca2cd7d097dd96eaadaf5f":[3,0,0,12,2],
+"structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d":[3,0,0,12,1],
 "structBSMPT_1_1CoexPhases.html#a091daf391aca2cd7d097dd96eaadaf5f":[2,0,0,5,2],
-"structBSMPT_1_1CoexPhases.html#a9d2be5af57b80dc88bce3c14f813f593":[3,0,0,12,0],
+"structBSMPT_1_1CoexPhases.html#a091daf391aca2cd7d097dd96eaadaf5f":[3,0,0,12,2],
 "structBSMPT_1_1CoexPhases.html#a9d2be5af57b80dc88bce3c14f813f593":[2,0,0,5,0]
 };
