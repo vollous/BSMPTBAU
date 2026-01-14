@@ -16,6 +16,5 @@ var searchData=
   ['gstarhight_13',['GstarHighT',['../namespaceBSMPT.html#a9ed1026b6652750ec98bc980465e6e1c',1,'BSMPT']]],
   ['gstarlowt_14',['GstarLowT',['../namespaceBSMPT.html#a2e805f343e6197f75b74a9084886107f',1,'BSMPT']]],
   ['gstarprofilehight_15',['GstarProfileHighT',['../classBSMPT_1_1BounceSolution.html#a2a3f3a515dbae5cd29bc6c8ea9f84506',1,'BSMPT::BounceSolution']]],
-  ['gstarprofilelowt_16',['GstarProfileLowT',['../classBSMPT_1_1BounceSolution.html#a3bd55ab25746f070ee69aa15f11bc6f9',1,'BSMPT::BounceSolution']]],
-  ['gw_17',['GW',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a58f41fac186d1737aec5dfb9471a0c13',1,'BSMPT::Baryo::FHCK::TransportEquations']]]
+  ['gstarprofilelowt_16',['GstarProfileLowT',['../classBSMPT_1_1BounceSolution.html#a3bd55ab25746f070ee69aa15f11bc6f9',1,'BSMPT::BounceSolution']]]
 ];
