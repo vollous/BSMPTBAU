@@ -210,7 +210,7 @@ public:
    * @brief Splines to store the variation of the quark masses
    *
    */
-  std::vector<tk::spline> FermionMassesRe, FermionMassesIm;
+  std::vector<tk::spline> QuarkMassesRe, QuarkMassesIm;
 
   /**
    * @brief Construct a new Transport Equations object

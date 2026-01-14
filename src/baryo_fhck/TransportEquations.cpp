@@ -210,8 +210,8 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
 
 void TransportEquations::GenerateFermionMass()
 {
-  FermionMassesRe.clear();
-  FermionMassesIm.clear();
+  QuarkMassesRe.clear();
+  QuarkMassesIm.clear();
   size_t ind = (modelPointer->get_NQuarks() - 1);
   std::vector<std::vector<double>> MassesReal, MassesImag;
   for (auto z : zList)
@@ -236,24 +236,24 @@ void TransportEquations::GenerateFermionMass()
   MassesImag = Transpose(MassesImag);
 
   for (auto MassProfile : MassesReal)
-    FermionMassesRe.push_back(tk::spline(zList,
-                                         MassProfile,
-                                         tk::spline::cspline,
-                                         false,
-                                         tk::spline::not_a_knot,
-                                         0,
-                                         tk::spline::not_a_knot,
-                                         0));
+    QuarkMassesRe.push_back(tk::spline(zList,
+                                       MassProfile,
+                                       tk::spline::cspline,
+                                       false,
+                                       tk::spline::not_a_knot,
+                                       0,
+                                       tk::spline::not_a_knot,
+                                       0));
 
   for (auto MassProfile : MassesImag)
-    FermionMassesIm.push_back(tk::spline(zList,
-                                         MassProfile,
-                                         tk::spline::cspline,
-                                         false,
-                                         tk::spline::not_a_knot,
-                                         0,
-                                         tk::spline::not_a_knot,
-                                         0));
+    QuarkMassesIm.push_back(tk::spline(zList,
+                                       MassProfile,
+                                       tk::spline::cspline,
+                                       false,
+                                       tk::spline::not_a_knot,
+                                       0,
+                                       tk::spline::not_a_knot,
+                                       0));
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
@@ -275,13 +275,12 @@ void TransportEquations::GetFermionMass(const double &z,
   const int ind =
       (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
 
-  m = std::complex<double>(FermionMassesRe.at(ind)(z),
-                           FermionMassesIm.at(ind)(z));
+  m = std::complex<double>(QuarkMassesRe.at(ind)(z), QuarkMassesIm.at(ind)(z));
 
-  mprime      = std::complex<double>(FermionMassesRe.at(ind).deriv(1, z),
-                                FermionMassesIm.at(ind).deriv(1, z));
-  mprimeprime = std::complex<double>(FermionMassesRe.at(ind).deriv(2, z),
-                                     FermionMassesIm.at(ind).deriv(2, z));
+  mprime      = std::complex<double>(QuarkMassesRe.at(ind).deriv(1, z),
+                                QuarkMassesIm.at(ind).deriv(1, z));
+  mprimeprime = std::complex<double>(QuarkMassesRe.at(ind).deriv(2, z),
+                                     QuarkMassesIm.at(ind).deriv(2, z));
   m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
   m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
   // Calculate theta
