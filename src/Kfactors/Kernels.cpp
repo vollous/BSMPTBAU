@@ -106,8 +106,10 @@ double Kernel::operator()(const KernelType Kern,
   {
   case KernelType::K:
   {
-    N0Int integrand(vw, gamw, statistic, x);
-    return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    KernelIntw integrand(0, 0, l, l, vw, gamw, statistic, x);
+    res *= -adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    //N0Int integrand(vw, gamw, statistic, x);
+    //return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
   }
   break;
   case KernelType::D:

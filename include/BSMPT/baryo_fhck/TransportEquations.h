@@ -86,10 +86,9 @@ public:
    */
   double Tstar;
 
-  std::vector<tk::spline> Kl, Dl, Ql, Q8ol, Q9ol;
+  std::vector<tk::spline> Klf, Klb, Dlf, Dlb, Qlf, Qlb, Q8ol, Q9ol;
 
-  tk::spline D0b, D0f, D1b, D1f, D2b, D2f, Q1b, Q1f, Q2b, Q2f, Q8o1, Q8o2, Q9o1,
-      Q9o2, Rbarb, Rbarf, K0b, K0f, K4FHf, K4FHb;
+  tk::spline Rbarb, Rbarf, K4FHf, K4FHb;
 
   /**
    * @brief Bubble wall velocity

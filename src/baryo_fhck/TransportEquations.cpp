@@ -126,8 +126,10 @@ void TransportEquations::BuildKernelInterpolation()
   K4FHb = InterpolateKernel("K4FH_b", true);
   Rbarf = InterpolateKernel("Rbar_f", false);
   Rbarb = InterpolateKernel("Rbar_b", false);
-  K0b = InterpolateKernel("K0_b", true);
-  K0f = InterpolateKernel("K0_f", true);
+  Qlf.push_back(tk::spline());
+  Q8ol.push_back(tk::spline());
+  Q9ol.push_back(tk::spline());
+  Qlb.push_back(tk::spline());
 
   for (int l = 0; l <= 2; l++)
   {
@@ -136,62 +138,36 @@ void TransportEquations::BuildKernelInterpolation()
       std::string suffix = (type == 0 ? "_f" : "_b");
 
       kernel_name = "D" + std::to_string(l) + suffix;
-      std::cout << kernel_name << "\n";
-      Dl.push_back(InterpolateKernel(kernel_name, is_1d));
+      type == 0 ? Dlf.push_back(InterpolateKernel(kernel_name, is_1d))
+                : Dlb.push_back(InterpolateKernel(kernel_name, is_1d));
 
-      // kernel_name = "K" + std::to_string(l) + suffix;
-      // std::cout << kernel_name << "\n";
-      // Kl.push_back(InterpolateKernel(kernel_name, is_1d));
+      if (l == 1)
+        type == 0 ? Klf.push_back(tk::spline()) : Klb.push_back(tk::spline());
+      else
+      {
+        kernel_name = "K" + std::to_string(l) + suffix;
+        type == 0 ? Klf.push_back(InterpolateKernel(kernel_name, is_1d))
+                  : Klb.push_back(InterpolateKernel(kernel_name, is_1d));
+      }
 
       if (l != 0)
       {
         kernel_name = "Q" + std::to_string(l) + suffix;
-        std::cout << kernel_name << "\n";
-        Ql.push_back(InterpolateKernel(kernel_name, is_1d));
+        type == 0 ? Qlf.push_back(InterpolateKernel(kernel_name, is_1d))
+                  : Qlb.push_back(InterpolateKernel(kernel_name, is_1d));
 
         if (type == 0)
         {
           kernel_name = "Q8o" + std::to_string(l) + suffix;
-          std::cout << kernel_name << "\n";
           Q8ol.push_back(InterpolateKernel(kernel_name, is_1d));
 
           kernel_name = "Q9o" + std::to_string(l) + suffix;
-          std::cout << kernel_name << "\n";
           Q9ol.push_back(InterpolateKernel(kernel_name, is_1d));
         }
       }
     }
     is_1d = false;
   }
-  D0b = InterpolateKernel("D0_b", true);
-  D0f = InterpolateKernel("D0_f", true);
-
-  std::string b1 = "D1_b";
-  std::string b2 = "D2_b";
-  std::string b3 = "Q1_b";
-  std::string b4 = "Q2_b";
-  std::string f1 = "D1_f";
-  std::string f2 = "D2_f";
-  std::string f3 = "Q1_f";
-  std::string f4 = "Q2_f";
-  std::string f5 = "Q8o1_f";
-  std::string f6 = "Q8o2_f";
-  std::string f7 = "Q9o1_f";
-  std::string f8 = "Q9o2_f";
-
-  D1b = InterpolateKernel(b1, false);
-  D2b = InterpolateKernel(b2, false);
-  Q1b = InterpolateKernel(b3, false);
-  Q2b = InterpolateKernel(b4, false);
-
-  D1f  = InterpolateKernel(f1, false);
-  D2f  = InterpolateKernel(f2, false);
-  Q1f  = InterpolateKernel(f3, false);
-  Q2f  = InterpolateKernel(f4, false);
-  Q8o1 = InterpolateKernel(f5, false);
-  Q8o2 = InterpolateKernel(f6, false);
-  Q9o1 = InterpolateKernel(f7, false);
-  Q9o2 = InterpolateKernel(f8, false);
 }
 
 void TransportEquations::SetNumberOfSteps(const int &num)
@@ -423,17 +399,17 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double mBot   = sqrt(FermionMasses[2]);
   const double mHiggs = sqrt(BosonMasses[0]);
 
-  const double D0T = D0f(mTop);
-  const double D0B = D0f(mBot);
+  const double D0T = Dlf[0](mTop);
+  const double D0B = Dlf[0](mBot);
 
-  const double K0T = K0f(mTop);
-  const double K0B = K0f(mBot);
-  const double K0h = K0b(mHiggs);
+  const double K0T = Klf[0](mTop);
+  const double K0B = Klf[0](mBot);
+  const double K0h = Klb[0](mHiggs);
 
   const double GammaTotTop = K4FHf(mTop) / (D0T * 6.) * Tstar; // TODO: fix
   const double GammaTotBot = K4FHf(mBot) / (D0B * 6.) * Tstar; // TODO: fix
   const double GammaTotHiggs =
-      K4FHb(mHiggs) / (D0b(mHiggs) * 20.) * Tstar; // TODO: fix
+      K4FHb(mHiggs) / (Dlb[0](mHiggs) * 20.) * Tstar; // TODO: fix
 
   const double GammaM       = pow(mTop, 2) / 63. * Tstar;
   const double GammaY       = 4.2e-3 * Tstar;
@@ -492,8 +468,8 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
 MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
   MatDoub res(2, 2);
-  const double fD1 = (type == Fermion ? D1f(m) : D1b(m));
-  const double fD2 = (type == Fermion ? D2f(m) : D2b(m));
+  const double fD1 = (type == Fermion ? Dlf[1](m) : Dlb[1](m));
+  const double fD2 = (type == Fermion ? Dlf[2](m) : Dlb[2](m));
   const double fR  = -vwall;
   res[0][0]        = fR / (fD2 - fD1 * fR);
   res[0][1]        = -1 / (fD2 - fD1 * fR);
@@ -508,8 +484,8 @@ MatDoub TransportEquations::calc_m2B(const double &m,
 {
   MatDoub res(2, 2);
   const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
-  const double fQ1   = (type == Fermion ? Q1f(m) : Q1b(m));
-  const double fQ2   = (type == Fermion ? Q2f(m) : Q2b(m));
+  const double fQ1   = (type == Fermion ? Qlf[1](m) : Qlb[1](m));
+  const double fQ2   = (type == Fermion ? Qlf[2](m) : Qlb[2](m));
 
   res[0][0] = gamwall * vwall * fQ1 * dm2;
   res[1][0] = gamwall * vwall * fQ2 * dm2;
@@ -525,11 +501,11 @@ VecDoub TransportEquations::calc_source(const double &m,
 {
   VecDoub res(2);
   res[0] = -vwall * gamwall *
-           ((dm2 * dth + m * m * d2th) * Q8o1(m) -
-            dm2 * m * m * dth * Q9o1(m)); // S1
+           ((dm2 * dth + m * m * d2th) * Q8ol[1](m) -
+            dm2 * m * m * dth * Q9ol[1](m)); // S1
   res[1] = -vwall * gamwall *
-           ((dm2 * dth + m * m * d2th) * Q8o2(m) -
-            dm2 * m * m * dth * Q9o2(m)); // S2
+           ((dm2 * dth + m * m * d2th) * Q8ol[2](m) -
+            dm2 * m * m * dth * Q9ol[2](m)); // S2
   return res;
 }
 
@@ -807,9 +783,9 @@ void TransportEquations::CalculateBAU()
     GetFermionMass(zi, 2, mb2, m2prime, thetaprime, theta2prime);
     // Results
     r = 0;
-    r += (1 + 4 * D0f(sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
-    r += (1 + 4 * D0f(sqrt(mb2))) / 2. * Solution.value()[4][i]; // bL
-    r += 2. * D0f(sqrt(mt2)) * Solution.value()[2][i];           // tR
+    r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
+    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution.value()[4][i]; // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[2][i];           // tR
     r *= min(
         1.,
         2.4 * Tstar / Gsph *

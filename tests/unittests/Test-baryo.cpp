@@ -48,8 +48,9 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
         }
         file.close();
       }
-      std::cout << "K-Kernel\n";
+      if (l != 1)
       {
+        std::cout << "K-Kernel\n";
         std::string str = path + "K" + std::to_string(l) + suffix;
         std::ofstream file(str);
         for (double i = 0.; i < 7.01; i += 0.1)
@@ -64,7 +65,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
               double vw = -5. + j;
               vw        = pow(10, vw);
               file << x << "\t" << vw << "\t"
-                   << Kern(KernelType::D, PType, x, vw) << "\n";
+                   << Kern(KernelType::K, PType, x, vw) << "\n";
             }
         }
         file.close();
@@ -83,7 +84,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
         }
         file.close();
       }
-      /* if (l != 0)
+      if (l != 0)
       {
         std::cout << "Q-Kernel\n";
         {
@@ -142,7 +143,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
             file.close();
           }
         }
-      } */
+      }
     }
   }
   for (int type = 0; type <= 1; type++)
