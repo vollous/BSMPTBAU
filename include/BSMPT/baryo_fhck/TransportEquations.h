@@ -29,7 +29,7 @@ enum class VevProfileMode
 {
   Unset,
   Kink,
-  TunnelPath
+  FieldEquation
 };
 
 /**
@@ -96,7 +96,7 @@ public:
   double vwall;
 
   /**
-   * @brief Rel. gamma factor of the wall 
+   * @brief Rel. gamma factor of the wall
    *
    */
   double gamwall;
@@ -196,7 +196,7 @@ public:
   /**
    * @brief Mode of the vev profile.
    * - Kink -> Kink solution
-   * - TunnelPath -> Calculate the vev profile using the tunneling solution
+   * - FieldEquation -> Calculate the vev profile using the tunneling solution
    */
   VevProfileMode VevProfile = VevProfileMode::Unset;
 
@@ -268,14 +268,14 @@ public:
    * @param vwall_in Wall velocity
    * @param Tstar_in Transition temperature
    * @param ActionInt_in ActionInt pointer
-   * @param Mode_in Mode. Either Kink of TunnelPath
+   * @param Mode_in Mode. Either Kink of FieldEquation
    */
   TransportEquations(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
       const double &vwall_in,
       const double &Tstar_in,
       const std::shared_ptr<BounceActionInt> &ActionInt_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
+      const VevProfileMode &Mode_in = VevProfileMode::FieldEquation);
 
   /**
    * @brief Construct a new Transport Equations object
@@ -283,24 +283,24 @@ public:
    * @param pointer_in Model pointer
    * @param Bounce_in BounceSolution pointer
    * @param which_transition_temp Which transition temperature to use ()
-   * @param Mode_in Mode. Either Kink of TunnelPath
+   * @param Mode_in Mode. Either Kink of FieldEquation
    */
   TransportEquations(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
       const std::shared_ptr<BounceSolution> &Bounce_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
+      const VevProfileMode &Mode_in = VevProfileMode::FieldEquation);
 
   /**
    * @brief Construct a new Transport Equations object
    *
    * @param pointer_in Model pointer
    * @param GW_in GravitationalWave pointer
-   * @param Mode_in Mode. Either Kink of TunnelPath
+   * @param Mode_in Mode. Either Kink of FieldEquation
    */
   TransportEquations(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
       const std::shared_ptr<GravitationalWave> &GW_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
+      const VevProfileMode &Mode_in = VevProfileMode::FieldEquation);
 
   /**
    * @brief Create the VEV vectors and initalize **Ki()** and **Kfac()**
@@ -309,7 +309,8 @@ public:
    */
   void Initialize();
 
-  tk::spline InterpolateKernel(const std::string &kernel_Name, const bool is_1D);
+  tk::spline InterpolateKernel(const std::string &kernel_Name,
+                               const bool is_1D);
 
   /**
    * @brief Load all the Kernel functions and interpolate them
@@ -401,7 +402,8 @@ public:
    * @param type type of particle e.g. fermion/boson
    * @return MatDoub of m2'B
    */
-  MatDoub calc_m2B(const double &m, const double &dm2, const ParticleType &type);
+  MatDoub
+  calc_m2B(const double &m, const double &dm2, const ParticleType &type);
 
   /**
    * @brief Calculate the souce term S for 1 particle

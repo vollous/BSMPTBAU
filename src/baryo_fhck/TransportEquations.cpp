@@ -85,7 +85,7 @@ void TransportEquations::Initialize()
 
   SetEtaInterface();
 
-  if (VevProfile == VevProfileMode::TunnelPath)
+  if (VevProfile == VevProfileMode::FieldEquation)
   {
     const double &eps = 0.01;
     // Calculate tunnel profile
@@ -253,7 +253,7 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
       return 2 * tanh(z / Lw.value()) / pow(cosh(z / Lw.value()), 2) *
              (TrueVacuum - FalseVacuum) / (2 * Lw.value() * Lw.value());
   }
-  else if (VevProfile == VevProfileMode::TunnelPath)
+  else if (VevProfile == VevProfileMode::FieldEquation)
   {
     return vacuumprofile->GetVev(z, diff);
   }
@@ -368,7 +368,7 @@ void TransportEquations::GetFermionMass(const double &z,
         ((brk - sym) / pow(cosh(z / Lw.value()), 2) * tanh(z / Lw.value())) /
         pow(Lw.value(), 2);
   }
-  else if (VevProfile == VevProfileMode::TunnelPath)
+  else if (VevProfile == VevProfileMode::FieldEquation)
   {
     if (pow(pow(m.imag(), 2) + pow(m.real(), 2), 2) == 0) // avoid 1/0
     {
