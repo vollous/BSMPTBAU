@@ -62,7 +62,7 @@ void VacuumProfile::CalculateProfile()
 {
   size_t itmax = 10;
   double conv  = 1e-10;
-  double slowc = 1e-2;
+  double slowc = 1e-1;
   mode         = ProfileSolverMode::Deriv;
 
   VecInt indexv = Calcindexv();
