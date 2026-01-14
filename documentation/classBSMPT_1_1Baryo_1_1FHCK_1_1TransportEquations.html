@@ -136,9 +136,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetEtaInterface</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</b> ()</td></tr>
 <tr class="memdesc:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the quark masses splines. <br /></td></tr>
 <tr class="separator:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaae39abc598c479c3f263080b693f5da" id="r_aaae39abc598c479c3f263080b693f5da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aaae39abc598c479c3f263080b693f5da">GetFermionMass</a> (const double &amp;z, const size_t &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
-<tr class="memdesc:aaae39abc598c479c3f263080b693f5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
-<tr class="separator:aaae39abc598c479c3f263080b693f5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab41223d20ca032083302a5f67d938773" id="r_ab41223d20ca032083302a5f67d938773"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab41223d20ca032083302a5f67d938773">GetFermionMass</a> (const double &amp;z, const int &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
+<tr class="memdesc:ab41223d20ca032083302a5f67d938773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
+<tr class="separator:ab41223d20ca032083302a5f67d938773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82eb7bfbff2a8ea78c41a7832342bb8b" id="r_a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a82eb7bfbff2a8ea78c41a7832342bb8b">GetWMass</a> (const std::vector&lt; double &gt; &amp;vev, const double &amp;T) const</td></tr>
 <tr class="memdesc:a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass. (same code as BSMPTv2)  <br /></td></tr>
 <tr class="separator:a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,14 +297,14 @@ std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"
 std::optional&lt; <a class="el" href="classMatDoub.html">MatDoub</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Solution</b></td></tr>
 <tr class="memdesc:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the solution from the relaxation method. <br /></td></tr>
 <tr class="separator:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b938a582a7ce0f5c06816f6ee86a8a5" id="r_a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="memItemLeft" align="right" valign="top"><a id="a5b938a582a7ce0f5c06816f6ee86a8a5" name="a5b938a582a7ce0f5c06816f6ee86a8a5"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nFermions</b> = 3</td></tr>
-<tr class="memdesc:a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Weil fermions. <br /></td></tr>
-<tr class="separator:a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09061573bf19438698f8740a71f5ddb9" id="r_a09061573bf19438698f8740a71f5ddb9"><td class="memItemLeft" align="right" valign="top"><a id="a09061573bf19438698f8740a71f5ddb9" name="a09061573bf19438698f8740a71f5ddb9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nBosons</b> = 1</td></tr>
-<tr class="memdesc:a09061573bf19438698f8740a71f5ddb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bosons. <br /></td></tr>
-<tr class="separator:a09061573bf19438698f8740a71f5ddb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ad291dc51a20df356de0e1d511bf9db" id="r_a7ad291dc51a20df356de0e1d511bf9db"><td class="memItemLeft" align="right" valign="top"><a id="a7ad291dc51a20df356de0e1d511bf9db" name="a7ad291dc51a20df356de0e1d511bf9db"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nFermions</b> = 3</td></tr>
+<tr class="memdesc:a7ad291dc51a20df356de0e1d511bf9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Weil fermions. <br /></td></tr>
+<tr class="separator:a7ad291dc51a20df356de0e1d511bf9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add8621a14cf74326c9996e82fa0c8c79" id="r_add8621a14cf74326c9996e82fa0c8c79"><td class="memItemLeft" align="right" valign="top"><a id="add8621a14cf74326c9996e82fa0c8c79" name="add8621a14cf74326c9996e82fa0c8c79"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nBosons</b> = 1</td></tr>
+<tr class="memdesc:add8621a14cf74326c9996e82fa0c8c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bosons. <br /></td></tr>
+<tr class="separator:add8621a14cf74326c9996e82fa0c8c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1334479ca895cbb37d5b2915be9b5ff8" id="r_a1334479ca895cbb37d5b2915be9b5ff8"><td class="memItemLeft" align="right" valign="top"><a id="a1334479ca895cbb37d5b2915be9b5ff8" name="a1334479ca895cbb37d5b2915be9b5ff8"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nFB2</b></td></tr>
 <tr class="memdesc:a1334479ca895cbb37d5b2915be9b5ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of equations. <br /></td></tr>
@@ -689,8 +689,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="aaae39abc598c479c3f263080b693f5da" name="aaae39abc598c479c3f263080b693f5da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaae39abc598c479c3f263080b693f5da">&#9670;&#160;</a></span>GetFermionMass()</h2>
+<a id="ab41223d20ca032083302a5f67d938773" name="ab41223d20ca032083302a5f67d938773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab41223d20ca032083302a5f67d938773">&#9670;&#160;</a></span>GetFermionMass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -704,7 +704,7 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
           <td class="paramname"><em>fermion</em>, </td>
         </tr>
         <tr>

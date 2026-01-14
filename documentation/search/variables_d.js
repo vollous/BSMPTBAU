@@ -1,13 +1,13 @@
 var searchData=
 [
   ['n_5fstep_0',['n_step',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#a2920b41b4ed289a19ebedc25a2b3dded',1,'BSMPT::Baryo::CalculateEtaInterface']]],
-  ['nbosons_1',['nBosons',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a09061573bf19438698f8740a71f5ddb9',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['nbosons_1',['nBosons',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#add8621a14cf74326c9996e82fa0c8c79',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['nchargedhiggs_2',['NChargedHiggs',['../classBSMPT_1_1Class__Potential__Origin.html#a7108f0a365c698c923510dc39420b794',1,'BSMPT::Class_Potential_Origin']]],
   ['ncolour_3',['NColour',['../classBSMPT_1_1Class__Potential__Origin.html#a7653674089f9cf8d4f813b8b23da7885',1,'BSMPT::Class_Potential_Origin']]],
   ['neglinearint_4',['neglinearint',['../NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8h.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp']]],
   ['neglinearinttransposed_5',['neglinearinttransposed',['../NegativeBosonSpline_8cpp.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8h.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp']]],
   ['nfb2_6',['nFB2',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1334479ca895cbb37d5b2915be9b5ff8',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['nfermions_7',['nFermions',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5b938a582a7ce0f5c06816f6ee86a8a5',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['nfermions_7',['nFermions',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7ad291dc51a20df356de0e1d511bf9db',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['ngauge_8',['NGauge',['../classBSMPT_1_1Class__Potential__Origin.html#aea6673f466a7a52589f8ca020f80e462',1,'BSMPT::Class_Potential_Origin']]],
   ['nhiggs_9',['NHiggs',['../classBSMPT_1_1Class__Potential__Origin.html#ac2856be5979bc0210a1094523b5f80fe',1,'BSMPT::Class_Potential_Origin']]],
   ['nl_5fcub_10',['nL_cub',['../classBSMPT_1_1Baryo_1_1Calc__eta.html#ad99d40efa424a08587531e5b532fe184',1,'BSMPT::Baryo::Calc_eta']]],
