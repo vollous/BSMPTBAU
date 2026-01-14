@@ -266,7 +266,7 @@ void TransportEquations::GenerateFermionMass()
 }
 
 void TransportEquations::GetFermionMass(const double &z,
-                                        const int &fermion,
+                                        const size_t &fermion,
                                         double &m2,
                                         double &m2prime,
                                         double &thetaprime,
@@ -714,7 +714,7 @@ void TransportEquations::SolveTransportEquation()
   Difeq_TransportEquation difeq(
       zList, nFermions, nBosons, MTildeList, STildeList);
 
-  double itmax = 30;
+  size_t itmax = 30;
   double conv  = 1e-10;
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
