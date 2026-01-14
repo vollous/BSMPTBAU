@@ -173,7 +173,7 @@ $(document).ready(function(){initNavTree('solvde_8h_source.html',''); initResiza
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordtype">int</span> km = 0;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordflow">for</span> (k = 0; k &lt; m; k++)</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>          <span class="keywordtype">double</span> vz = abs(c[jv][0][k]);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>          <span class="keywordtype">double</span> vz = std::abs(c[jv][0][k]);</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>          <span class="keywordflow">if</span> (vz &gt; vmax)</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>          {</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            vmax = vz;</div>
@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('solvde_8h_source.html',''); initResiza
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    {</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      big = 0.0;</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = je1; j &lt; je2; j++)</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">if</span> (abs(s[i][j]) &gt; big) big = abs(s[i][j]);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">if</span> (std::abs(s[i][j]) &gt; big) big = std::abs(s[i][j]);</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>      <span class="keywordflow">if</span> (big == 0.0)</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>      {</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Singular matrix in pinvs with k = &quot;</span> &lt;&lt; k</div>
@@ -247,10 +247,10 @@ $(document).ready(function(){initNavTree('solvde_8h_source.html',''); initResiza
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>          big = 0.0;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = je1; j &lt; je2; j++)</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>          {</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">if</span> (abs(s[i][j]) &gt; big)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">if</span> (std::abs(s[i][j]) &gt; big)</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            {</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>              jp  = j;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>              big = abs(s[i][j]);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>              big = std::abs(s[i][j]);</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            }</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>          }</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>          <span class="keywordflow">if</span> (big * pscl[i - ie1] &gt; piv)</div>
