@@ -10,7 +10,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "CheckBoundary", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aa5d7fe7c5e3a5a5562fe52791c7cb8c5", null ],
     [ "Equations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a400b738fb0871e6c1c68e51c65a15980", null ],
     [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a840ad2e6e0da381d6a4dfdc425d7a352", null ],
-    [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab41223d20ca032083302a5f67d938773", null ],
+    [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aaae39abc598c479c3f263080b693f5da", null ],
     [ "GetWMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a82eb7bfbff2a8ea78c41a7832342bb8b", null ],
     [ "Initialize", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684", null ],
     [ "MakeDistribution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0f6e41b6253429da0bac40b0b344cebb", null ],
