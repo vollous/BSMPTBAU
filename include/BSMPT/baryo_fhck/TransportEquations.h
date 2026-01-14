@@ -86,6 +86,8 @@ public:
    */
   double Tstar;
 
+  std::vector<tk::spline> Kl, Dl, Ql, Q8ol, Q9ol;
+
   tk::spline D0b, D0f, D1b, D1f, D2b, D2f, Q1b, Q1f, Q2b, Q2f, Q8o1, Q8o2, Q9o1,
       Q9o2, Rbarb, Rbarf, K0b, K0f, K4FHf, K4FHb;
 
@@ -96,7 +98,7 @@ public:
   double vwall;
 
   /**
-   * @brief Rel. gamma factor of the wall 
+   * @brief Rel. gamma factor of the wall
    *
    */
   double gamwall;
@@ -309,7 +311,8 @@ public:
    */
   void Initialize();
 
-  tk::spline InterpolateKernel(const std::string &kernel_Name, const bool is_1D);
+  tk::spline InterpolateKernel(const std::string &kernel_Name,
+                               const bool is_1D);
 
   /**
    * @brief Load all the Kernel functions and interpolate them
@@ -401,7 +404,8 @@ public:
    * @param type type of particle e.g. fermion/boson
    * @return MatDoub of m2'B
    */
-  MatDoub calc_m2B(const double &m, const double &dm2, const ParticleType &type);
+  MatDoub
+  calc_m2B(const double &m, const double &dm2, const ParticleType &type);
 
   /**
    * @brief Calculate the souce term S for 1 particle

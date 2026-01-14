@@ -174,12 +174,52 @@ tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
 
 void TransportEquations::BuildKernelInterpolation()
 {
-  D0b   = InterpolateKernel("D0_b", true);
-  D0f   = InterpolateKernel("D0_f", true);
-  K0b   = InterpolateKernel("K0_b", true);
-  K0f   = InterpolateKernel("K0_f", true);
-  K4FHb = InterpolateKernel("K4FH_b", true);
+  std::string kernel_name;
+  bool is_1d = true;
+
   K4FHf = InterpolateKernel("K4FH_f", true);
+  K4FHb = InterpolateKernel("K4FH_b", true);
+  Rbarf = InterpolateKernel("Rbar_f", false);
+  Rbarb = InterpolateKernel("Rbar_b", false);
+  K0b = InterpolateKernel("K0_b", true);
+  K0f = InterpolateKernel("K0_f", true);
+
+  for (int l = 0; l <= 2; l++)
+  {
+    for (int type = 0; type <= 1; type++)
+    {
+      std::string suffix = (type == 0 ? "_f" : "_b");
+
+      kernel_name = "D" + std::to_string(l) + suffix;
+      std::cout << kernel_name << "\n";
+      Dl.push_back(InterpolateKernel(kernel_name, is_1d));
+
+      // kernel_name = "K" + std::to_string(l) + suffix;
+      // std::cout << kernel_name << "\n";
+      // Kl.push_back(InterpolateKernel(kernel_name, is_1d));
+
+      if (l != 0)
+      {
+        kernel_name = "Q" + std::to_string(l) + suffix;
+        std::cout << kernel_name << "\n";
+        Ql.push_back(InterpolateKernel(kernel_name, is_1d));
+
+        if (type == 0)
+        {
+          kernel_name = "Q8o" + std::to_string(l) + suffix;
+          std::cout << kernel_name << "\n";
+          Q8ol.push_back(InterpolateKernel(kernel_name, is_1d));
+
+          kernel_name = "Q9o" + std::to_string(l) + suffix;
+          std::cout << kernel_name << "\n";
+          Q9ol.push_back(InterpolateKernel(kernel_name, is_1d));
+        }
+      }
+    }
+    is_1d = false;
+  }
+  D0b = InterpolateKernel("D0_b", true);
+  D0f = InterpolateKernel("D0_f", true);
 
   std::string b1 = "D1_b";
   std::string b2 = "D2_b";
@@ -193,24 +233,20 @@ void TransportEquations::BuildKernelInterpolation()
   std::string f6 = "Q8o2_f";
   std::string f7 = "Q9o1_f";
   std::string f8 = "Q9o2_f";
-  std::string rb = "Rbar_b";
-  std::string rf = "Rbar_f";
 
   D1b = InterpolateKernel(b1, false);
   D2b = InterpolateKernel(b2, false);
   Q1b = InterpolateKernel(b3, false);
   Q2b = InterpolateKernel(b4, false);
 
-  D1f   = InterpolateKernel(f1, false);
-  D2f   = InterpolateKernel(f2, false);
-  Q1f   = InterpolateKernel(f3, false);
-  Q2f   = InterpolateKernel(f4, false);
-  Q8o1  = InterpolateKernel(f5, false);
-  Q8o2  = InterpolateKernel(f6, false);
-  Q9o1  = InterpolateKernel(f7, false);
-  Q9o2  = InterpolateKernel(f8, false);
-  Rbarb = InterpolateKernel(rb, false);
-  Rbarf = InterpolateKernel(rf, false);
+  D1f  = InterpolateKernel(f1, false);
+  D2f  = InterpolateKernel(f2, false);
+  Q1f  = InterpolateKernel(f3, false);
+  Q2f  = InterpolateKernel(f4, false);
+  Q8o1 = InterpolateKernel(f5, false);
+  Q8o2 = InterpolateKernel(f6, false);
+  Q9o1 = InterpolateKernel(f7, false);
+  Q9o2 = InterpolateKernel(f8, false);
 }
 
 void TransportEquations::SetNumberOfSteps(const int &num)
@@ -706,7 +742,8 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
   if (NumberOfNonDecayingModes > nFB2)
   {
-    ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy the "
+    ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy "
+          "the "
           "boundary "
           "conditions of mu = u = 0.\033[0m\n";
     Status = FHCKStatus::UnphysicalBoundary;
