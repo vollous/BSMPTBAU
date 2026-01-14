@@ -104,7 +104,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           }
           file.close();
         }
-        if (PType == fermion)
+        if (PType == Fermion)
         {
           std::cout << "Q8o-Kernel\n";
           {
