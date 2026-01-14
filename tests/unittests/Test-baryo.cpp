@@ -216,12 +216,6 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
 
-  auto end = std::chrono::high_resolution_clock::now();
-
-  // Calculate elapsed time
-  std::chrono::duration<double> duration = end - start;
-  std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
-
   exit(0);
 
   REQUIRE(1 == 1);
