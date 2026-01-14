@@ -136,9 +136,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetEtaInterface</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</b> ()</td></tr>
 <tr class="memdesc:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the quark masses splines. <br /></td></tr>
 <tr class="separator:a840ad2e6e0da381d6a4dfdc425d7a352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab41223d20ca032083302a5f67d938773" id="r_ab41223d20ca032083302a5f67d938773"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab41223d20ca032083302a5f67d938773">GetFermionMass</a> (const double &amp;z, const int &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
-<tr class="memdesc:ab41223d20ca032083302a5f67d938773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
-<tr class="separator:ab41223d20ca032083302a5f67d938773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae39abc598c479c3f263080b693f5da" id="r_aaae39abc598c479c3f263080b693f5da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aaae39abc598c479c3f263080b693f5da">GetFermionMass</a> (const double &amp;z, const size_t &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
+<tr class="memdesc:aaae39abc598c479c3f263080b693f5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
+<tr class="separator:aaae39abc598c479c3f263080b693f5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82eb7bfbff2a8ea78c41a7832342bb8b" id="r_a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a82eb7bfbff2a8ea78c41a7832342bb8b">GetWMass</a> (const std::vector&lt; double &gt; &amp;vev, const double &amp;T) const</td></tr>
 <tr class="memdesc:a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass. (same code as BSMPTv2)  <br /></td></tr>
 <tr class="separator:a82eb7bfbff2a8ea78c41a7832342bb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,60 +205,36 @@ std::shared_ptr&lt; <a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1Vacuum
 double&#160;</td><td class="memItemRight" valign="bottom"><b>Tstar</b></td></tr>
 <tr class="memdesc:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transition temperature. <br /></td></tr>
 <tr class="separator:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a362237ad1dfc6b112cf861b58c01eec1" id="r_a362237ad1dfc6b112cf861b58c01eec1"><td class="memItemLeft" align="right" valign="top"><a id="a362237ad1dfc6b112cf861b58c01eec1" name="a362237ad1dfc6b112cf861b58c01eec1"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D0b</b></td></tr>
-<tr class="separator:a362237ad1dfc6b112cf861b58c01eec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21223701c2bfe6f4531b65a75622e9e1" id="r_a21223701c2bfe6f4531b65a75622e9e1"><td class="memItemLeft" align="right" valign="top"><a id="a21223701c2bfe6f4531b65a75622e9e1" name="a21223701c2bfe6f4531b65a75622e9e1"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D0f</b></td></tr>
-<tr class="separator:a21223701c2bfe6f4531b65a75622e9e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cc887f051999576276944b44bef329f" id="r_a9cc887f051999576276944b44bef329f"><td class="memItemLeft" align="right" valign="top"><a id="a9cc887f051999576276944b44bef329f" name="a9cc887f051999576276944b44bef329f"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D1b</b></td></tr>
-<tr class="separator:a9cc887f051999576276944b44bef329f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a6ae1869ea4d5d47fb012e45b3f3cc4" id="r_a1a6ae1869ea4d5d47fb012e45b3f3cc4"><td class="memItemLeft" align="right" valign="top"><a id="a1a6ae1869ea4d5d47fb012e45b3f3cc4" name="a1a6ae1869ea4d5d47fb012e45b3f3cc4"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D1f</b></td></tr>
-<tr class="separator:a1a6ae1869ea4d5d47fb012e45b3f3cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f4b4bac55a84e75a33aa0dda6ef4934" id="r_a3f4b4bac55a84e75a33aa0dda6ef4934"><td class="memItemLeft" align="right" valign="top"><a id="a3f4b4bac55a84e75a33aa0dda6ef4934" name="a3f4b4bac55a84e75a33aa0dda6ef4934"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D2b</b></td></tr>
-<tr class="separator:a3f4b4bac55a84e75a33aa0dda6ef4934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace0947525de1b347132c87cd85a95f93" id="r_ace0947525de1b347132c87cd85a95f93"><td class="memItemLeft" align="right" valign="top"><a id="ace0947525de1b347132c87cd85a95f93" name="ace0947525de1b347132c87cd85a95f93"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>D2f</b></td></tr>
-<tr class="separator:ace0947525de1b347132c87cd85a95f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93f4fe75a320712c2c1e2ac23d370710" id="r_a93f4fe75a320712c2c1e2ac23d370710"><td class="memItemLeft" align="right" valign="top"><a id="a93f4fe75a320712c2c1e2ac23d370710" name="a93f4fe75a320712c2c1e2ac23d370710"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q1b</b></td></tr>
-<tr class="separator:a93f4fe75a320712c2c1e2ac23d370710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07b17d9b857859a576682d47f43d54c6" id="r_a07b17d9b857859a576682d47f43d54c6"><td class="memItemLeft" align="right" valign="top"><a id="a07b17d9b857859a576682d47f43d54c6" name="a07b17d9b857859a576682d47f43d54c6"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q1f</b></td></tr>
-<tr class="separator:a07b17d9b857859a576682d47f43d54c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09215d057d0b39e7aa89262637bf89d7" id="r_a09215d057d0b39e7aa89262637bf89d7"><td class="memItemLeft" align="right" valign="top"><a id="a09215d057d0b39e7aa89262637bf89d7" name="a09215d057d0b39e7aa89262637bf89d7"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q2b</b></td></tr>
-<tr class="separator:a09215d057d0b39e7aa89262637bf89d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a340e1f6e8ce70ef3a9233faec3bd55a5" id="r_a340e1f6e8ce70ef3a9233faec3bd55a5"><td class="memItemLeft" align="right" valign="top"><a id="a340e1f6e8ce70ef3a9233faec3bd55a5" name="a340e1f6e8ce70ef3a9233faec3bd55a5"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q2f</b></td></tr>
-<tr class="separator:a340e1f6e8ce70ef3a9233faec3bd55a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da5480ffef55139681bd15c119c4835" id="r_a1da5480ffef55139681bd15c119c4835"><td class="memItemLeft" align="right" valign="top"><a id="a1da5480ffef55139681bd15c119c4835" name="a1da5480ffef55139681bd15c119c4835"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q8o1</b></td></tr>
-<tr class="separator:a1da5480ffef55139681bd15c119c4835"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3268814753a5b43e5097845b0c47f8d4" id="r_a3268814753a5b43e5097845b0c47f8d4"><td class="memItemLeft" align="right" valign="top"><a id="a3268814753a5b43e5097845b0c47f8d4" name="a3268814753a5b43e5097845b0c47f8d4"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q8o2</b></td></tr>
-<tr class="separator:a3268814753a5b43e5097845b0c47f8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb3d7f7b637ff77c1a2c1d6577921f0" id="r_a6fb3d7f7b637ff77c1a2c1d6577921f0"><td class="memItemLeft" align="right" valign="top"><a id="a6fb3d7f7b637ff77c1a2c1d6577921f0" name="a6fb3d7f7b637ff77c1a2c1d6577921f0"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q9o1</b></td></tr>
-<tr class="separator:a6fb3d7f7b637ff77c1a2c1d6577921f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbfe45c98244a2182421f202d4a59105" id="r_acbfe45c98244a2182421f202d4a59105"><td class="memItemLeft" align="right" valign="top"><a id="acbfe45c98244a2182421f202d4a59105" name="acbfe45c98244a2182421f202d4a59105"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Q9o2</b></td></tr>
-<tr class="separator:acbfe45c98244a2182421f202d4a59105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae11136128236afc22bca49fa8a9f4657" id="r_ae11136128236afc22bca49fa8a9f4657"><td class="memItemLeft" align="right" valign="top"><a id="ae11136128236afc22bca49fa8a9f4657" name="ae11136128236afc22bca49fa8a9f4657"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Klf</b></td></tr>
+<tr class="separator:ae11136128236afc22bca49fa8a9f4657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72078d00f635b3bdbd787bb025e8ac5" id="r_ab72078d00f635b3bdbd787bb025e8ac5"><td class="memItemLeft" align="right" valign="top"><a id="ab72078d00f635b3bdbd787bb025e8ac5" name="ab72078d00f635b3bdbd787bb025e8ac5"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Klb</b></td></tr>
+<tr class="separator:ab72078d00f635b3bdbd787bb025e8ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbdde635da892ac072a89c685baa2a73" id="r_afbdde635da892ac072a89c685baa2a73"><td class="memItemLeft" align="right" valign="top"><a id="afbdde635da892ac072a89c685baa2a73" name="afbdde635da892ac072a89c685baa2a73"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Dlf</b></td></tr>
+<tr class="separator:afbdde635da892ac072a89c685baa2a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a684cc3a5e40e767f74fa4fca96577aa9" id="r_a684cc3a5e40e767f74fa4fca96577aa9"><td class="memItemLeft" align="right" valign="top"><a id="a684cc3a5e40e767f74fa4fca96577aa9" name="a684cc3a5e40e767f74fa4fca96577aa9"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Dlb</b></td></tr>
+<tr class="separator:a684cc3a5e40e767f74fa4fca96577aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48fb6cb49b182c1256e2e2804a843feb" id="r_a48fb6cb49b182c1256e2e2804a843feb"><td class="memItemLeft" align="right" valign="top"><a id="a48fb6cb49b182c1256e2e2804a843feb" name="a48fb6cb49b182c1256e2e2804a843feb"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Qlf</b></td></tr>
+<tr class="separator:a48fb6cb49b182c1256e2e2804a843feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c29a358f01d17e1ac5cd144a650cfba" id="r_a5c29a358f01d17e1ac5cd144a650cfba"><td class="memItemLeft" align="right" valign="top"><a id="a5c29a358f01d17e1ac5cd144a650cfba" name="a5c29a358f01d17e1ac5cd144a650cfba"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Qlb</b></td></tr>
+<tr class="separator:a5c29a358f01d17e1ac5cd144a650cfba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2ee06967209dcf25b9b2f5f42ecbcf8" id="r_af2ee06967209dcf25b9b2f5f42ecbcf8"><td class="memItemLeft" align="right" valign="top"><a id="af2ee06967209dcf25b9b2f5f42ecbcf8" name="af2ee06967209dcf25b9b2f5f42ecbcf8"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Q8ol</b></td></tr>
+<tr class="separator:af2ee06967209dcf25b9b2f5f42ecbcf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a733351e7aeb88ab1b3b948024ebb6b95" id="r_a733351e7aeb88ab1b3b948024ebb6b95"><td class="memItemLeft" align="right" valign="top"><a id="a733351e7aeb88ab1b3b948024ebb6b95" name="a733351e7aeb88ab1b3b948024ebb6b95"></a>
+std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Q9ol</b></td></tr>
+<tr class="separator:a733351e7aeb88ab1b3b948024ebb6b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d38ba3136fdca2cd0d1df28b9096145" id="r_a6d38ba3136fdca2cd0d1df28b9096145"><td class="memItemLeft" align="right" valign="top"><a id="a6d38ba3136fdca2cd0d1df28b9096145" name="a6d38ba3136fdca2cd0d1df28b9096145"></a>
 <a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Rbarb</b></td></tr>
 <tr class="separator:a6d38ba3136fdca2cd0d1df28b9096145"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a706280729a385142f8e33a49e7c40f63" id="r_a706280729a385142f8e33a49e7c40f63"><td class="memItemLeft" align="right" valign="top"><a id="a706280729a385142f8e33a49e7c40f63" name="a706280729a385142f8e33a49e7c40f63"></a>
 <a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Rbarf</b></td></tr>
 <tr class="separator:a706280729a385142f8e33a49e7c40f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52319dffde8c45328a7d1da0119fc7e6" id="r_a52319dffde8c45328a7d1da0119fc7e6"><td class="memItemLeft" align="right" valign="top"><a id="a52319dffde8c45328a7d1da0119fc7e6" name="a52319dffde8c45328a7d1da0119fc7e6"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>K0b</b></td></tr>
-<tr class="separator:a52319dffde8c45328a7d1da0119fc7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18a1edf865b2444f36fa59709d518652" id="r_a18a1edf865b2444f36fa59709d518652"><td class="memItemLeft" align="right" valign="top"><a id="a18a1edf865b2444f36fa59709d518652" name="a18a1edf865b2444f36fa59709d518652"></a>
-<a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>K0f</b></td></tr>
-<tr class="separator:a18a1edf865b2444f36fa59709d518652"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a214baab6e1f18d44576253ea4535ef33" id="r_a214baab6e1f18d44576253ea4535ef33"><td class="memItemLeft" align="right" valign="top"><a id="a214baab6e1f18d44576253ea4535ef33" name="a214baab6e1f18d44576253ea4535ef33"></a>
 <a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>K4FHf</b></td></tr>
 <tr class="separator:a214baab6e1f18d44576253ea4535ef33"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,14 +273,14 @@ std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"
 std::optional&lt; <a class="el" href="classMatDoub.html">MatDoub</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Solution</b></td></tr>
 <tr class="memdesc:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the solution from the relaxation method. <br /></td></tr>
 <tr class="separator:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad291dc51a20df356de0e1d511bf9db" id="r_a7ad291dc51a20df356de0e1d511bf9db"><td class="memItemLeft" align="right" valign="top"><a id="a7ad291dc51a20df356de0e1d511bf9db" name="a7ad291dc51a20df356de0e1d511bf9db"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>nFermions</b> = 3</td></tr>
-<tr class="memdesc:a7ad291dc51a20df356de0e1d511bf9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Weil fermions. <br /></td></tr>
-<tr class="separator:a7ad291dc51a20df356de0e1d511bf9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add8621a14cf74326c9996e82fa0c8c79" id="r_add8621a14cf74326c9996e82fa0c8c79"><td class="memItemLeft" align="right" valign="top"><a id="add8621a14cf74326c9996e82fa0c8c79" name="add8621a14cf74326c9996e82fa0c8c79"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>nBosons</b> = 1</td></tr>
-<tr class="memdesc:add8621a14cf74326c9996e82fa0c8c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bosons. <br /></td></tr>
-<tr class="separator:add8621a14cf74326c9996e82fa0c8c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b938a582a7ce0f5c06816f6ee86a8a5" id="r_a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="memItemLeft" align="right" valign="top"><a id="a5b938a582a7ce0f5c06816f6ee86a8a5" name="a5b938a582a7ce0f5c06816f6ee86a8a5"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nFermions</b> = 3</td></tr>
+<tr class="memdesc:a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Weil fermions. <br /></td></tr>
+<tr class="separator:a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09061573bf19438698f8740a71f5ddb9" id="r_a09061573bf19438698f8740a71f5ddb9"><td class="memItemLeft" align="right" valign="top"><a id="a09061573bf19438698f8740a71f5ddb9" name="a09061573bf19438698f8740a71f5ddb9"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nBosons</b> = 1</td></tr>
+<tr class="memdesc:a09061573bf19438698f8740a71f5ddb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bosons. <br /></td></tr>
+<tr class="separator:a09061573bf19438698f8740a71f5ddb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1334479ca895cbb37d5b2915be9b5ff8" id="r_a1334479ca895cbb37d5b2915be9b5ff8"><td class="memItemLeft" align="right" valign="top"><a id="a1334479ca895cbb37d5b2915be9b5ff8" name="a1334479ca895cbb37d5b2915be9b5ff8"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nFB2</b></td></tr>
 <tr class="memdesc:a1334479ca895cbb37d5b2915be9b5ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of equations. <br /></td></tr>
@@ -689,8 +665,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="ab41223d20ca032083302a5f67d938773" name="ab41223d20ca032083302a5f67d938773"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab41223d20ca032083302a5f67d938773">&#9670;&#160;</a></span>GetFermionMass()</h2>
+<a id="aaae39abc598c479c3f263080b693f5da" name="aaae39abc598c479c3f263080b693f5da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaae39abc598c479c3f263080b693f5da">&#9670;&#160;</a></span>GetFermionMass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -704,7 +680,7 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
           <td class="paramname"><em>fermion</em>, </td>
         </tr>
         <tr>
