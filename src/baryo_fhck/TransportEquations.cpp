@@ -102,8 +102,6 @@ void TransportEquations::Initialize()
         Hessian = [=](auto const &arg)
     { return HessianNumerical(arg, V, eps); };
 
-    std::cout << "Lw values it\t" << Lw.value() << "\n";
-
     vacuumprofile =
         std::make_unique<VacuumProfileNS::VacuumProfile>(FalseVacuum.size(),
                                                          TrueVacuum,
@@ -114,6 +112,11 @@ void TransportEquations::Initialize()
                                                          Lw.value());
     vacuumprofile->CalculateProfile();
   }
+
+  zList = std::vector<double>(
+      MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
+
+  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
   // Generate the fermion masses splines
   GenerateFermionMass();
@@ -144,6 +147,9 @@ void TransportEquations::SetEtaInterface()
                         Minimizer::WhichMinimizerDefault);
 
   Lw = EtaInterface->getLW();
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Lw * T = " + std::to_string(Lw.value() * Tstar) + "\n");
 }
 
 std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
@@ -172,10 +178,11 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
 
 void TransportEquations::GenerateFermionMass()
 {
-
+  FermionMassesRe.clear();
+  FermionMassesIm.clear();
   size_t ind = (modelPointer->get_NQuarks() - 1);
   std::vector<std::vector<double>> MassesReal, MassesImag;
-  for (auto z : vacuumprofile->z)
+  for (auto z : zList)
   {
     std::vector<double> MassReal, MassImag;
 
@@ -197,7 +204,7 @@ void TransportEquations::GenerateFermionMass()
   MassesImag = Transpose(MassesImag);
 
   for (auto MassProfile : MassesReal)
-    FermionMassesRe.push_back(tk::spline(vacuumprofile->z,
+    FermionMassesRe.push_back(tk::spline(zList,
                                          MassProfile,
                                          tk::spline::cspline,
                                          false,
@@ -207,7 +214,7 @@ void TransportEquations::GenerateFermionMass()
                                          0));
 
   for (auto MassProfile : MassesImag)
-    FermionMassesIm.push_back(tk::spline(vacuumprofile->z,
+    FermionMassesIm.push_back(tk::spline(zList,
                                          MassProfile,
                                          tk::spline::cspline,
                                          false,
@@ -218,24 +225,23 @@ void TransportEquations::GenerateFermionMass()
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
-  Plot.addPlot(vacuumprofile->z, MassesReal.at(ind), "Re(mt)", '*');
-  Plot.addPlot(vacuumprofile->z, MassesImag.at(ind), "Im(mt)", '.');
+  Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
+  Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
   std::stringstream ss;
   Plot.show(ss);
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
-void TransportEquations::GetFermionMass(
-    const double &z,
-    const int &fermion,
-    const Eigen::ComplexEigenSolver<Eigen::MatrixXcd> &esQuark,
-    double &m2,
-    double &m2prime,
-    double &thetaprime,
-    double &theta2prime)
+void TransportEquations::GetFermionMass(const double &z,
+                                        const int &fermion,
+                                        double &m2,
+                                        double &m2prime,
+                                        double &thetaprime,
+                                        double &theta2prime)
 {
   std::complex<double> m, mprime, mprimeprime;
-  int ind = (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
+  const int ind =
+      (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
 
   m = std::complex<double>(FermionMassesRe.at(ind)(z),
                            FermionMassesIm.at(ind)(z));
@@ -277,7 +283,7 @@ void TransportEquations::GetFermionMass(
   }
   else if (VevProfile == VevProfileMode::TunnelPath)
   {
-    if (pow(m.imag(), 2) + pow(m.real(), 2) == 0) // avoid 1/0
+    if (pow(pow(m.imag(), 2) + pow(m.real(), 2), 2) == 0) // avoid 1/0
     {
       thetaprime  = 0.;
       theta2prime = 0.;
@@ -500,7 +506,7 @@ void TransportEquations::Equations(const double &z,
 
     double m2, m2prime, thetaprime, theta2prime;
     // Calculate fermionic masses
-    GetFermionMass(z, fermion, esQuark, m2, m2prime, thetaprime, theta2prime);
+    GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
     FermionMasses[fermion] = m2;
 
     // Calculate A inverse for fermion
@@ -562,15 +568,15 @@ void TransportEquations::Equations(const double &z,
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
-VecDoub TransportEquations::MakeDistribution(const double xmax,
-                                             const size_t npoints)
+std::vector<double> TransportEquations::MakeDistribution(const double xmax,
+                                                         const size_t npoints)
 {
-  VecDoub res(npoints);
+  std::vector<double> res(npoints);
 
   for (size_t i = 0; i < npoints; i++)
   {
     double temp = pow(((i - npoints / 2.)) / (npoints / 2.), 3) * M_PI / 4.;
-    res[i]      = xmax * tan(temp);
+    res.at(i)   = xmax * tan(temp);
   }
   return res;
 }
@@ -636,8 +642,6 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
 void TransportEquations::SolveTransportEquation()
 {
-  VecDoub zList(MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
-
   Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw.value()));
 
   MatDoub STildeList(NumberOfSteps, nFB2);
@@ -716,8 +720,7 @@ void TransportEquations::SolveTransportEquation()
   res.close();
 
   // Store the solution
-  SolutionZ = zList;
-  Solution  = y;
+  Solution = y;
 
   PrintTransportEquation(120, "tL", "mu", 100);
   PrintTransportEquation(120, "tR", "mu", 100);
@@ -735,21 +738,17 @@ void TransportEquations::CalculateBAU()
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of z positions
   std::vector<double> muB; // muB integrand at position z
-  for (size_t i = 0; i < SolutionZ.value().size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
   {
 
-    const double zi = SolutionZ.value()[i]; // z at position i
+    const double zi = zList[i]; // z at position i
     // Calculate the vev at z
-    const std::vector<double> vev = Vev(zi, 0);
-    // Calculate masses
-    Eigen::MatrixXcd MIJQuarks =
-        modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(vev));
-    Eigen::ComplexEigenSolver<Eigen::MatrixXcd> esQuark(MIJQuarks);
+    const std::vector<double> vev = Vev(zi);
     // D0 of t
-    GetFermionMass(zi, 0, esQuark, m2, m2prime, thetaprime, theta2prime);
+    GetFermionMass(zi, 0, m2, m2prime, thetaprime, theta2prime);
     const double D0t = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
     // D0 of b
-    GetFermionMass(zi, 2, esQuark, m2, m2prime, thetaprime, theta2prime);
+    GetFermionMass(zi, 2, m2, m2prime, thetaprime, theta2prime);
     const double D0b = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
     // Results
     r = 0;
@@ -835,10 +834,10 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  for (size_t i = 0; i < SolutionZ.value().size(); i++)
-    if (abs(SolutionZ.value()[i]) < Lw.value() * multiplier)
+  for (size_t i = 0; i < zList.size(); i++)
+    if (abs(zList[i]) < Lw.value() * multiplier)
     {
-      z.push_back(SolutionZ.value()[i]);
+      z.push_back(zList[i]);
       y.push_back(Solution.value()[ind.value()][i]);
     }
   Plot.addPlot(z, y, "", '*');
