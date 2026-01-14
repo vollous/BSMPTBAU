@@ -34,7 +34,7 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
   if (z_In.size() != path_In.size())
     throw("z and path have different lengths.");
   scalv = VecDoub(2 * dim, 1); // min of 1
-  z     = std::vector<double>(z_In.size(), 0.);
+  z     = z_In;
   y     = MatDoub(dim * 2, z.size(), 0.);
   for (size_t k = 0; k < path_In.size(); k++)
   {
