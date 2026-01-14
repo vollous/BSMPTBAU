@@ -121,9 +121,96 @@ void TransportEquations::Initialize()
   // Generate the fermion masses splines
   GenerateFermionMass();
 
-  Ki   = std::make_unique<Kinfo>(Tstar, vwall);
-  Kfac = std::make_unique<Kfactor>(Ki, true);
+  gamwall = 1. / std::sqrt(1. - vwall * vwall);
+
   nFB2 = 2 * (nFermions + nBosons);
+
+  BuildKernelInterpolation();
+}
+
+tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
+                                                 const bool is_1D)
+{
+  double x, x_save, vw, y;
+  std::vector<double> vw_vals, y_vals, x_vals, res_vals;
+
+  std::string filename = "kernels/" + kernel_name + ".dat";
+  std::ifstream kernel(filename);
+  if (is_1D)
+  {
+    while (kernel >> x >> y)
+    {
+      x_vals.push_back(x);
+      res_vals.push_back(y);
+    }
+    kernel.close();
+  }
+  else
+  {
+    kernel >> x >> vw >> y;
+    x_save = x;
+    vw_vals.push_back(vw);
+    y_vals.push_back(y);
+
+    while (kernel >> x >> vw >> y)
+    {
+      if (x != x_save)
+      {
+        tk::spline spl(vw_vals, y_vals);
+        x_vals.push_back(x_save);
+        res_vals.push_back(spl(vwall));
+        vw_vals.clear();
+        y_vals.clear();
+      }
+      vw_vals.push_back(vw);
+      y_vals.push_back(y);
+      x_save = x;
+    }
+    kernel.close();
+  }
+
+  return tk::spline(x_vals, res_vals);
+}
+
+void TransportEquations::BuildKernelInterpolation()
+{
+  D0b   = InterpolateKernel("D0_b", true);
+  D0f   = InterpolateKernel("D0_f", true);
+  K0b   = InterpolateKernel("K0_b", true);
+  K0f   = InterpolateKernel("K0_f", true);
+  K4FHb = InterpolateKernel("K4FH_b", true);
+  K4FHf = InterpolateKernel("K4FH_f", true);
+
+  std::string b1 = "D1_b";
+  std::string b2 = "D2_b";
+  std::string b3 = "Q1_b";
+  std::string b4 = "Q2_b";
+  std::string f1 = "D1_f";
+  std::string f2 = "D2_f";
+  std::string f3 = "Q1_f";
+  std::string f4 = "Q2_f";
+  std::string f5 = "Q8o1_f";
+  std::string f6 = "Q8o2_f";
+  std::string f7 = "Q9o1_f";
+  std::string f8 = "Q9o2_f";
+  std::string rb = "Rbar_b";
+  std::string rf = "Rbar_f";
+
+  D1b = InterpolateKernel(b1, false);
+  D2b = InterpolateKernel(b2, false);
+  Q1b = InterpolateKernel(b3, false);
+  Q2b = InterpolateKernel(b4, false);
+
+  D1f   = InterpolateKernel(f1, false);
+  D2f   = InterpolateKernel(f2, false);
+  Q1f   = InterpolateKernel(f3, false);
+  Q2f   = InterpolateKernel(f4, false);
+  Q8o1  = InterpolateKernel(f5, false);
+  Q8o2  = InterpolateKernel(f6, false);
+  Q9o1  = InterpolateKernel(f7, false);
+  Q9o2  = InterpolateKernel(f8, false);
+  Rbarb = InterpolateKernel(rb, false);
+  Rbarf = InterpolateKernel(rf, false);
 }
 
 void TransportEquations::SetNumberOfSteps(const int &num)
@@ -250,8 +337,8 @@ void TransportEquations::GetFermionMass(const double &z,
                                 FermionMassesIm.at(ind).deriv(1, z));
   mprimeprime = std::complex<double>(FermionMassesRe.at(ind).deriv(2, z),
                                      FermionMassesIm.at(ind).deriv(2, z));
-  m2          = std::abs(m * m); // m^2 of fermion
-  m2prime     = std::abs(2. * mprime * m);
+  m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
+  m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
@@ -333,7 +420,7 @@ double TransportEquations::GetWMass(const std::vector<double> &vev,
         retmessage += __func__;
         throw std::runtime_error(retmessage);
       }
-      return sqrt(res.at(j));
+      return sqrt(res.at(j)) / Tstar;
     }
   }
   return 0;
@@ -355,84 +442,78 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double mBot   = sqrt(FermionMasses[2]);
   const double mHiggs = sqrt(BosonMasses[0]);
 
-  const double D0t = (*Kfac)(K_type::D0, P_type::fermion, mTop);
-  const double D0b = (*Kfac)(K_type::D0, P_type::fermion, mBot);
+  const double D0T = D0f(mTop);
+  const double D0B = D0f(mBot);
 
-  const double K0t = (*Kfac)(K_type::K0, P_type::fermion, mTop); // TODO: fix
-  const double K0b = (*Kfac)(K_type::K0, P_type::fermion, mBot); // TODO: fix
-  const double K0h = (*Kfac)(K_type::K0, P_type::boson, mHiggs); // TODO: fix
+  const double K0T = K0f(mTop);
+  const double K0B = K0f(mBot);
+  const double K0h = K0b(mHiggs);
 
-  const double GammaTotTop =
-      (*Kfac)(K_type::K4, P_type::fermion, mTop) /
-      ((*Kfac)(K_type::D0, P_type::fermion, mTop) * (6 / Tstar)); // TODO: fix
-  const double GammaTotBot =
-      (*Kfac)(K_type::K4, P_type::fermion, mBot) /
-      ((*Kfac)(K_type::D0, P_type::fermion, mBot) * (6 / Tstar)); // TODO: fix
+  const double GammaTotTop = K4FHf(mTop) / (D0T * 6.) * Tstar; // TODO: fix
+  const double GammaTotBot = K4FHf(mBot) / (D0B * 6.) * Tstar; // TODO: fix
   const double GammaTotHiggs =
-      (*Kfac)(K_type::K4, P_type::boson, mHiggs) /
-      ((*Kfac)(K_type::D0, P_type::boson, mHiggs) * (20 / Tstar)); // TODO: fix
+      K4FHb(mHiggs) / (D0b(mHiggs) * 20.) * Tstar; // TODO: fix
 
-  const double GammaM       = pow(mTop, 2) / (63 * Tstar);
+  const double GammaM       = pow(mTop, 2) / 63. * Tstar;
   const double GammaY       = 4.2e-3 * Tstar;
   const double GammaW       = GammaTotHiggs;
   const double GammaTildeSS = 4.9e-4 * Tstar;
-  // const double GammaTildeY  = 4.9e-4 * Tstar; Not sure what this is
-  const double GammaH = mW * mW / (50 * Tstar); // TODO: fix
+  const double GammaH       = mW * mW / 50. * Tstar;
 
   MatDoub Gamma(8, 8, 0.);
-  Gamma[0][0] = (GammaM + GammaW + GammaY + (1 + 9 * D0t) * GammaTildeSS) * K0t;
-  Gamma[0][2] = (-GammaM - GammaY + (-1 + 9 * D0t) * GammaTildeSS) * K0t;
-  Gamma[0][4] = (-GammaW + (1 + 9 * D0b) * GammaTildeSS) * K0t;
-  Gamma[0][6] = GammaY * K0t;
+  Gamma[0][0] = (GammaM + GammaW + GammaY + (1 + 9 * D0T) * GammaTildeSS) * K0T;
+  Gamma[0][2] = (-GammaM - GammaY + (-1 + 9 * D0T) * GammaTildeSS) * K0T;
+  Gamma[0][4] = (-GammaW + (1 + 9 * D0B) * GammaTildeSS) * K0T;
+  Gamma[0][6] = GammaY * K0T;
 
-  Gamma[1][0] = -Ki->vw * Gamma[0][0];
+  Gamma[1][0] = -vwall * Gamma[0][0];
   Gamma[1][1] = -GammaTotTop;
-  Gamma[1][2] = -Ki->vw * Gamma[0][2];
-  Gamma[1][4] = -Ki->vw * Gamma[0][4];
-  Gamma[1][6] = -Ki->vw * Gamma[0][6];
+  Gamma[1][2] = -vwall * Gamma[0][2];
+  Gamma[1][4] = -vwall * Gamma[0][4];
+  Gamma[1][6] = -vwall * Gamma[0][6];
 
-  Gamma[2][0] = (-GammaM - GammaY - (1 + 9 * D0t) * GammaTildeSS) * K0t;
-  Gamma[2][2] = (GammaM + 2 * GammaY + (1 - 9 * D0t) * GammaTildeSS) * K0t;
-  Gamma[2][4] = (-GammaY - (1 + 9 * D0b) * GammaTildeSS) * K0t;
-  Gamma[2][6] = -2 * GammaY * K0t;
+  Gamma[2][0] = (-GammaM - GammaY - (1 + 9 * D0T) * GammaTildeSS) * K0T;
+  Gamma[2][2] = (GammaM + 2 * GammaY + (1 - 9 * D0T) * GammaTildeSS) * K0T;
+  Gamma[2][4] = (-GammaY - (1 + 9 * D0B) * GammaTildeSS) * K0T;
+  Gamma[2][6] = -2 * GammaY * K0T;
 
-  Gamma[3][0] = -Ki->vw * Gamma[2][0];
-  Gamma[3][2] = -Ki->vw * Gamma[2][2];
+  Gamma[3][0] = -vwall * Gamma[2][0];
+  Gamma[3][2] = -vwall * Gamma[2][2];
   Gamma[3][3] = -GammaTotTop;
-  Gamma[3][4] = -Ki->vw * Gamma[2][4];
-  Gamma[3][6] = -Ki->vw * Gamma[2][6];
+  Gamma[3][4] = -vwall * Gamma[2][4];
+  Gamma[3][6] = -vwall * Gamma[2][6];
 
-  Gamma[4][0] = (-GammaW + (1 + 9 * D0t) * GammaTildeSS) * K0b;
-  Gamma[4][2] = (-GammaY + (-1 + 9 * D0t) * GammaTildeSS) * K0b;
-  Gamma[4][4] = (GammaW + GammaY + (1 + 9 * D0b) * GammaTildeSS) * K0b;
-  Gamma[4][6] = GammaY * K0b;
+  Gamma[4][0] = (-GammaW + (1 + 9 * D0T) * GammaTildeSS) * K0B;
+  Gamma[4][2] = (-GammaY + (-1 + 9 * D0T) * GammaTildeSS) * K0B;
+  Gamma[4][4] = (GammaW + GammaY + (1 + 9 * D0B) * GammaTildeSS) * K0B;
+  Gamma[4][6] = GammaY * K0B;
 
-  Gamma[5][0] = -Ki->vw * Gamma[4][0];
-  Gamma[5][2] = -Ki->vw * Gamma[4][2];
-  Gamma[5][4] = -Ki->vw * Gamma[4][4];
+  Gamma[5][0] = -vwall * Gamma[4][0];
+  Gamma[5][2] = -vwall * Gamma[4][2];
+  Gamma[5][4] = -vwall * Gamma[4][4];
   Gamma[5][5] = -GammaTotBot;
-  Gamma[5][6] = -Ki->vw * Gamma[4][6];
+  Gamma[5][6] = -vwall * Gamma[4][6];
 
   Gamma[6][0] = GammaY * K0h;
   Gamma[6][2] = -2 * GammaY * K0h;
   Gamma[6][4] = GammaY * K0h;
   Gamma[6][6] = (GammaH + 2 * GammaY) * K0h;
 
-  Gamma[7][0] = -Ki->vw * Gamma[6][0];
-  Gamma[7][2] = -Ki->vw * Gamma[6][2];
-  Gamma[7][4] = -Ki->vw * Gamma[6][4];
-  Gamma[7][6] = -Ki->vw * Gamma[6][6];
+  Gamma[7][0] = -vwall * Gamma[6][0];
+  Gamma[7][2] = -vwall * Gamma[6][2];
+  Gamma[7][4] = -vwall * Gamma[6][4];
+  Gamma[7][6] = -vwall * Gamma[6][6];
   Gamma[7][7] = -GammaTotHiggs;
 
   return Gamma;
 }
 
-MatDoub TransportEquations::calc_Ainv(const double &m, const P_type &type)
+MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
   MatDoub res(2, 2);
-  const double fD1 = (*Kfac)(K_type::D1, type, m);
-  const double fD2 = (*Kfac)(K_type::D2, type, m);
-  const double fR  = -Ki->vw;
+  const double fD1 = (type == Fermion ? D1f(m) : D1b(m));
+  const double fD2 = (type == Fermion ? D2f(m) : D2b(m));
+  const double fR  = -vwall;
   res[0][0]        = fR / (fD2 - fD1 * fR);
   res[0][1]        = -1 / (fD2 - fD1 * fR);
   res[1][0]        = fD2 / (fD2 - fD1 * fR);
@@ -442,15 +523,16 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const P_type &type)
 
 MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
-                                     const P_type &type)
+                                     const ParticleType &type)
 {
   MatDoub res(2, 2);
-  const double fRbar = (*Kfac)(K_type::Rbar, type, m);
-  const double fQ1   = (*Kfac)(K_type::Q1, type, m);
-  const double fQ2   = (*Kfac)(K_type::Q2, type, m);
-  res[0][0]          = Ki->gamw * Ki->vw * fQ1 * dm2;
-  res[1][0]          = Ki->gamw * Ki->vw * fQ2 * dm2;
-  res[1][1]          = fRbar * dm2;
+  const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
+  const double fQ1   = (type == Fermion ? Q1f(m) : Q1b(m));
+  const double fQ2   = (type == Fermion ? Q2f(m) : Q2b(m));
+
+  res[0][0] = gamwall * vwall * fQ1 * dm2;
+  res[1][0] = gamwall * vwall * fQ2 * dm2;
+  res[1][1] = fRbar * dm2;
   return res;
 }
 
@@ -458,20 +540,15 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &dm2,
                                         const double &dth,
                                         const double &d2th,
-                                        const P_type &type)
+                                        const ParticleType &type)
 {
   VecDoub res(2);
-  const double fQ8o1 = (*Kfac)(K_type::Q8o1, type, m);
-  const double fQ8o2 = (*Kfac)(K_type::Q8o2, type, m);
-  const double fQ9o1 = (*Kfac)(K_type::Q9o1, type, m);
-  const double fQ9o2 = (*Kfac)(K_type::Q9o2, type, m);
-
-  res[0] =
-      -Ki->vw * Ki->gamw *
-      ((dm2 * dth + m * m * d2th) * fQ8o1 - dm2 * m * m * dth * fQ9o1); // S1
-  res[1] =
-      -Ki->vw * Ki->gamw *
-      ((dm2 * dth + m * m * d2th) * fQ8o2 - dm2 * m * m * dth * fQ9o2); // S2
+  res[0] = -vwall * gamwall *
+           ((dm2 * dth + m * m * d2th) * Q8o1(m) -
+            dm2 * m * m * dth * Q9o1(m)); // S1
+  res[1] = -vwall * gamwall *
+           ((dm2 * dth + m * m * d2th) * Q8o2(m) -
+            dm2 * m * m * dth * Q9o2(m)); // S2
   return res;
 }
 
@@ -510,21 +587,21 @@ void TransportEquations::Equations(const double &z,
     FermionMasses[fermion] = m2;
 
     // Calculate A inverse for fermion
-    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::fermion));
+    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Fermion));
     Ainverse[2 * fermion][2 * fermion]         = tempA[0][0];
     Ainverse[2 * fermion][2 * fermion + 1]     = tempA[0][1];
     Ainverse[2 * fermion + 1][2 * fermion]     = tempA[1][0];
     Ainverse[2 * fermion + 1][2 * fermion + 1] = tempA[1][1];
 
     // Calculate m2'B for fermion
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
     m2B[2 * fermion][2 * fermion]         = tempB[0][0];
     m2B[2 * fermion + 1][2 * fermion]     = tempB[1][0];
     m2B[2 * fermion + 1][2 * fermion + 1] = tempB[1][1];
 
     // Source terms
     VecDoub tempS(calc_source(
-        sqrt(m2), m2prime, thetaprime, theta2prime, P_type::fermion));
+        sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
     S[2 * fermion]     = tempS[0];
     S[2 * fermion + 1] = tempS[1];
   }
@@ -539,14 +616,14 @@ void TransportEquations::Equations(const double &z,
     BosonMasses[boson] = m2;
 
     // Calculate A inverse for bosons
-    MatDoub tempA(calc_Ainv(sqrt(m2), P_type::boson));
+    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Boson));
     Ainverse[nF2 + 2 * boson][nF2 + 2 * boson]         = tempA[0][0];
     Ainverse[nF2 + 2 * boson][nF2 + 2 * boson + 1]     = tempA[0][1];
     Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempA[1][0];
     Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempA[1][1];
 
     // Calculate m2'B
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, P_type::fermion));
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
     m2B[nF2 + 2 * boson][nF2 + 2 * boson]         = tempB[0][0];
     m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempB[1][0];
     m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempB[1][1];
@@ -732,7 +809,7 @@ void TransportEquations::SolveTransportEquation()
 
 void TransportEquations::CalculateBAU()
 {
-  double m2, m2prime, thetaprime, theta2prime; // temporary vars
+  double mt2, mb2, m2prime, thetaprime, theta2prime; // temporary vars
   // Weak spharelon rate
   const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
@@ -744,17 +821,13 @@ void TransportEquations::CalculateBAU()
     const double zi = zList[i]; // z at position i
     // Calculate the vev at z
     const std::vector<double> vev = Vev(zi);
-    // D0 of t
-    GetFermionMass(zi, 0, m2, m2prime, thetaprime, theta2prime);
-    const double D0t = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
-    // D0 of b
-    GetFermionMass(zi, 2, m2, m2prime, thetaprime, theta2prime);
-    const double D0b = (*Kfac)(K_type::D0, P_type::fermion, sqrt(m2));
+    GetFermionMass(zi, 0, mt2, m2prime, thetaprime, theta2prime);
+    GetFermionMass(zi, 2, mb2, m2prime, thetaprime, theta2prime);
     // Results
     r = 0;
-    r += (1 + 4 * D0t) / 2. * Solution.value()[0][i]; // tL
-    r += (1 + 4 * D0b) / 2. * Solution.value()[4][i]; // bL
-    r += 2. * D0b * Solution.value()[2][i];           // tR
+    r += (1 + 4 * D0f(sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
+    r += (1 + 4 * D0f(sqrt(mb2))) / 2. * Solution.value()[4][i]; // bL
+    r += 2. * D0f(sqrt(mt2)) * Solution.value()[2][i];           // tR
     r *= min(
         1.,
         2.4 * Tstar / Gsph *
@@ -762,7 +835,7 @@ void TransportEquations::CalculateBAU()
                 modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev), 0.) /
                 Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
-             (4. * Ki->vw * Ki->gamw)); // exp(-45 G_sph |z| / 4 vw gammaw)
+             (4. * vwall * gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
@@ -804,7 +877,7 @@ void TransportEquations::CalculateBAU()
   // Results
   const double prefactor =
       405. * Gsph /
-      (4 * M_PI * M_PI * Ki->vw * Ki->gamw * 106.75 * Tstar); // TODO Fix gstas
+      (4 * M_PI * M_PI * vwall * gamwall * 106.75 * Tstar); // TODO Fix gstas
 
   result *= prefactor;
   // Save the result

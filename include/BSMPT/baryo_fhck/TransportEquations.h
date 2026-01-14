@@ -1,6 +1,6 @@
 #pragma once
 
-#include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_fhck/difeq_transport_equations.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
@@ -86,11 +86,20 @@ public:
    */
   double Tstar;
 
+  tk::spline D0b, D0f, D1b, D1f, D2b, D2f, Q1b, Q1f, Q2b, Q2f, Q8o1, Q8o2, Q9o1,
+      Q9o2, Rbarb, Rbarf, K0b, K0f, K4FHf, K4FHb;
+
   /**
    * @brief Bubble wall velocity
    *
    */
   double vwall;
+
+  /**
+   * @brief Rel. gamma factor of the wall 
+   *
+   */
+  double gamwall;
 
   /**
    * @brief Wall thickness
@@ -190,18 +199,6 @@ public:
    * - TunnelPath -> Calculate the vev profile using the tunneling solution
    */
   VevProfileMode VevProfile = VevProfileMode::Unset;
-
-  /**
-   * @brief Ki object that has the bubble wall properties
-   *
-   */
-  std::shared_ptr<Kinfo> Ki;
-
-  /**
-   * @brief Kfac object to calculate the K-functions
-   *
-   */
-  std::shared_ptr<Kfactor> Kfac;
 
   /**
    * @brief Coex phase object
@@ -312,6 +309,15 @@ public:
    */
   void Initialize();
 
+  tk::spline InterpolateKernel(const std::string &kernel_Name, const bool is_1D);
+
+  /**
+   * @brief Load all the Kernel functions and interpolate them
+   *
+   *
+   */
+  void BuildKernelInterpolation();
+
   /**
    * @brief Set the number of intergrations steps and initialize again.
    *
@@ -385,7 +391,7 @@ public:
    * @param type type of particle e.g. fermion/boson
    * @return MatDoub of Ainv
    */
-  MatDoub calc_Ainv(const double &m, const P_type &type);
+  MatDoub calc_Ainv(const double &m, const ParticleType &type);
 
   /**
    * @brief Calculate the 2x2 submatrix of m2'B for 1 particle
@@ -395,7 +401,7 @@ public:
    * @param type type of particle e.g. fermion/boson
    * @return MatDoub of m2'B
    */
-  MatDoub calc_m2B(const double &m, const double &dm2, const P_type &type);
+  MatDoub calc_m2B(const double &m, const double &dm2, const ParticleType &type);
 
   /**
    * @brief Calculate the souce term S for 1 particle
@@ -411,7 +417,7 @@ public:
                       const double &dm2,
                       const double &dth,
                       const double &d2th,
-                      const P_type &type);
+                      const ParticleType &type);
 
   /**
    * @brief Check if the boundary have enough decaying modes for the solution to

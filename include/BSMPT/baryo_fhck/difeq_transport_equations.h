@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <BSMPT/Kfactors/vw_Kfactors.h>
 #include <BSMPT/utility/relaxation/difeq.h>
 
 using BSMPT::Delta;

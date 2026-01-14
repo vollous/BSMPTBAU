@@ -3,7 +3,7 @@
 
 using Approx = Catch::Approx;
 
-#include <BSMPT/Kfactors/vw_Kfactors.h>
+#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
 #include <BSMPT/models/IncludeAllModels.h>
@@ -11,6 +11,170 @@ using Approx = Catch::Approx;
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/vacuum_profile.h>
 
+TEST_CASE("Construct Kernel table", "[baryoKernels]")
+{
+  using namespace BSMPT;
+  std::string path = "kernels/";
+  double vw_step   = 0.064;
+
+  for (int l = 0; l <= 2; l++)
+  {
+    std::cout << "Current moment: " << l << "\n\n";
+    for (int type = 0; type <= 1; type++)
+    {
+      ParticleType PType = (type == 0 ? Fermion : Boson);
+      std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
+      std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
+      Kernel Kern(l, 2);
+
+      std::cout << "D-Kernel\n";
+      {
+        std::string str = path + "D" + std::to_string(l) + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 7.01; i += 0.1)
+        {
+          double x = -5 + i;
+          x        = pow(10, x);
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::D, PType, x, 0.1) << "\n";
+          else
+            for (double j = 0.; j < 5.01; j += vw_step)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::D, PType, x, vw) << "\n";
+            }
+        }
+        file.close();
+      }
+      std::cout << "K-Kernel\n";
+      {
+        std::string str = path + "K" + std::to_string(l) + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 7.01; i += 0.1)
+        {
+          double x = -5 + i;
+          x        = pow(10, x);
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::K, PType, x, 0.1) << "\n";
+          else if (l >= 2)
+            for (double j = 0.; j < 5.01; j += vw_step)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::D, PType, x, vw) << "\n";
+            }
+        }
+        file.close();
+      }
+      if (l == 0)
+      {
+        std::cout << "K4FH-Kernel\n";
+        std::string str = path + "K4FH" + suffix;
+        std::ofstream file(str);
+        for (double i = 0.; i < 7.01; i += 0.1)
+        {
+          double x = -5 + i;
+          x        = pow(10, x);
+          if (l == 0)
+            file << x << "\t" << Kern(KernelType::K4FH, PType, x, 0.1) << "\n";
+        }
+        file.close();
+      }
+      /* if (l != 0)
+      {
+        std::cout << "Q-Kernel\n";
+        {
+          std::string str = path + "Q" + std::to_string(l) + suffix;
+          std::ofstream file(str);
+          for (double i = 0.; i < 7.01; i += 0.1)
+          {
+            double x = -5 + i;
+            x        = pow(10, x);
+            for (double j = 0.; j < 5.01; j += vw_step)
+            {
+              double vw = -5. + j;
+              vw        = pow(10, vw);
+              file << x << "\t" << vw << "\t"
+                   << Kern(KernelType::Q, PType, x, vw) << "\n";
+            }
+          }
+          file.close();
+        }
+        if (PType == fermion)
+        {
+          std::cout << "Q8o-Kernel\n";
+          {
+            std::string str = path + "Q8o" + std::to_string(l) + suffix;
+            std::ofstream file(str);
+            for (double i = 0.; i < 7.01; i += 0.1)
+            {
+              double x = -5 + i;
+              x        = pow(10, x);
+              for (double j = 0.; j < 5.01; j += vw_step)
+              {
+                double vw = -5. + j;
+                vw        = pow(10, vw);
+                file << x << "\t" << vw << "\t"
+                     << Kern(KernelType::Q8o, PType, x, vw) << "\n";
+              }
+            }
+            file.close();
+          }
+          std::cout << "Q9o-Kernel\n";
+          {
+            std::string str = path + "Q9o" + std::to_string(l) + suffix;
+            std::ofstream file(str);
+            for (double i = 0.; i < 7.01; i += 0.1)
+            {
+              double x = -5 + i;
+              x        = pow(10, x);
+              for (double j = 0.; j < 5.01; j += vw_step)
+              {
+                double vw = -5. + j;
+                vw        = pow(10, vw);
+                file << x << "\t" << vw << "\t"
+                     << Kern(KernelType::Q9o, PType, x, vw) << "\n";
+              }
+            }
+            file.close();
+          }
+        }
+      } */
+    }
+  }
+  for (int type = 0; type <= 1; type++)
+  {
+    Kernel Kern(0, 0);
+    ParticleType PType = (type == 0 ? Fermion : Boson);
+    std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
+    std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
+    std::cout << "Rbar-Kernel\n";
+    {
+      std::string str = path + "Rbar" + suffix;
+      std::ofstream file(str);
+      for (double i = 0.; i < 7.01; i += 0.1)
+      {
+        double x = -5 + i;
+        x        = pow(10, x);
+        for (double j = 0.; j < 5.01; j += vw_step)
+        {
+          double vw = -5. + j;
+          vw        = pow(10, vw);
+          file << x << "\t" << vw << "\t" << Kern(KernelType::Rb, PType, x, vw)
+               << "\n";
+        }
+      }
+      file.close();
+    }
+  }
+
+  exit(0);
+
+  REQUIRE(1 == 1);
+}
 
 TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 {
