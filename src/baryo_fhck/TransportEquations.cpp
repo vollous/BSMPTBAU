@@ -9,22 +9,6 @@ namespace FHCK
 {
 TransportEquations::TransportEquations(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const double &vwall_in,
-    const double &Tstar_in,
-    const std::vector<double> &FalseVacuum_in,
-    const std::vector<double> &TrueVacuum_in)
-{
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  FalseVacuum  = FalseVacuum_in;
-  TrueVacuum   = TrueVacuum_in;
-  VevProfile   = VevProfileMode::Kink;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
     const std::shared_ptr<CoexPhases> &CoexPhase_in,
     const double &vwall_in,
     const double &Tstar_in,
@@ -37,45 +21,6 @@ TransportEquations::TransportEquations(
   FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
   TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
   VevProfile   = VevProfile_In;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const double &vwall_in,
-    const double &Tstar_in,
-    const std::shared_ptr<BounceActionInt> &ActionInt_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  ActionInt    = ActionInt_in;
-  VevProfile   = Mode_in;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<BounceSolution> &Bounce_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  Bounce       = Bounce_in;
-  Tstar        = Bounce->GetTransitionTemp();
-  vwall        = Bounce->vwall;
-  VevProfile   = Mode_in;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<GravitationalWave> &GW_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  GW           = GW_in;
-  VevProfile   = Mode_in;
   Initialize();
 }
 
