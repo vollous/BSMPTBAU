@@ -259,6 +259,7 @@ void TransportEquations::GenerateFermionMass()
 
   Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
   Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
+  Plot.legend();
   std::stringstream ss;
   Plot.show(ss);
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
