@@ -15,7 +15,7 @@ var searchData=
   ['stateof1dintegration_12',['StateOf1DIntegration',['../classBSMPT_1_1BounceActionInt.html#a94fed28e7da1fa31fc2d832e6262203a',1,'BSMPT::BounceActionInt']]],
   ['stateofbounceactionint_13',['StateOfBounceActionInt',['../classBSMPT_1_1BounceActionInt.html#a5a45d485ea861cdf709c5dc035f370ba',1,'BSMPT::BounceActionInt']]],
   ['stateofpathdeformation_14',['StateOfPathDeformation',['../classBSMPT_1_1BounceActionInt.html#a31b192a035855958fbbe882838598504',1,'BSMPT::BounceActionInt']]],
-  ['status_15',['status',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a5f4212fd06f1a319bd5a20dac0889043',1,'BSMPT::VacuumProfileNS::VacuumProfile::status'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad9c3248e8509271063a4d75d27054678',1,'BSMPT::Baryo::FHCK::TransportEquations::Status']]],
+  ['status_15',['status',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad9c3248e8509271063a4d75d27054678',1,'BSMPT::Baryo::FHCK::TransportEquations::Status'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a5f4212fd06f1a319bd5a20dac0889043',1,'BSMPT::VacuumProfileNS::VacuumProfile::status']]],
   ['status_5fbounce_5fsol_16',['status_bounce_sol',['../classBSMPT_1_1BounceSolution.html#afeb7a3ff39e6d95a49eaade9c8a2b1ad',1,'BSMPT::BounceSolution']]],
   ['status_5fcoex_5fpairs_17',['status_coex_pairs',['../structBSMPT_1_1Vacuum.html#a630f06ec754d580aace9e621fbe7cb33',1,'BSMPT::Vacuum']]],
   ['status_5fcompl_18',['status_compl',['../classBSMPT_1_1BounceSolution.html#a3b87b677837eccdd9ee8b8a5e4e4ff55',1,'BSMPT::BounceSolution']]],

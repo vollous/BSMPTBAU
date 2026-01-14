@@ -1,28 +1,5 @@
 var NAVTREEINDEX9 =
 {
-"structBSMPT_1_1Wall_1_1GSL__params.html#ab1784e040e3a590f777f9b8fc4e69955":[3,0,0,6,0,6],
-"structBSMPT_1_1Wall_1_1GSL__params.html#af328fd3781947bd22923ef5e73827efd":[3,0,0,6,0,1],
-"structBSMPT_1_1gw__data.html":[2,0,0,11],
-"structBSMPT_1_1gw__data.html":[3,0,0,18],
-"structBSMPT_1_1output.html":[2,0,0,20],
-"structBSMPT_1_1output.html":[3,0,0,27],
-"structBSMPT_1_1parser_1_1KeyValue.html":[2,0,0,21,0],
-"structBSMPT_1_1parser_1_1KeyValue.html":[3,0,0,28,0],
-"structBSMPT_1_1parser_1_1Options.html":[2,0,0,21,1],
-"structBSMPT_1_1parser_1_1Options.html":[3,0,0,28,1],
-"structBSMPT_1_1resultErrorPair.html":[3,0,0,44],
-"structBSMPT_1_1resultErrorPair.html":[2,0,0,37],
-"structBSMPT_1_1status__codes.html":[3,0,0,45],
-"structBSMPT_1_1status__codes.html":[2,0,0,38],
-"structBSMPT_1_1transition__data.html":[3,0,0,46],
-"structBSMPT_1_1transition__data.html":[2,0,0,39],
-"structBSMPT_1_1user__input.html":[3,0,0,48],
-"structBSMPT_1_1user__input.html":[2,0,0,41],
-"structCLIOptions.html":[3,0,3],
-"structDifeq.html":[3,0,11],
-"structDifeq__TransportEquation.html":[3,0,12],
-"structMyListener.html":[3,0,15],
-"tau__source_8cpp.html":[4,0,1,0,0,3],
 "tau__source_8h.html":[4,0,0,0,0,0,3],
 "tau__source_8h_source.html":[4,0,0,0,0,0,3],
 "test.html":[1],
@@ -83,6 +60,5 @@ var NAVTREEINDEX9 =
 "utility_8h.html#af399e9a581e9c31fc59194a3f32b66f1":[4,0,0,0,10,11,15],
 "utility_8h_source.html":[4,0,0,0,10,11],
 "vacuum__profile_8cpp.html":[4,0,1,8,0],
-"vacuum__profile_8h_source.html":[4,0,0,0,11,1],
-"vw__Kfactors_8h_source.html":[4,0,0,0,4,3]
+"vacuum__profile_8h_source.html":[4,0,0,0,11,1]
 };
