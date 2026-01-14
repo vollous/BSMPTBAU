@@ -125,116 +125,58 @@ void TransportEquations::Initialize()
   BuildKernelInterpolation();
 }
 
-tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name)
+tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
+                                                 const bool is_1D)
 {
   double x, x_save, vw, y;
   std::vector<double> vw_vals, y_vals, x_vals, res_vals;
 
   std::string filename = "kernels/" + kernel_name + ".dat";
   std::ifstream kernel(filename);
-  kernel >> x >> vw >> y;
-  x_save = x;
-  vw_vals.push_back(vw);
-  y_vals.push_back(y);
-
-  while (kernel >> x >> vw >> y)
+  if (is_1D)
   {
-    if (x != x_save)
+    while (kernel >> x >> y)
     {
-      tk::spline spl(vw_vals, y_vals);
-      x_vals.push_back(x_save);
-      res_vals.push_back(spl(vwall));
-      vw_vals.clear();
-      y_vals.clear();
+      x_vals.push_back(x);
+      res_vals.push_back(y);
     }
+    kernel.close();
+  }
+  else
+  {
+    kernel >> x >> vw >> y;
+    x_save = x;
     vw_vals.push_back(vw);
     y_vals.push_back(y);
-    x_save = x;
+
+    while (kernel >> x >> vw >> y)
+    {
+      if (x != x_save)
+      {
+        tk::spline spl(vw_vals, y_vals);
+        x_vals.push_back(x_save);
+        res_vals.push_back(spl(vwall));
+        vw_vals.clear();
+        y_vals.clear();
+      }
+      vw_vals.push_back(vw);
+      y_vals.push_back(y);
+      x_save = x;
+    }
+    kernel.close();
   }
-  kernel.close();
+
   return tk::spline(x_vals, res_vals);
 }
 
 void TransportEquations::BuildKernelInterpolation()
 {
-  double x, y;
-  std::vector<double> x_vals, y_vals;
-  {
-    std::string filename = "kernels/D0_b.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  D0b = tk::spline(x_vals, y_vals);
-  x_vals.clear();
-  y_vals.clear();
-  {
-    std::string filename = "kernels/D0_f.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  D0f = tk::spline(x_vals, y_vals);
-  x_vals.clear();
-  y_vals.clear();
-  {
-    std::string filename = "kernels/K0_b.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  K0b = tk::spline(x_vals, y_vals);
-  x_vals.clear();
-  y_vals.clear();
-  {
-    std::string filename = "kernels/K0_f.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  K0f = tk::spline(x_vals, y_vals);
-  x_vals.clear();
-  y_vals.clear();
-  {
-    std::string filename = "kernels/K4FH_b.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  K4FHb = tk::spline(x_vals, y_vals);
-  x_vals.clear();
-  y_vals.clear();
-  {
-    std::string filename = "kernels/K4FH_f.dat";
-    std::ifstream kernel(filename);
-    while (kernel >> x >> y)
-    {
-      x_vals.push_back(x);
-      y_vals.push_back(y);
-    }
-    kernel.close();
-  }
-  K4FHf = tk::spline(x_vals, y_vals);
+  D0b   = InterpolateKernel("D0_b", true);
+  D0f   = InterpolateKernel("D0_f", true);
+  K0b   = InterpolateKernel("K0_b", true);
+  K0f   = InterpolateKernel("K0_f", true);
+  K4FHb = InterpolateKernel("K4FH_b", true);
+  K4FHf = InterpolateKernel("K4FH_f", true);
 
   std::string b1 = "D1_b";
   std::string b2 = "D2_b";
@@ -251,21 +193,21 @@ void TransportEquations::BuildKernelInterpolation()
   std::string rb = "Rbar_b";
   std::string rf = "Rbar_f";
 
-  D1b = InterpolateKernel(b1);
-  D2b = InterpolateKernel(b2);
-  Q1b = InterpolateKernel(b3);
-  Q2b = InterpolateKernel(b4);
+  D1b = InterpolateKernel(b1, false);
+  D2b = InterpolateKernel(b2, false);
+  Q1b = InterpolateKernel(b3, false);
+  Q2b = InterpolateKernel(b4, false);
 
-  D1f   = InterpolateKernel(f1);
-  D2f   = InterpolateKernel(f2);
-  Q1f   = InterpolateKernel(f3);
-  Q2f   = InterpolateKernel(f4);
-  Q8o1  = InterpolateKernel(f5);
-  Q8o2  = InterpolateKernel(f6);
-  Q9o1  = InterpolateKernel(f7);
-  Q9o2  = InterpolateKernel(f8);
-  Rbarb = InterpolateKernel(rb);
-  Rbarf = InterpolateKernel(rf);
+  D1f   = InterpolateKernel(f1, false);
+  D2f   = InterpolateKernel(f2, false);
+  Q1f   = InterpolateKernel(f3, false);
+  Q2f   = InterpolateKernel(f4, false);
+  Q8o1  = InterpolateKernel(f5, false);
+  Q8o2  = InterpolateKernel(f6, false);
+  Q9o1  = InterpolateKernel(f7, false);
+  Q9o2  = InterpolateKernel(f8, false);
+  Rbarb = InterpolateKernel(rb, false);
+  Rbarf = InterpolateKernel(rf, false);
 }
 
 void TransportEquations::SetNumberOfSteps(const int &num)

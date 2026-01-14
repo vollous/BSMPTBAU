@@ -308,7 +308,7 @@ public:
    */
   void Initialize();
 
-  tk::spline InterpolateKernel(const std::string &kernel_Name);
+  tk::spline InterpolateKernel(const std::string &kernel_Name, const bool is_1D);
 
   /**
    * @brief Load all the Kernel functions and interpolate them
