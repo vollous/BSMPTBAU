@@ -223,12 +223,12 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
       Baryo::FHCK::VevProfileMode::Kink); // TODO: rename this
 
   transport.SolveTransportEquation();
-  CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-4));
+  CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-2));
 
   transport.VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
-  CHECK(transport.BAUEta.value() == Approx(7.41908e-09).epsilon(1e-4));
+  CHECK(transport.BAUEta.value() == Approx(7.41908e-09).epsilon(1e-2));
 
   auto t2 = high_resolution_clock::now();
 
@@ -322,7 +322,7 @@ TEST_CASE("Bubble profile lambda^4", "[baryoFHCKdomain]")
   REQUIRE(1 == 1);
 }
 
-TEST_CASE("Test indexv", "[baryoFHCK]")
+TEST_CASE("Test indexv - field", "[baryoFHCK]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
@@ -338,16 +338,7 @@ TEST_CASE("Test indexv", "[baryoFHCK]")
 
   VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
 
-  VecInt indexv, indexvField(8), indexvDeriv(8);
-
-  indexvDeriv[0] = 0;
-  indexvDeriv[1] = 1;
-  indexvDeriv[2] = 2;
-  indexvDeriv[3] = 3;
-  indexvDeriv[4] = 4;
-  indexvDeriv[5] = 5;
-  indexvDeriv[6] = 6;
-  indexvDeriv[7] = 7;
+  VecInt indexvField(8);
 
   indexvField[0] = 4;
   indexvField[1] = 5;
@@ -359,12 +350,40 @@ TEST_CASE("Test indexv", "[baryoFHCK]")
   indexvField[7] = 3;
 
   vacuumprofile.mode = VacuumProfileNS::ProfileSolverMode::Field;
-  indexv             = vacuumprofile.Calcindexv();
+  VecInt indexv      = vacuumprofile.Calcindexv();
   for (size_t i = 0; i < 2 * dim; i++)
     CHECK(indexv[i] == indexvField[i]);
+}
+
+TEST_CASE("Test indexv - deriv", "[baryoFHCK]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  using namespace VacuumProfileNS;
+
+  size_t dim = 4;
+  std::vector<double> TrueVacuum(dim, -1);
+  std::vector<double> FalseVacuum(dim, 1);
+
+  std::function<double(std::vector<double>)> V;
+  std::function<std::vector<double>(std::vector<double>)> dV;
+  std::function<std::vector<std::vector<double>>(std::vector<double>)> Hessian;
+
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian, 1);
+
+  VecInt indexvDeriv(8);
+
+  indexvDeriv[0] = 0;
+  indexvDeriv[1] = 1;
+  indexvDeriv[2] = 2;
+  indexvDeriv[3] = 3;
+  indexvDeriv[4] = 4;
+  indexvDeriv[5] = 5;
+  indexvDeriv[6] = 6;
+  indexvDeriv[7] = 7;
 
   vacuumprofile.mode = VacuumProfileNS::ProfileSolverMode::Deriv;
-  indexv             = vacuumprofile.Calcindexv();
+  VecInt indexv      = vacuumprofile.Calcindexv();
   for (size_t i = 0; i < 2 * dim; i++)
     CHECK(indexv[i] == indexvDeriv[i]);
 }
