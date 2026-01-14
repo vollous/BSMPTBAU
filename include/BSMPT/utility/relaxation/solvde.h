@@ -65,7 +65,7 @@ public:
         int km = 0;
         for (k = 0; k < m; k++)
         {
-          double vz = abs(c[jv][0][k]);
+          double vz = std::abs(c[jv][0][k]);
           if (vz > vmax)
           {
             vmax = vz;
@@ -118,7 +118,7 @@ public:
     {
       big = 0.0;
       for (int j = je1; j < je2; j++)
-        if (abs(s[i][j]) > big) big = abs(s[i][j]);
+        if (std::abs(s[i][j]) > big) big = std::abs(s[i][j]);
       if (big == 0.0)
       {
         std::cout << "Singular matrix in pinvs with k = " << k
@@ -149,10 +149,10 @@ public:
           big = 0.0;
           for (int j = je1; j < je2; j++)
           {
-            if (abs(s[i][j]) > big)
+            if (std::abs(s[i][j]) > big)
             {
               jp  = j;
-              big = abs(s[i][j]);
+              big = std::abs(s[i][j]);
             }
           }
           if (big * pscl[i - ie1] > piv)
