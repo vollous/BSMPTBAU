@@ -38,7 +38,6 @@ TransportEquations::TransportEquations(
   TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
   VevProfile   = VevProfile_In;
   Initialize();
-  BuildKernelInterpolation();
 }
 
 TransportEquations::TransportEquations(
@@ -122,6 +121,8 @@ void TransportEquations::Initialize()
   gamwall = 1. / std::sqrt(1. - vwall * vwall);
 
   nFB2 = 2 * (nFermions + nBosons);
+
+  BuildKernelInterpolation();
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name)
@@ -388,8 +389,8 @@ void TransportEquations::GetFermionMass(
                                 FermionMassesIm.at(ind).deriv(1, z));
   mprimeprime = std::complex<double>(FermionMassesRe.at(ind).deriv(2, z),
                                      FermionMassesIm.at(ind).deriv(2, z));
-  m2          = std::abs(m * m); // m^2 of fermion
-  m2prime     = std::abs(2. * mprime * m);
+  m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
+  m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
