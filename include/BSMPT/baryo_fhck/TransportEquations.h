@@ -141,13 +141,13 @@ public:
    * @brief Number of Weil fermions
    *
    */
-  int nFermions = 3;
+  size_t nFermions = 3;
 
   /**
    * @brief Number of bosons
    *
    */
-  int nBosons = 1;
+  size_t nBosons = 1;
 
   /**
    * @brief Number of equations
