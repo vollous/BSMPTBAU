@@ -29,7 +29,7 @@ enum class VevProfileMode
 {
   Unset,
   Kink,
-  TunnelPath
+  FieldEquation
 };
 
 /**
@@ -143,13 +143,13 @@ public:
    * @brief Number of Weil fermions
    *
    */
-  int nFermions = 3;
+  size_t nFermions = 3;
 
   /**
    * @brief Number of bosons
    *
    */
-  int nBosons = 1;
+  size_t nBosons = 1;
 
   /**
    * @brief Number of equations
@@ -198,7 +198,7 @@ public:
   /**
    * @brief Mode of the vev profile.
    * - Kink -> Kink solution
-   * - TunnelPath -> Calculate the vev profile using the tunneling solution
+   * - FieldEquation -> Calculate the vev profile using the tunneling solution
    */
   VevProfileMode VevProfile = VevProfileMode::Unset;
 
@@ -209,43 +209,10 @@ public:
   std::shared_ptr<CoexPhases> CoexPhase;
 
   /**
-   * @brief Pointer to Action solution from GW routines
-   *
-   */
-  std::shared_ptr<BounceActionInt> ActionInt;
-
-  /**
-   * @brief Pointer to Bounce solution from GW routines
-   *
-   */
-  std::shared_ptr<BounceSolution> Bounce;
-
-  /**
-   * @brief Gravitational Wave object
-   *
-   */
-  std::shared_ptr<GravitationalWave> GW;
-
-  /**
    * @brief Splines to store the variation of the quark masses
    *
    */
-  std::vector<tk::spline> FermionMassesRe, FermionMassesIm;
-
-  /**
-   * @brief Construct a new Transport Equations object
-   *
-   * @param pointer_in Model pointer
-   * @param vwall_in Wall velocity
-   * @param Tstar_in Transition temperature
-   * @param FalseVacuum_in False vacuum
-   * @param TrueVacuum_in True vacuum
-   */
-  TransportEquations(const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-                     const double &vwall_in,
-                     const double &Tstar_in,
-                     const std::vector<double> &FalseVacuum_in,
-                     const std::vector<double> &TrueVacuum_in);
+  std::vector<tk::spline> QuarkMassesRe, QuarkMassesIm;
 
   /**
    * @brief Construct a new Transport Equations object
@@ -262,47 +229,6 @@ public:
       const double &vwall_in,
       const double &Tstar_in,
       const VevProfileMode &VevProfile_In = VevProfileMode::Kink);
-
-  /**
-   * @brief Construct a new Transport Equations object
-   *
-   * @param pointer_in Model pointer
-   * @param vwall_in Wall velocity
-   * @param Tstar_in Transition temperature
-   * @param ActionInt_in ActionInt pointer
-   * @param Mode_in Mode. Either Kink of TunnelPath
-   */
-  TransportEquations(
-      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-      const double &vwall_in,
-      const double &Tstar_in,
-      const std::shared_ptr<BounceActionInt> &ActionInt_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
-
-  /**
-   * @brief Construct a new Transport Equations object
-   *
-   * @param pointer_in Model pointer
-   * @param Bounce_in BounceSolution pointer
-   * @param which_transition_temp Which transition temperature to use ()
-   * @param Mode_in Mode. Either Kink of TunnelPath
-   */
-  TransportEquations(
-      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-      const std::shared_ptr<BounceSolution> &Bounce_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
-
-  /**
-   * @brief Construct a new Transport Equations object
-   *
-   * @param pointer_in Model pointer
-   * @param GW_in GravitationalWave pointer
-   * @param Mode_in Mode. Either Kink of TunnelPath
-   */
-  TransportEquations(
-      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-      const std::shared_ptr<GravitationalWave> &GW_in,
-      const VevProfileMode &Mode_in = VevProfileMode::TunnelPath);
 
   /**
    * @brief Create the VEV vectors and initalize **Ki()** and **Kfac()**

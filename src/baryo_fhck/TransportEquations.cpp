@@ -9,22 +9,6 @@ namespace FHCK
 {
 TransportEquations::TransportEquations(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const double &vwall_in,
-    const double &Tstar_in,
-    const std::vector<double> &FalseVacuum_in,
-    const std::vector<double> &TrueVacuum_in)
-{
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  FalseVacuum  = FalseVacuum_in;
-  TrueVacuum   = TrueVacuum_in;
-  VevProfile   = VevProfileMode::Kink;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
     const std::shared_ptr<CoexPhases> &CoexPhase_in,
     const double &vwall_in,
     const double &Tstar_in,
@@ -40,52 +24,13 @@ TransportEquations::TransportEquations(
   Initialize();
 }
 
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const double &vwall_in,
-    const double &Tstar_in,
-    const std::shared_ptr<BounceActionInt> &ActionInt_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  ActionInt    = ActionInt_in;
-  VevProfile   = Mode_in;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<BounceSolution> &Bounce_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  Bounce       = Bounce_in;
-  Tstar        = Bounce->GetTransitionTemp();
-  vwall        = Bounce->vwall;
-  VevProfile   = Mode_in;
-  Initialize();
-}
-
-TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<GravitationalWave> &GW_in,
-    const VevProfileMode &Mode_in)
-{
-  modelPointer = pointer_in;
-  GW           = GW_in;
-  VevProfile   = Mode_in;
-  Initialize();
-}
-
 void TransportEquations::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
   SetEtaInterface();
 
-  if (VevProfile == VevProfileMode::TunnelPath)
+  if (VevProfile == VevProfileMode::FieldEquation)
   {
     const double &eps = 0.01;
     // Calculate tunnel profile
@@ -289,7 +234,7 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
       return 2 * tanh(z / Lw.value()) / pow(cosh(z / Lw.value()), 2) *
              (TrueVacuum - FalseVacuum) / (2 * Lw.value() * Lw.value());
   }
-  else if (VevProfile == VevProfileMode::TunnelPath)
+  else if (VevProfile == VevProfileMode::FieldEquation)
   {
     return vacuumprofile->GetVev(z, diff);
   }
@@ -301,8 +246,8 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
 
 void TransportEquations::GenerateFermionMass()
 {
-  FermionMassesRe.clear();
-  FermionMassesIm.clear();
+  QuarkMassesRe.clear();
+  QuarkMassesIm.clear();
   size_t ind = (modelPointer->get_NQuarks() - 1);
   std::vector<std::vector<double>> MassesReal, MassesImag;
   for (auto z : zList)
@@ -327,29 +272,30 @@ void TransportEquations::GenerateFermionMass()
   MassesImag = Transpose(MassesImag);
 
   for (auto MassProfile : MassesReal)
-    FermionMassesRe.push_back(tk::spline(zList,
-                                         MassProfile,
-                                         tk::spline::cspline,
-                                         false,
-                                         tk::spline::not_a_knot,
-                                         0,
-                                         tk::spline::not_a_knot,
-                                         0));
+    QuarkMassesRe.push_back(tk::spline(zList,
+                                       MassProfile,
+                                       tk::spline::cspline,
+                                       false,
+                                       tk::spline::not_a_knot,
+                                       0,
+                                       tk::spline::not_a_knot,
+                                       0));
 
   for (auto MassProfile : MassesImag)
-    FermionMassesIm.push_back(tk::spline(zList,
-                                         MassProfile,
-                                         tk::spline::cspline,
-                                         false,
-                                         tk::spline::not_a_knot,
-                                         0,
-                                         tk::spline::not_a_knot,
-                                         0));
+    QuarkMassesIm.push_back(tk::spline(zList,
+                                       MassProfile,
+                                       tk::spline::cspline,
+                                       false,
+                                       tk::spline::not_a_knot,
+                                       0,
+                                       tk::spline::not_a_knot,
+                                       0));
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
   Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
   Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
+  Plot.legend();
   std::stringstream ss;
   Plot.show(ss);
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
@@ -366,13 +312,12 @@ void TransportEquations::GetFermionMass(const double &z,
   const int ind =
       (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
 
-  m = std::complex<double>(FermionMassesRe.at(ind)(z),
-                           FermionMassesIm.at(ind)(z));
+  m = std::complex<double>(QuarkMassesRe.at(ind)(z), QuarkMassesIm.at(ind)(z));
 
-  mprime      = std::complex<double>(FermionMassesRe.at(ind).deriv(1, z),
-                                FermionMassesIm.at(ind).deriv(1, z));
-  mprimeprime = std::complex<double>(FermionMassesRe.at(ind).deriv(2, z),
-                                     FermionMassesIm.at(ind).deriv(2, z));
+  mprime      = std::complex<double>(QuarkMassesRe.at(ind).deriv(1, z),
+                                QuarkMassesIm.at(ind).deriv(1, z));
+  mprimeprime = std::complex<double>(QuarkMassesRe.at(ind).deriv(2, z),
+                                     QuarkMassesIm.at(ind).deriv(2, z));
   m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
   m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
   // Calculate theta
@@ -404,7 +349,7 @@ void TransportEquations::GetFermionMass(const double &z,
         ((brk - sym) / pow(cosh(z / Lw.value()), 2) * tanh(z / Lw.value())) /
         pow(Lw.value(), 2);
   }
-  else if (VevProfile == VevProfileMode::TunnelPath)
+  else if (VevProfile == VevProfileMode::FieldEquation)
   {
     if (pow(pow(m.imag(), 2) + pow(m.real(), 2), 2) == 0) // avoid 1/0
     {
@@ -614,7 +559,7 @@ void TransportEquations::Equations(const double &z,
   VecDoub BosonMasses(nBosons);
 
   // Fermions
-  for (int fermion = 0; fermion < nFermions; fermion++)
+  for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
 
     double m2, m2prime, thetaprime, theta2prime;
@@ -643,7 +588,7 @@ void TransportEquations::Equations(const double &z,
   }
 
   // Bosons
-  for (int boson = 0; boson < nBosons; boson++)
+  for (size_t boson = 0; boson < nBosons; boson++)
   {
     double m2, m2prime;
     // Calculate the boson mass
@@ -670,14 +615,14 @@ void TransportEquations::Equations(const double &z,
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
-  for (int i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (int j = 0; j < 2 * (nBosons + nFermions); j++)
-      for (int l = 0; l < 2 * (nBosons + nFermions); l++)
+  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
+    for (size_t j = 0; j < 2 * (nBosons + nFermions); j++)
+      for (size_t l = 0; l < 2 * (nBosons + nFermions); l++)
         Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
-  for (int i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (int j = 0; j < 2 * (nFermions); j++)
+  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
+    for (size_t j = 0; j < 2 * (nFermions); j++)
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 

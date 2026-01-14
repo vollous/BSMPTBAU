@@ -206,6 +206,13 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
   std::shared_ptr<BSMPT::CoexPhases> coex =
       std::make_shared<BSMPT::CoexPhases>(vac.CoexPhasesList[0]);
 
+  // TODO remove this timing
+  using std::chrono::duration;
+  using std::chrono::duration_cast;
+  using std::chrono::high_resolution_clock;
+  using std::chrono::milliseconds;
+
+  auto t1 = high_resolution_clock::now();
 
   TransportEquations transport(
       modelPointer,
@@ -217,92 +224,21 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
   transport.SolveTransportEquation();
   CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-4));
 
-  transport.VevProfile = Baryo::FHCK::VevProfileMode::TunnelPath;
+  transport.VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
   CHECK(transport.BAUEta.value() == Approx(7.41908e-09).epsilon(1e-4));
 
+  auto t2 = high_resolution_clock::now();
 
-  REQUIRE(1 == 1);
-}
+  /* Getting number of milliseconds as an integer. */
+  auto ms_int = duration_cast<milliseconds>(t2 - t1);
 
-TEST_CASE("VEV Profile", "[baryo123]")
-{
-  using namespace BSMPT;
-  using namespace Baryo::FHCK;
+  /* Getting number of milliseconds as a double. */
+  duration<double, std::milli> ms_double = t2 - t1;
 
-  const std::vector<double> example_point_C2HDM{/* lambda_1 = */ 3.29771,
-                                                /* lambda_2 = */ 0.274365,
-                                                /* lambda_3 = */ 4.71019,
-                                                /* lambda_4 = */ -2.23056,
-                                                /* Re(lambda_5) = */ -2.43487,
-                                                /* Im(lambda_5) = */ 0.124948,
-                                                /* Re(m_{12}^2) = */ 2706.86,
-                                                /* tan(beta) = */ 4.64487,
-                                                /* Yukawa Type = */ 1};
-
-  using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
-  const auto SMConstants = GetSMConstants();
-  std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
-      ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
-  modelPointer->initModel(example_point_C2HDM);
-
-  size_t dim                      = 4;
-  double Tstar                    = 143.7102777;
-  double eps                      = 0.01;
-  size_t NumberOfSteps            = 1000;
-  std::vector<double> FalseVacuum = {0, 0, 0, 0};
-  std::vector<double> TrueVacuum  = {0, 49.3578, 194.183, -1.30873};
-  double itmax                    = 30;
-  double conv                     = 1e-10;
-  double slowc                    = 1e-2;
-  int NB                          = 4;
-  std::vector<double> zList(NumberOfSteps);
-  MatDoub y(dim * 2, zList.size(), 0.);
-  y.zero();
-  VecDoub scalv(zList.size(), 246.22);
-  VecInt indexv(2 * dim);
-  VacuumProfileNS::ProfileSolverMode mode =
-      VacuumProfileNS::ProfileSolverMode::Deriv;
-  std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
-  {
-    // Potential wrapper
-    std::vector<double> res = modelPointer->MinimizeOrderVEV(vev);
-    return modelPointer->VEff(res, Tstar);
-  };
-
-  std::function<std::vector<double>(std::vector<double>)> dV =
-      [=](auto const &arg) { return NablaNumerical(arg, V, eps); };
-  std::function<std::vector<std::vector<double>>(std::vector<double>)> Hessian =
-      [=](auto const &arg) { return HessianNumerical(arg, V, eps); };
-
-  for (size_t i = 0; i < NumberOfSteps; i++)
-  {
-    double temp = ((i - (NumberOfSteps - 1) / 2.)) / ((NumberOfSteps - 1) / 2.);
-    zList[i]    = 1 * temp;
-
-    const double fac  = (tanh(10 * zList[i]) + 1.) / 2.;
-    const double dfac = 10 * pow(cosh(10 * zList[i]), -2) / 2.;
-    for (size_t d = 0; d < dim; d++)
-    {
-      y[d][i]       = FalseVacuum[d] * dfac + TrueVacuum[d] * (-dfac);
-      y[dim + d][i] = FalseVacuum[d] * fac + TrueVacuum[d] * (1 - fac);
-    }
-  }
-
-  VacuumProfileNS::Difeq_VacuumProfile difeq_vacuumprofile(
-      mode, dim, zList, TrueVacuum, FalseVacuum, V, dV, Hessian);
-
-  for (int i = 0; i < 2 * dim; i++)
-    indexv[i] = i;
-
-  RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, NB, y, difeq_vacuumprofile);
-
-  exit(0);
-
-  REQUIRE(1 == 1);
+  std::cout << ms_int.count() << "ms\n";
+  std::cout << ms_double.count() << "ms\n";
 }
 
 TEST_CASE("Domain Wall lambda^4", "[baryoFHCKdomain]")
