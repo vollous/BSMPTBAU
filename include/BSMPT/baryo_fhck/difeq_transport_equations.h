@@ -9,7 +9,7 @@ using BSMPT::Delta;
 struct Difeq_TransportEquation : Difeq
 {
   // List of z coordinates on the grid
-  VecDoub &z;
+  std::vector<double> &z;
   // Number of fermion and number of bosons
   const int &nFermions, &nBosons;
   // Tensor with  A^-1 Gamma for each k
@@ -19,7 +19,7 @@ struct Difeq_TransportEquation : Difeq
 
   Difeq_TransportEquation(
       // z list
-      VecDoub &z_In,
+      std::vector<double> &z_In,
       // Number of fermions and bosons
       const int &nFermions_In,
       const int &nBosons_In,

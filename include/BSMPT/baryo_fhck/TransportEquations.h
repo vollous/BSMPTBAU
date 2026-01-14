@@ -108,6 +108,12 @@ public:
   std::optional<double> Lw;
 
   /**
+   * @brief List of point on the z-axis.
+   *
+   */
+  std::vector<double> zList;
+
+  /**
    * @brief EtaInterface object. To  use BSMPTv2 functions
    *
    */
@@ -125,11 +131,6 @@ public:
    */
   std::optional<double> Theta_True;
 
-  /**
-   * @brief Store the Zs from the solution from the relaxation method
-   *
-   */
-  std::optional<VecDoub> SolutionZ;
   /**
    * @brief Store the solution from the relaxation method
    *
@@ -353,20 +354,17 @@ public:
    *
    * @param z distance to the bubble wall
    * @param fermion which fermion, 0 = most massive
-   * @param esQuark Quark mass matrix
    * @param m2 \f$ m^2 \f$
    * @param m2prime \f$ m'^2 \f$
    * @param thetaprime \f$ \theta' \f$
    * @param theta2prime \f$ \theta'' \f$
    */
-  void
-  GetFermionMass(const double &z,
-                 const int &fermion,
-                 const Eigen::ComplexEigenSolver<Eigen::MatrixXcd> &esQuark,
-                 double &m2,
-                 double &m2prime,
-                 double &thetaprime,
-                 double &theta2prime);
+  void GetFermionMass(const double &z,
+                      const int &fermion,
+                      double &m2,
+                      double &m2prime,
+                      double &thetaprime,
+                      double &theta2prime);
 
   /**
    * @brief Calculate the W boson mass. (same code as BSMPTv2)
@@ -461,7 +459,7 @@ public:
    * @brief Distributes the points used in the relaxation method
    *
    */
-  VecDoub MakeDistribution(const double xmax, const size_t npoints);
+  std::vector<double> MakeDistribution(const double xmax, const size_t npoints);
 
   /**
    * @brief Solve the transport equations.
