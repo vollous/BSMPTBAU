@@ -68,7 +68,7 @@ void TransportEquations::Initialize()
 
   gamwall = 1. / std::sqrt(1. - vwall * vwall);
 
-  nFB2 = 2 * (nFermions + nBosons);
+  nEqs = moment * (nFermions + nBosons);
 
   BuildKernelInterpolation();
 }
@@ -131,7 +131,7 @@ void TransportEquations::BuildKernelInterpolation()
   Q9ol.push_back(tk::spline());
   Qlb.push_back(tk::spline());
 
-  for (int l = 0; l <= 2; l++)
+  for (size_t l = 0; l <= moment; l++)
   {
     for (int type = 0; type <= 1; type++)
     {
@@ -482,14 +482,15 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
                                      const ParticleType &type)
 {
-  MatDoub res(2, 2);
+  MatDoub res(moment, moment, 0.);
   const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
-  const double fQ1   = (type == Fermion ? Qlf[1](m) : Qlb[1](m));
-  const double fQ2   = (type == Fermion ? Qlf[2](m) : Qlb[2](m));
 
-  res[0][0] = gamwall * vwall * fQ1 * dm2;
-  res[1][0] = gamwall * vwall * fQ2 * dm2;
-  res[1][1] = fRbar * dm2;
+  for (size_t i = 1; i <= moment; i++)
+  {
+    const double fQ   = (type == Fermion ? Qlf[i](m) : Qlb[i](m));
+    res[i - 1][i - 1] = fRbar * (double)(i - 1) * dm2;
+    res[i - 1][0]     = gamwall * vwall * fQ * dm2;
+  }
   return res;
 }
 
@@ -515,11 +516,11 @@ void TransportEquations::Equations(const double &z,
 {
   const int nF2 = 2 * nFermions; // Clearer code
 
-  MatDoub Ainverse(nFB2, nFB2, 0.); // Store A^-1
+  MatDoub Ainverse(nEqs, nEqs, 0.); // Store A^-1
 
-  VecDoub S(nFB2, 0.); // Source vector
+  VecDoub S(nEqs, 0.); // Source vector
 
-  MatDoub m2B(nFB2, nFB2, 0.); // m2' B;
+  MatDoub m2B(nEqs, nEqs, 0.); // m2' B;
 
   Stilde.zero(); // A^-1 * Source vector
   Mtilde.zero(); // Store A^-1 * M
@@ -624,14 +625,14 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
   size_t NumberOfNonDecayingModes(0);
   stringstream ss;
 
-  Eigen::MatrixXcd EigenMtildeM(nFB2, nFB2);
-  Eigen::MatrixXcd EigenMtildeP(nFB2, nFB2);
+  Eigen::MatrixXcd EigenMtildeM(nEqs, nEqs);
+  Eigen::MatrixXcd EigenMtildeP(nEqs, nEqs);
 
-  for (size_t i = 0; i < nFB2; i++)
+  for (size_t i = 0; i < nEqs; i++)
   {
     STildeLength += pow(StildeM[i], 2);
     STildeLength += pow(StildeP[i], 2);
-    for (size_t j = 0; j < nFB2; j++)
+    for (size_t j = 0; j < nEqs; j++)
     {
       EigenMtildeM(i, j) = MtildeM[i][j];
       EigenMtildeP(i, j) = MtildeP[i][j];
@@ -640,7 +641,7 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
   // Checking if S vector are small enough
   STildeLength = sqrt(STildeLength);
-  STildeLength /= 2. * nFB2;
+  STildeLength /= 2. * nEqs;
 
   if (STildeLength > STildeThreshold)
   {
@@ -661,7 +662,7 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
   ss << "There are " << NumberOfNonDecayingModes
      << " modes that have to be set to zero at the boundaries.";
 
-  if (NumberOfNonDecayingModes > nFB2)
+  if (NumberOfNonDecayingModes > nEqs)
   {
     ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy "
           "the "
@@ -679,11 +680,11 @@ void TransportEquations::SolveTransportEquation()
 {
   Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw.value()));
 
-  MatDoub STildeList(NumberOfSteps, nFB2);
-  Mat3DDoub MTildeList(NumberOfSteps, nFB2, nFB2);
+  MatDoub STildeList(NumberOfSteps, nEqs);
+  Mat3DDoub MTildeList(NumberOfSteps, nEqs, nEqs);
 
-  MatDoub Mtilde(nFB2, nFB2), MtildeM(nFB2, nFB2), MtildeP(nFB2, nFB2);
-  VecDoub Stilde(nFB2), StildeM(nFB2), StildeP(nFB2);
+  MatDoub Mtilde(nEqs, nEqs), MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
+  VecDoub Stilde(nEqs), StildeM(nEqs), StildeP(nEqs);
 
   Equations(-1, MtildeM, StildeM);
   Equations(1, MtildeP, StildeP);
@@ -716,10 +717,10 @@ void TransportEquations::SolveTransportEquation()
       Equations(zc, Mtilde, Stilde);
 
     // Save the Mtilde and Stilde
-    for (size_t j = 0; j < nFB2; j++)
+    for (size_t j = 0; j < nEqs; j++)
     {
       STildeList[i][j] = Stilde[j];
-      for (size_t k = 0; k < nFB2; k++)
+      for (size_t k = 0; k < nEqs; k++)
         MTildeList[i][j][k] = Mtilde[j][k];
     }
   }
@@ -731,7 +732,7 @@ void TransportEquations::SolveTransportEquation()
   double conv  = 1e-10;
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
-  VecInt indexv(nFB2);
+  VecInt indexv(nEqs);
   indexv[0] = 0;
   indexv[1] = 4;
   indexv[2] = 1;
@@ -741,7 +742,7 @@ void TransportEquations::SolveTransportEquation()
   indexv[6] = 3;
   indexv[7] = 7;
   int NB    = 4;
-  MatDoub y(nFB2, zList.size(), 0.);
+  MatDoub y(nEqs, zList.size(), 0.);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
   std::string str = "test.csv";
