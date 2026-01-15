@@ -395,72 +395,91 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
     throw std::runtime_error(
         "Transport equation are only supported with 1 boson.");
 
-  const double mTop   = sqrt(FermionMasses[0]);
-  const double mBot   = sqrt(FermionMasses[2]);
-  const double mHiggs = sqrt(BosonMasses[0]);
+  std::vector<double> mass = {sqrt(FermionMasses[0]),
+                              sqrt(FermionMasses[0]),
+                              sqrt(FermionMasses[2]),
+                              sqrt(BosonMasses[0])};
 
-  const double D0T = Dlf[0](mTop);
-  const double D0B = Dlf[0](mBot);
+  std::vector<ParticleType> ptype = {Fermion, Fermion, Fermion, Boson};
 
-  const double K0T = Klf[0](mTop);
-  const double K0B = Klf[0](mBot);
-  const double K0h = Klb[0](mHiggs);
+  const double D0T = Dlf[0](mass[0]);
+  const double D0B = Dlf[0](mass[2]);
 
-  const double GammaTotTop = K4FHf(mTop) / (D0T * 6.) * Tstar; // TODO: fix
-  const double GammaTotBot = K4FHf(mBot) / (D0B * 6.) * Tstar; // TODO: fix
-  const double GammaTotHiggs =
-      K4FHb(mHiggs) / (Dlb[0](mHiggs) * 20.) * Tstar; // TODO: fix
+  const std::vector<double> gammatot = {K4FHf(mass[0]) / (D0T * 6.) * Tstar,
+                                        K4FHf(mass[1]) / (D0T * 6.) * Tstar,
+                                        K4FHf(mass[2]) / (D0B * 6.) * Tstar,
+                                        K4FHb(mass[3]) /
+                                            (Dlb[0](mass[3]) * 20.) * Tstar};
 
-  const double GammaM       = pow(mTop, 2) / 63. * Tstar;
-  const double GammaY       = 4.2e-3 * Tstar;
-  const double GammaW       = GammaTotHiggs;
-  const double GammaTildeSS = 4.9e-4 * Tstar;
-  const double GammaH       = mW * mW / 50. * Tstar;
+  const std::vector<double> rates = {pow(mass[0], 2) / 63. * Tstar, // gammaM
+                                     4.2e-3 * Tstar,                // gammaY
+                                     gammatot[3],                   // gammaW
+                                     mW * mW / 50. * Tstar,         // gammaH
+                                     4.9e-4 * Tstar};               // gammaSS
 
-  MatDoub Gamma(8, 8, 0.);
-  Gamma[0][0] = (GammaM + GammaW + GammaY + (1 + 9 * D0T) * GammaTildeSS) * K0T;
-  Gamma[0][2] = (-GammaM - GammaY + (-1 + 9 * D0T) * GammaTildeSS) * K0T;
-  Gamma[0][4] = (-GammaW + (1 + 9 * D0B) * GammaTildeSS) * K0T;
-  Gamma[0][6] = GammaY * K0T;
+  std::vector<double> trunc = {1., 1., 1., 1., 1.};
 
-  Gamma[1][0] = -vwall * Gamma[0][0];
-  Gamma[1][1] = -GammaTotTop;
-  Gamma[1][2] = -vwall * Gamma[0][2];
-  Gamma[1][4] = -vwall * Gamma[0][4];
-  Gamma[1][6] = -vwall * Gamma[0][6];
+  const std::vector<std::vector<double>> tL_interactions = {
+      {1., 1., 1., 0., (1. + 9. * D0T)},
+      {-1., -1., 0., 0., (-1. + 9. * D0T)},
+      {0., 0., -1., 0., (1. + 9. * D0B)},
+      {0., 1., 0., 0., 0.}};
+  const std::vector<std::vector<double>> tR_interactions = {
+      {-1., -1., 0., 0., -(1. + 9. * D0T)},
+      {1., 2., 0., 0., (1. - 9. * D0T)},
+      {0., -1., 0., 0., -(1. + 9. * D0B)},
+      {0., -2., 0., 0., 0.}};
+  const std::vector<std::vector<double>> bL_interactions = {
+      {0., 0., -1., 0., (1. + 9. * D0T)},
+      {0., -1., 0., 0., (-1. + 9. * D0T)},
+      {0., 1., 1., 0., (1. + 9. * D0B)},
+      {0., 1., 0., 0., 0.}};
+  const std::vector<std::vector<double>> h_interactions = {
+      {0., 1., 0., 0., 0.},
+      {0., -2., 0., 0., 0},
+      {0., 1., 0., 0., 0.},
+      {0., 2., 0., 1., 0.}};
+  const std::vector<std::vector<std::vector<double>>> prtcl = {
+      tL_interactions, tR_interactions, bL_interactions, h_interactions};
 
-  Gamma[2][0] = (-GammaM - GammaY - (1 + 9 * D0T) * GammaTildeSS) * K0T;
-  Gamma[2][2] = (GammaM + 2 * GammaY + (1 - 9 * D0T) * GammaTildeSS) * K0T;
-  Gamma[2][4] = (-GammaY - (1 + 9 * D0B) * GammaTildeSS) * K0T;
-  Gamma[2][6] = -2 * GammaY * K0T;
+  MatDoub Gamma(nEqs, nEqs, 0.);
+  double Kp, ul;
+  for (size_t i = 0; i < prtcl.size(); i++)
+  {
+    double m = mass[i];
+    for (size_t l = 1; l <= moment; l++)
+    {
+      if (l == 1)
+      {
+        ul                      = 0.;
+        trunc[rates.size() - 1] = 1.;
+        Kp = (ptype[i] == Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+      }
+      else if (l == 2)
+      {
+        ul                      = 1.;
+        trunc[rates.size() - 1] = 1.;
+        Kp = -vwall * (ptype[i] == Fermion ? Klf[0](m) : Klb[0](m));
+      }
+      else
+      {
+        ul                      = 1.;
+        trunc[rates.size() - 1] = 0.;
+        Kp = (ptype[i] == Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+      }
 
-  Gamma[3][0] = -vwall * Gamma[2][0];
-  Gamma[3][2] = -vwall * Gamma[2][2];
-  Gamma[3][3] = -GammaTotTop;
-  Gamma[3][4] = -vwall * Gamma[2][4];
-  Gamma[3][6] = -vwall * Gamma[2][6];
-
-  Gamma[4][0] = (-GammaW + (1 + 9 * D0T) * GammaTildeSS) * K0B;
-  Gamma[4][2] = (-GammaY + (-1 + 9 * D0T) * GammaTildeSS) * K0B;
-  Gamma[4][4] = (GammaW + GammaY + (1 + 9 * D0B) * GammaTildeSS) * K0B;
-  Gamma[4][6] = GammaY * K0B;
-
-  Gamma[5][0] = -vwall * Gamma[4][0];
-  Gamma[5][2] = -vwall * Gamma[4][2];
-  Gamma[5][4] = -vwall * Gamma[4][4];
-  Gamma[5][5] = -GammaTotBot;
-  Gamma[5][6] = -vwall * Gamma[4][6];
-
-  Gamma[6][0] = GammaY * K0h;
-  Gamma[6][2] = -2 * GammaY * K0h;
-  Gamma[6][4] = GammaY * K0h;
-  Gamma[6][6] = (GammaH + 2 * GammaY) * K0h;
-
-  Gamma[7][0] = -vwall * Gamma[6][0];
-  Gamma[7][2] = -vwall * Gamma[6][2];
-  Gamma[7][4] = -vwall * Gamma[6][4];
-  Gamma[7][6] = -vwall * Gamma[6][6];
-  Gamma[7][7] = -GammaTotHiggs;
+      for (size_t j = 0; j < prtcl.size(); j++)
+      {
+        for (size_t k = 0; k < rates.size(); k++)
+        {
+          Gamma[moment * i + l - 1][2 * j] +=
+              prtcl[i][j][k] * rates[k] * trunc[k];
+        }
+        Gamma[moment * i + l - 1][2 * j] *= Kp;
+      }
+      Gamma[moment * i + l - 1][moment * i + l - 1] -= ul * gammatot[i];
+    }
+  }
 
   return Gamma;
 }
@@ -485,11 +504,11 @@ MatDoub TransportEquations::calc_m2B(const double &m,
   MatDoub res(moment, moment, 0.);
   const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
 
-  for (size_t i = 1; i <= moment; i++)
+  for (size_t l = 1; l <= moment; l++)
   {
-    const double fQ   = (type == Fermion ? Qlf[i](m) : Qlb[i](m));
-    res[i - 1][i - 1] = fRbar * (double)(i - 1) * dm2;
-    res[i - 1][0]     = gamwall * vwall * fQ * dm2;
+    const double fQ   = (type == Fermion ? Qlf[l](m) : Qlb[l](m));
+    res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
+    res[l - 1][0]     = gamwall * vwall * fQ * dm2;
   }
   return res;
 }

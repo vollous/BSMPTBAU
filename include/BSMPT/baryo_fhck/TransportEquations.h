@@ -54,6 +54,19 @@ const std::unordered_map<FHCKStatus, std::string> FHCKStatusToString{
     {FHCKStatus::SmallIntegrationRegion, "small_integration_region"},
     {FHCKStatus::UnphysicalBoundary, "unphysical_boundary"}};
 
+struct Interactions
+{
+  const std::vector<std::string> rates = {"GammaM", "GammaY"};
+  const std::map<std::string, std::vector<double>> partciles;
+
+  Interactions(std::vector<std::string> rates_in,
+               std::map<std::string, std::vector<double>> partciles_in)
+      : rates(rates_in)
+      , partciles(partciles_in) {};
+
+  ~Interactions() {};
+};
+
 class TransportEquations
 {
 public:
@@ -93,11 +106,11 @@ public:
   const size_t moment = 2;
 
   /**
-   * @brief Interpolated kernel functions for different moments 
+   * @brief Interpolated kernel functions for different moments
    *
    */
   std::vector<tk::spline> Klf, Klb, Dlf, Dlb, Qlf, Qlb, Q8ol, Q9ol;
-  
+
   /**
    * @brief Special interpolated kernel functions
    *
