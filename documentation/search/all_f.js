@@ -46,10 +46,11 @@ var searchData=
   ['kfactorsinterpolatedgsl_2ecpp_43',['KfactorsinterpolatedGSL.cpp',['../KfactorsinterpolatedGSL_8cpp.html',1,'']]],
   ['kfactorsinterpolatedgsl_2eh_44',['KfactorsinterpolatedGSL.h',['../KfactorsinterpolatedGSL_8h.html',1,'']]],
   ['kfunctions_5fgrid_2eh_45',['Kfunctions_grid.h',['../Kfunctions__grid_8h.html',1,'']]],
-  ['ktilde_5fnormalization_46',['Ktilde_normalization',['../Kfactors_8h.html#a30cb1e4f8c0cdd8c2326aefd39511d1d',1,'BSMPT::Kfactors']]],
-  ['ktilde_5fnormalization_5ffunc_47',['Ktilde_normalization_func',['../Kfactors_8h.html#a59a26b07627ddf2097c79c50f02d36e8',1,'BSMPT::Kfactors']]],
-  ['ktildeinterpolation_2eh_48',['KtildeInterpolation.h',['../KtildeInterpolation_8h.html',1,'']]],
-  ['ktildeinterpolationsize_49',['KtildeInterpolationSize',['../KtildeInterpolation_8h.html#a5d07381ea6a8e0a9a2b313d027fe1931',1,'BSMPT::Kfactors::Data']]],
-  ['ktildenormboson_5fgrid_50',['KtildeNormBoson_grid',['../KtildeInterpolation_8h.html#a1964924c15e2313da5fa275acd8c0153',1,'BSMPT::Kfactors::Data']]],
-  ['ktildenormfermion_5fgrid_51',['KtildeNormFermion_grid',['../KtildeInterpolation_8h.html#abc33dcbf5a3c9f89eb8f699227d5e679',1,'BSMPT::Kfactors::Data']]]
+  ['klf_46',['Klf',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae11136128236afc22bca49fa8a9f4657',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['ktilde_5fnormalization_47',['Ktilde_normalization',['../Kfactors_8h.html#a30cb1e4f8c0cdd8c2326aefd39511d1d',1,'BSMPT::Kfactors']]],
+  ['ktilde_5fnormalization_5ffunc_48',['Ktilde_normalization_func',['../Kfactors_8h.html#a59a26b07627ddf2097c79c50f02d36e8',1,'BSMPT::Kfactors']]],
+  ['ktildeinterpolation_2eh_49',['KtildeInterpolation.h',['../KtildeInterpolation_8h.html',1,'']]],
+  ['ktildeinterpolationsize_50',['KtildeInterpolationSize',['../KtildeInterpolation_8h.html#a5d07381ea6a8e0a9a2b313d027fe1931',1,'BSMPT::Kfactors::Data']]],
+  ['ktildenormboson_5fgrid_51',['KtildeNormBoson_grid',['../KtildeInterpolation_8h.html#a1964924c15e2313da5fa275acd8c0153',1,'BSMPT::Kfactors::Data']]],
+  ['ktildenormfermion_5fgrid_52',['KtildeNormFermion_grid',['../KtildeInterpolation_8h.html#abc33dcbf5a3c9f89eb8f699227d5e679',1,'BSMPT::Kfactors::Data']]]
 ];

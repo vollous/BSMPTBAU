@@ -6,7 +6,7 @@ var searchData=
   ['ncolour_3',['NColour',['../classBSMPT_1_1Class__Potential__Origin.html#a7653674089f9cf8d4f813b8b23da7885',1,'BSMPT::Class_Potential_Origin']]],
   ['neglinearint_4',['neglinearint',['../NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8h.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp']]],
   ['neglinearinttransposed_5',['neglinearinttransposed',['../NegativeBosonSpline_8cpp.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8h.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp']]],
-  ['nfb2_6',['nFB2',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1334479ca895cbb37d5b2915be9b5ff8',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['neqs_6',['nEqs',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4fcf47cf52552d7475d9f0b63c56d238',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['nfermions_7',['nFermions',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5b938a582a7ce0f5c06816f6ee86a8a5',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['ngauge_8',['NGauge',['../classBSMPT_1_1Class__Potential__Origin.html#aea6673f466a7a52589f8ca020f80e462',1,'BSMPT::Class_Potential_Origin']]],
   ['nhiggs_9',['NHiggs',['../classBSMPT_1_1Class__Potential__Origin.html#ac2856be5979bc0210a1094523b5f80fe',1,'BSMPT::Class_Potential_Origin']]],
