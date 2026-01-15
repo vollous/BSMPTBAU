@@ -168,7 +168,7 @@ public:
    * @brief Number of equations
    *
    */
-  size_t nFB2;
+  size_t nEqs;
 
   /**
    * @brief Number of steps in space
