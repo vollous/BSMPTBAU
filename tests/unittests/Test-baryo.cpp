@@ -17,7 +17,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   std::string path = "kernels/";
   double vw_step   = 0.064;
 
-  for (int l = 0; l <= 2; l++)
+  for (int l = 0; l <= 10; l++)
   {
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
