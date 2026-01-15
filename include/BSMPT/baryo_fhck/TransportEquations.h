@@ -54,19 +54,6 @@ const std::unordered_map<FHCKStatus, std::string> FHCKStatusToString{
     {FHCKStatus::SmallIntegrationRegion, "small_integration_region"},
     {FHCKStatus::UnphysicalBoundary, "unphysical_boundary"}};
 
-struct Interactions
-{
-  const std::vector<std::string> rates = {"GammaM", "GammaY"};
-  const std::map<std::string, std::vector<double>> partciles;
-
-  Interactions(std::vector<std::string> rates_in,
-               std::map<std::string, std::vector<double>> partciles_in)
-      : rates(rates_in)
-      , partciles(partciles_in) {};
-
-  ~Interactions() {};
-};
-
 class TransportEquations
 {
 public:

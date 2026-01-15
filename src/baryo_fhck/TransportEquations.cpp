@@ -472,10 +472,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         for (size_t k = 0; k < rates.size(); k++)
         {
-          Gamma[moment * i + l - 1][2 * j] +=
+          Gamma[moment * i + l - 1][moment * j] +=
               prtcl[i][j][k] * rates[k] * trunc[k];
         }
-        Gamma[moment * i + l - 1][2 * j] *= Kp;
+        Gamma[moment * i + l - 1][moment * j] *= Kp;
       }
       Gamma[moment * i + l - 1][moment * i + l - 1] -= ul * gammatot[i];
     }
