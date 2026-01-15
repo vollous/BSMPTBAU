@@ -762,7 +762,7 @@ void TransportEquations::SolveTransportEquation()
   }
   // Construct Difeq object (S_j,n matrix)
   Difeq_TransportEquation difeq(
-      zList, nFermions, nBosons, MTildeList, STildeList);
+      zList, nFermions, nBosons, MTildeList, STildeList, moment);
 
   size_t itmax = 30;
   double conv  = 1e-10;

@@ -16,6 +16,8 @@ struct Difeq_TransportEquation : Difeq
   const Mat3DDoub &MTilde;
   // Matrix Stilde = A^-1 * S (source) for each k
   const MatDoub &STilde;
+  // Moments used to solve the ODE
+  const size_t &moment;
 
   Difeq_TransportEquation(
       // z list
@@ -24,12 +26,14 @@ struct Difeq_TransportEquation : Difeq
       const size_t &nFermions_In,
       const size_t &nBosons_In,
       const Mat3DDoub &MTilde_In,
-      const MatDoub &STilde_In)
+      const MatDoub &STilde_In,
+      const size_t &moment_In)
       : z(z_In)
       , nFermions(nFermions_In)
       , nBosons(nBosons_In)
       , MTilde(MTilde_In) // A^-1 * Gamma matrix
       , STilde(STilde_In) // A^-1 * Sources vector
+      , moment(moment_In)
   {
   }
 
@@ -50,9 +54,9 @@ struct Difeq_TransportEquation : Difeq
       for (size_t particle = 0; particle < nP; particle++)
       {
         // Sn at the first boundary
-        s[nP + particle][2 * nP + indexv[2 * particle]] = 1.0;
+        s[nP + particle][moment * nP + indexv[moment * particle]] = 1.0;
         // B0
-        s[nP + particle][jsf] = y[indexv[2 * particle]][0];
+        s[nP + particle][jsf] = y[indexv[moment * particle]][0];
       }
     }
     else if (k > k2 - 1)
@@ -61,16 +65,16 @@ struct Difeq_TransportEquation : Difeq
       for (size_t particle = 0; particle < nP; particle++)
       {
         // Sn at the last boundary
-        s[particle][2 * nP + indexv[2 * particle]] = 1.0;
+        s[particle][moment * nP + indexv[moment * particle]] = 1.0;
         // C0
-        s[particle][jsf] = y[indexv[2 * particle]][z.size() - 1];
+        s[particle][jsf] = y[indexv[moment * particle]][z.size() - 1];
       }
     }
     else
     {
-      for (size_t j = 0; j < 2 * (nFermions + nBosons); j++)
+      for (size_t j = 0; j < moment * (nFermions + nBosons); j++)
       {
-        for (size_t n = 0; n < 2 * (nFermions + nBosons); n++)
+        for (size_t n = 0; n < moment * (nFermions + nBosons); n++)
         {
           // s matrix for the middle point
           // S_{j,n}
@@ -83,7 +87,7 @@ struct Difeq_TransportEquation : Difeq
         }
         //  Equations for E(k,k-1)
         temp = STilde[k][j];
-        for (size_t i = 0; i < 2 * (nFermions + nBosons); i++)
+        for (size_t i = 0; i < moment * (nFermions + nBosons); i++)
         {
           temp += MTilde[k][j][i] * (y[i][k] + y[i][k - 1]) / 2.;
         }
