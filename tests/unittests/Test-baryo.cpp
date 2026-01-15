@@ -177,7 +177,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   REQUIRE(1 == 1);
 }
 
-TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
+TEST_CASE("Check example_point_C2HDM", "[baryoFHCK1]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;

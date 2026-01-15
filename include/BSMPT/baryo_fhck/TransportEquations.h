@@ -86,8 +86,22 @@ public:
    */
   double Tstar;
 
-  std::vector<tk::spline> Klf, Klb, Dlf, Dlb, Qlf, Qlb, Q8ol, Q9ol;
+  /**
+   * @brief Transition temperature
+   *
+   */
+  const size_t moment = 2;
 
+  /**
+   * @brief Interpolated kernel functions for different moments 
+   *
+   */
+  std::vector<tk::spline> Klf, Klb, Dlf, Dlb, Qlf, Qlb, Q8ol, Q9ol;
+  
+  /**
+   * @brief Special interpolated kernel functions
+   *
+   */
   tk::spline Rbarb, Rbarf, K4FHf, K4FHb;
 
   /**

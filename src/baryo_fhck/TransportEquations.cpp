@@ -131,7 +131,7 @@ void TransportEquations::BuildKernelInterpolation()
   Q9ol.push_back(tk::spline());
   Qlb.push_back(tk::spline());
 
-  for (int l = 0; l <= 2; l++)
+  for (size_t l = 0; l <= moment; l++)
   {
     for (int type = 0; type <= 1; type++)
     {
@@ -482,14 +482,15 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
                                      const ParticleType &type)
 {
-  MatDoub res(2, 2);
+  MatDoub res(moment, moment, 0.);
   const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
-  const double fQ1   = (type == Fermion ? Qlf[1](m) : Qlb[1](m));
-  const double fQ2   = (type == Fermion ? Qlf[2](m) : Qlb[2](m));
 
-  res[0][0] = gamwall * vwall * fQ1 * dm2;
-  res[1][0] = gamwall * vwall * fQ2 * dm2;
-  res[1][1] = fRbar * dm2;
+  for (size_t i = 1; i <= moment; i++)
+  {
+    const double fQ   = (type == Fermion ? Qlf[i](m) : Qlb[i](m));
+    res[i - 1][i - 1] = fRbar * (double)(i - 1) * dm2;
+    res[i - 1][0]     = gamwall * vwall * fQ * dm2;
+  }
   return res;
 }
 
