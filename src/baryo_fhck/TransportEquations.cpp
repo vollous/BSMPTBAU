@@ -486,14 +486,31 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
 
 MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
-  MatDoub res(2, 2);
-  const double fD1 = (type == Fermion ? Dlf[1](m) : Dlb[1](m));
-  const double fD2 = (type == Fermion ? Dlf[2](m) : Dlb[2](m));
-  const double fR  = -vwall;
-  res[0][0]        = fR / (fD2 - fD1 * fR);
-  res[0][1]        = -1 / (fD2 - fD1 * fR);
-  res[1][0]        = fD2 / (fD2 - fD1 * fR);
-  res[1][1]        = -fD1 / (fD2 - fD1 * fR);
+  MatDoub res(moment, moment, 0.);
+  std::vector<double> Di(moment, 1), Ri(moment);
+
+  for (size_t i = 0; i < moment - 1; i++)
+  {
+    // 1, D1, D2, ..., Dn-1
+    Di.at(i + 1) = (type == Fermion ? Dlf[i + 1](m) : Dlb[i + 1](m));
+    // off-diagonal "diagonal"
+    res[i + 1][i] = 1;
+  }
+
+  // 0, 0, ..., -vwall, -1
+  Ri.at(moment - 2) = -vwall;
+  Ri.at(moment - 1) = -1;
+
+  // (-1)^moment Inv(A)
+  double Dn = (type == Fermion ? Dlf[moment](m) : Dlb[moment](m));
+  for (size_t i = 0; i < moment - 1; i++)
+    Dn -= Ri.at(i) * Di.at(i + 1);
+
+  // Tensor product
+  for (std::size_t i = 0; i < moment; i++)
+    for (std::size_t j = 0; j < moment; j++)
+      res[i][j] += Di[i] * Ri[j] / Dn;
+
   return res;
 }
 
