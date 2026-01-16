@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"structBSMPT_1_1CoexPhases.html":[3,0,0,12],
 "structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d":[3,0,0,12,1],
 "structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d":[2,0,0,5,1],
 "structBSMPT_1_1CoexPhases.html#a091daf391aca2cd7d097dd96eaadaf5f":[3,0,0,12,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "structDifeq.html":[3,0,11],
 "structDifeq__TransportEquation.html":[3,0,12],
 "structMyListener.html":[3,0,15],
-"tau__source_8cpp.html":[4,0,1,0,0,3],
-"tau__source_8h.html":[4,0,0,0,0,0,3]
+"tau__source_8cpp.html":[4,0,1,0,0,3]
 };

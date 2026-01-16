@@ -157,6 +157,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</
 <tr class="memitem:aa5d7fe7c5e3a5a5562fe52791c7cb8c5" id="r_aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aa5d7fe7c5e3a5a5562fe52791c7cb8c5">CheckBoundary</a> (const <a class="el" href="classMatDoub.html">MatDoub</a> &amp;MtildeM, const <a class="el" href="classVecDoub.html">VecDoub</a> &amp;StildeM, const <a class="el" href="classMatDoub.html">MatDoub</a> &amp;MtildeP, const <a class="el" href="classVecDoub.html">VecDoub</a> &amp;StildeP)</td></tr>
 <tr class="memdesc:aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist.  <br /></td></tr>
 <tr class="separator:aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b34028093eb0d010f1b80affb857892" id="r_a3b34028093eb0d010f1b80affb857892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892">InsertBlockDiagonal</a> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;full, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;sub, const size_t position)</td></tr>
+<tr class="memdesc:a3b34028093eb0d010f1b80affb857892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a sub matrix into a block diagonal matrix.  <br /></td></tr>
+<tr class="separator:a3b34028093eb0d010f1b80affb857892"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a400b738fb0871e6c1c68e51c65a15980" id="r_a400b738fb0871e6c1c68e51c65a15980"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a400b738fb0871e6c1c68e51c65a15980">Equations</a> (const double &amp;z, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;Mtilde, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;Stilde)</td></tr>
 <tr class="memdesc:a400b738fb0871e6c1c68e51c65a15980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the equations.  <br /></td></tr>
 <tr class="separator:a400b738fb0871e6c1c68e51c65a15980"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -771,6 +774,50 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double W boson mass </dd></dl>
+
+</div>
+</div>
+<a id="a3b34028093eb0d010f1b80affb857892" name="a3b34028093eb0d010f1b80affb857892"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b34028093eb0d010f1b80affb857892">&#9670;&#160;</a></span>InsertBlockDiagonal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BSMPT::Baryo::FHCK::TransportEquations::InsertBlockDiagonal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMatDoub.html">MatDoub</a> &amp;&#160;</td>
+          <td class="paramname"><em>full</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classMatDoub.html">MatDoub</a> &amp;&#160;</td>
+          <td class="paramname"><em>sub</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Insert a sub matrix into a block diagonal matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">full</td><td>\( reference to the block diagonal matrix \) </td></tr>
+    <tr><td class="paramname">sub</td><td>\( sub matrix to be inserted \) </td></tr>
+    <tr><td class="paramname">Stilde</td><td>\( position at which we want to insert the sub matrix \) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

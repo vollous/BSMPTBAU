@@ -13,6 +13,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aaae39abc598c479c3f263080b693f5da", null ],
     [ "GetWMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a82eb7bfbff2a8ea78c41a7832342bb8b", null ],
     [ "Initialize", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684", null ],
+    [ "InsertBlockDiagonal", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892", null ],
     [ "MakeDistribution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0f6e41b6253429da0bac40b0b344cebb", null ],
     [ "PrintTransportEquation", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4092557b602fe66bf93e3ca416bf344e", null ],
     [ "RelaxationMethod", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad8804340e2806b23d391825d61bb90f9", null ],
