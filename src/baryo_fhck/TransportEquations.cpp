@@ -544,12 +544,21 @@ VecDoub TransportEquations::calc_source(const double &m,
   return res;
 }
 
+void TransportEquations::InsertBlockDiagonal(MatDoub &full,
+                                             MatDoub &sub,
+                                             const size_t position)
+{
+  assert((full.cols() % sub.cols()) == 0);
+  size_t start = position * sub.cols();
+  for (size_t i = 0; i < sub.rows(); i++)
+    for (size_t j = 0; j < sub.cols(); j++)
+      full[start + i][start + j] = sub[i][j];
+}
+
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde)
 {
-  const int nF2 = 2 * nFermions; // Clearer code
-
   MatDoub Ainverse(nEqs, nEqs, 0.); // Store A^-1
 
   VecDoub S(nEqs, 0.); // Source vector
@@ -572,7 +581,6 @@ void TransportEquations::Equations(const double &z,
   // Fermions
   for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
-
     double m2, m2prime, thetaprime, theta2prime;
     // Calculate fermionic masses
     GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
@@ -580,16 +588,11 @@ void TransportEquations::Equations(const double &z,
 
     // Calculate A inverse for fermion
     MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Fermion));
-    Ainverse[2 * fermion][2 * fermion]         = tempA[0][0];
-    Ainverse[2 * fermion][2 * fermion + 1]     = tempA[0][1];
-    Ainverse[2 * fermion + 1][2 * fermion]     = tempA[1][0];
-    Ainverse[2 * fermion + 1][2 * fermion + 1] = tempA[1][1];
+    InsertBlockDiagonal(Ainverse, tempA, fermion);
 
     // Calculate m2'B for fermion
     MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
-    m2B[2 * fermion][2 * fermion]         = tempB[0][0];
-    m2B[2 * fermion + 1][2 * fermion]     = tempB[1][0];
-    m2B[2 * fermion + 1][2 * fermion + 1] = tempB[1][1];
+    InsertBlockDiagonal(m2B, tempB, fermion);
 
     // Source terms
     VecDoub tempS(calc_source(
@@ -609,16 +612,11 @@ void TransportEquations::Equations(const double &z,
 
     // Calculate A inverse for bosons
     MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Boson));
-    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson]         = tempA[0][0];
-    Ainverse[nF2 + 2 * boson][nF2 + 2 * boson + 1]     = tempA[0][1];
-    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempA[1][0];
-    Ainverse[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempA[1][1];
+    InsertBlockDiagonal(Ainverse, tempA, nFermions + boson);
 
     // Calculate m2'B
     MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
-    m2B[nF2 + 2 * boson][nF2 + 2 * boson]         = tempB[0][0];
-    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson]     = tempB[1][0];
-    m2B[nF2 + 2 * boson + 1][nF2 + 2 * boson + 1] = tempB[1][1];
+    InsertBlockDiagonal(m2B, tempB, nFermions + boson);
   }
 
   // Gamma = deltaC - m2' B

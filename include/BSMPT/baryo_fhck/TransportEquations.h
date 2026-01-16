@@ -377,6 +377,15 @@ public:
                      const VecDoub &StildeP);
 
   /**
+   * @brief Insert a sub matrix into a block diagonal matrix
+   *
+   * @param full \f$ reference to the block diagonal matrix \f$
+   * @param sub \f$ sub matrix to be inserted \f$
+   * @param Stilde \f$ position at which we want to insert the sub matrix \f$
+   */
+  void InsertBlockDiagonal(MatDoub &full, MatDoub &sub, const size_t position);
+
+  /**
    * @brief Calculate the equations
    *
    * @param z distance to the bubble wall
