@@ -878,7 +878,7 @@ void TransportEquations::CalculateBAU()
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
-  ss << "eta/eta_obs = " << result / (6.2e-10) << std::endl;
+  ss << "eta/eta_obs = " << result / (8.7e-11) << std::endl;
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
