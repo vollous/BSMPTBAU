@@ -597,8 +597,8 @@ void TransportEquations::Equations(const double &z,
     // Source terms
     VecDoub tempS(calc_source(
         sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
-    S[2 * fermion]     = tempS[0];
-    S[2 * fermion + 1] = tempS[1];
+    for (size_t i = 0; i < moment; i++)
+      S[moment * fermion + i] = tempS[i];
   }
 
   // Bosons
