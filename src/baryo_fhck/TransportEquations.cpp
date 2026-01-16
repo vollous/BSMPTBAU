@@ -620,18 +620,18 @@ void TransportEquations::Equations(const double &z,
   }
 
   // Gamma = deltaC - m2' B
-  const MatDoub CollisiontMatrix =
+  MatDoub CollisiontMatrix =
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
-  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (size_t j = 0; j < 2 * (nBosons + nFermions); j++)
-      for (size_t l = 0; l < 2 * (nBosons + nFermions); l++)
+  for (size_t i = 0; i < nEqs; i++)
+    for (size_t j = 0; j < nEqs; j++)
+      for (size_t l = 0; l < nEqs; l++)
         Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
-  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (size_t j = 0; j < 2 * (nFermions); j++)
+  for (size_t i = 0; i < nEqs; i++)
+    for (size_t j = 0; j < moment * (nFermions); j++)
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
@@ -765,25 +765,32 @@ void TransportEquations::SolveTransportEquation()
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
   VecInt indexv(nEqs);
-  indexv[0] = 0;
+  int nParticles = nFermions + nBosons;
+  for (int l = 0; l < moment; l++)
+    for (int i = 0; i < nParticles; i++)
+      indexv[i * moment + l] = l * nParticles + i;
+
+  /* indexv[0] = 0;
   indexv[1] = 4;
   indexv[2] = 1;
-  indexv[3] = 5;
-  indexv[4] = 2;
+  indexv[3] = 5;    moment=2 scenario
+  indexv[4] = 2;    for reference
   indexv[5] = 6;
   indexv[6] = 3;
-  indexv[7] = 7;
-  int NB    = 4;
-  MatDoub y(nEqs, zList.size(), 0.);
-  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
+  indexv[7] = 7; */
 
-  std::string str = "test.csv";
+  MatDoub y(nEqs, zList.size(), 0.);
+  RelaxOde solvde(
+      itmax, conv, slowc, scalv, indexv, (nParticles * moment) / 2, y, difeq);
+
+  std::string str = "10_moment_field.csv";
   std::ofstream res(str);
   for (size_t i = 0; i < zList.size(); i++)
   {
-    res << zList[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
-        << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
-        << y[6][i] << "\t" << y[7][i] << "\n";
+    res << zList[i] << "\t";
+    for (size_t j = 0; j < nEqs; j++)
+      res << y[j][i] << "\t";
+    res << "\n";
   }
   res.close();
 
