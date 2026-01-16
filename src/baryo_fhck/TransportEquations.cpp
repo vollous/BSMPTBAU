@@ -719,8 +719,8 @@ void TransportEquations::SolveTransportEquation()
   MatDoub Mtilde(nEqs, nEqs), MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
   VecDoub Stilde(nEqs), StildeM(nEqs), StildeP(nEqs);
 
-  Equations(-1, MtildeM, StildeM);
-  Equations(1, MtildeP, StildeP);
+  Equations(-1, MtildeM, StildeM); // this is to specific in z
+  Equations(1, MtildeP, StildeP);  // this is to specific in z
 
   CheckBoundary(MtildeM, StildeM, MtildeP, StildeP);
   if (Status != FHCKStatus::NotSet)
@@ -736,18 +736,7 @@ void TransportEquations::SolveTransportEquation()
   {
     // Compute Mtilde and Stilde
     double zc = (zList[i] + zList[i - 1]) / 2.;
-    if (zc < -1) // TODO: Fix this, too specific.
-    {
-      Mtilde = MtildeM;
-      Stilde = StildeM;
-    }
-    else if (zc > 1)
-    {
-      Mtilde = MtildeP;
-      Stilde = StildeP;
-    }
-    else
-      Equations(zc, Mtilde, Stilde);
+    Equations(zc, Mtilde, Stilde);
 
     // Save the Mtilde and Stilde
     for (size_t j = 0; j < nEqs; j++)
@@ -897,10 +886,10 @@ void TransportEquations::PrintTransportEquation(const int &size,
   std::optional<int> ind;
   std::vector<double> z, y;
 
-  if (Particle == "tL") ind = 0;
-  if (Particle == "tR") ind = 2;
-  if (Particle == "bL") ind = 4;
-  if (Particle == "h") ind = 6;
+  if (Particle == "tL") ind = 0 * moment;
+  if (Particle == "tR") ind = 1 * moment;
+  if (Particle == "bL") ind = 2 * moment;
+  if (Particle == "h") ind = 3 * moment;
 
   if (not ind.has_value()) throw("Invalid particle to plot the solution.");
 
