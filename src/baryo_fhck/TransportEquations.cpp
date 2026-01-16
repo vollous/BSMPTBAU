@@ -310,12 +310,12 @@ void TransportEquations::GetFermionMass(const double &z,
       sym = EtaInterface->getSymmetricCPViolatingPhase_top();
       break;
     case 1:
-      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
-      break;
-    case 2:
       brk = EtaInterface->getBrokenCPViolatingPhase_top();
       sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      break;
+    case 2:
+      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
+      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
       break;
     default: throw("Invalid fermion in GetFermionMass()"); break;
     }
@@ -577,7 +577,7 @@ void TransportEquations::Equations(const double &z,
   const double mW = GetWMass(Vev(z, 0), Tstar);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
-
+  double pre = 1.;
   // Fermions
   for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
@@ -597,8 +597,9 @@ void TransportEquations::Equations(const double &z,
     // Source terms
     VecDoub tempS(calc_source(
         sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
+    if (fermion == 1) pre = -1.;
     for (size_t i = 0; i < moment; i++)
-      S[moment * fermion + i] = tempS[i];
+      S[moment * fermion + i] = pre * tempS[i];
   }
 
   // Bosons

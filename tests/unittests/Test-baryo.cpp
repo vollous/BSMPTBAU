@@ -222,8 +222,8 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK1]")
       coex->crit_temp,
       Baryo::FHCK::VevProfileMode::Kink); // TODO: rename this
 
-  // transport.SolveTransportEquation();
-  // CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-2));
+  transport.SolveTransportEquation();
+  CHECK(transport.BAUEta.value() == Approx(9.34959e-11).epsilon(1e-2));
 
   transport.VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();

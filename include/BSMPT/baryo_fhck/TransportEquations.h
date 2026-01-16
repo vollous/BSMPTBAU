@@ -90,7 +90,7 @@ public:
    * @brief Transition temperature
    *
    */
-  const size_t moment = 10;
+  const size_t moment = 2;
 
   /**
    * @brief Interpolated kernel functions for different moments
