@@ -536,13 +536,11 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &d2th,
                                         const ParticleType &type)
 {
-  VecDoub res(2);
-  res[0] = -vwall * gamwall *
-           ((dm2 * dth + m * m * d2th) * Q8ol[1](m) -
-            dm2 * m * m * dth * Q9ol[1](m)); // S1
-  res[1] = -vwall * gamwall *
-           ((dm2 * dth + m * m * d2th) * Q8ol[2](m) -
-            dm2 * m * m * dth * Q9ol[2](m)); // S2
+  VecDoub res(moment);
+  for (size_t i = 0; i < moment; i++)
+    res[i] = -vwall * gamwall *
+             ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
+              dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
   return res;
 }
 
