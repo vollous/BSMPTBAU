@@ -17,7 +17,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   std::string path = "kernels/";
   double vw_step   = 0.064;
 
-  for (int l = 15; l <= 30; l++)
+  for (int l = 21; l <= 30; l++)
   {
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
@@ -31,7 +31,6 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       using std::chrono::high_resolution_clock;
       using std::chrono::milliseconds;
 
-      auto t1 = high_resolution_clock::now();
       std::cout << "D-Kernel\n";
       {
         std::string str = path + "D" + std::to_string(l) + suffix;
@@ -53,13 +52,6 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
         }
         file.close();
       }
-      auto t2 = high_resolution_clock::now();
-
-      /* Getting number of milliseconds as an integer. */
-      auto ms_int = duration_cast<seconds>(t2 - t1);
-
-      std::cout << ms_int.count() << "ms\n";
-      exit(1);
       if (l != 1)
       {
         std::cout << "K-Kernel\n";
@@ -158,6 +150,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
       }
     }
   }
+  exit(1);
   for (int type = 0; type <= 1; type++)
   {
     Kernel Kern(0, 0);
