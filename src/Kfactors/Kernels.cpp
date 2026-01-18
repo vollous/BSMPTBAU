@@ -3,6 +3,8 @@
 namespace BSMPT
 {
 
+static const double KERNELPRECISION = 1e-6;
+
 double ipow(const double x, const int n)
 {
   double res = 1.;
@@ -49,8 +51,8 @@ double KernelIntw::operator()(const double u)
 {
   Integrand.set_all(u);
   if (std::abs(Integrand.pre) == 0.) return 0.;
-  return Integrand.pre * adap_gauss_kronrod_15(Integrand, -1, 1, 1e-8) /
-         (u * u);
+  return Integrand.pre *
+         adap_gauss_kronrod_15(Integrand, -1, 1, KERNELPRECISION) / (u * u);
 }
 
 void Q9KernelInty::set_all(const double u)
@@ -76,7 +78,7 @@ double Q9KernelIntw::operator()(const double u)
   Integrand.set_all(u);
   if ((std::abs(Integrand.pre1) == 0.) && (std::abs(Integrand.pre2) == 0.))
     return 0.;
-  return adap_gauss_kronrod_15(Integrand, -1, 1, 1e-8) / (u * u);
+  return adap_gauss_kronrod_15(Integrand, -1, 1, KERNELPRECISION) / (u * u);
 }
 
 double N0Int::operator()(const double u)
@@ -114,49 +116,50 @@ double Kernel::operator()(const KernelType Kern,
   case KernelType::K:
   {
     KernelIntw integrand(0, 0, l, l, vw, gamw, statistic, x);
-    res *= -adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    res *= -adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION);
     // N0Int integrand(vw, gamw, statistic, x);
     // return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1.,
-    // 1e-8);
+    // KERNELPRECISION);
   }
   break;
   case KernelType::D:
   {
     KernelIntw integrand(1, 0, l, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION);
   }
   break;
   case KernelType::Q:
   {
     KernelIntw integrand(2, 0, l - 1, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION) / 2.;
   }
   break;
   case KernelType::Qe:
   {
     KernelIntw integrand(1, 0, l - 1, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION) / 2.;
   }
   break;
   case KernelType::Q8o:
   {
     KernelIntw integrand(1, structure, l - 2, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 2.;
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION) / 2.;
   }
   break;
   case KernelType::Q9o:
   {
     Q9KernelIntw integrand(structure, l, vw, gamw, statistic, x);
-    res *= adap_gauss_kronrod_15(integrand, 0., 1., 1e-8) / 4.;
+    res *= adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION) / 4.;
   }
   break;
   case KernelType::Rb:
   {
     N0Int integrand1(vw, gamw, statistic, x);
     const double res1 =
-        4. * M_PI * adap_gauss_kronrod_15(integrand1, 0., 1., 1e-8);
+        4. * M_PI * adap_gauss_kronrod_15(integrand1, 0., 1., KERNELPRECISION);
     RbarInt integrand2(vw, gamw, statistic, x);
-    const double res2 = adap_gauss_kronrod_15(integrand2, 0., 1., 1e-8);
+    const double res2 =
+        adap_gauss_kronrod_15(integrand2, 0., 1., KERNELPRECISION);
     return res2 / res1;
   }
   break;
