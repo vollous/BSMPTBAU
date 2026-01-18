@@ -26,6 +26,8 @@ enum ParticleType
   Fermion,
 };
 
+double ipow(const double x, const int n);
+
 double f0(const double x, const double s, const int diff);
 
 class KernelInty
