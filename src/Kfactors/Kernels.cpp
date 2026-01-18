@@ -3,17 +3,24 @@
 namespace BSMPT
 {
 
+double ipow(const double x, const int n)
+{
+  double res = 1.;
+  for (int i = 0; i < std::abs(n); i++)
+    res *= x;
+  return (n > 0 ? res : 1 / res);
+}
 double f0(const double x, const double s, const int diff)
 {
-  if (x > 50) return std::pow(-1, diff) * std::exp(-x);
+  if (x > 50) return ipow(-1, diff) * std::exp(-x);
 
   const double expw = std::exp(-x / 2.);
   if (diff == 0)
     return expw / (1. / expw + s * expw);
   else if (diff == 1)
-    return -1. / std::pow(1. / expw + s * expw, 2);
+    return -1. / ipow(1. / expw + s * expw, 2);
   else if (diff == 2)
-    return (1. / expw - s * expw) / std::pow(1. / expw + s * expw, 3);
+    return (1. / expw - s * expw) / ipow(1. / expw + s * expw, 3);
   return 0.;
 }
 
@@ -35,7 +42,7 @@ double KernelInty::operator()(const double y)
     V = pwt / std::sqrt(1. + x * x / (pzt * pzt));
   else if (structure == 2)
     V = w * pzt * pzt / (pzt * pzt + x * x);
-  return std::pow(pzt, n) / std::pow(Et, m - 1) * V;
+  return ipow(pzt, n) / ipow(Et, m - 1) * V;
 }
 
 double KernelIntw::operator()(const double u)
@@ -61,7 +68,7 @@ double Q9KernelInty::operator()(const double y)
   double V         = 1;
   if (structure >= 1) V *= 1. / std::sqrt(1. + x * x / (pzt * pzt));
   if (structure >= 2) V = V * V / std::sqrt(1. - x * x / (w * w));
-  return pow(pzt, l - 2) / pow(Et, l + 1) * V * (pre1 - pre2 * Et);
+  return ipow(pzt, l - 2) / ipow(Et, l + 1) * V * (pre1 - pre2 * Et);
 }
 
 double Q9KernelIntw::operator()(const double u)
@@ -108,8 +115,9 @@ double Kernel::operator()(const KernelType Kern,
   {
     KernelIntw integrand(0, 0, l, l, vw, gamw, statistic, x);
     res *= -adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
-    //N0Int integrand(vw, gamw, statistic, x);
-    //return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1., 1e-8);
+    // N0Int integrand(vw, gamw, statistic, x);
+    // return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1.,
+    // 1e-8);
   }
   break;
   case KernelType::D:
