@@ -765,15 +765,13 @@ void TransportEquations::SolveTransportEquation()
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
   VecInt indexv(nEqs);
-  indexv[0] = 0;
-  indexv[1] = 4;
-  indexv[2] = 1;
-  indexv[3] = 5;
-  indexv[4] = 2;
-  indexv[5] = 6;
-  indexv[6] = 3;
-  indexv[7] = 7;
-  int NB    = 4;
+
+  // fix μ and first u
+  for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
+    for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+
+  int NB = nEqs / 2;
   MatDoub y(nEqs, zList.size(), 0.);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
