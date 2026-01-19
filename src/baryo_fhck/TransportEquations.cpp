@@ -772,7 +772,7 @@ void TransportEquations::SolveTransportEquation()
   for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
     for (size_t particle = 0; particle < nFermions + nBosons; particle++)
     {
-      indexv[particle + l * (nFermions + nBosons)] = l + particle * moment;
+      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
       Logger::Write(LoggingLevel::FHCK,
                     "indexv[" +
                         std::to_string(particle + l * (nFermions + nBosons)) +
@@ -895,10 +895,10 @@ void TransportEquations::PrintTransportEquation(const int &size,
   std::optional<int> ind;
   std::vector<double> z, y;
 
-  if (Particle == "tL") ind = 0;
-  if (Particle == "tR") ind = 2;
-  if (Particle == "bL") ind = 4;
-  if (Particle == "h") ind = 6;
+  if (Particle == "tL") ind = 0 * moment;
+  if (Particle == "tR") ind = 1 * moment;
+  if (Particle == "bL") ind = 2 * moment;
+  if (Particle == "h") ind = 3 * moment;
 
   if (not ind.has_value()) throw("Invalid particle to plot the solution.");
 
