@@ -624,14 +624,14 @@ void TransportEquations::Equations(const double &z,
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
-  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (size_t j = 0; j < 2 * (nBosons + nFermions); j++)
-      for (size_t l = 0; l < 2 * (nBosons + nFermions); l++)
+  for (size_t i = 0; i < nEqs; i++)
+    for (size_t j = 0; j < nEqs; j++)
+      for (size_t l = 0; l < nEqs; l++)
         Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
-  for (size_t i = 0; i < 2 * (nBosons + nFermions); i++)
-    for (size_t j = 0; j < 2 * (nFermions); j++)
+  for (size_t i = 0; i < nEqs; i++)
+    for (size_t j = 0; j < moment * (nFermions); j++)
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
@@ -696,10 +696,12 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
   if (NumberOfNonDecayingModes > nEqs)
   {
-    ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy "
+    ss << " \033[31m\nToo many non-decaying modes (" << NumberOfNonDecayingModes
+       << ") for the boundary conditions (" << nEqs
+       << "). Impossible to satisfy "
           "the "
           "boundary "
-          "conditions of mu = u = 0.\033[0m\n";
+          "conditions of μ = u = 0.\033[0m\n";
     Status = FHCKStatus::UnphysicalBoundary;
   }
   else
