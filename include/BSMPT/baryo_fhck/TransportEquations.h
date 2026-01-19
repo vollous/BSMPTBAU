@@ -87,7 +87,7 @@ public:
   double Tstar;
 
   /**
-   * @brief Transition temperature
+   * @brief Number of moments used to solve transport equation
    *
    */
   const size_t moment = 2;
@@ -174,14 +174,14 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 2000;
+  size_t NumberOfSteps = 20000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 100.;
+  double LwMultiplier = 1000.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If

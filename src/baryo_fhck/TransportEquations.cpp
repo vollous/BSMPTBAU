@@ -771,7 +771,13 @@ void TransportEquations::SolveTransportEquation()
   // fix μ and first u
   for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
     for (size_t particle = 0; particle < nFermions + nBosons; particle++)
-      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+    {
+      indexv[particle + l * (nFermions + nBosons)] = l + particle * moment;
+      Logger::Write(LoggingLevel::FHCK,
+                    "indexv[" +
+                        std::to_string(particle + l * (nFermions + nBosons)) +
+                        "] = " + std::to_string(l + particle * moment));
+    }
 
   int NB = nEqs / 2;
   MatDoub y(nEqs, zList.size(), 0.);
