@@ -90,7 +90,7 @@ public:
    * @brief Transition temperature
    *
    */
-  const size_t moment = 6;
+  const size_t moment = 14;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -181,7 +181,7 @@ public:
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 1000.;
+  double LwMultiplier = 2000.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If

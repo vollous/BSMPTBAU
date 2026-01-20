@@ -773,7 +773,7 @@ void TransportEquations::SolveTransportEquation()
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, (nParticles * moment) / 2, y, difeq);
 
-  std::string str = "10_moment_field.csv";
+  std::string str = "14_moment_field.csv";
   std::ofstream res(str);
   for (size_t i = 0; i < zList.size(); i++)
   {
@@ -814,8 +814,9 @@ void TransportEquations::CalculateBAU()
     // Results
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
-    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution.value()[4][i]; // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[2][i];           // tR
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment * 1][i];  // tR
+    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
+         Solution.value()[moment * 2][i]; // bL
     r *= min(
         1.,
         2.4 * Tstar / Gsph *
