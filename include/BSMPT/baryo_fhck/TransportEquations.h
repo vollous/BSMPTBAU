@@ -90,7 +90,7 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 2;
+  const size_t moment = 10;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -353,14 +353,14 @@ public:
    * @param dm2 derivative of the squared particle mass
    * @param dth derivative of theta
    * @param d2th second derivative theta
-   * @param type type of particle e.g. fermion/boson
+   * @param h helicity
    * @return VecDoub source term
    */
   VecDoub calc_source(const double &m,
                       const double &dm2,
                       const double &dth,
                       const double &d2th,
-                      const ParticleType &type);
+                      const int &h);
 
   /**
    * @brief Check if the boundary have enough decaying modes for the solution to

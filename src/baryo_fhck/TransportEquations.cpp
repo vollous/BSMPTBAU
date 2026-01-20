@@ -310,12 +310,12 @@ void TransportEquations::GetFermionMass(const double &z,
       sym = EtaInterface->getSymmetricCPViolatingPhase_top();
       break;
     case 1:
-      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
-      break;
-    case 2:
       brk = EtaInterface->getBrokenCPViolatingPhase_top();
       sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      break;
+    case 2:
+      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
+      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
       break;
     default: throw("Invalid fermion in GetFermionMass()"); break;
     }
@@ -534,11 +534,11 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &dm2,
                                         const double &dth,
                                         const double &d2th,
-                                        const ParticleType &type)
+                                        const int &h)
 {
   VecDoub res(moment);
   for (size_t i = 0; i < moment; i++)
-    res[i] = -vwall * gamwall *
+    res[i] = -vwall * gamwall * h *
              ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
               dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
   return res;
@@ -581,6 +581,8 @@ void TransportEquations::Equations(const double &z,
   // Fermions
   for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
+    const int h = pow(-1, fermion + 1); /* = h -> helicity */
+
     double m2, m2prime, thetaprime, theta2prime;
     // Calculate fermionic masses
     GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
@@ -595,8 +597,7 @@ void TransportEquations::Equations(const double &z,
     InsertBlockDiagonal(m2B, tempB, fermion);
 
     // Source terms
-    VecDoub tempS(calc_source(
-        sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
+    VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
     for (size_t i = 0; i < moment; i++)
       S[moment * fermion + i] = tempS[i];
   }
