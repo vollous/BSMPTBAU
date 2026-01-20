@@ -824,8 +824,9 @@ void TransportEquations::CalculateBAU()
     // Results
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
-    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution.value()[4][i]; // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[2][i];           // tR
+    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
+         Solution.value()[moment * 2][i];                      // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
     r *= min(
         1.,
         2.4 * Tstar / Gsph *
