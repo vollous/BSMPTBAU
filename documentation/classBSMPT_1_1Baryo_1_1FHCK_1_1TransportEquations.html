@@ -151,9 +151,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</
 <tr class="memitem:aca15a8f9a30af48591c5fce3415bbdd4" id="r_aca15a8f9a30af48591c5fce3415bbdd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMatDoub.html">MatDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aca15a8f9a30af48591c5fce3415bbdd4">calc_m2B</a> (const double &amp;m, const double &amp;dm2, const ParticleType &amp;type)</td></tr>
 <tr class="memdesc:aca15a8f9a30af48591c5fce3415bbdd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the 2x2 submatrix of m2'B for 1 particle.  <br /></td></tr>
 <tr class="separator:aca15a8f9a30af48591c5fce3415bbdd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7afa79f406317c78df52483def485157" id="r_a7afa79f406317c78df52483def485157"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7afa79f406317c78df52483def485157">calc_source</a> (const double &amp;m, const double &amp;dm2, const double &amp;dth, const double &amp;d2th, const ParticleType &amp;type)</td></tr>
-<tr class="memdesc:a7afa79f406317c78df52483def485157"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the souce term S for 1 particle.  <br /></td></tr>
-<tr class="separator:a7afa79f406317c78df52483def485157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb07a643a6aca143583b0e27ee6a9097" id="r_aeb07a643a6aca143583b0e27ee6a9097"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aeb07a643a6aca143583b0e27ee6a9097">calc_source</a> (const double &amp;m, const double &amp;dm2, const double &amp;dth, const double &amp;d2th, const int &amp;h)</td></tr>
+<tr class="memdesc:aeb07a643a6aca143583b0e27ee6a9097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the souce term S for 1 particle.  <br /></td></tr>
+<tr class="separator:aeb07a643a6aca143583b0e27ee6a9097"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5d7fe7c5e3a5a5562fe52791c7cb8c5" id="r_aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aa5d7fe7c5e3a5a5562fe52791c7cb8c5">CheckBoundary</a> (const <a class="el" href="classMatDoub.html">MatDoub</a> &amp;MtildeM, const <a class="el" href="classVecDoub.html">VecDoub</a> &amp;StildeM, const <a class="el" href="classMatDoub.html">MatDoub</a> &amp;MtildeP, const <a class="el" href="classVecDoub.html">VecDoub</a> &amp;StildeP)</td></tr>
 <tr class="memdesc:aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist.  <br /></td></tr>
 <tr class="separator:aa5d7fe7c5e3a5a5562fe52791c7cb8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,7 +209,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>Tstar</b></td></tr>
 <tr class="memdesc:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transition temperature. <br /></td></tr>
 <tr class="separator:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45fc4685b2add1f50ba04d1c63b7fd74" id="r_a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memItemLeft" align="right" valign="top"><a id="a45fc4685b2add1f50ba04d1c63b7fd74" name="a45fc4685b2add1f50ba04d1c63b7fd74"></a>
-const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b> = 2</td></tr>
+const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b> = 10</td></tr>
 <tr class="memdesc:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of moments used to solve transport equation. <br /></td></tr>
 <tr class="separator:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae11136128236afc22bca49fa8a9f4657" id="r_ae11136128236afc22bca49fa8a9f4657"><td class="memItemLeft" align="right" valign="top"><a id="ae11136128236afc22bca49fa8a9f4657" name="ae11136128236afc22bca49fa8a9f4657"></a>
@@ -477,8 +477,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="a7afa79f406317c78df52483def485157" name="a7afa79f406317c78df52483def485157"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7afa79f406317c78df52483def485157">&#9670;&#160;</a></span>calc_source()</h2>
+<a id="aeb07a643a6aca143583b0e27ee6a9097" name="aeb07a643a6aca143583b0e27ee6a9097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb07a643a6aca143583b0e27ee6a9097">&#9670;&#160;</a></span>calc_source()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -510,8 +510,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const ParticleType &amp;&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -528,7 +528,7 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
     <tr><td class="paramname">dm2</td><td>derivative of the squared particle mass </td></tr>
     <tr><td class="paramname">dth</td><td>derivative of theta </td></tr>
     <tr><td class="paramname">d2th</td><td>second derivative theta </td></tr>
-    <tr><td class="paramname">type</td><td>type of particle e.g. fermion/boson </td></tr>
+    <tr><td class="paramname">h</td><td>helicity </td></tr>
   </table>
   </dd>
 </dl>
