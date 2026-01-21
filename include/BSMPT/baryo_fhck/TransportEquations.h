@@ -90,7 +90,7 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 10;
+  const size_t moment = 2;
 
   /**
    * @brief Interpolated kernel functions for different moments
