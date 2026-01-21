@@ -577,10 +577,10 @@ void TransportEquations::Equations(const double &z,
   const double mW = GetWMass(Vev(z, 0), Tstar);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
-  double pre = 1.;
   // Fermions
   for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
+    double pre = 1.;
     double m2, m2prime, thetaprime, theta2prime;
     // Calculate fermionic masses
     GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
