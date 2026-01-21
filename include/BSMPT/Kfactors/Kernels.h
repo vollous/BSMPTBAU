@@ -42,7 +42,7 @@ enum class ParticleType
  * @brief Function for integer powers. Better suitable than the std one
  *
  * @param x Value of the number
- * @param i Power of the number
+ * @param i Power to which we take the number
  */
 double ipow(const double x, const int n);
 
