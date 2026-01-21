@@ -8,7 +8,7 @@
 namespace BSMPT
 {
 
-enum KernelType
+enum class KernelType
 {
   K,
   D,
@@ -20,7 +20,7 @@ enum KernelType
   K4FH
 };
 
-enum ParticleType
+enum class ParticleType
 {
   Boson,
   Fermion,

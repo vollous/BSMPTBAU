@@ -400,7 +400,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                               sqrt(FermionMasses[2]),
                               sqrt(BosonMasses[0])};
 
-  std::vector<ParticleType> ptype = {Fermion, Fermion, Fermion, Boson};
+  std::vector<ParticleType> ptype = {ParticleType::Fermion,
+                                     ParticleType::Fermion,
+                                     ParticleType::Fermion,
+                                     ParticleType::Boson};
 
   const double D0T = Dlf[0](mass[0]);
   const double D0B = Dlf[0](mass[2]);
@@ -453,19 +456,22 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         ul                      = 0.;
         trunc[rates.size() - 1] = 1.;
-        Kp = (ptype[i] == Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+        Kp =
+            (ptype[i] == ParticleType::Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
       }
       else if (l == 2)
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 1.;
-        Kp = -vwall * (ptype[i] == Fermion ? Klf[0](m) : Klb[0](m));
+        Kp                      = -vwall *
+             (ptype[i] == ParticleType::Fermion ? Klf[0](m) : Klb[0](m));
       }
       else
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 0.;
-        Kp = (ptype[i] == Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+        Kp =
+            (ptype[i] == ParticleType::Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
       }
 
       for (size_t j = 0; j < prtcl.size(); j++)
@@ -492,7 +498,8 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   for (size_t i = 0; i < moment - 1; i++)
   {
     // 1, D1, D2, ..., Dn-1
-    Di.at(i + 1) = (type == Fermion ? Dlf[i + 1](m) : Dlb[i + 1](m));
+    Di.at(i + 1) =
+        (type == ParticleType::Fermion ? Dlf[i + 1](m) : Dlb[i + 1](m));
     // off-diagonal "diagonal"
     res[i + 1][i] = 1;
   }
@@ -502,7 +509,7 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   Ri.at(moment - 1) = -1;
 
   // (-1)^moment Inv(A)
-  double Dn = (type == Fermion ? Dlf[moment](m) : Dlb[moment](m));
+  double Dn = (type == ParticleType::Fermion ? Dlf[moment](m) : Dlb[moment](m));
   for (size_t i = 0; i < moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
 
@@ -519,11 +526,11 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const ParticleType &type)
 {
   MatDoub res(moment, moment, 0.);
-  const double fRbar = (type == Fermion ? Rbarf(m) : Rbarb(m));
+  const double fRbar = (type == ParticleType::Fermion ? Rbarf(m) : Rbarb(m));
 
   for (size_t l = 1; l <= moment; l++)
   {
-    const double fQ   = (type == Fermion ? Qlf[l](m) : Qlb[l](m));
+    const double fQ   = (type == ParticleType::Fermion ? Qlf[l](m) : Qlb[l](m));
     res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
     res[l - 1][0]     = gamwall * vwall * fQ * dm2;
   }
