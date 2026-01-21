@@ -47,19 +47,13 @@ void TransportEquations::Initialize()
         Hessian = [=](auto const &arg)
     { return HessianNumerical(arg, V, eps); };
 
-    vacuumprofile =
-        std::make_unique<VacuumProfileNS::VacuumProfile>(FalseVacuum.size(),
-                                                         TrueVacuum,
-                                                         FalseVacuum,
-                                                         V,
-                                                         dV,
-                                                         Hessian,
-                                                         Lw.value());
+    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
+        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
     vacuumprofile->CalculateProfile();
   }
 
-  zList = std::vector<double>(
-      MakeDistribution(LwMultiplier * Lw.value(), NumberOfSteps));
+  zList =
+      std::vector<double>(MakeDistribution(LwMultiplier * Lw, NumberOfSteps));
 
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
@@ -193,7 +187,7 @@ void TransportEquations::SetEtaInterface()
   Lw = EtaInterface->getLW();
 
   Logger::Write(LoggingLevel::FHCK,
-                "Lw * T = " + std::to_string(Lw.value() * Tstar) + "\n");
+                "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
 }
 
 std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
@@ -201,14 +195,12 @@ std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
   if (VevProfile == VevProfileMode::Kink)
   {
     if (diff == 0)
-      return FalseVacuum +
-             (1 - tanh(z / Lw.value())) * (TrueVacuum - FalseVacuum) / 2;
+      return FalseVacuum + (1 - tanh(z / Lw)) * (TrueVacuum - FalseVacuum) / 2;
     if (diff == 1)
-      return -1 / pow(cosh(z / Lw.value()), 2) * (TrueVacuum - FalseVacuum) /
-             (2 * Lw.value());
+      return -1 / pow(cosh(z / Lw), 2) * (TrueVacuum - FalseVacuum) / (2 * Lw);
     if (diff == 2)
-      return 2 * tanh(z / Lw.value()) / pow(cosh(z / Lw.value()), 2) *
-             (TrueVacuum - FalseVacuum) / (2 * Lw.value() * Lw.value());
+      return 2 * tanh(z / Lw) / pow(cosh(z / Lw), 2) *
+             (TrueVacuum - FalseVacuum) / (2 * Lw * Lw);
   }
   else if (VevProfile == VevProfileMode::FieldEquation)
   {
@@ -319,11 +311,9 @@ void TransportEquations::GetFermionMass(const double &z,
       break;
     default: throw("Invalid fermion in GetFermionMass()"); break;
     }
-    thetaprime =
-        -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw.value()), 2)) / Lw.value();
+    thetaprime = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
     theta2prime =
-        ((brk - sym) / pow(cosh(z / Lw.value()), 2) * tanh(z / Lw.value())) /
-        pow(Lw.value(), 2);
+        ((brk - sym) / pow(cosh(z / Lw), 2) * tanh(z / Lw)) / pow(Lw, 2);
   }
   else if (VevProfile == VevProfileMode::FieldEquation)
   {
@@ -720,7 +710,7 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
 void TransportEquations::SolveTransportEquation()
 {
-  Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw.value()));
+  Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw));
 
   MatDoub STildeList(NumberOfSteps, nEqs);
   Mat3DDoub MTildeList(NumberOfSteps, nEqs, nEqs);
@@ -914,7 +904,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
   if (MuOrU == "u") ind = ind.value() + 1;
 
   for (size_t i = 0; i < zList.size(); i++)
-    if (abs(zList[i]) < Lw.value() * multiplier)
+    if (abs(zList[i]) < Lw * multiplier)
     {
       z.push_back(zList[i]);
       y.push_back(Solution.value()[ind.value()][i]);
