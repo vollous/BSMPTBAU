@@ -575,11 +575,6 @@ void TransportEquations::Equations(const double &z,
   Stilde.zero(); // A^-1 * Source vector
   Mtilde.zero(); // Store A^-1 * M
 
-  // Quark matrix
-  Eigen::MatrixXcd MIJQuarks =
-      modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(Vev(z, 0)));
-  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> esQuark(MIJQuarks);
-
   // Mass vector
   const double mW = GetWMass(Vev(z, 0), Tstar);
   VecDoub FermionMasses(nFermions);
