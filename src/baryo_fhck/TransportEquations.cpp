@@ -576,7 +576,7 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = GetWMass(Vev(z, 0), Tstar);
+  const double mW = GetWMass(Vev(z), Tstar);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
