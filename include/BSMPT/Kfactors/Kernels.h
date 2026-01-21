@@ -85,6 +85,18 @@ public:
    */
   double pre;
 
+  /**
+   * @brief Construct a new Kernel Integrand y object
+   *
+   * @param k_in derivative of f0
+   * @param structure_in structure of V
+   * @param n_in n variable of kernel see [2407.13639]
+   * @param m_in m variable of kernel see [2407.13639]
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param s_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   KernelInty(const int k_in,
              const int structure_in,
              const int n_in,
@@ -110,11 +122,12 @@ public:
   void set_all(const double u);
 
   /**
-   * @brief operator which evaluates the integrand of the y-dependent part of
+   * @brief Operator which evaluates the integrand of the y-dependent part of
    * the kernel integrand
    * @param y Integration variable between [-1, 1]
    */
   double operator()(const double y);
+
   ~KernelInty() {};
 };
 
@@ -127,6 +140,18 @@ private:
   KernelInty Integrand;
 
 public:
+  /**
+   * @brief Construct a new Kernel Integrand w object
+   *
+   * @param k_in derivative of f0
+   * @param structure_in structure of V
+   * @param n_in n variable of kernel see [2407.13639]
+   * @param m_in m variable of kernel see [2407.13639]
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param s_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   KernelIntw(const int k_in,
              const int structure_in,
              const int n_in,
@@ -178,6 +203,16 @@ public:
    */
   double pre1, pre2;
 
+  /**
+   * @brief Construct a new Q9 Kernel Integrand y object
+   *
+   * @param structure_in structure of V
+   * @param l_in Moment of the kernel
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param vw_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   Q9KernelInty(const int structure_in,
                const int l_in,
                const double vw_in,
@@ -217,6 +252,16 @@ private:
   Q9KernelInty Integrand;
 
 public:
+  /**
+   * @brief Construct a new Q9 Kernel Integrand w object
+   *
+   * @param structure_in structure of V
+   * @param l_in Moment of the kernel
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param vw_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   Q9KernelIntw(const int structure_in,
                const int l_in,
                const double vw_in,
@@ -243,6 +288,14 @@ private:
   const double vw, gamw, s, x;
 
 public:
+  /**
+   * @brief Construct a new N0 Kernel Integrand object
+   *
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param vw_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   N0Int(const double vw_in,
         const double gamw_in,
         const double s_in,
@@ -272,6 +325,14 @@ private:
   const double vw, gamw, s, x;
 
 public:
+  /**
+   * @brief Construct a new Rbar Kernel Integrand object
+   *
+   * @param vw_in Wall velocity
+   * @param gamw_in Gamma factor of the wall
+   * @param vw_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   RbarInt(const double vw_in,
           const double gamw_in,
           const double s_in,
@@ -298,6 +359,12 @@ private:
   const double s, x;
 
 public:
+  /**
+   * @brief Construct a new K4 Kernel Integrand object
+   *
+   * @param vw_in Spin statistic of particle
+   * @param x_in x = m / T
+   */
   K4Int(const double s_in, const double x_in) : s(s_in), x(x_in) {}
 
   /**
@@ -322,9 +389,16 @@ private:
   const int structure;
 
 public:
+  /**
+   * @brief Construct a new Kernel object
+   *
+   * @param l_in l-th moment of the kernel
+   * @param structure_in structure of V
+   */
   Kernel(const int l_in, const int structure_in)
       : l(l_in)
       , structure(structure_in) {};
+
   /**
    * @brief Evaluates the needed kernel at a given x and wall velocity
    * @param KernelType Type of Kernel
