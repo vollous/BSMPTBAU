@@ -395,12 +395,6 @@ public:
   void Equations(const double &z, MatDoub &Mtilde, VecDoub &Stilde);
 
   /**
-   * @brief Solve the transport equation using the shooting method. Runge Kutta
-   *
-   */
-  void ShootingMethod();
-
-  /**
    * @brief Solve the transport equation using the relaxation method.
    * Recommended.
    *
