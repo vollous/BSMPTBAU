@@ -713,8 +713,8 @@ void TransportEquations::SolveTransportEquation()
   MatDoub Mtilde(nEqs, nEqs), MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
   VecDoub Stilde(nEqs), StildeM(nEqs), StildeP(nEqs);
 
-  Equations(-1, MtildeM, StildeM);
-  Equations(1, MtildeP, StildeP);
+  Equations(zList.front(), MtildeM, StildeM);
+  Equations(zList.back(), MtildeP, StildeP);
 
   CheckBoundary(MtildeM, StildeM, MtildeP, StildeP);
   if (Status != FHCKStatus::NotSet)
@@ -730,12 +730,12 @@ void TransportEquations::SolveTransportEquation()
   {
     // Compute Mtilde and Stilde
     double zc = (zList[i] + zList[i - 1]) / 2.;
-    if (zc < -1) // TODO: Fix this, too specific.
+    if (zc < -LwMultiplier * Lw / 100.)
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zc > 1)
+    else if (zc > LwMultiplier * Lw / 100.)
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
@@ -757,8 +757,8 @@ void TransportEquations::SolveTransportEquation()
 
   size_t itmax = 30;
   double conv  = 1e-10;
-  double slowc = 1e-3;
-  VecDoub scalv(zList.size(), 1);
+  double slowc = 1.;
+  VecDoub scalv(nEqs, 1);
   VecInt indexv(nEqs);
 
   // fix μ and first u
