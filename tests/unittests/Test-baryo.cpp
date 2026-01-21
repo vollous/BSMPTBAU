@@ -13,7 +13,7 @@ using Approx = Catch::Approx;
 
 TEST_CASE("Construct Kernel table", "[baryoKernels]")
 {
-  using namespace BSMPT;
+  using namespace BSMPT::Baryo::FHCK;
   std::string path = "kernels/";
   double vw_step   = 0.064;
 

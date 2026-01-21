@@ -7,7 +7,10 @@
 
 namespace BSMPT
 {
-
+namespace Baryo
+{
+namespace FHCK
+{
 enum class KernelType
 {
   K,
@@ -191,4 +194,6 @@ public:
   ~Kernel() {};
 };
 
+} // namespace FHCK
+} // namespace Baryo
 } // namespace BSMPT
