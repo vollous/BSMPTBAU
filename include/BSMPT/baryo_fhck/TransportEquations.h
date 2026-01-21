@@ -120,7 +120,7 @@ public:
    * @brief Wall thickness
    *
    */
-  std::optional<double> Lw;
+  double Lw;
 
   /**
    * @brief List of point on the z-axis.
