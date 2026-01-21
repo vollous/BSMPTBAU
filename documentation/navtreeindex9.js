@@ -1,13 +1,5 @@
 var NAVTREEINDEX9 =
 {
-"tau__source_8h.html":[4,0,0,0,0,0,3],
-"tau__source_8h_source.html":[4,0,0,0,0,0,3],
-"test.html":[1],
-"thermalcoefficientcalculator_8cpp.html":[4,0,1,6,1],
-"thermalcoefficientcalculator_8h_source.html":[4,0,0,0,8,1],
-"top__source_8cpp.html":[4,0,1,0,0,4],
-"top__source_8h.html":[4,0,0,0,0,0,4],
-"top__source_8h_source.html":[4,0,0,0,0,0,4],
 "transition__tracer_8h_source.html":[4,0,0,0,9,0],
 "transport__equations_8cpp.html":[4,0,1,0,2],
 "transport__equations_8cpp.html#a06ca6944f075deca05b61249734bd7f1":[4,0,1,0,2,4],
