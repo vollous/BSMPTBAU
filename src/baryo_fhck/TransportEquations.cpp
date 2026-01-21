@@ -534,11 +534,11 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &dm2,
                                         const double &dth,
                                         const double &d2th,
-                                        const ParticleType &type)
+                                        const int &h)
 {
   VecDoub res(moment);
   for (size_t i = 0; i < moment; i++)
-    res[i] = -vwall * gamwall *
+    res[i] = -vwall * gamwall * h *
              ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
               dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
   return res;
@@ -580,7 +580,8 @@ void TransportEquations::Equations(const double &z,
   // Fermions
   for (size_t fermion = 0; fermion < nFermions; fermion++)
   {
-    double pre = 1.;
+    const int h = pow(-1, fermion + 1); /* = h -> helicity */
+
     double m2, m2prime, thetaprime, theta2prime;
     // Calculate fermionic masses
     GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
@@ -595,9 +596,7 @@ void TransportEquations::Equations(const double &z,
     InsertBlockDiagonal(m2B, tempB, fermion);
 
     // Source terms
-    VecDoub tempS(calc_source(
-        sqrt(m2), m2prime, thetaprime, theta2prime, ParticleType::Fermion));
-    if (fermion == 1) pre = -1.;
+    VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
     for (size_t i = 0; i < moment; i++)
       S[moment * fermion + i] = pre * tempS[i];
   }
@@ -697,10 +696,12 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
 
   if (NumberOfNonDecayingModes > nEqs)
   {
-    ss << " \033[31m\nToo many non-decaying modes. Impossible to satisfy "
+    ss << " \033[31m\nToo many non-decaying modes (" << NumberOfNonDecayingModes
+       << ") for the boundary conditions (" << nEqs
+       << "). Impossible to satisfy "
           "the "
           "boundary "
-          "conditions of mu = u = 0.\033[0m\n";
+          "conditions of μ = u = 0.\033[0m\n";
     Status = FHCKStatus::UnphysicalBoundary;
   }
   else
@@ -755,20 +756,19 @@ void TransportEquations::SolveTransportEquation()
   double slowc = 1e-3;
   VecDoub scalv(zList.size(), 1);
   VecInt indexv(nEqs);
-  int nParticles = nFermions + nBosons;
-  for (int l = 0; l < moment; l++)
-    for (int i = 0; i < nParticles; i++)
-      indexv[i * moment + l] = l * nParticles + i;
 
-  /* indexv[0] = 0;
-  indexv[1] = 4;
-  indexv[2] = 1;
-  indexv[3] = 5;    moment=2 scenario
-  indexv[4] = 2;    for reference
-  indexv[5] = 6;
-  indexv[6] = 3;
-  indexv[7] = 7; */
+  // fix μ and first u
+  for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
+    for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+    {
+      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+      Logger::Write(LoggingLevel::FHCK,
+                    "indexv[" +
+                        std::to_string(particle + l * (nFermions + nBosons)) +
+                        "] = " + std::to_string(l + particle * moment));
+    }
 
+  int NB = nEqs / 2;
   MatDoub y(nEqs, zList.size(), 0.);
   RelaxOde solvde(
       itmax, conv, slowc, scalv, indexv, (nParticles * moment) / 2, y, difeq);
@@ -814,9 +814,9 @@ void TransportEquations::CalculateBAU()
     // Results
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment * 1][i];  // tR
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
-         Solution.value()[moment * 2][i]; // bL
+         Solution.value()[moment * 2][i];                      // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
     r *= min(
         1.,
         2.4 * Tstar / Gsph *
