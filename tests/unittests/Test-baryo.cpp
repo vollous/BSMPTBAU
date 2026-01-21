@@ -13,7 +13,7 @@ using Approx = Catch::Approx;
 
 TEST_CASE("Construct Kernel table", "[baryoKernels]")
 {
-  using namespace BSMPT;
+  using namespace BSMPT::Baryo::FHCK;
   std::string path = "kernels/";
   double vw_step   = 0.064;
 
@@ -22,7 +22,8 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
     std::cout << "Current moment: " << l << "\n\n";
     for (int type = 0; type <= 1; type++)
     {
-      ParticleType PType = (type == 0 ? Fermion : Boson);
+      ParticleType PType =
+          (type == 0 ? ParticleType::Fermion : ParticleType::Boson);
       std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
       std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
       Kernel Kern(l, 2);
@@ -108,7 +109,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           }
           file.close();
         }
-        if (PType == Fermion)
+        if (PType == ParticleType::Fermion)
         {
           std::cout << "Q8o-Kernel\n";
           {
@@ -154,7 +155,8 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   for (int type = 0; type <= 1; type++)
   {
     Kernel Kern(0, 0);
-    ParticleType PType = (type == 0 ? Fermion : Boson);
+    ParticleType PType =
+        (type == 0 ? ParticleType::Fermion : ParticleType::Boson);
     std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
     std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
     std::cout << "Rbar-Kernel\n";

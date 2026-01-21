@@ -7,8 +7,11 @@
 
 namespace BSMPT
 {
-
-enum KernelType
+namespace Baryo
+{
+namespace FHCK
+{
+enum class KernelType
 {
   K,
   D,
@@ -20,7 +23,7 @@ enum KernelType
   K4FH
 };
 
-enum ParticleType
+enum class ParticleType
 {
   Boson,
   Fermion,
@@ -191,4 +194,6 @@ public:
   ~Kernel() {};
 };
 
+} // namespace FHCK
+} // namespace Baryo
 } // namespace BSMPT

@@ -2,6 +2,10 @@
 
 namespace BSMPT
 {
+namespace Baryo
+{
+namespace FHCK
+{
 
 static const double KERNELPRECISION = 1e-6;
 
@@ -177,4 +181,6 @@ double Kernel::operator()(const KernelType Kern,
   return res;
 }
 
+} // namespace FHCK
+} // namespace Baryo
 } // namespace BSMPT
