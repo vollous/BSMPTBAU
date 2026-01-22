@@ -794,10 +794,10 @@ void TransportEquations::SolveTransportEquation()
   // Store the solution
   Solution = y;
 
-  PrintTransportEquation(120, "tL", "mu", 100);
-  PrintTransportEquation(120, "tR", "mu", 100);
-  PrintTransportEquation(120, "bL", "mu", 100);
-  PrintTransportEquation(120, "h", "mu", 100);
+  PrintTransportEquation(120, "tL", "mu");
+  PrintTransportEquation(120, "tR", "mu");
+  PrintTransportEquation(120, "bL", "mu");
+  PrintTransportEquation(120, "h", "mu");
 
   CalculateBAU();
 }
@@ -887,8 +887,7 @@ void TransportEquations::CalculateBAU()
 
 void TransportEquations::PrintTransportEquation(const int &size,
                                                 const std::string &Particle,
-                                                const std::string &MuOrU,
-                                                const double &multiplier)
+                                                const std::string &MuOrU)
 {
   AsciiPlotter Plot(Particle + " " + MuOrU, size, ceil(size / 3.));
   std::optional<int> ind;
@@ -903,12 +902,11 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  for (size_t i = 0; i < zList.size(); i++)
-    if (abs(zList[i]) < Lw * multiplier)
-    {
-      z.push_back(zList[i]);
-      y.push_back(Solution.value()[ind.value()][i]);
-    }
+  for (size_t i = 0; i < uList.size(); i++)
+  {
+    z.push_back(uList[i]);
+    y.push_back(Solution.value()[ind.value()][i]);
+  }
   Plot.addPlot(z, y, "", '*');
   std::stringstream ss;
   Plot.show(ss);
