@@ -808,12 +808,13 @@ void TransportEquations::CalculateBAU()
   // Weak spharelon rate
   const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
-  std::vector<double> z;   // list of z positions
-  std::vector<double> muB; // muB integrand at position z
-  for (size_t i = 0; i < zList.size(); i++)
+  std::vector<double> u;   // list of u positions
+  std::vector<double> muB; // muB integrand at position u
+  for (size_t i = 0; i < uList.size(); i++)
   {
 
-    const double zi = zList[i]; // z at position i
+    const double ui = uList[i]; // u at position i
+    const double zi = uTOz(ui); // z(u)
     // Calculate the vev at z
     const std::vector<double> vev = Vev(zi);
     GetFermionMass(zi, 0, mt2, m2prime, thetaprime, theta2prime);
@@ -832,36 +833,37 @@ void TransportEquations::CalculateBAU()
                 Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * vwall * gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
+    r *= 1 / abs(dudz(ui));           // z -> u jacobian
     // Save in list to pass to integrator
-    z.push_back(zi);
+    u.push_back(ui);
     muB.push_back(r); // integrand
   }
   // Step 1: Set up GSL interpolation
-  size_t n = z.size();
+  size_t n = u.size();
   const gsl_interp_type *interp_type =
       gsl_interp_cspline; // Cubic spline interpolation
   gsl_interp *interp = gsl_interp_alloc(interp_type, n);
-  gsl_interp_init(interp, z.data(), muB.data(), n);
+  gsl_interp_init(interp, u.data(), muB.data(), n);
   gsl_interp_accel *acc = gsl_interp_accel_alloc();
   // Step 2: Integrate the interpolated function
-  double a = z.front(); // Lower bound of integration
-  double b = z.back();  // Upper bound of integration
+  double a = u.front(); // Lower bound of integration
+  double b = u.back();  // Upper bound of integration
   double result, error;
   // Struct to hold parameters
   struct Params
   {
     gsl_interp *interp;
     gsl_interp_accel *acc;
-    const std::vector<double> *z;
+    const std::vector<double> *u;
     const std::vector<double> *muB;
-  } params                             = {interp, acc, &z, &muB};
+  } params                             = {interp, acc, &u, &muB};
   gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
   gsl_function F;
   F.function = [](double x, void *p) -> double
   {
     auto *data = static_cast<Params *>(p);
     return gsl_interp_eval(
-        data->interp, data->z->data(), data->muB->data(), x, data->acc);
+        data->interp, data->u->data(), data->muB->data(), x, data->acc);
   };
   F.params = &params;
   gsl_integration_qags(
