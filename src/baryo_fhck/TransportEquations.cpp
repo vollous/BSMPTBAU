@@ -55,6 +55,12 @@ void TransportEquations::Initialize()
   zList =
       std::vector<double>(MakeDistribution(LwMultiplier * Lw, NumberOfSteps));
 
+  uList.clear();
+  for (const auto &z : zList)
+  {
+    const double uu = zTOu(z);
+    uList.push_back(uu);
+  }
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
   // Generate the fermion masses splines
@@ -552,6 +558,21 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
       full[start + i][start + j] = sub[i][j];
 }
 
+double TransportEquations::dudz(const double &u)
+{
+  return pow(1 - u * u, 3. / 2.) / (Lw * 100);
+}
+
+double TransportEquations::zTOu(const double &z)
+{
+  return (z / (Lw * 100)) / sqrt(1 + pow(z / (Lw * 100), 2));
+}
+
+double TransportEquations::uTOz(const double &u)
+{
+  return 100 * Lw * u / (sqrt(1 - u * u));
+}
+
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde)
@@ -734,36 +755,36 @@ void TransportEquations::SolveTransportEquation()
   for (size_t i = 1; i < NumberOfSteps; i++)
   {
     // Compute Mtilde and Stilde
-    double zc = (zList[i] + zList[i - 1]) / 2.;
-    if (zc < -1) // TODO: Fix this, too specific.
+    double uc = (uList[i] + uList[i - 1]) / 2.;
+    if (uc < -0.3) // TODO: Fix this, too specific.
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zc > 1)
+    else if (uc > 0.3)
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
     }
     else
-      Equations(zc, Mtilde, Stilde);
+      Equations(uTOz(uc), Mtilde, Stilde);
 
     // Save the Mtilde and Stilde
     for (size_t j = 0; j < nEqs; j++)
     {
-      STildeList[i][j] = Stilde[j];
+      STildeList[i][j] = Stilde[j] / dudz(uc);
       for (size_t k = 0; k < nEqs; k++)
-        MTildeList[i][j][k] = Mtilde[j][k];
+        MTildeList[i][j][k] = Mtilde[j][k] / dudz(uc);
     }
   }
   // Construct Difeq object (S_j,n matrix)
   Difeq_TransportEquation difeq(
-      zList, nFermions, nBosons, MTildeList, STildeList, moment);
+      uList, nFermions, nBosons, MTildeList, STildeList, moment);
 
   size_t itmax = 30;
   double conv  = 1e-10;
   double slowc = 1e-3;
-  VecDoub scalv(zList.size(), 1);
+  VecDoub scalv(nEqs, 1);
   VecInt indexv(nEqs);
 
   // fix μ and first u
@@ -778,17 +799,20 @@ void TransportEquations::SolveTransportEquation()
     }
 
   int NB = nEqs / 2;
-  MatDoub y(nEqs, zList.size(), 0.);
+  MatDoub y(nEqs, uList.size(), 0.);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
-  std::string str = "test.csv";
+  std::string str = "u.tsv";
   std::ofstream res(str);
-  for (size_t i = 0; i < zList.size(); i++)
+
+  for (size_t k = 0; k < uList.size(); k++)
   {
-    res << zList[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
-        << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
-        << y[6][i] << "\t" << y[7][i] << "\n";
+    res << uList[k];
+    for (size_t i = 0; i < nEqs; i++)
+      res << "\t" << y[i][k];
+    res << "\n";
   }
+
   res.close();
 
   // Store the solution

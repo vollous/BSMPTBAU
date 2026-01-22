@@ -129,6 +129,12 @@ public:
   std::vector<double> zList;
 
   /**
+   * @brief List of points on the u-axis (tanh scaled).
+   *
+   */
+  std::vector<double> uList;
+
+  /**
    * @brief EtaInterface object. To  use BSMPTv2 functions
    *
    */
@@ -384,6 +390,31 @@ public:
    * @param Stilde \f$ position at which we want to insert the sub matrix \f$
    */
   void InsertBlockDiagonal(MatDoub &full, MatDoub &sub, const size_t position);
+
+  /**
+   * @brief Derivative \f$ \frac{du}{dz} \f$ of \f$ z \to u \equiv \tanh(z/L_w)
+   * \f$
+   *
+   * @param u
+   * @return double
+   */
+  double dudz(const double &u);
+
+  /**
+   * @brief
+   *
+   * @param z
+   * @return double
+   */
+  double zTOu(const double &z);
+
+  /**
+   * @brief Mapping of \f$ u \to z \equiv L_w\tanh^{-1}(z) \f$
+   *
+   * @param u
+   * @return double
+   */
+  double uTOz(const double &u);
 
   /**
    * @brief Calculate the equations
