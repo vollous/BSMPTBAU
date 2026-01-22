@@ -52,15 +52,14 @@ void TransportEquations::Initialize()
     vacuumprofile->CalculateProfile();
   }
 
-  zList =
-      std::vector<double>(MakeDistribution(LwMultiplier * Lw, NumberOfSteps));
+  uList = MakeDistribution(1, NumberOfSteps);
 
-  uList.clear();
-  for (const auto &z : zList)
+  zList.clear();
+  for (const auto &u : uList)
   {
-    const double uu = zTOu(z);
-    uList.push_back(uu);
+    zList.push_back(uTOz(u));
   }
+
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
   // Generate the fermion masses splines
@@ -267,8 +266,8 @@ void TransportEquations::GenerateFermionMass()
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
-  Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
-  Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
+  Plot.addPlot(uList, MassesReal.at(ind), "Re(mt)", '*');
+  Plot.addPlot(uList, MassesImag.at(ind), "Im(mt)", '.');
   Plot.legend();
   std::stringstream ss;
   Plot.show(ss);
@@ -560,17 +559,17 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
 
 double TransportEquations::dudz(const double &u)
 {
-  return pow(1 - u * u, 3. / 2.) / (Lw * 100);
+  return pow(1 - u * u, 3. / 2.) / (Lw * LwMultiplier);
 }
 
 double TransportEquations::zTOu(const double &z)
 {
-  return (z / (Lw * 100)) / sqrt(1 + pow(z / (Lw * 100), 2));
+  return (z / (Lw * LwMultiplier)) / sqrt(1 + pow(z / (Lw * LwMultiplier), 2));
 }
 
 double TransportEquations::uTOz(const double &u)
 {
-  return 100 * Lw * u / (sqrt(1 - u * u));
+  return LwMultiplier * Lw * u / (sqrt(1 - u * u));
 }
 
 void TransportEquations::Equations(const double &z,
@@ -661,8 +660,10 @@ std::vector<double> TransportEquations::MakeDistribution(const double xmax,
 
   for (size_t i = 0; i < npoints; i++)
   {
-    double temp = pow(((i - npoints / 2.)) / (npoints / 2.), 3) * M_PI / 4.;
-    res.at(i)   = xmax * tan(temp);
+    double temp =
+        pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
+        4.;
+    res.at(i) = xmax * tan(temp);
   }
   return res;
 }
@@ -781,7 +782,7 @@ void TransportEquations::SolveTransportEquation()
   Difeq_TransportEquation difeq(
       uList, nFermions, nBosons, MTildeList, STildeList, moment);
 
-  size_t itmax = 30;
+  size_t itmax = 10;
   double conv  = 1e-10;
   double slowc = 1e-3;
   VecDoub scalv(nEqs, 1);
