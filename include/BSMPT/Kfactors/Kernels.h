@@ -55,6 +55,10 @@ double ipow(const double x, const int n);
  */
 double f0(const double x, const double s, const int diff);
 
+/**
+ * @brief y-dependent integrand of the kernel
+ *
+ */
 class KernelInty
 {
 private:
@@ -131,6 +135,10 @@ public:
   ~KernelInty() {};
 };
 
+/**
+ * @brief w-dependent integrand of the kernel
+ *
+ */
 class KernelIntw
 {
 private:
@@ -172,7 +180,9 @@ public:
 };
 
 /**
- * @brief Separate class for Q9 kernels as they involve two normal kernels
+ * @brief Separate class for Q9 kernels as they involve two normal kernels.
+ * y-dependent part
+ *
  */
 class Q9KernelInty
 {
@@ -243,6 +253,10 @@ public:
   ~Q9KernelInty() {};
 };
 
+/**
+ * @brief w-dependent integrand of the Q9 kernel
+ *
+ */
 class Q9KernelIntw
 {
 private:
@@ -277,6 +291,9 @@ public:
   ~Q9KernelIntw() {};
 };
 
+/**
+ * @brief Integrand of the N0 kernel
+ */
 class N0Int
 {
 private:
@@ -314,6 +331,9 @@ public:
   ~N0Int() {};
 };
 
+/**
+ * @brief Integrand of the Rbar kernel
+ */
 class RbarInt
 {
 private:
@@ -349,6 +369,9 @@ public:
   ~RbarInt() {};
 };
 
+/**
+ * @brief Integrand of the K4 kernel
+ */
 class K4Int
 {
 private:
@@ -375,6 +398,9 @@ public:
   ~K4Int() {};
 };
 
+/**
+ * @brief Generic Kernel function for any moment
+ */
 class Kernel
 {
 private:
