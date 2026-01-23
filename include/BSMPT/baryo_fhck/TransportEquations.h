@@ -180,14 +180,14 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 10000;
+  size_t NumberOfSteps = 1000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 1000.;
+  double LwMultiplier = 100.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If

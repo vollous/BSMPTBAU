@@ -782,7 +782,7 @@ void TransportEquations::SolveTransportEquation()
   Difeq_TransportEquation difeq(
       uList, nFermions, nBosons, MTildeList, STildeList, moment);
 
-  size_t itmax = 10;
+  size_t itmax = 1;
   double conv  = 1e-10;
   double slowc = 1e-3;
   VecDoub scalv(nEqs, 1);
