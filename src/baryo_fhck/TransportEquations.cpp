@@ -60,6 +60,14 @@ void TransportEquations::Initialize()
     zList.push_back(uTOz(u));
   }
 
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
+                    std::to_string(zList.back()) + "\n");
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
+                    std::to_string(uList.back()) + "\n");
+
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
   // Generate the fermion masses splines
@@ -68,6 +76,8 @@ void TransportEquations::Initialize()
   gamwall = 1. / std::sqrt(1. - vwall * vwall);
 
   nEqs = moment * (nFermions + nBosons);
+
+  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations\n");
 
   BuildKernelInterpolation();
 }
