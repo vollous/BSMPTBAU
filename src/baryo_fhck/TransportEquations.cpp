@@ -52,8 +52,21 @@ void TransportEquations::Initialize()
     vacuumprofile->CalculateProfile();
   }
 
-  zList =
-      std::vector<double>(MakeDistribution(LwMultiplier * Lw, NumberOfSteps));
+  uList = MakeDistribution(1, NumberOfSteps);
+
+  zList.clear();
+  for (const auto &u : uList)
+  {
+    zList.push_back(uTOz(u));
+  }
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
+                    std::to_string(zList.back()) + "\n");
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
+                    std::to_string(uList.back()) + "\n");
 
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
 
@@ -63,6 +76,8 @@ void TransportEquations::Initialize()
   gamwall = 1. / std::sqrt(1. - vwall * vwall);
 
   nEqs = moment * (nFermions + nBosons);
+
+  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations\n");
 
   BuildKernelInterpolation();
 }
@@ -261,8 +276,8 @@ void TransportEquations::GenerateFermionMass()
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
-  Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
-  Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
+  Plot.addPlot(uList, MassesReal.at(ind), "Re(mt)", '*');
+  Plot.addPlot(uList, MassesImag.at(ind), "Im(mt)", '.');
   Plot.legend();
   std::stringstream ss;
   Plot.show(ss);
@@ -552,6 +567,21 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
       full[start + i][start + j] = sub[i][j];
 }
 
+double TransportEquations::dudz(const double &u)
+{
+  return pow(1 - u * u, 3. / 2.) / (Lw * LwMultiplier);
+}
+
+double TransportEquations::zTOu(const double &z)
+{
+  return (z / (Lw * LwMultiplier)) / sqrt(1 + pow(z / (Lw * LwMultiplier), 2));
+}
+
+double TransportEquations::uTOz(const double &u)
+{
+  return LwMultiplier * Lw * u / (sqrt(1 - u * u));
+}
+
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde)
@@ -635,8 +665,10 @@ std::vector<double> TransportEquations::MakeDistribution(const double xmax,
 
   for (size_t i = 0; i < npoints; i++)
   {
-    double temp = pow(((i - npoints / 2.)) / (npoints / 2.), 3) * M_PI / 4.;
-    res.at(i)   = xmax * tan(temp);
+    double temp =
+        pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
+        4.;
+    res.at(i) = xmax * tan(temp);
   }
   return res;
 }
@@ -729,33 +761,33 @@ void TransportEquations::SolveTransportEquation()
   for (size_t i = 1; i < NumberOfSteps; i++)
   {
     // Compute Mtilde and Stilde
-    double zc = (zList[i] + zList[i - 1]) / 2.;
-    if (zc < -LwMultiplier * Lw / 100.)
+    double uc = (uList[i] + uList[i - 1]) / 2.;
+    if (uc < -0.3) // TODO: Fix this, too specific.
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zc > LwMultiplier * Lw / 100.)
+    else if (uc > 0.3)
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
     }
     else
-      Equations(zc, Mtilde, Stilde);
+      Equations(uTOz(uc), Mtilde, Stilde);
 
     // Save the Mtilde and Stilde
     for (size_t j = 0; j < nEqs; j++)
     {
-      STildeList[i][j] = Stilde[j];
+      STildeList[i][j] = Stilde[j] / dudz(uc);
       for (size_t k = 0; k < nEqs; k++)
-        MTildeList[i][j][k] = Mtilde[j][k];
+        MTildeList[i][j][k] = Mtilde[j][k] / dudz(uc);
     }
   }
   // Construct Difeq object (S_j,n matrix)
   Difeq_TransportEquation difeq(
-      zList, nFermions, nBosons, MTildeList, STildeList, moment);
+      uList, nFermions, nBosons, MTildeList, STildeList, moment);
 
-  size_t itmax = 30;
+  size_t itmax = 1;
   double conv  = 1e-10;
   double slowc = 1.;
   VecDoub scalv(nEqs, 1);
@@ -773,26 +805,29 @@ void TransportEquations::SolveTransportEquation()
     }
 
   int NB = nEqs / 2;
-  MatDoub y(nEqs, zList.size(), 0.);
+  MatDoub y(nEqs, uList.size(), 0.);
   RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
 
-  std::string str = "test.csv";
+  std::string str = "u.tsv";
   std::ofstream res(str);
-  for (size_t i = 0; i < zList.size(); i++)
+
+  for (size_t k = 0; k < uList.size(); k++)
   {
-    res << zList[i] << "\t" << y[0][i] << "\t" << y[1][i] << "\t" << y[2][i]
-        << "\t" << y[3][i] << "\t" << y[4][i] << "\t" << y[5][i] << "\t"
-        << y[6][i] << "\t" << y[7][i] << "\n";
+    res << uList[k];
+    for (size_t i = 0; i < nEqs; i++)
+      res << "\t" << y[i][k];
+    res << "\n";
   }
+
   res.close();
 
   // Store the solution
   Solution = y;
 
-  PrintTransportEquation(120, "tL", "mu", 100);
-  PrintTransportEquation(120, "tR", "mu", 100);
-  PrintTransportEquation(120, "bL", "mu", 100);
-  PrintTransportEquation(120, "h", "mu", 100);
+  PrintTransportEquation(120, "tL", "mu");
+  PrintTransportEquation(120, "tR", "mu");
+  PrintTransportEquation(120, "bL", "mu");
+  PrintTransportEquation(120, "h", "mu");
 
   CalculateBAU();
 }
@@ -803,12 +838,13 @@ void TransportEquations::CalculateBAU()
   // Weak spharelon rate
   const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
-  std::vector<double> z;   // list of z positions
-  std::vector<double> muB; // muB integrand at position z
-  for (size_t i = 0; i < zList.size(); i++)
+  std::vector<double> u;   // list of u positions
+  std::vector<double> muB; // muB integrand at position u
+  for (size_t i = 0; i < uList.size(); i++)
   {
 
-    const double zi = zList[i]; // z at position i
+    const double ui = uList[i]; // u at position i
+    const double zi = uTOz(ui); // z(u)
     // Calculate the vev at z
     const std::vector<double> vev = Vev(zi);
     GetFermionMass(zi, 0, mt2, m2prime, thetaprime, theta2prime);
@@ -827,36 +863,37 @@ void TransportEquations::CalculateBAU()
                 Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * vwall * gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
+    r *= 1 / abs(dudz(ui));           // z -> u jacobian
     // Save in list to pass to integrator
-    z.push_back(zi);
+    u.push_back(ui);
     muB.push_back(r); // integrand
   }
   // Step 1: Set up GSL interpolation
-  size_t n = z.size();
+  size_t n = u.size();
   const gsl_interp_type *interp_type =
       gsl_interp_cspline; // Cubic spline interpolation
   gsl_interp *interp = gsl_interp_alloc(interp_type, n);
-  gsl_interp_init(interp, z.data(), muB.data(), n);
+  gsl_interp_init(interp, u.data(), muB.data(), n);
   gsl_interp_accel *acc = gsl_interp_accel_alloc();
   // Step 2: Integrate the interpolated function
-  double a = z.front(); // Lower bound of integration
-  double b = z.back();  // Upper bound of integration
+  double a = u.front(); // Lower bound of integration
+  double b = u.back();  // Upper bound of integration
   double result, error;
   // Struct to hold parameters
   struct Params
   {
     gsl_interp *interp;
     gsl_interp_accel *acc;
-    const std::vector<double> *z;
+    const std::vector<double> *u;
     const std::vector<double> *muB;
-  } params                             = {interp, acc, &z, &muB};
+  } params                             = {interp, acc, &u, &muB};
   gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
   gsl_function F;
   F.function = [](double x, void *p) -> double
   {
     auto *data = static_cast<Params *>(p);
     return gsl_interp_eval(
-        data->interp, data->z->data(), data->muB->data(), x, data->acc);
+        data->interp, data->u->data(), data->muB->data(), x, data->acc);
   };
   F.params = &params;
   gsl_integration_qags(
@@ -882,8 +919,7 @@ void TransportEquations::CalculateBAU()
 
 void TransportEquations::PrintTransportEquation(const int &size,
                                                 const std::string &Particle,
-                                                const std::string &MuOrU,
-                                                const double &multiplier)
+                                                const std::string &MuOrU)
 {
   AsciiPlotter Plot(Particle + " " + MuOrU, size, ceil(size / 3.));
   std::optional<int> ind;
@@ -898,12 +934,11 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  for (size_t i = 0; i < zList.size(); i++)
-    if (abs(zList[i]) < Lw * multiplier)
-    {
-      z.push_back(zList[i]);
-      y.push_back(Solution.value()[ind.value()][i]);
-    }
+  for (size_t i = 0; i < uList.size(); i++)
+  {
+    z.push_back(uList[i]);
+    y.push_back(Solution.value()[ind.value()][i]);
+  }
   Plot.addPlot(z, y, "", '*');
   std::stringstream ss;
   Plot.show(ss);

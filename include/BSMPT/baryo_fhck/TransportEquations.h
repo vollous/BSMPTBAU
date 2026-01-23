@@ -90,7 +90,7 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 10;
+  const size_t moment = 2;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -127,6 +127,12 @@ public:
    *
    */
   std::vector<double> zList;
+
+  /**
+   * @brief List of points on the u-axis (tanh scaled).
+   *
+   */
+  std::vector<double> uList;
 
   /**
    * @brief EtaInterface object. To  use BSMPTv2 functions
@@ -174,14 +180,14 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 10000;
+  size_t NumberOfSteps = 1000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 1000.;
+  double LwMultiplier = 100.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If
@@ -386,6 +392,31 @@ public:
   void InsertBlockDiagonal(MatDoub &full, MatDoub &sub, const size_t position);
 
   /**
+   * @brief Derivative \f$ \frac{du}{dz} \f$ of \f$ z \to u \equiv \tanh(z/L_w)
+   * \f$
+   *
+   * @param u
+   * @return double
+   */
+  double dudz(const double &u);
+
+  /**
+   * @brief
+   *
+   * @param z
+   * @return double
+   */
+  double zTOu(const double &z);
+
+  /**
+   * @brief Mapping of \f$ u \to z \equiv L_w\tanh^{-1}(z) \f$
+   *
+   * @param u
+   * @return double
+   */
+  double uTOz(const double &u);
+
+  /**
    * @brief Calculate the equations
    *
    * @param z distance to the bubble wall
@@ -393,12 +424,6 @@ public:
    * @param Stilde \f$ A^{-1}\right( \deltaC - m^2' B \left) \f$
    */
   void Equations(const double &z, MatDoub &Mtilde, VecDoub &Stilde);
-
-  /**
-   * @brief Solve the transport equation using the shooting method. Runge Kutta
-   *
-   */
-  void ShootingMethod();
 
   /**
    * @brief Solve the transport equation using the relaxation method.
@@ -434,8 +459,7 @@ public:
    */
   void PrintTransportEquation(const int &size,
                               const std::string &Particle,
-                              const std::string &MuOrU,
-                              const double &multiplier = 1);
+                              const std::string &MuOrU);
 };
 } // namespace FHCK
 } // namespace Baryo
