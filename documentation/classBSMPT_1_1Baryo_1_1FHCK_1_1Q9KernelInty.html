@@ -105,23 +105,29 @@ $(document).ready(function(){initNavTree('classBSMPT_1_1Baryo_1_1FHCK_1_1Q9Kerne
   <div class="headertitle"><div class="title">BSMPT::Baryo::FHCK::Q9KernelInty Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Separate class for Q9 kernels as they involve two normal kernels. y-dependent part.  
+ <a href="classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Kernels_8h_source.html">BSMPT/Kfactors/Kernels.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ade7b767084ffadc596932e516d1ac585" id="r_ade7b767084ffadc596932e516d1ac585"><td class="memItemLeft" align="right" valign="top"><a id="ade7b767084ffadc596932e516d1ac585" name="ade7b767084ffadc596932e516d1ac585"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Q9KernelInty</b> (const int structure_in, const int l_in, const double vw_in, const double gamw_in, const double s_in, const double x_in)</td></tr>
+<tr class="memitem:ade7b767084ffadc596932e516d1ac585" id="r_ade7b767084ffadc596932e516d1ac585"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#ade7b767084ffadc596932e516d1ac585">Q9KernelInty</a> (const int structure_in, const int l_in, const double vw_in, const double gamw_in, const double s_in, const double x_in)</td></tr>
+<tr class="memdesc:ade7b767084ffadc596932e516d1ac585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Q9 <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html" title="Generic Kernel function for any moment.">Kernel</a> Integrand y object.  <br /></td></tr>
 <tr class="separator:ade7b767084ffadc596932e516d1ac585"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90758018454ec253a232c2af36abaf36" id="r_a90758018454ec253a232c2af36abaf36"><td class="memItemLeft" align="right" valign="top"><a id="a90758018454ec253a232c2af36abaf36" name="a90758018454ec253a232c2af36abaf36"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_all</b> (const double u)</td></tr>
+<tr class="memitem:a90758018454ec253a232c2af36abaf36" id="r_a90758018454ec253a232c2af36abaf36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#a90758018454ec253a232c2af36abaf36">set_all</a> (const double u)</td></tr>
+<tr class="memdesc:a90758018454ec253a232c2af36abaf36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all relevant variables of the class.  <br /></td></tr>
 <tr class="separator:a90758018454ec253a232c2af36abaf36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2adc69ca954cc4aaf965d3904e098fc8" id="r_a2adc69ca954cc4aaf965d3904e098fc8"><td class="memItemLeft" align="right" valign="top"><a id="a2adc69ca954cc4aaf965d3904e098fc8" name="a2adc69ca954cc4aaf965d3904e098fc8"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const double y)</td></tr>
+<tr class="memitem:a2adc69ca954cc4aaf965d3904e098fc8" id="r_a2adc69ca954cc4aaf965d3904e098fc8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#a2adc69ca954cc4aaf965d3904e098fc8">operator()</a> (const double y)</td></tr>
+<tr class="memdesc:a2adc69ca954cc4aaf965d3904e098fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">operator which evaluates the integrand of the y-dependent part of the kernel integrand  <br /></td></tr>
 <tr class="separator:a2adc69ca954cc4aaf965d3904e098fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a1e468178e36a19b9023c5cd8dbb2d300" id="r_a1e468178e36a19b9023c5cd8dbb2d300"><td class="memItemLeft" align="right" valign="top"><a id="a1e468178e36a19b9023c5cd8dbb2d300" name="a1e468178e36a19b9023c5cd8dbb2d300"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>pre1</b></td></tr>
+<tr class="memdesc:a1e468178e36a19b9023c5cd8dbb2d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Useful prefactors to save computation time. <br /></td></tr>
 <tr class="separator:a1e468178e36a19b9023c5cd8dbb2d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60a89c8f36267164103ad36be08f8f81" id="r_a60a89c8f36267164103ad36be08f8f81"><td class="memItemLeft" align="right" valign="top"><a id="a60a89c8f36267164103ad36be08f8f81" name="a60a89c8f36267164103ad36be08f8f81"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>pre2</b></td></tr>
@@ -131,12 +137,14 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>pre2</b></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ac6a1265d6c9bcbed359f5590d00d63b7" id="r_ac6a1265d6c9bcbed359f5590d00d63b7"><td class="memItemLeft" align="right" valign="top"><a id="ac6a1265d6c9bcbed359f5590d00d63b7" name="ac6a1265d6c9bcbed359f5590d00d63b7"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>structure</b></td></tr>
+<tr class="memdesc:ac6a1265d6c9bcbed359f5590d00d63b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure = {0, 1, 2} -&gt; V={1, V_s, V_h}. l is the moment of the kernel. <br /></td></tr>
 <tr class="separator:ac6a1265d6c9bcbed359f5590d00d63b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afde347f3be826728e6cc1b5db4eef05e" id="r_afde347f3be826728e6cc1b5db4eef05e"><td class="memItemLeft" align="right" valign="top"><a id="afde347f3be826728e6cc1b5db4eef05e" name="afde347f3be826728e6cc1b5db4eef05e"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>l</b></td></tr>
 <tr class="separator:afde347f3be826728e6cc1b5db4eef05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66aeb0938a7e6d2fc484178d36f2592e" id="r_a66aeb0938a7e6d2fc484178d36f2592e"><td class="memItemLeft" align="right" valign="top"><a id="a66aeb0938a7e6d2fc484178d36f2592e" name="a66aeb0938a7e6d2fc484178d36f2592e"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>vw</b></td></tr>
+<tr class="memdesc:a66aeb0938a7e6d2fc484178d36f2592e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wall velocity, wall gamma factor, spin-statistic, lower boundary of the integral. <br /></td></tr>
 <tr class="separator:a66aeb0938a7e6d2fc484178d36f2592e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae41cb032a3ffd2f99189f11b0912650c" id="r_ae41cb032a3ffd2f99189f11b0912650c"><td class="memItemLeft" align="right" valign="top"><a id="ae41cb032a3ffd2f99189f11b0912650c" name="ae41cb032a3ffd2f99189f11b0912650c"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>gamw</b></td></tr>
@@ -149,11 +157,141 @@ const double&#160;</td><td class="memItemRight" valign="bottom"><b>x</b></td></t
 <tr class="separator:aac2ad17637690729b22b0e1d509c3c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab13c93f525e0f1464e22d1a13adac04f" id="r_ab13c93f525e0f1464e22d1a13adac04f"><td class="memItemLeft" align="right" valign="top"><a id="ab13c93f525e0f1464e22d1a13adac04f" name="ab13c93f525e0f1464e22d1a13adac04f"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>w</b></td></tr>
+<tr class="memdesc:ab13c93f525e0f1464e22d1a13adac04f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variables which occur during the integration over y. <br /></td></tr>
 <tr class="separator:ab13c93f525e0f1464e22d1a13adac04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae16513d3882c799718e01851d2b604ce" id="r_ae16513d3882c799718e01851d2b604ce"><td class="memItemLeft" align="right" valign="top"><a id="ae16513d3882c799718e01851d2b604ce" name="ae16513d3882c799718e01851d2b604ce"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>pwt</b></td></tr>
 <tr class="separator:ae16513d3882c799718e01851d2b604ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Separate class for Q9 kernels as they involve two normal kernels. y-dependent part. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ade7b767084ffadc596932e516d1ac585" name="ade7b767084ffadc596932e516d1ac585"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade7b767084ffadc596932e516d1ac585">&#9670;&#160;</a></span>Q9KernelInty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BSMPT::Baryo::FHCK::Q9KernelInty::Q9KernelInty </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>structure_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>l_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>vw_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>gamw_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>s_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>x_in</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Q9 <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html" title="Generic Kernel function for any moment.">Kernel</a> Integrand y object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">structure_in</td><td>structure of V </td></tr>
+    <tr><td class="paramname">l_in</td><td>Moment of the kernel </td></tr>
+    <tr><td class="paramname">vw_in</td><td>Wall velocity </td></tr>
+    <tr><td class="paramname">gamw_in</td><td>Gamma factor of the wall </td></tr>
+    <tr><td class="paramname">vw_in</td><td>Spin statistic of particle </td></tr>
+    <tr><td class="paramname">x_in</td><td>x = m / T </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2adc69ca954cc4aaf965d3904e098fc8" name="a2adc69ca954cc4aaf965d3904e098fc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2adc69ca954cc4aaf965d3904e098fc8">&#9670;&#160;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::Q9KernelInty::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>y</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>operator which evaluates the integrand of the y-dependent part of the kernel integrand </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">y</td><td>Integration variable between [-1, 1] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a90758018454ec253a232c2af36abaf36" name="a90758018454ec253a232c2af36abaf36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90758018454ec253a232c2af36abaf36">&#9670;&#160;</a></span>set_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BSMPT::Baryo::FHCK::Q9KernelInty::set_all </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets all relevant variables of the class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Integration variable. Defined through w = x + (1 - u) / u. Takes value between 0 and 1 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/BSMPT/Kfactors/<a class="el" href="Kernels_8h_source.html">Kernels.h</a></li>
 <li>src/Kfactors/<b>Kernels.cpp</b></li>

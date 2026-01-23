@@ -10,5 +10,6 @@ var searchData=
   ['distribution_5ff0_7',['distribution_f0',['../Kfactors_8h.html#a3a12382cb6aa4fa878ea8dde4d046dff',1,'BSMPT::Kfactors']]],
   ['dl_8',['dl',['../classcvspline.html#a6d1c75d9b856e77b7a3a0c3f05eb5e38',1,'cvspline']]],
   ['doglobminoverlap_9',['DoGlobMinOverlap',['../structBSMPT_1_1Vacuum.html#ad05bc23a3a5cd444d44b1fea01e20f59',1,'BSMPT::Vacuum']]],
-  ['dophasesoverlap_10',['DoPhasesOverlap',['../structBSMPT_1_1Vacuum.html#aeeaf7a1f9261d3fa38461b74864de52d',1,'BSMPT::Vacuum']]]
+  ['dophasesoverlap_10',['DoPhasesOverlap',['../structBSMPT_1_1Vacuum.html#aeeaf7a1f9261d3fa38461b74864de52d',1,'BSMPT::Vacuum']]],
+  ['dudz_11',['dudz',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3333197358fc6cfd634ea62b4d1f449c',1,'BSMPT::Baryo::FHCK::TransportEquations']]]
 ];

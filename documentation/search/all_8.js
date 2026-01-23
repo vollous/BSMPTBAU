@@ -33,5 +33,6 @@ var searchData=
   ['dq_30',['Dq',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140',1,'BSMPT::Baryo::gen_fluid']]],
   ['dt_31',['Dt',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2314e9e4aad61d6263e146346cc7a0c6',1,'BSMPT::Baryo::gen_fluid']]],
   ['dtau_32',['Dtau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2fad2a6c0f10a3c95b7ec065eb144959',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dv_33',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#acbee846f9efe820d11e4baf78a084f07',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6',1,'BSMPT::VacuumProfileNS::VacuumProfile::dV']]]
+  ['dudz_33',['dudz',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3333197358fc6cfd634ea62b4d1f449c',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['dv_34',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#acbee846f9efe820d11e4baf78a084f07',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6',1,'BSMPT::VacuumProfileNS::VacuumProfile::dV']]]
 ];

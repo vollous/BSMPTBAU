@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['n0int_0',['N0Int',['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html',1,'BSMPT::Baryo::FHCK']]],
+  ['n0int_0',['n0int',['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html',1,'BSMPT::Baryo::FHCK::N0Int'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html#a24fc138ae64ae24817f3885063ba0e90',1,'BSMPT::Baryo::FHCK::N0Int::N0Int()']]],
   ['n_5fstep_1',['n_step',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#a2920b41b4ed289a19ebedc25a2b3dded',1,'BSMPT::Baryo::CalculateEtaInterface']]],
   ['nablanumerical_2',['NablaNumerical',['../namespaceBSMPT.html#a5d3fdbfc7b4f3e3d170f2fd5b094fdc3',1,'BSMPT']]],
   ['nablavct_3',['NablaVCT',['../classBSMPT_1_1Class__Potential__Origin.html#a93027829ab6605b5a153316129cbbcef',1,'BSMPT::Class_Potential_Origin']]],
@@ -11,7 +11,7 @@ var searchData=
   ['nderive_5fbounceratio_8',['Nderive_BounceRatio',['../namespaceBSMPT.html#a5f8fa445f29f8398aa04e79642e9ede9',1,'BSMPT']]],
   ['negativebosonspline_2ecpp_9',['NegativeBosonSpline.cpp',['../NegativeBosonSpline_8cpp.html',1,'']]],
   ['negativebosonspline_2eh_10',['NegativeBosonSpline.h',['../NegativeBosonSpline_8h.html',1,'']]],
-  ['neglinearint_11',['neglinearint',['../NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8h.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp']]],
+  ['neglinearint_11',['neglinearint',['../NegativeBosonSpline_8h.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a',1,'NegLinearInt:&#160;NegativeBosonSpline.cpp']]],
   ['neglinearinttransposed_12',['neglinearinttransposed',['../NegativeBosonSpline_8h.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp'],['../NegativeBosonSpline_8cpp.html#abfde607bc1595b6eeccd62be17afbb8f',1,'NegLinearIntTransposed:&#160;NegativeBosonSpline.cpp']]],
   ['neqs_13',['nEqs',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4fcf47cf52552d7475d9f0b63c56d238',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['new_20model_14',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],

@@ -119,7 +119,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b> ()</td
 <tr class="separator:ab9499ad5285aee0fbffafd79865f6ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d4db03d9a70760b57025b114ff43129" id="r_a5d4db03d9a70760b57025b114ff43129"><td class="memItemLeft" align="right" valign="top"><a id="a5d4db03d9a70760b57025b114ff43129" name="a5d4db03d9a70760b57025b114ff43129"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildKernelInterpolation</b> ()</td></tr>
-<tr class="memdesc:a5d4db03d9a70760b57025b114ff43129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load all the <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html">Kernel</a> functions and interpolate them. <br /></td></tr>
+<tr class="memdesc:a5d4db03d9a70760b57025b114ff43129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load all the <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html" title="Generic Kernel function for any moment.">Kernel</a> functions and interpolate them. <br /></td></tr>
 <tr class="separator:a5d4db03d9a70760b57025b114ff43129"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe593f81716d6c0c6b9f2b3611054a5e" id="r_abe593f81716d6c0c6b9f2b3611054a5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#abe593f81716d6c0c6b9f2b3611054a5e">SetNumberOfSteps</a> (const int &amp;num)</td></tr>
 <tr class="memdesc:abe593f81716d6c0c6b9f2b3611054a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of intergrations steps and initialize again.  <br /></td></tr>
@@ -160,13 +160,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFermionMass</
 <tr class="memitem:a3b34028093eb0d010f1b80affb857892" id="r_a3b34028093eb0d010f1b80affb857892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892">InsertBlockDiagonal</a> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;full, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;sub, const size_t position)</td></tr>
 <tr class="memdesc:a3b34028093eb0d010f1b80affb857892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a sub matrix into a block diagonal matrix.  <br /></td></tr>
 <tr class="separator:a3b34028093eb0d010f1b80affb857892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3333197358fc6cfd634ea62b4d1f449c" id="r_a3333197358fc6cfd634ea62b4d1f449c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3333197358fc6cfd634ea62b4d1f449c">dudz</a> (const double &amp;u)</td></tr>
+<tr class="memdesc:a3333197358fc6cfd634ea62b4d1f449c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivative \( \frac{du}{dz} \) of \( z \to u \equiv \tanh(z/L_w)
+\).  <br /></td></tr>
+<tr class="separator:a3333197358fc6cfd634ea62b4d1f449c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d3d51ebfcb3bcb15a8337e49b065b0" id="r_a06d3d51ebfcb3bcb15a8337e49b065b0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a06d3d51ebfcb3bcb15a8337e49b065b0">zTOu</a> (const double &amp;z)</td></tr>
+<tr class="separator:a06d3d51ebfcb3bcb15a8337e49b065b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87a6c708bb61ab6ef99415d310e0571b" id="r_a87a6c708bb61ab6ef99415d310e0571b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a87a6c708bb61ab6ef99415d310e0571b">uTOz</a> (const double &amp;u)</td></tr>
+<tr class="memdesc:a87a6c708bb61ab6ef99415d310e0571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping of \( u \to z \equiv L_w\tanh^{-1}(z) \).  <br /></td></tr>
+<tr class="separator:a87a6c708bb61ab6ef99415d310e0571b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a400b738fb0871e6c1c68e51c65a15980" id="r_a400b738fb0871e6c1c68e51c65a15980"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a400b738fb0871e6c1c68e51c65a15980">Equations</a> (const double &amp;z, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;Mtilde, <a class="el" href="classVecDoub.html">VecDoub</a> &amp;Stilde)</td></tr>
 <tr class="memdesc:a400b738fb0871e6c1c68e51c65a15980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the equations.  <br /></td></tr>
 <tr class="separator:a400b738fb0871e6c1c68e51c65a15980"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa32c37dc0a977a511d682fd61b4fb738" id="r_aa32c37dc0a977a511d682fd61b4fb738"><td class="memItemLeft" align="right" valign="top"><a id="aa32c37dc0a977a511d682fd61b4fb738" name="aa32c37dc0a977a511d682fd61b4fb738"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ShootingMethod</b> ()</td></tr>
-<tr class="memdesc:aa32c37dc0a977a511d682fd61b4fb738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the transport equation using the shooting method. Runge Kutta. <br /></td></tr>
-<tr class="separator:aa32c37dc0a977a511d682fd61b4fb738"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8804340e2806b23d391825d61bb90f9" id="r_ad8804340e2806b23d391825d61bb90f9"><td class="memItemLeft" align="right" valign="top"><a id="ad8804340e2806b23d391825d61bb90f9" name="ad8804340e2806b23d391825d61bb90f9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RelaxationMethod</b> ()</td></tr>
 <tr class="memdesc:ad8804340e2806b23d391825d61bb90f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the transport equation using the relaxation method. Recommended. <br /></td></tr>
@@ -183,8 +188,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SolveTransportEquatio
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculateBAU</b> ()</td></tr>
 <tr class="memdesc:acfc483605df8710d718c9213860b38b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the baryonic assymetry of the Universe. <br /></td></tr>
 <tr class="separator:acfc483605df8710d718c9213860b38b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4092557b602fe66bf93e3ca416bf344e" id="r_a4092557b602fe66bf93e3ca416bf344e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4092557b602fe66bf93e3ca416bf344e">PrintTransportEquation</a> (const int &amp;size, const std::string &amp;Particle, const std::string &amp;MuOrU, const double &amp;multiplier=1)</td></tr>
-<tr class="separator:a4092557b602fe66bf93e3ca416bf344e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d4a3f64284c415f3af982a6d460f24" id="r_ae0d4a3f64284c415f3af982a6d460f24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae0d4a3f64284c415f3af982a6d460f24">PrintTransportEquation</a> (const int &amp;size, const std::string &amp;Particle, const std::string &amp;MuOrU)</td></tr>
+<tr class="separator:ae0d4a3f64284c415f3af982a6d460f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -209,7 +214,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>Tstar</b></td></tr>
 <tr class="memdesc:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transition temperature. <br /></td></tr>
 <tr class="separator:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45fc4685b2add1f50ba04d1c63b7fd74" id="r_a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memItemLeft" align="right" valign="top"><a id="a45fc4685b2add1f50ba04d1c63b7fd74" name="a45fc4685b2add1f50ba04d1c63b7fd74"></a>
-const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b> = 10</td></tr>
+const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b> = 2</td></tr>
 <tr class="memdesc:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of moments used to solve transport equation. <br /></td></tr>
 <tr class="separator:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae11136128236afc22bca49fa8a9f4657" id="r_ae11136128236afc22bca49fa8a9f4657"><td class="memItemLeft" align="right" valign="top"><a id="ae11136128236afc22bca49fa8a9f4657" name="ae11136128236afc22bca49fa8a9f4657"></a>
@@ -266,6 +271,10 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>Lw</b></td></tr>
 std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>zList</b></td></tr>
 <tr class="memdesc:a5142d92ac8d5112cf5b1afc21d6237a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of point on the z-axis. <br /></td></tr>
 <tr class="separator:a5142d92ac8d5112cf5b1afc21d6237a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9984b2587e3398a81a7b1c3b30e1164" id="r_ad9984b2587e3398a81a7b1c3b30e1164"><td class="memItemLeft" align="right" valign="top"><a id="ad9984b2587e3398a81a7b1c3b30e1164" name="ad9984b2587e3398a81a7b1c3b30e1164"></a>
+std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>uList</b></td></tr>
+<tr class="memdesc:ad9984b2587e3398a81a7b1c3b30e1164"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of points on the u-axis (tanh scaled). <br /></td></tr>
+<tr class="separator:ad9984b2587e3398a81a7b1c3b30e1164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a18e8da834396bf7750b052a165a208" id="r_a1a18e8da834396bf7750b052a165a208"><td class="memItemLeft" align="right" valign="top"><a id="a1a18e8da834396bf7750b052a165a208" name="a1a18e8da834396bf7750b052a165a208"></a>
 std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html">CalculateEtaInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>EtaInterface</b></td></tr>
 <tr class="memdesc:a1a18e8da834396bf7750b052a165a208"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtaInterface object. To use BSMPTv2 functions. <br /></td></tr>
@@ -295,11 +304,11 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nEqs</b></td></tr>
 <tr class="memdesc:a4fcf47cf52552d7475d9f0b63c56d238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of equations. <br /></td></tr>
 <tr class="separator:a4fcf47cf52552d7475d9f0b63c56d238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6650cb0a9ad4a9b42bd330734a2b7af2" id="r_a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="memItemLeft" align="right" valign="top"><a id="a6650cb0a9ad4a9b42bd330734a2b7af2" name="a6650cb0a9ad4a9b42bd330734a2b7af2"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b> = 10000</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b> = 1000</td></tr>
 <tr class="memdesc:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of steps in space. <br /></td></tr>
 <tr class="separator:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58396388ee15d5de8755dff47363bf43" id="r_a58396388ee15d5de8755dff47363bf43"><td class="memItemLeft" align="right" valign="top"><a id="a58396388ee15d5de8755dff47363bf43" name="a58396388ee15d5de8755dff47363bf43"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>LwMultiplier</b> = 1000.</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>LwMultiplier</b> = 100.</td></tr>
 <tr class="memdesc:a58396388ee15d5de8755dff47363bf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">The integration goes from \( - LwMultiplier * Lw \) up to \(
 LwMultiplier * Lw \). <br /></td></tr>
 <tr class="separator:a58396388ee15d5de8755dff47363bf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -630,6 +639,34 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
+<a id="a3333197358fc6cfd634ea62b4d1f449c" name="a3333197358fc6cfd634ea62b4d1f449c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3333197358fc6cfd634ea62b4d1f449c">&#9670;&#160;</a></span>dudz()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::TransportEquations::dudz </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Derivative \( \frac{du}{dz} \) of \( z \to u \equiv \tanh(z/L_w)
+\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+
+</div>
+</div>
 <a id="a400b738fb0871e6c1c68e51c65a15980" name="a400b738fb0871e6c1c68e51c65a15980"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a400b738fb0871e6c1c68e51c65a15980">&#9670;&#160;</a></span>Equations()</h2>
 
@@ -821,8 +858,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="a4092557b602fe66bf93e3ca416bf344e" name="a4092557b602fe66bf93e3ca416bf344e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4092557b602fe66bf93e3ca416bf344e">&#9670;&#160;</a></span>PrintTransportEquation()</h2>
+<a id="ae0d4a3f64284c415f3af982a6d460f24" name="ae0d4a3f64284c415f3af982a6d460f24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d4a3f64284c415f3af982a6d460f24">&#9670;&#160;</a></span>PrintTransportEquation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -843,13 +880,7 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>MuOrU</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>multiplier</em> = <code>1</code>&#160;</td>
+          <td class="paramname"><em>MuOrU</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -895,6 +926,33 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
+<a id="a87a6c708bb61ab6ef99415d310e0571b" name="a87a6c708bb61ab6ef99415d310e0571b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87a6c708bb61ab6ef99415d310e0571b">&#9670;&#160;</a></span>uTOz()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::TransportEquations::uTOz </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mapping of \( u \to z \equiv L_w\tanh^{-1}(z) \). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+
+</div>
+</div>
 <a id="a829f4356f0ede57197a25e70939be296" name="a829f4356f0ede57197a25e70939be296"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a829f4356f0ede57197a25e70939be296">&#9670;&#160;</a></span>Vev()</h2>
 
@@ -932,6 +990,31 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;double&gt; result </dd></dl>
+
+</div>
+</div>
+<a id="a06d3d51ebfcb3bcb15a8337e49b065b0" name="a06d3d51ebfcb3bcb15a8337e49b065b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d3d51ebfcb3bcb15a8337e49b065b0">&#9670;&#160;</a></span>zTOu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::TransportEquations::zTOu </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>z</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">z</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
 </div>
 </div>

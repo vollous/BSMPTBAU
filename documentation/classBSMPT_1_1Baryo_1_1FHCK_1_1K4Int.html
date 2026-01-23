@@ -104,25 +104,80 @@ $(document).ready(function(){initNavTree('classBSMPT_1_1Baryo_1_1FHCK_1_1K4Int.h
   <div class="headertitle"><div class="title">BSMPT::Baryo::FHCK::K4Int Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Integrand of the K4 kernel.  
+ <a href="classBSMPT_1_1Baryo_1_1FHCK_1_1K4Int.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Kernels_8h_source.html">BSMPT/Kfactors/Kernels.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0e683627de9abbce919b4a500a2006d7" id="r_a0e683627de9abbce919b4a500a2006d7"><td class="memItemLeft" align="right" valign="top"><a id="a0e683627de9abbce919b4a500a2006d7" name="a0e683627de9abbce919b4a500a2006d7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>K4Int</b> (const double s_in, const double x_in)</td></tr>
+<tr class="memitem:a0e683627de9abbce919b4a500a2006d7" id="r_a0e683627de9abbce919b4a500a2006d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1K4Int.html#a0e683627de9abbce919b4a500a2006d7">K4Int</a> (const double s_in, const double x_in)</td></tr>
+<tr class="memdesc:a0e683627de9abbce919b4a500a2006d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new K4 <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html" title="Generic Kernel function for any moment.">Kernel</a> Integrand object.  <br /></td></tr>
 <tr class="separator:a0e683627de9abbce919b4a500a2006d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1c3aab2c4a23fbb3bc5a10702a7a287" id="r_ac1c3aab2c4a23fbb3bc5a10702a7a287"><td class="memItemLeft" align="right" valign="top"><a id="ac1c3aab2c4a23fbb3bc5a10702a7a287" name="ac1c3aab2c4a23fbb3bc5a10702a7a287"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const double u)</td></tr>
+<tr class="memdesc:ac1c3aab2c4a23fbb3bc5a10702a7a287"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the integrand depending on u between [0, 1]. <br /></td></tr>
 <tr class="separator:ac1c3aab2c4a23fbb3bc5a10702a7a287"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ad4ce209b24b52edbcc18b27367400d96" id="r_ad4ce209b24b52edbcc18b27367400d96"><td class="memItemLeft" align="right" valign="top"><a id="ad4ce209b24b52edbcc18b27367400d96" name="ad4ce209b24b52edbcc18b27367400d96"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>s</b></td></tr>
+<tr class="memdesc:ad4ce209b24b52edbcc18b27367400d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">spin-statistic, lower boundary of the integral <br /></td></tr>
 <tr class="separator:ad4ce209b24b52edbcc18b27367400d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d36bc830de85e3edcc673a3ac2c2424" id="r_a5d36bc830de85e3edcc673a3ac2c2424"><td class="memItemLeft" align="right" valign="top"><a id="a5d36bc830de85e3edcc673a3ac2c2424" name="a5d36bc830de85e3edcc673a3ac2c2424"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>x</b></td></tr>
 <tr class="separator:a5d36bc830de85e3edcc673a3ac2c2424"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Integrand of the K4 kernel. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0e683627de9abbce919b4a500a2006d7" name="a0e683627de9abbce919b4a500a2006d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e683627de9abbce919b4a500a2006d7">&#9670;&#160;</a></span>K4Int()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BSMPT::Baryo::FHCK::K4Int::K4Int </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>s_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>x_in</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new K4 <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html" title="Generic Kernel function for any moment.">Kernel</a> Integrand object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vw_in</td><td>Spin statistic of particle </td></tr>
+    <tr><td class="paramname">x_in</td><td>x = m / T </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/BSMPT/Kfactors/<a class="el" href="Kernels_8h_source.html">Kernels.h</a></li>
 <li>src/Kfactors/<b>Kernels.cpp</b></li>
