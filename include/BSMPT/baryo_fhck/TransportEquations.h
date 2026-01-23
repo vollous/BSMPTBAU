@@ -90,7 +90,7 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 2;
+  const size_t moment = 14;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -461,6 +461,98 @@ public:
                               const std::string &Particle,
                               const std::string &MuOrU);
 };
+
+struct Difeq_Transport : Difeq
+{
+
+  TransportEquations &Transport;
+  MatDoub Mtilde, MtildeM, MtildeP;
+  VecDoub Stilde, StildeM, StildeP;
+  Difeq_Transport(TransportEquations &Transport_in,
+                  MatDoub &MtildeM_in,
+                  MatDoub &MtildeP_in,
+                  VecDoub &StildeM_in,
+                  VecDoub &StildeP_in)
+      : Transport(Transport_in)
+      , Mtilde(MtildeM_in)
+      , MtildeM(MtildeM_in)
+      , MtildeP(MtildeP_in)
+      , Stilde(StildeM_in)
+      , StildeM(StildeM_in)
+      , StildeP(StildeP_in)
+  {
+  }
+  void smatrix(const int k,
+               const int k1,
+               const int k2,
+               const int jsf,
+               VecInt &indexv,
+               MatDoub &s,
+               MatDoub &y)
+  {
+    double temp;
+    size_t nEqs = Transport.nEqs;
+    s.zero(); // Set matrix s = 0
+    if (k == k1)
+    {
+      // Boundary conditions mu = 0 and first u on first boundary
+      for (size_t i = 0; i < nEqs / 2; i++)
+      {
+        // Sn at the first boundary
+        s[nEqs / 2 + i][nEqs + i] = 1.0;
+        // B0
+        s[nEqs / 2 + i][jsf] = y[indexv[i]][0];
+      }
+    }
+    else if (k > k2 - 1)
+    {
+      // Boundary conditions mu = 0 and first u on second boundary
+      for (size_t i = 0; i < nEqs / 2; i++)
+      {
+        // Sn at the last boundary
+        s[i][nEqs + i] = 1.0;
+        // C0
+        s[i][jsf] = y[indexv[i]][Transport.uList.size() - 1];
+      }
+    }
+    else
+    {
+      double um = (Transport.uList[k] + Transport.uList[k - 1]) / 2.;
+      double du = (Transport.uList[k] - Transport.uList[k - 1]) / Transport.dudz(um);
+      if (um < -0.3) // TODO: change. Too specific
+      {
+        Mtilde = MtildeM;
+        Stilde = StildeM;
+      }
+      else if (um > 0.3) // TODO: chagne. Too specific
+      {
+        Mtilde = MtildeP;
+        Stilde = StildeP;
+      }
+      else
+        Transport.Equations(Transport.uTOz(um), Mtilde, Stilde);
+      for (size_t j = 0; j < nEqs; j++)
+      {
+        for (size_t n = 0; n < nEqs; n++)
+        {
+          // s matrix for the middle point
+          // S_{j,n}
+          // M[k] and S[k] are evaluated between k and k-1
+          s[j][indexv[n]] = -Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+          // S_{j,N + n}
+          s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        }
+        //  Equations for E(k,k-1)
+        temp = Stilde[j];
+        for (size_t i = 0; i < nEqs; i++)
+          temp += Mtilde[j][i] * (y[i][k] + y[i][k - 1]) / 2.;
+        s[j][jsf] = y[j][k] - y[j][k - 1] - du * temp;
+      }
+    }
+  }
+  ~Difeq_Transport() {};
+};
+
 } // namespace FHCK
 } // namespace Baryo
 } // namespace BSMPT

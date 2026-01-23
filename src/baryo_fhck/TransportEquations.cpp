@@ -739,11 +739,8 @@ void TransportEquations::SolveTransportEquation()
 {
   Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw));
 
-  MatDoub STildeList(NumberOfSteps, nEqs);
-  Mat3DDoub MTildeList(NumberOfSteps, nEqs, nEqs);
-
-  MatDoub Mtilde(nEqs, nEqs), MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
-  VecDoub Stilde(nEqs), StildeM(nEqs), StildeP(nEqs);
+  MatDoub MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
+  VecDoub StildeM(nEqs), StildeP(nEqs);
 
   Equations(zList.front(), MtildeM, StildeM);
   Equations(zList.back(), MtildeP, StildeP);
@@ -758,34 +755,8 @@ void TransportEquations::SolveTransportEquation()
     return;
   }
 
-  for (size_t i = 1; i < NumberOfSteps; i++)
-  {
-    // Compute Mtilde and Stilde
-    double uc = (uList[i] + uList[i - 1]) / 2.;
-    if (uc < -0.3) // TODO: Fix this, too specific.
-    {
-      Mtilde = MtildeM;
-      Stilde = StildeM;
-    }
-    else if (uc > 0.3)
-    {
-      Mtilde = MtildeP;
-      Stilde = StildeP;
-    }
-    else
-      Equations(uTOz(uc), Mtilde, Stilde);
-
-    // Save the Mtilde and Stilde
-    for (size_t j = 0; j < nEqs; j++)
-    {
-      STildeList[i][j] = Stilde[j] / dudz(uc);
-      for (size_t k = 0; k < nEqs; k++)
-        MTildeList[i][j][k] = Mtilde[j][k] / dudz(uc);
-    }
-  }
   // Construct Difeq object (S_j,n matrix)
-  Difeq_TransportEquation difeq(
-      uList, nFermions, nBosons, MTildeList, STildeList, moment);
+  Difeq_Transport difeq(*this, MtildeM, MtildeP, StildeM, StildeP);
 
   size_t itmax = 1;
   double conv  = 1e-10;
