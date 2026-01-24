@@ -37,6 +37,7 @@ public:
   VecDoub(const size_t n, const double &a);
   VecDoub(const VecDoub &a);
   size_t size();
+  void resize(const size_t newn);
   void zero();
   void print();
   VecDoub &operator=(const VecDoub &a);
