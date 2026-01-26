@@ -60,7 +60,7 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
 
 void VacuumProfile::CalculateProfile()
 {
-  size_t itmax = 10;
+  size_t itmax = 50;
   double conv  = 1e-10;
   double slowc = 1e-1;
   mode         = ProfileSolverMode::Deriv;
@@ -75,16 +75,37 @@ void VacuumProfile::CalculateProfile()
   ss << "False vacuum = " << FalseVacuum << "\n";
   ss << "VEV dimension = " << dim << "\n";
   ss << "Calculating profile in z ∈ [" << z.front() << ", " << z.back() << "]";
+  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
+  ss.clear();
 
   Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, z, TrueVacuum, FalseVacuum, V, dV, Hessian);
-  RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
+
+  double MinError  = 1.e100;
+  size_t NotBetter = 0;
+  auto Best_y      = y;
+
+  for (size_t it = 0; it < itmax; it++)
+  {
+    if (NotBetter >= NotBetterThreshold) break;
+    RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
+    Logger::Write(LoggingLevel::VacuumProfile,
+                  "[Relaxation Vacuum profile] it = " + std::to_string(it) +
+                      ". Error = " + std::to_string(solvde.err));
+    if (solvde.err < MinError)
+    {
+      MinError  = solvde.err;
+      Best_y    = y;
+      NotBetter = 0;
+    }
+    NotBetter++;
+  }
 
   ss << "\nμ = " << difeq_vacuumprofile.mu << "\n";
 
   status = VacuumProfileStatus::Success;
-  GenerateSplines();
+  y      = Best_y;
+  CenterPath();
 
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }

@@ -54,6 +54,12 @@ struct VacuumProfile
   size_t NumberOfSteps = 1000;
 
   /**
+   * @brief Number of times we let the profile relax without getting better.
+   *
+   */
+  size_t NotBetterThreshold = 3;
+
+  /**
    * @brief True and False Vacuum
    *
    */
