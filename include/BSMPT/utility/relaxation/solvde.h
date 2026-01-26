@@ -16,6 +16,8 @@ private:
   MatDoub s;
 
 public:
+  double err;
+
   RelaxOde(const int itmax,
            const double conv,
            const double slowc,
@@ -57,7 +59,7 @@ public:
       red(nb2, ne, nenb1, nenb1, ne2, m);
       pinvs(0, nb2, nenb1, nb2, m);
       bksub(nb2, 0, m);
-      double err = 0.0;
+      err = 0.0;
       for (int j = 0; j < ne; j++)
       {
         jv          = indexv[j];
