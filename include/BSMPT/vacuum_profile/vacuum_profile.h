@@ -17,6 +17,10 @@ namespace BSMPT
 namespace VacuumProfileNS
 {
 
+/**
+ * @brief Status of the Vacuum Profile calculation
+ *
+ */
 enum class VacuumProfileStatus
 {
   Unset,
