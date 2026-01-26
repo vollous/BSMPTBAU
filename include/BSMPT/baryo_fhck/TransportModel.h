@@ -182,7 +182,8 @@ public:
 
   /**
    * @brief Generate the quark masses splines
-   *
+   * 
+   * @param zList z distribution where we interpolate the fermion mass
    */
   void GenerateFermionMass(std::vector<double> &zList);
 
