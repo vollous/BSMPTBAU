@@ -96,9 +96,6 @@ double VacuumProfile::CalculateWidth(
 {
   size_t NumberPointsBarrier = 100;
 
-  Logger::Write(LoggingLevel::VacuumProfile,
-                "Estimating Lw using a rough approximation");
-
   const double vc     = BSMPT::L2NormVector(TrueVacuum - FalseVacuum);
   const double Vtrue  = V(TrueVacuum);
   const double Vfalse = V(FalseVacuum);
@@ -110,6 +107,10 @@ double VacuumProfile::CalculateWidth(
     Vb              = std::max(Vb, std::max(abs(Vtrue - Vk), abs(Vfalse - Vk)));
   }
   const double Lw = vc / sqrt(8 * Vb);
+
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Estimating Lw using a rough approximation -> Lw = " +
+                    std::to_string(Lw));
 
   return Lw;
 }
