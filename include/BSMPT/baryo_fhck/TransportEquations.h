@@ -48,6 +48,9 @@ const std::unordered_map<FHCKStatus, std::string> FHCKStatusToString{
 class TransportEquations
 {
 public:
+  /**
+   * @brief Transport model under consideration
+   */
   std::shared_ptr<TransportModel> Tmodel;
 
   /**
@@ -103,24 +106,6 @@ public:
    *
    */
   std::vector<double> uList;
-
-  /**
-   * @brief EtaInterface object. To  use BSMPTv2 functions
-   *
-   */
-  std::shared_ptr<CalculateEtaInterface> EtaInterface;
-
-  /**
-   * @brief Phase of the top mass at the false vacuum
-   *
-   */
-  std::optional<double> Theta_False;
-
-  /**
-   * @brief Phase of the top mass at the true vacuum
-   *
-   */
-  std::optional<double> Theta_True;
 
   /**
    * @brief Store the solution from the relaxation method

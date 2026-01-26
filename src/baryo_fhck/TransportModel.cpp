@@ -21,7 +21,35 @@ TransportModel::TransportModel(
   FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
   TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
   VevProfile   = VevProfile_In;
-  Initialize();
+}
+
+void TransportModel::Initialize()
+{
+  EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
+
+  SetEtaInterface();
+
+  if (VevProfile == VevProfileMode::FieldEquation)
+  {
+    const double &eps = 0.01;
+    // Calculate tunnel profile
+    std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
+    {
+      // Potential wrapper
+      std::vector<double> res = modelPointer->MinimizeOrderVEV(vev);
+      return modelPointer->VEff(res, Tstar);
+    };
+
+    std::function<std::vector<double>(std::vector<double>)> dV =
+        [=](auto const &arg) { return NablaNumerical(arg, V, eps); };
+    std::function<std::vector<std::vector<double>>(std::vector<double>)>
+        Hessian = [=](auto const &arg)
+    { return HessianNumerical(arg, V, eps); };
+
+    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
+        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
+    vacuumprofile->CalculateProfile();
+  }
 }
 
 void TransportModel::SetEtaInterface()
@@ -44,7 +72,7 @@ void TransportModel::SetEtaInterface()
                 "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
 }
 
-void TransportModel::GenerateFermionMass()
+void TransportModel::GenerateFermionMass(std::vector<double> &zList)
 {
   QuarkMassesRe.clear();
   QuarkMassesIm.clear();
@@ -99,62 +127,6 @@ void TransportModel::GenerateFermionMass()
   std::stringstream ss;
   Plot.show(ss);
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
-}
-
-std::vector<double> TransportModel::MakeDistribution(const double xmax,
-                                                     const size_t npoints)
-{
-  std::vector<double> res(npoints);
-
-  for (size_t i = 0; i < npoints; i++)
-  {
-    double temp = pow(((i - npoints / 2.)) / (npoints / 2.), 3) * M_PI / 4.;
-    res.at(i)   = xmax * tan(temp);
-  }
-  return res;
-}
-
-void TransportModel::Initialize()
-{
-  EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
-
-  SetEtaInterface();
-
-  if (VevProfile == VevProfileMode::FieldEquation)
-  {
-    const double &eps = 0.01;
-    // Calculate tunnel profile
-    std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
-    {
-      // Potential wrapper
-      std::vector<double> res = modelPointer->MinimizeOrderVEV(vev);
-      return modelPointer->VEff(res, Tstar);
-    };
-
-    std::function<std::vector<double>(std::vector<double>)> dV =
-        [=](auto const &arg) { return NablaNumerical(arg, V, eps); };
-    std::function<std::vector<std::vector<double>>(std::vector<double>)>
-        Hessian = [=](auto const &arg)
-    { return HessianNumerical(arg, V, eps); };
-
-    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
-        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
-    vacuumprofile->CalculateProfile();
-  }
-
-  zList =
-      std::vector<double>(MakeDistribution(LwMultiplier * Lw, NumberOfSteps));
-
-  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
-
-  // Generate the fermion masses splines
-  GenerateFermionMass();
-
-  // gamwall = 1. / std::sqrt(1. - vwall * vwall);
-
-  // nEqs = moment * (nFermions + nBosons);
-
-  // BuildKernelInterpolation();
 }
 
 std::vector<double> TransportModel::Vev(const double &z, const int &diff)

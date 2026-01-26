@@ -113,19 +113,6 @@ private:
    */
   std::vector<tk::spline> QuarkMassesRe, QuarkMassesIm;
 
-  /**
-   * @brief Number of steps in space
-   *
-   */
-  size_t NumberOfSteps = 10000;
-
-  /**
-   * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
-   * LwMultiplier * Lw \f$
-   *
-   */
-  double LwMultiplier = 1000.;
-
 public:
   /**
    * @brief The standard 4 particle that appear in the transport equations
@@ -146,12 +133,6 @@ public:
    *
    */
   double vwall;
-
-  /**
-   * @brief List of point on the z-axis.
-   *
-   */
-  std::vector<double> zList;
 
   /**
    * @brief Mode of the vev profile.
@@ -175,17 +156,18 @@ public:
                  const double &vwall_in,
                  const double &Tstar_in,
                  const VevProfileMode &VevProfile_In = VevProfileMode::Kink);
+
+  /**
+   * @brief Create the VEV vectors
+   *
+   */
+  void Initialize();
+
   /**
    * @brief Set EtaInterface obejct to use BSMPTv2 functions.
    *
    */
   void SetEtaInterface();
-
-  /**
-   * @brief Distributes the points used in the relaxation method
-   *
-   */
-  std::vector<double> MakeDistribution(const double xmax, const size_t npoints);
 
   /**
    * @brief Calculates the VEV \f$ \vec{v} \f$ and derivatives \f$
@@ -202,7 +184,7 @@ public:
    * @brief Generate the quark masses splines
    *
    */
-  void GenerateFermionMass();
+  void GenerateFermionMass(std::vector<double> &zList);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its
@@ -229,12 +211,6 @@ public:
    * @return double W boson mass
    */
   double GetWMass(const double &z, const double &T);
-
-  /**
-   * @brief Create the VEV vectors
-   *
-   */
-  void Initialize();
 
   /**
    * @brief This function calculates the EW breaking VEV from all contributing

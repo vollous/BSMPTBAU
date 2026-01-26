@@ -18,6 +18,8 @@ TransportEquations::TransportEquations(
 
 void TransportEquations::Initialize()
 {
+  Tmodel->Initialize();
+
   uList = MakeDistribution(1, NumberOfSteps);
 
   zList.clear();
@@ -35,6 +37,7 @@ void TransportEquations::Initialize()
                     std::to_string(uList.back()) + "\n");
 
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
+  Tmodel->GenerateFermionMass(zList);
 
   gamwall = 1. / std::sqrt(1. - Tmodel->vwall * Tmodel->vwall);
 
