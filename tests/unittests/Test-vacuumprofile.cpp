@@ -154,7 +154,7 @@ TEST_CASE("Test indexv - deriv", "[vacuumprofile]")
   vacuumprofile.mode = VacuumProfileNS::ProfileSolverMode::Deriv;
   VecInt indexv      = vacuumprofile.Calcindexv();
   for (size_t i = 0; i < 2 * dim; i++)
-    CHECK(indexv[i] == indexvDeriv[i]);
+    REQUIRE(indexv[i] == indexvDeriv[i]);
 }
 
 TEST_CASE("Test center path", "[vacuumprofile]")
