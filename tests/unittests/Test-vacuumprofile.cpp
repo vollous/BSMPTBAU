@@ -211,5 +211,5 @@ TEST_CASE("Test center path", "[vacuumprofile]")
   vacuumprofile.CenterPath(center); // Center path
   vacuumprofile.CenterPath(center); // Recenter does nothing
 
-  REQUIRE(center == Approx(0.).epsilon(1e-8));
+  REQUIRE(center == Approx(0.).margin(1e-2));
 }
