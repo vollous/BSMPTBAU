@@ -65,6 +65,12 @@ struct VacuumProfile
   double LwToSolve = 10;
 
   /**
+   * @brief Max iterations for the relaxation method
+   *
+   */
+  size_t itmax = 50;
+
+  /**
    * @brief Calculates \f$ \frac{d\phi}{dz} \f$ at the edges and, if its too
    * large, increases the integration domain.
    *

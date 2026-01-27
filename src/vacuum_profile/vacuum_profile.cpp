@@ -83,7 +83,7 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
 
 void VacuumProfile::CalculateProfile()
 {
-  size_t itmax = 50;
+  size_t it;
   double conv  = 1e-10;
   double slowc = 1e-1;
   mode         = ProfileSolverMode::Deriv;
@@ -108,7 +108,7 @@ void VacuumProfile::CalculateProfile()
   size_t NotBetter = 0;
   auto Best_y      = y;
 
-  for (size_t it = 0; it < itmax; it++)
+  for (it = 0; it < itmax; it++)
   {
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
@@ -148,6 +148,14 @@ void VacuumProfile::CalculateProfile()
     }
 
     NotBetter++;
+  }
+
+  if (it == NotBetter)
+  {
+    Logger::Write(LoggingLevel::VacuumProfile,
+                  "Vacuum profile calculation failed! [did not converge once]");
+    status = VacuumProfileStatus::Failed;
+    return;
   }
 
   ss << "\nμ = " << difeq_vacuumprofile.mu << "\n";

@@ -262,3 +262,46 @@ TEST_CASE("Test path small domain", "[vacuumprofile]")
   for (const auto z : std::vector<double>({{-0.5, -0.1, 0, 0.1, 0.5}}))
     REQUIRE(solution(z)[0] == Approx(vacuumprofile.GetVev(z)[0]).margin(0.001));
 }
+
+TEST_CASE("Test not enough iterations", "[vacuumprofile]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  using namespace VacuumProfileNS;
+
+  SetLogger({"--logginglevel::complete=true"});
+
+  size_t dim                      = 1;
+  std::vector<double> TrueVacuum  = {-1};
+  std::vector<double> FalseVacuum = {1};
+
+  double m   = 0;
+  double lam = 1;
+
+  std::function<double(std::vector<double>)> V = [=](auto const &arg)
+  {
+    return lam * pow(arg[0], 2) * (-2 + pow(arg[0], 2)) +
+           m * (arg[0] - pow(arg[0], 3) / 3.);
+  };
+  std::function<std::vector<double>(std::vector<double>)> dV =
+      [=](auto const &arg)
+  {
+    return std::vector<double>(
+        {-((m - 4 * lam * arg[0]) * (-1 + pow(arg[0], 2)))});
+  };
+  std::function<std::vector<std::vector<double>>(std::vector<double>)> Hessian =
+      [=](auto const &arg)
+  {
+    return std::vector<std::vector<double>>(
+        {{-2 * m * arg[0] + 10 * lam * pow(arg[0], 2) +
+          2 * lam * (-2 + pow(arg[0], 2))}});
+  };
+
+  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian);
+
+  vacuumprofile.itmax = 0;
+
+  vacuumprofile.CalculateProfile();
+
+  REQUIRE(vacuumprofile.status == VacuumProfileStatus::Failed);
+}
