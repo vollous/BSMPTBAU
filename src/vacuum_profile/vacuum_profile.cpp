@@ -25,6 +25,29 @@ VecInt VacuumProfile::Calcindexv()
   return indexv;
 }
 
+void VacuumProfile::CreatePath(const double &Lw, const size_t &NumberOfSteps)
+{
+  // temporary variables
+  std::vector<std::vector<double>> path;
+  std::vector<double> vev_k(dim), zpath;
+  // Use the kink to calculate a first approximation
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Creating path | Lw = " + std::to_string(Lw) +
+                    " and NumberOfSteps = " + std::to_string(NumberOfSteps));
+  for (size_t k = 0; k < NumberOfSteps; k++)
+  {
+    // uniformly distributed between -10 Lw and 10 Lw
+    const double zk = (-1. + 2. * k / (NumberOfSteps - 1.)) * Lw * LwToSolve;
+    for (size_t i = 0; i < dim; i++)
+      vev_k.at(i) =
+          TrueVacuum.at(i) +
+          (1. + tanh(zk / Lw)) / 2. * (FalseVacuum.at(i) - TrueVacuum.at(i));
+    zpath.push_back(zk);
+    path.push_back(vev_k);
+  }
+  LoadPath(zpath, path);
+}
+
 void VacuumProfile::LoadPath(const std::vector<double> &z_In,
                              const std::vector<std::vector<double>> &path_In)
 {
@@ -98,6 +121,32 @@ void VacuumProfile::CalculateProfile()
       Best_y    = y;
       NotBetter = 0;
     }
+    // Check if edges are moving
+    double dphi = 0;
+    for (size_t i = 0; i < dim; i++)
+      dphi +=
+          pow(y[i][0] / scalv[i], 2) + pow(y[i][z.size() - 1] / scalv[i], 2);
+    if (sqrt(dphi) / (2 * dim) > dphiTreshold)
+    {
+
+      if (LwToSolve > 100)
+      {
+        Logger::Write(LoggingLevel::VacuumProfile,
+                      "\nVacuum profile calculation failed!\n");
+        status = VacuumProfileStatus::Failed;
+        return;
+      }
+      LwToSolve += 10;
+      // Generate new path. Keep roughly same number of points
+      CreatePath(CalculateWidth(TrueVacuum, FalseVacuum, V),
+                 ceil(z.size() * LwToSolve / (LwToSolve - 10)));
+      Logger::Write(LoggingLevel::VacuumProfile,
+                    "Vacuum profile small domain, increase LwToSolve to " +
+                        std::to_string(LwToSolve));
+      CalculateProfile();
+      return;
+    }
+
     NotBetter++;
   }
 
@@ -282,23 +331,7 @@ VacuumProfile::VacuumProfile(
     , dV(dV_In)
     , Hessian(Hessian_In)
 {
-  // temporary variables
-  std::vector<std::vector<double>> path;
-  std::vector<double> vev_k(dim), zpath;
-  // Use the kink to calculate a first approximation
-  Logger::Write(LoggingLevel::VacuumProfile, "Lw = " + std::to_string(Lw));
-  for (size_t k = 0; k < NumberOfSteps; k++)
-  {
-    // uniformly distributed between -10 Lw and 10 Lw
-    const double zk = (-10. + (20.) * k / (NumberOfSteps - 1.)) * Lw;
-    for (size_t i = 0; i < dim; i++)
-      vev_k.at(i) =
-          TrueVacuum.at(i) +
-          (1. + tanh(zk / Lw)) / 2. * (FalseVacuum.at(i) - TrueVacuum.at(i));
-    zpath.push_back(zk);
-    path.push_back(vev_k);
-  }
-  LoadPath(zpath, path);
+  CreatePath(Lw, NumberOfSteps);
 }
 
 VacuumProfile::VacuumProfile(

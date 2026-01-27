@@ -58,6 +58,20 @@ struct VacuumProfile
   size_t NotBetterThreshold = 3;
 
   /**
+   * @brief Try to solve the tunnel profile from -Lw * LwToSolve -> Lw *
+   * LwToSolve
+   *
+   */
+  double LwToSolve = 10;
+
+  /**
+   * @brief Calculates \f$ \frac{d\phi}{dz} \f$ at the edges and, if its too
+   * large, increases the integration domain.
+   *
+   */
+  const double dphiTreshold = 1.e-20;
+
+  /**
    * @brief True and False Vacuum
    *
    */
@@ -164,6 +178,13 @@ struct VacuumProfile
   CalculateWidth(const std::vector<double> &TrueVacuum,
                  const std::vector<double> &FalseVacuum,
                  const std::function<double(std::vector<double>)> &V);
+  /**
+   * @brief Create a Path object
+   *
+   * @param Lw Wall width
+   * @param NumberOfSteps Number of steps
+   */
+  void CreatePath(const double &Lw, const size_t &NumberOfSteps);
 
   /**
    * @brief Load path -> z, y
