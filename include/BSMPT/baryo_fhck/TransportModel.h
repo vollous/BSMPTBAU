@@ -1,7 +1,7 @@
 #pragma once
 
+#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
-#include <BSMPT/baryo_fhck/difeq_transport_equations.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
@@ -21,21 +21,6 @@ namespace Baryo
 namespace FHCK
 {
 /**
- * @brief All possible quarks that can be considered by BSMPT
- */
-static const std::map<std::string, size_t> possible_quarks = {{"tL", 11},
-                                                              {"tR", 10},
-                                                              {"bL", 9},
-                                                              {"bR", 8},
-                                                              {"cL", 7},
-                                                              {"cR", 6},
-                                                              {"sL", 5},
-                                                              {"sR", 4},
-                                                              {"uL", 3},
-                                                              {"uR", 2},
-                                                              {"dL", 1},
-                                                              {"dR", 0}};
-/**
  * @brief Types of vev profiles
  *
  */
@@ -44,17 +29,6 @@ enum class VevProfileMode
   Unset,
   Kink,
   FieldEquation
-};
-
-/**
- * @brief Types of particles that appear in the transport equations
- *
- */
-enum class TransportParticles
-{
-  LeftFermion,
-  RightFermion,
-  Boson
 };
 
 class TransportModel
@@ -118,10 +92,10 @@ public:
    * @brief The standard 4 particle that appear in the transport equations
    *
    */
-  std::vector<TransportParticles> Tprtcls = {TransportParticles::LeftFermion,
-                                             TransportParticles::RightFermion,
-                                             TransportParticles::LeftFermion,
-                                             TransportParticles::Boson};
+  std::vector<ParticleType> involvedparticles = {ParticleType::LeftFermion,
+                                                 ParticleType::RightFermion,
+                                                 ParticleType::LeftFermion,
+                                                 ParticleType::Boson};
   /**
    * @brief Wall thickness
    *
@@ -182,10 +156,10 @@ public:
 
   /**
    * @brief Generate the quark masses splines
-   * 
+   *
    * @param zList z distribution where we interpolate the fermion mass
    */
-  void GenerateFermionMass(std::vector<double> &zList);
+  void GenerateFermionMass(const std::vector<double> &zList);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its

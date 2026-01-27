@@ -24,7 +24,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
     for (int type = 0; type <= 1; type++)
     {
       ParticleType PType =
-          (type == 0 ? ParticleType::Fermion : ParticleType::Boson);
+          (type == 0 ? ParticleType::LeftFermion : ParticleType::Boson);
       std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
       std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
       Kernel Kern(l, 2);
@@ -110,7 +110,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
           }
           file.close();
         }
-        if (PType == ParticleType::Fermion)
+        if (PType == ParticleType::LeftFermion)
         {
           std::cout << "Q8o-Kernel\n";
           {
@@ -157,7 +157,7 @@ TEST_CASE("Construct Kernel table", "[baryoKernels]")
   {
     Kernel Kern(0, 0);
     ParticleType PType =
-        (type == 0 ? ParticleType::Fermion : ParticleType::Boson);
+        (type == 0 ? ParticleType::LeftFermion : ParticleType::Boson);
     std::string suffix = (type == 0 ? "_f.dat" : "_b.dat");
     std::cout << (type == 0 ? "Fermion" : "Boson") << "\n";
     std::cout << "Rbar-Kernel\n";

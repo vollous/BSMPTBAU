@@ -72,7 +72,7 @@ void TransportModel::SetEtaInterface()
                 "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
 }
 
-void TransportModel::GenerateFermionMass(std::vector<double> &zList)
+void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
 {
   QuarkMassesRe.clear();
   QuarkMassesIm.clear();

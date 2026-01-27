@@ -51,7 +51,7 @@ public:
   /**
    * @brief Transport model under consideration
    */
-  std::shared_ptr<TransportModel> Tmodel;
+  std::shared_ptr<TransportModel> transportmodel;
 
   /**
    * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
