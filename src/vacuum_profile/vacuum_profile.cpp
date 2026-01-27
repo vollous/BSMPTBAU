@@ -132,7 +132,7 @@ void VacuumProfile::CalculateProfile()
       if (LwToSolve > 100)
       {
         Logger::Write(LoggingLevel::VacuumProfile,
-                      "\nVacuum profile calculation failed!\n");
+                      "\nVacuum profile calculation failed! [small domain]\n");
         status = VacuumProfileStatus::Failed;
         return;
       }
