@@ -142,7 +142,7 @@ void VacuumProfile::GenerateSplines()
   for (size_t i = 0; i < dim; i++)
   {
     std::vector<double> phi;
-    for (size_t k = 0; k < NumberOfSteps; k++)
+    for (size_t k = 0; k < z.size(); k++)
       phi.push_back(y[dim + i][k]);
     tk::spline s(z,
                  phi,
@@ -205,7 +205,7 @@ void VacuumProfile::CenterPath(double &center)
   GenerateSplines();
   // locate maximum of dphi/dz
   double max_dphidz = -1;
-  for (size_t k = 0; k < NumberOfSteps; k++)
+  for (size_t k = 0; k < z.size(); k++)
   {
     double dphidz = 0;
     for (size_t i = 0; i < dim; i++)
@@ -272,7 +272,9 @@ VacuumProfile::VacuumProfile(
     const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian_In,
     // Bubble width
-    const double Lw)
+    const double Lw,
+    // Number of steps for the path
+    const size_t NumberOfSteps)
     : dim(dim_In)
     , TrueVacuum(TrueVacuum_In)
     , FalseVacuum(FalseVacuum_In)

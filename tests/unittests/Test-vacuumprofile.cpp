@@ -85,10 +85,22 @@ TEST_CASE("Bubble profile lambda^4", "[vacuumprofile]")
           2 * lam * (-2 + pow(arg[0], 2))}});
   };
 
-  VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian);
+  VacuumProfile vacuumprofile(dim,
+                              TrueVacuum,
+                              FalseVacuum,
+                              V,
+                              dV,
+                              Hessian,
+                              1 / sqrt(3.) /* wrong on purpose*/,
+                              10000);
   vacuumprofile.CalculateProfile();
+  vacuumprofile.CenterPath();
 
-  REQUIRE(1 == 1);
+  std::function<std::vector<double>(double)> solution = [=](auto const &arg)
+  { return std::vector<double>({tanh(sqrt(2) * arg)}); };
+
+  for (const auto z : std::vector<double>({{-0.5, -0.1, 0, 0.1, 0.5}}))
+    REQUIRE(solution(z)[0] == Approx(vacuumprofile.GetVev(z)[0]).margin(0.001));
 }
 
 TEST_CASE("Test indexv - field", "[vacuumprofile]")

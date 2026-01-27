@@ -52,12 +52,6 @@ struct VacuumProfile
   const size_t dim;
 
   /**
-   * @brief Number of steps in \f$ z \f$
-   *
-   */
-  size_t NumberOfSteps = 1000;
-
-  /**
    * @brief Number of times we let the profile relax without getting better.
    *
    */
@@ -238,7 +232,9 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double Lw);
+      const double Lw,
+      // Number of steps for the path
+      const size_t NumberOfSteps = 1000);
 
   /**
    * @brief Construct a new Vacuum Profile object
