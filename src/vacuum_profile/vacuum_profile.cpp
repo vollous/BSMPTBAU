@@ -25,6 +25,29 @@ VecInt VacuumProfile::Calcindexv()
   return indexv;
 }
 
+void VacuumProfile::CreatePath(const double &Lw, const size_t &NumberOfSteps)
+{
+  // temporary variables
+  std::vector<std::vector<double>> path;
+  std::vector<double> vev_k(dim), zpath;
+  // Use the kink to calculate a first approximation
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Creating path | Lw = " + std::to_string(Lw) +
+                    " and NumberOfSteps = " + std::to_string(NumberOfSteps));
+  for (size_t k = 0; k < NumberOfSteps; k++)
+  {
+    // uniformly distributed between -10 Lw and 10 Lw
+    const double zk = (-1. + 2. * k / (NumberOfSteps - 1.)) * Lw * LwToSolve;
+    for (size_t i = 0; i < dim; i++)
+      vev_k.at(i) =
+          TrueVacuum.at(i) +
+          (1. + tanh(zk / Lw)) / 2. * (FalseVacuum.at(i) - TrueVacuum.at(i));
+    zpath.push_back(zk);
+    path.push_back(vev_k);
+  }
+  LoadPath(zpath, path);
+}
+
 void VacuumProfile::LoadPath(const std::vector<double> &z_In,
                              const std::vector<std::vector<double>> &path_In)
 {
@@ -60,7 +83,7 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
 
 void VacuumProfile::CalculateProfile()
 {
-  size_t itmax = 10;
+  size_t it;
   double conv  = 1e-10;
   double slowc = 1e-1;
   mode         = ProfileSolverMode::Deriv;
@@ -75,16 +98,71 @@ void VacuumProfile::CalculateProfile()
   ss << "False vacuum = " << FalseVacuum << "\n";
   ss << "VEV dimension = " << dim << "\n";
   ss << "Calculating profile in z ∈ [" << z.front() << ", " << z.back() << "]";
+  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
+  ss.clear();
 
   Difeq_VacuumProfile difeq_vacuumprofile(
       mode, dim, z, TrueVacuum, FalseVacuum, V, dV, Hessian);
-  RelaxOde solvde(
-      itmax, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
+
+  double MinError  = 1.e100;
+  size_t NotBetter = 0;
+  auto Best_y      = y;
+
+  for (it = 0; it < itmax; it++)
+  {
+    if (NotBetter >= NotBetterThreshold) break;
+    RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
+    Logger::Write(LoggingLevel::VacuumProfile,
+                  "[Relaxation Vacuum profile] it = " + std::to_string(it) +
+                      ". Error = " + std::to_string(solvde.err));
+    if (solvde.err < MinError)
+    {
+      MinError  = solvde.err;
+      Best_y    = y;
+      NotBetter = 0;
+    }
+    // Check if edges are moving
+    double dphi = 0;
+    for (size_t i = 0; i < dim; i++)
+      dphi +=
+          pow(y[i][0] / scalv[i], 2) + pow(y[i][z.size() - 1] / scalv[i], 2);
+    if (sqrt(dphi) / (2 * dim) > dphiTreshold)
+    {
+
+      if (LwToSolve > 100)
+      {
+        Logger::Write(LoggingLevel::VacuumProfile,
+                      "\nVacuum profile calculation failed! [small domain]\n");
+        status = VacuumProfileStatus::Failed;
+        return;
+      }
+      LwToSolve += 10;
+      // Generate new path. Keep roughly same number of points
+      CreatePath(CalculateWidth(TrueVacuum, FalseVacuum, V),
+                 ceil(z.size() * LwToSolve / (LwToSolve - 10)));
+      Logger::Write(LoggingLevel::VacuumProfile,
+                    "Vacuum profile small domain, increase LwToSolve to " +
+                        std::to_string(LwToSolve));
+      CalculateProfile();
+      return;
+    }
+
+    NotBetter++;
+  }
+
+  if (it == NotBetter)
+  {
+    Logger::Write(LoggingLevel::VacuumProfile,
+                  "Vacuum profile calculation failed! [did not converge once]");
+    status = VacuumProfileStatus::Failed;
+    return;
+  }
 
   ss << "\nμ = " << difeq_vacuumprofile.mu << "\n";
 
   status = VacuumProfileStatus::Success;
-  GenerateSplines();
+  y      = Best_y;
+  CenterPath();
 
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
@@ -95,9 +173,6 @@ double VacuumProfile::CalculateWidth(
     const std::function<double(std::vector<double>)> &V)
 {
   size_t NumberPointsBarrier = 100;
-
-  Logger::Write(LoggingLevel::VacuumProfile,
-                "Estimating Lw using a rough approximation");
 
   const double vc     = BSMPT::L2NormVector(TrueVacuum - FalseVacuum);
   const double Vtrue  = V(TrueVacuum);
@@ -111,6 +186,10 @@ double VacuumProfile::CalculateWidth(
   }
   const double Lw = vc / sqrt(8 * Vb);
 
+  Logger::Write(LoggingLevel::VacuumProfile,
+                "Estimating Lw using a rough approximation -> Lw = " +
+                    std::to_string(Lw));
+
   return Lw;
 }
 
@@ -120,7 +199,7 @@ void VacuumProfile::GenerateSplines()
   for (size_t i = 0; i < dim; i++)
   {
     std::vector<double> phi;
-    for (size_t k = 0; k < NumberOfSteps; k++)
+    for (size_t k = 0; k < z.size(); k++)
       phi.push_back(y[dim + i][k]);
     tk::spline s(z,
                  phi,
@@ -183,7 +262,7 @@ void VacuumProfile::CenterPath(double &center)
   GenerateSplines();
   // locate maximum of dphi/dz
   double max_dphidz = -1;
-  for (size_t k = 0; k < NumberOfSteps; k++)
+  for (size_t k = 0; k < z.size(); k++)
   {
     double dphidz = 0;
     for (size_t i = 0; i < dim; i++)
@@ -250,7 +329,9 @@ VacuumProfile::VacuumProfile(
     const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian_In,
     // Bubble width
-    const double Lw)
+    const double Lw,
+    // Number of steps for the path
+    const size_t NumberOfSteps)
     : dim(dim_In)
     , TrueVacuum(TrueVacuum_In)
     , FalseVacuum(FalseVacuum_In)
@@ -258,23 +339,7 @@ VacuumProfile::VacuumProfile(
     , dV(dV_In)
     , Hessian(Hessian_In)
 {
-  // temporary variables
-  std::vector<std::vector<double>> path;
-  std::vector<double> vev_k(dim), zpath;
-  // Use the kink to calculate a first approximation
-  Logger::Write(LoggingLevel::VacuumProfile, "Lw = " + std::to_string(Lw));
-  for (size_t k = 0; k < NumberOfSteps; k++)
-  {
-    // uniformly distributed between -10 Lw and 10 Lw
-    const double zk = (-10. + (20.) * k / (NumberOfSteps - 1.)) * Lw;
-    for (size_t i = 0; i < dim; i++)
-      vev_k.at(i) =
-          TrueVacuum.at(i) +
-          (1. + tanh(zk / Lw)) / 2. * (FalseVacuum.at(i) - TrueVacuum.at(i));
-    zpath.push_back(zk);
-    path.push_back(vev_k);
-  }
-  LoadPath(zpath, path);
+  CreatePath(Lw, NumberOfSteps);
 }
 
 VacuumProfile::VacuumProfile(

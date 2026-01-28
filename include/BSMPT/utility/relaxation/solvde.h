@@ -14,8 +14,11 @@ private:
   VecDoub ermax;
   Mat3DDoub c;
   MatDoub s;
+  bool VERBOSE = false;
 
 public:
+  double err;
+
   RelaxOde(const int itmax,
            const double conv,
            const double slowc,
@@ -37,9 +40,10 @@ public:
       , s(ne, 2 * ne + 1, 0.)
   {
     int jv, k, nvars = ne * m;
-    std::cout << std::setw(8) << "Iter.";
-    std::cout << std::setw(10) << "Error" << std::setw(10) << "FAC"
-              << std::endl;
+    if (VERBOSE) std::cout << std::setw(8) << "Iter.";
+    if (VERBOSE)
+      std::cout << std::setw(10) << "Error" << std::setw(10) << "FAC"
+                << std::endl;
     for (int it = 0; it < itmax; it++)
     {
       k = 0;
@@ -57,7 +61,7 @@ public:
       red(nb2, ne, nenb1, nenb1, ne2, m);
       pinvs(0, nb2, nenb1, nb2, m);
       bksub(nb2, 0, m);
-      double err = 0.0;
+      err = 0.0;
       for (int j = 0; j < ne; j++)
       {
         jv          = indexv[j];
@@ -86,9 +90,9 @@ public:
         for (k = 0; k < m; k++)
           y[j][k] -= fac * c[jv][0][k];
       }
-      std::cout << std::setw(6) << it;
-      std::cout << std::setw(13) << err;
-      std::cout << std::setw(12) << fac << std::endl;
+      if (VERBOSE) std::cout << std::setw(6) << it;
+      if (VERBOSE) std::cout << std::setw(13) << err;
+      if (VERBOSE) std::cout << std::setw(12) << fac << std::endl;
 
       if (err < conv and it > 3) return;
     }
@@ -121,19 +125,21 @@ public:
         if (std::abs(s[i][j]) > big) big = std::abs(s[i][j]);
       if (big == 0.0)
       {
-        std::cout << "Singular matrix in pinvs with k = " << k
-                  << " with rows= (" << ie1 << ",\t" << ie2 << ")\n";
+        if (VERBOSE)
+          std::cout << "Singular matrix in pinvs with k = " << k
+                    << " with rows= (" << ie1 << ",\t" << ie2 << ")\n";
 
-        std::cout << "Singular matrix in pinvs with k = " << k
-                  << " with columns= (" << je1 << ",\t" << je2 << ")\n";
-        std::cout << "\n\n";
+        if (VERBOSE)
+          std::cout << "Singular matrix in pinvs with k = " << k
+                    << " with columns= (" << je1 << ",\t" << je2 << ")\n";
+        if (VERBOSE) std::cout << "\n\n";
         for (int ii = ie1; ii < ie2; ii++)
         {
           for (int jj = je1; jj < je2; jj++)
-            std::cout << s[ii][jj] << "\t";
-          std::cout << "\n";
+            if (VERBOSE) std::cout << s[ii][jj] << "\t";
+          if (VERBOSE) std::cout << "\n";
         }
-        std::cout << "\n\n";
+        if (VERBOSE) std::cout << "\n\n";
         throw("Singular matrix - row all 0, in pinvs");
       }
       pscl[i - ie1]  = 1.0 / big;

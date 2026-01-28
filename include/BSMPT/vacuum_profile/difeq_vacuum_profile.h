@@ -205,9 +205,9 @@ struct Difeq_VacuumProfile : Difeq
       {
         for (size_t n = 0; n < dim; n++)
         {
-          s[j][0 * dim + n] = -Delta(j, n) * (1 + dz * mu / 2); // 1
+          s[j][0 * dim + n] = -Delta(j, n) * (1 - dz * mu / 2); // 1
           s[j][1 * dim + n] = -1. / 2. * dz * hessian[j][n];    // 3
-          s[j][2 * dim + n] = Delta(j, n) * (1 - dz * mu / 2);  // 5
+          s[j][2 * dim + n] = Delta(j, n) * (1 + dz * mu / 2);  // 5
           s[j][3 * dim + n] = -1. / 2. * dz * hessian[j][n];    // 7
         }
         //  Equations for E(k,k-1)
