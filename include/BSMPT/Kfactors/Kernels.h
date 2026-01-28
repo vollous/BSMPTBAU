@@ -34,8 +34,9 @@ enum class KernelType
  */
 enum class ParticleType
 {
-  Boson,
-  Fermion,
+  LeftFermion,
+  RightFermion,
+  Boson
 };
 
 /**
