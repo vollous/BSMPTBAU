@@ -9,7 +9,8 @@ namespace FHCK
 
 TransportModel::TransportModel(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<CoexPhases> &CoexPhase_in,
+    const std::vector<double> FalseVacuum_In,
+    const std::vector<double> TrueVacuum_In,
     const double &vwall_in,
     const double &Tstar_in,
     const VevProfileMode &VevProfile_In)
@@ -17,10 +18,24 @@ TransportModel::TransportModel(
   modelPointer = pointer_in;
   Tstar        = Tstar_in;
   vwall        = vwall_in;
-  CoexPhase    = CoexPhase_in;
-  FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
-  TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
+  FalseVacuum  = FalseVacuum_In;
+  TrueVacuum   = TrueVacuum_In;
   VevProfile   = VevProfile_In;
+}
+
+TransportModel::TransportModel(
+    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
+    const std::shared_ptr<CoexPhases> &CoexPhase,
+    const double &vwall_in,
+    const double &Tstar_in,
+    const VevProfileMode &VevProfile_In)
+    : TransportModel(pointer_in,
+                     CoexPhase->false_phase.Get(Tstar_in).point,
+                     CoexPhase->true_phase.Get(Tstar_in).point,
+                     vwall_in,
+                     Tstar_in,
+                     VevProfile_In)
+{
 }
 
 void TransportModel::Initialize()

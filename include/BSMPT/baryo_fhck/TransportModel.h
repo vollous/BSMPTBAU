@@ -119,17 +119,35 @@ public:
   /**
    * @brief Construct a new Transport Model object
    *
+   * @param pointer_in  Model pointer
+   * @param FalseVacuum_In False Vacuum
+   * @param TrueVacuum_In True Vacum
+   * @param vwall_in Wall velocity
+   * @param Tstar_in  Transition temperature
+   * @param VevProfile_In Solver mode. Default: field EOM solution
+   */
+  TransportModel(
+      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
+      const std::vector<double> FalseVacuum_In,
+      const std::vector<double> TrueVacuum_In,
+      const double &vwall_in,
+      const double &Tstar_in,
+      const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation);
+
+  /**
+   * @brief Construct a new Transport Model object
+   *
    * @param pointer_in Model pointer
    * @param CoexPhase_in Coexphase pointer
    * @param vwall_in Wall velocity
    * @param Tstar_in Transition temperature
-   * @param VevProfile_In Solver mode. Default: kink solution
+   * @param VevProfile_In Solver mode.
    */
   TransportModel(const std::shared_ptr<Class_Potential_Origin> &pointer_in,
                  const std::shared_ptr<CoexPhases> &CoexPhase_in,
                  const double &vwall_in,
                  const double &Tstar_in,
-                 const VevProfileMode &VevProfile_In = VevProfileMode::Kink);
+                 const VevProfileMode &VevProfile_In);
 
   /**
    * @brief Create the VEV vectors
