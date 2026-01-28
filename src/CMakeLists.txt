@@ -86,6 +86,10 @@ if(BSMPTBuildExecutables)
   target_link_libraries(PotPlotter Models Utility Minimizer MinimumTracer)
   target_compile_features(PotPlotter PUBLIC cxx_std_17)
 
+  add_executable(CalcBAU prog/CalcBAU.cpp)
+  target_link_libraries(CalcBAU BaryoFHCK)
+  target_compile_features(CalcBAU PUBLIC cxx_std_17)
+
   if(BSMPTCompileBaryo)
     add_executable(CalculateEWBG prog/CalculateEWBG.cpp)
     target_link_libraries(CalculateEWBG Minimizer Models Baryo Utility)
