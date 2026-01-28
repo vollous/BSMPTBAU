@@ -179,6 +179,29 @@ try
         for (std::size_t i = 0; i < trans.output_store.num_coex_phase_pairs;
              i++)
         {
+          // Calculate false vacuum at the transition temperature
+          std::vector<double> trans_false_vev;
+          switch (args.WhichTransitionTemperature)
+          {
+          case TransitionTemperature::ApproxNucleation:
+            trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
+            break;
+          case TransitionTemperature::Nucleation:
+            trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
+            break;
+          case TransitionTemperature::Percolation:
+            trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
+            break;
+          case TransitionTemperature::Completion:
+            trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
+            break;
+          default: trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
+          }
+          if ((modelPointer->EWSBVEV(
+                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) and
+              not args.forced_no_symmetric_phase)
+            continue;
+
           output_contents.at(count - 1)
               << output.status.status_crit.at(i) << sep
               << output.vec_trans_data.at(i).crit_temp.value_or(EmptyValue)
@@ -523,6 +546,17 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
   catch (BSMPT::parserException &)
   {
     ss << "--perc_prbl not set, using default value: " << perc_prbl << "\n";
+  }
+
+  try
+  {
+    forced_no_symmetric_phase =
+        argparser.get_value<bool>("forced_no_symmetric_phase");
+  }
+  catch (BSMPT::parserException &)
+  {
+    ss << "--forced_no_symmetric_phase not set, using default value: "
+       << forced_no_symmetric_phase << "\n";
   }
 
   try
