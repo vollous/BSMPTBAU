@@ -11,6 +11,7 @@
  *
  */
 
+#include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/transition_tracer/transition_tracer.h>
 #include <BSMPT/utility/Logger.h>
@@ -33,8 +34,10 @@ struct CLIOptions
   BSMPT::ModelID::ModelIDs Model{ModelID::ModelIDs::NotSet};
   int firstline{0}, lastline{0};
   double templow{0}, temphigh{300};
-  double UserDefined_vwall = 0.95;
-  int MaxPathIntegrations  = 7;
+  double UserDefined_vwall     = 0.95;
+  int UserDefined_PNLO_scaling = 1;
+  double UserDefined_epsturb   = 0.1;
+  int MaxPathIntegrations      = 7;
   std::string inputfile, outputfile;
   bool UseGSL{Minimizer::UseGSLDefault};
   bool UseCMAES{Minimizer::UseLibCMAESDefault};
@@ -49,8 +52,14 @@ struct CLIOptions
   int CheckNLOStability{1};
   TransitionTemperature WhichTransitionTemperature{
       TransitionTemperature::Percolation};
-  int moment           = 2;
-  int truncationscheme = CLIOptions(const BSMPT::parser &argparser);
+  size_t moment = 2;
+  BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
+      BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
+  BSMPT::Baryo::FHCK::VevProfileModevacuumprofile =
+      BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
+  bool gwoutput                  = false;
+  bool forced_no_symmetric_phase = false;
+  CLIOptions(const BSMPT::parser &argparser);
   bool good() const;
 };
 

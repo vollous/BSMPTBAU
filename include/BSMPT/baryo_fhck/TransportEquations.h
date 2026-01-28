@@ -35,6 +35,18 @@ enum class FHCKStatus
 };
 
 /**
+ * @brief Truncation schemes
+ *
+ */
+enum class TruncationScheme
+{
+  Zero,
+  MinusVw,
+  One,
+  Variance
+};
+
+/**
  * @brief Convert FHCK baryo into strings
  *
  */
