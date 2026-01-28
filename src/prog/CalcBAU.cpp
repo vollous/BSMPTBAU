@@ -55,7 +55,7 @@ struct CLIOptions
   size_t moment = 2;
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
-  BSMPT::Baryo::FHCK::VevProfileModevacuumprofile =
+  BSMPT::Baryo::FHCK::VevProfileMode vacuumprofile =
       BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
   bool gwoutput                  = false;
   bool forced_no_symmetric_phase = false;
@@ -132,6 +132,11 @@ try
 
       auto start = std::chrono::high_resolution_clock::now();
 
+      bool gw_calculation =
+          args.WhichTransitionTemperature == TransitionTemperature::Critical
+              ? false
+              : true;
+
       user_input input{modelPointer,
                        args.templow,
                        args.temphigh,
@@ -146,7 +151,7 @@ try
                        args.CheckNLOStability,
                        args.WhichMinimizer,
                        args.UseMultithreading,
-                       true,
+                       gw_calculation,
                        args.WhichTransitionTemperature,
                        args.UserDefined_PNLO_scaling};
 
@@ -532,6 +537,10 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
   try
   {
     auto trans_string = argparser.get_value("trans_temp");
+    if (trans_string == "crit")
+    {
+      WhichTransitionTemperature = TransitionTemperature::Critical;
+    }
     if (trans_string == "nucl_approx")
     {
       WhichTransitionTemperature = TransitionTemperature::ApproxNucleation;
@@ -672,6 +681,7 @@ BSMPT::parser prepare_parser()
       "compl_prbl", "false vacuum fraction for completion", "0.01", false);
   argparser.add_argument(
       "trans_temp", "transition temperature, options are:", "perc", false);
+  argparser.add_subtext("crit: critical temperature");
   argparser.add_subtext("nucl_approx: approx nucleation temperature");
   argparser.add_subtext("nucl: nucleation temperature");
   argparser.add_subtext("perc: percolation temperature");

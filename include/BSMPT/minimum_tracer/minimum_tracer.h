@@ -190,6 +190,7 @@ const std::unordered_map<StatusGW, std::string> StatusGWToString{
 enum class TransitionTemperature
 {
   NotSet,
+  Critical,
   ApproxNucleation,
   Nucleation,
   Percolation,
