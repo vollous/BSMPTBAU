@@ -125,6 +125,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>CenterPath</b> ()</td
 <tr class="memitem:a936e316ae1027131537827382971e28f" id="r_a936e316ae1027131537827382971e28f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVecInt.html">VecInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f">Calcindexv</a> ()</td></tr>
 <tr class="memdesc:a936e316ae1027131537827382971e28f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the order of the fields to pass to the numerical solver.  <br /></td></tr>
 <tr class="separator:a936e316ae1027131537827382971e28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af09905b0d4520866f5a80c5b1da4ffb1" id="r_af09905b0d4520866f5a80c5b1da4ffb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#af09905b0d4520866f5a80c5b1da4ffb1">CreatePath</a> (const double &amp;Lw, const size_t &amp;NumberOfSteps)</td></tr>
+<tr class="memdesc:af09905b0d4520866f5a80c5b1da4ffb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Path object.  <br /></td></tr>
+<tr class="separator:af09905b0d4520866f5a80c5b1da4ffb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac953ff5d542655dcff6f9880ac70dacf" id="r_ac953ff5d542655dcff6f9880ac70dacf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf">LoadPath</a> (const std::vector&lt; double &gt; &amp;z_In, const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;path_In)</td></tr>
 <tr class="memdesc:ac953ff5d542655dcff6f9880ac70dacf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load path -&gt; z, y.  <br /></td></tr>
 <tr class="separator:ac953ff5d542655dcff6f9880ac70dacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,9 +139,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculateProfile</b> 
 <tr class="memdesc:aa9bfb819f54211d641e212860a49a66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a> Profile object. Attemps to calculate \( L_w
 \) for the first guess using the kink solution.  <br /></td></tr>
 <tr class="separator:aa9bfb819f54211d641e212860a49a66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7eec4c54b9356a32547d3cfc3113232" id="r_ab7eec4c54b9356a32547d3cfc3113232"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ab7eec4c54b9356a32547d3cfc3113232">VacuumProfile</a> (const size_t dim_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In, const double Lw)</td></tr>
-<tr class="memdesc:ab7eec4c54b9356a32547d3cfc3113232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a> Profile object. Uses \( L_w \) for the first path guess using the kink solution.  <br /></td></tr>
-<tr class="separator:ab7eec4c54b9356a32547d3cfc3113232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9504367d168cfec478399b935a38ed5d" id="r_a9504367d168cfec478399b935a38ed5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a9504367d168cfec478399b935a38ed5d">VacuumProfile</a> (const size_t dim_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In, const double Lw, const size_t NumberOfSteps=1000)</td></tr>
+<tr class="memdesc:a9504367d168cfec478399b935a38ed5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a> Profile object. Uses \( L_w \) for the first path guess using the kink solution.  <br /></td></tr>
+<tr class="separator:a9504367d168cfec478399b935a38ed5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b6d05e83e281c55806fb73adb4e428c" id="r_a3b6d05e83e281c55806fb73adb4e428c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3b6d05e83e281c55806fb73adb4e428c">VacuumProfile</a> (const size_t dim_In, const std::vector&lt; double &gt; &amp;TrueVacuum_In, const std::vector&lt; double &gt; &amp;FalseVacuum_In, const std::function&lt; double(std::vector&lt; double &gt;)&gt; &amp;V_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;dV_In, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian_In, std::vector&lt; double &gt; &amp;z_In, std::vector&lt; std::vector&lt; double &gt; &gt; &amp;path_In)</td></tr>
 <tr class="memdesc:a3b6d05e83e281c55806fb73adb4e428c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a> Profile object.  <br /></td></tr>
 <tr class="separator:a3b6d05e83e281c55806fb73adb4e428c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,10 +166,22 @@ VacuumProfileStatus&#160;</td><td class="memItemRight" valign="bottom"><b>status
 const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>dim</b></td></tr>
 <tr class="memdesc:a31f43d47ab3a65580678870597d50a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of VEV space. <br /></td></tr>
 <tr class="separator:a31f43d47ab3a65580678870597d50a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9496c3dd0d37d52e7c74fe5cfe26421" id="r_ae9496c3dd0d37d52e7c74fe5cfe26421"><td class="memItemLeft" align="right" valign="top"><a id="ae9496c3dd0d37d52e7c74fe5cfe26421" name="ae9496c3dd0d37d52e7c74fe5cfe26421"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b> = 1000</td></tr>
-<tr class="memdesc:ae9496c3dd0d37d52e7c74fe5cfe26421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of steps in \( z \). <br /></td></tr>
-<tr class="separator:ae9496c3dd0d37d52e7c74fe5cfe26421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecb83d1d5951bca06af688799ed407b3" id="r_aecb83d1d5951bca06af688799ed407b3"><td class="memItemLeft" align="right" valign="top"><a id="aecb83d1d5951bca06af688799ed407b3" name="aecb83d1d5951bca06af688799ed407b3"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NotBetterThreshold</b> = 3</td></tr>
+<tr class="memdesc:aecb83d1d5951bca06af688799ed407b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of times we let the profile relax without getting better. <br /></td></tr>
+<tr class="separator:aecb83d1d5951bca06af688799ed407b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a343449de0aa22512c19d05ae8f89c427" id="r_a343449de0aa22512c19d05ae8f89c427"><td class="memItemLeft" align="right" valign="top"><a id="a343449de0aa22512c19d05ae8f89c427" name="a343449de0aa22512c19d05ae8f89c427"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>LwToSolve</b> = 10</td></tr>
+<tr class="memdesc:a343449de0aa22512c19d05ae8f89c427"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to solve the tunnel profile from -Lw * LwToSolve -&gt; Lw * LwToSolve. <br /></td></tr>
+<tr class="separator:a343449de0aa22512c19d05ae8f89c427"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0e56001b4a6582ecf1d3f5dc6a73435" id="r_ae0e56001b4a6582ecf1d3f5dc6a73435"><td class="memItemLeft" align="right" valign="top"><a id="ae0e56001b4a6582ecf1d3f5dc6a73435" name="ae0e56001b4a6582ecf1d3f5dc6a73435"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>itmax</b> = 50</td></tr>
+<tr class="memdesc:ae0e56001b4a6582ecf1d3f5dc6a73435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max iterations for the relaxation method. <br /></td></tr>
+<tr class="separator:ae0e56001b4a6582ecf1d3f5dc6a73435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75286896fe8a3611b35af78e664ee0d4" id="r_a75286896fe8a3611b35af78e664ee0d4"><td class="memItemLeft" align="right" valign="top"><a id="a75286896fe8a3611b35af78e664ee0d4" name="a75286896fe8a3611b35af78e664ee0d4"></a>
+const double&#160;</td><td class="memItemRight" valign="bottom"><b>dphiTreshold</b> = 1.e-20</td></tr>
+<tr class="memdesc:a75286896fe8a3611b35af78e664ee0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates \( \frac{d\phi}{dz} \) at the edges and, if its too large, increases the integration domain. <br /></td></tr>
+<tr class="separator:a75286896fe8a3611b35af78e664ee0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6104bb10f8a2978cf2ee5e811c1d7fdf" id="r_a6104bb10f8a2978cf2ee5e811c1d7fdf"><td class="memItemLeft" align="right" valign="top"><a id="a6104bb10f8a2978cf2ee5e811c1d7fdf" name="a6104bb10f8a2978cf2ee5e811c1d7fdf"></a>
 const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>TrueVacuum</b></td></tr>
 <tr class="memdesc:a6104bb10f8a2978cf2ee5e811c1d7fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">True and False <a class="el" href="structBSMPT_1_1Vacuum.html" title="Complete vacuum structure of the theory for this parameter point.">Vacuum</a>. <br /></td></tr>
@@ -269,8 +284,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="ab7eec4c54b9356a32547d3cfc3113232" name="ab7eec4c54b9356a32547d3cfc3113232"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7eec4c54b9356a32547d3cfc3113232">&#9670;&#160;</a></span>VacuumProfile() <span class="overload">[2/3]</span></h2>
+<a id="a9504367d168cfec478399b935a38ed5d" name="a9504367d168cfec478399b935a38ed5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9504367d168cfec478399b935a38ed5d">&#9670;&#160;</a></span>VacuumProfile() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -315,7 +330,13 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double&#160;</td>
-          <td class="paramname"><em>Lw</em>&#160;</td>
+          <td class="paramname"><em>Lw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>NumberOfSteps</em> = <code>1000</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -523,6 +544,43 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">center</td><td>calculated old center </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af09905b0d4520866f5a80c5b1da4ffb1" name="af09905b0d4520866f5a80c5b1da4ffb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af09905b0d4520866f5a80c5b1da4ffb1">&#9670;&#160;</a></span>CreatePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BSMPT::VacuumProfileNS::VacuumProfile::CreatePath </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>Lw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfSteps</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a Path object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Lw</td><td>Wall width </td></tr>
+    <tr><td class="paramname">NumberOfSteps</td><td>Number of steps </td></tr>
   </table>
   </dd>
 </dl>

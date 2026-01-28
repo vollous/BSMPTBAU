@@ -132,7 +132,7 @@ var NAVTREEINDEX =
 "classBSMPT_1_1Models_1_1Class__SM.html#a13067b5b36fd7276d9530e5755d0b66f",
 "functions_vars_s.html",
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a764c93d5bc8890d46c2bf739f74be4cf",
-"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f"
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6f1f83f8ab72a4284421c2879d84b190"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

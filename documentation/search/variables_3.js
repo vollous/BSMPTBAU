@@ -12,8 +12,9 @@ var searchData=
   ['dmsqrt_5fthermal_5fbot_9',['dmsqrt_thermal_bot',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a35b64a14c2b8eee657b868a00fd38cb2',1,'BSMPT::Baryo::gen_fluid']]],
   ['dmsqrt_5fthermal_5ftau_10',['dmsqrt_thermal_tau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a12935834539e0429a876562248522e78',1,'BSMPT::Baryo::gen_fluid']]],
   ['dmsqrt_5fthermal_5ftop_11',['dmsqrt_thermal_top',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a8966e63984cd32044db90d84ba819e1d',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dq_12',['Dq',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dt_13',['Dt',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2314e9e4aad61d6263e146346cc7a0c6',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dtau_14',['Dtau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2fad2a6c0f10a3c95b7ec065eb144959',1,'BSMPT::Baryo::gen_fluid']]],
-  ['dv_15',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#acbee846f9efe820d11e4baf78a084f07',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6',1,'BSMPT::VacuumProfileNS::VacuumProfile::dV']]]
+  ['dphitreshold_12',['dphiTreshold',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a75286896fe8a3611b35af78e664ee0d4',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['dq_13',['Dq',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#ab20b06ac65425be710ba550013809140',1,'BSMPT::Baryo::gen_fluid']]],
+  ['dt_14',['Dt',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2314e9e4aad61d6263e146346cc7a0c6',1,'BSMPT::Baryo::gen_fluid']]],
+  ['dtau_15',['Dtau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a2fad2a6c0f10a3c95b7ec065eb144959',1,'BSMPT::Baryo::gen_fluid']]],
+  ['dv_16',['dv',['../classBSMPT_1_1BounceActionInt.html#a0debf1c85acfb2ae72566892c055c5b9',1,'BSMPT::BounceActionInt::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#acbee846f9efe820d11e4baf78a084f07',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile::dV'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6',1,'BSMPT::VacuumProfileNS::VacuumProfile::dV']]]
 ];
