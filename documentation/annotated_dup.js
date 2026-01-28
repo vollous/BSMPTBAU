@@ -11,7 +11,8 @@ var annotated_dup =
           [ "Q9KernelIntw", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelIntw.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelIntw" ],
           [ "Q9KernelInty", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty" ],
           [ "RbarInt", "classBSMPT_1_1Baryo_1_1FHCK_1_1RbarInt.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1RbarInt" ],
-          [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations" ]
+          [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations" ],
+          [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel" ]
         ] ],
         [ "AdditionalBaryoArgs", "structBSMPT_1_1Baryo_1_1AdditionalBaryoArgs.html", null ],
         [ "bot_source", "classBSMPT_1_1Baryo_1_1bot__source.html", "classBSMPT_1_1Baryo_1_1bot__source" ],

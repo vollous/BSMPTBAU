@@ -52,7 +52,7 @@ var searchData=
   ['calccouplingsdone_49',['CalcCouplingsdone',['../classBSMPT_1_1Class__Potential__Origin.html#a762eed521dae06c4d5dae99dc9c6f3bc',1,'BSMPT::Class_Potential_Origin']]],
   ['calculatedtriplecopulings_50',['CalculatedTripleCopulings',['../classBSMPT_1_1Class__Potential__Origin.html#a519a313f4beca7c3c36dfd265f2441de',1,'BSMPT::Class_Potential_Origin']]],
   ['calculater_51',['Calculater',['../classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator.html#a44dd86c38fafe25f6eb03144aea4d24b',1,'BSMPT::ThermalFunctions::ThermalCoefficientCalculator']]],
-  ['coexphase_52',['CoexPhase',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a8670c698d897e5a18e91fa5211f35897',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['coexphase_52',['CoexPhase',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a469b75c4349879c7948f7126e25d9019',1,'BSMPT::Baryo::FHCK::TransportModel']]],
   ['coexphaseslist_53',['CoexPhasesList',['../structBSMPT_1_1Vacuum.html#a42c1bc7761899f2ea292dc323ec0d485',1,'BSMPT::Vacuum']]],
   ['completion_5ftemp_5fset_54',['completion_temp_set',['../classBSMPT_1_1BounceSolution.html#a3ccf7acab51a0dd480ae30b5ccbbfae2',1,'BSMPT::BounceSolution']]],
   ['couplings_5fgauge_5fhiggs_5f21_55',['Couplings_Gauge_Higgs_21',['../classBSMPT_1_1Class__Potential__Origin.html#a35af6a9f82f4cde1f8a69bf5c0f0bff2',1,'BSMPT::Class_Potential_Origin']]],

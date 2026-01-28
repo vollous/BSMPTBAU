@@ -6,5 +6,6 @@ var searchData=
   ['transition_5fdata_3',['transition_data',['../structBSMPT_1_1transition__data.html',1,'BSMPT']]],
   ['transitiontracer_4',['TransitionTracer',['../classBSMPT_1_1TransitionTracer.html',1,'BSMPT']]],
   ['transport_5fequations_5',['transport_equations',['../classBSMPT_1_1Baryo_1_1transport__equations.html',1,'BSMPT::Baryo']]],
-  ['transportequations_6',['TransportEquations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html',1,'BSMPT::Baryo::FHCK']]]
+  ['transportequations_6',['TransportEquations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html',1,'BSMPT::Baryo::FHCK']]],
+  ['transportmodel_7',['TransportModel',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html',1,'BSMPT::Baryo::FHCK']]]
 ];

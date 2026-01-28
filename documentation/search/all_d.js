@@ -13,7 +13,7 @@ var searchData=
   ['indextruecandidatephase_10',['indexTrueCandidatePhase',['../classBSMPT_1_1BounceSolution.html#ab47f6914869ddbb8b0f5252ecdc64f66',1,'BSMPT::BounceSolution']]],
   ['init_11',['init',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#aefb21909b1cda96a8d87a63b56ae6ffd',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['initial_5flmin_12',['Initial_lmin',['../classBSMPT_1_1BounceActionInt.html#ad2fe0a80ad1f5a2184fdf902d66a0859',1,'BSMPT::BounceActionInt']]],
-  ['initialize_13',['initialize',['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()']]],
+  ['initialize_13',['initialize',['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957',1,'BSMPT::Baryo::FHCK::TransportModel::Initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()']]],
   ['initializedvspline_14',['InitializedVSpline',['../classBSMPT_1_1BounceSolution.html#a21218a67011da29030772b801beb44cb',1,'BSMPT::BounceSolution']]],
   ['initializegstarprofile_15',['InitializeGstarProfile',['../classBSMPT_1_1BounceSolution.html#aa80b67ffde0490943c1f728247a65e83',1,'BSMPT::BounceSolution']]],
   ['initializek1bosongrid_16',['initializeK1bosonGrid',['../KfactorsinterpolatedGSL_8h.html#ac089c4eee50d85c1e9dcabf297941686',1,'BSMPT::Kfactors']]],
@@ -26,7 +26,7 @@ var searchData=
   ['initializek6fermiongrid_23',['initializeK6fermionGrid',['../KfactorsinterpolatedGSL_8h.html#a2ea3c826233359b690de9fa97b7a06f6',1,'BSMPT::Kfactors']]],
   ['initializek8fermiongrid_24',['initializeK8fermionGrid',['../KfactorsinterpolatedGSL_8h.html#a912cf90cf68d131f391e628afae2f971',1,'BSMPT::Kfactors']]],
   ['initializek9fermiongrid_25',['initializeK9fermionGrid',['../KfactorsinterpolatedGSL_8h.html#a258fdb170bf089d40ac47ef97ba83ede',1,'BSMPT::Kfactors']]],
-  ['initmodel_26',['initmodel',['../classBSMPT_1_1Class__Potential__Origin.html#a15c0f9b10a492e2aa859a70a8dcb26fc',1,'BSMPT::Class_Potential_Origin::initModel(const std::vector&lt; double &gt; &amp;par)'],['../classBSMPT_1_1Class__Potential__Origin.html#ae68f6352df1661e94331c17e156896f0',1,'BSMPT::Class_Potential_Origin::initModel(std::string linestr)']]],
+  ['initmodel_26',['initmodel',['../classBSMPT_1_1Class__Potential__Origin.html#ae68f6352df1661e94331c17e156896f0',1,'BSMPT::Class_Potential_Origin::initModel(std::string linestr)'],['../classBSMPT_1_1Class__Potential__Origin.html#a15c0f9b10a492e2aa859a70a8dcb26fc',1,'BSMPT::Class_Potential_Origin::initModel(const std::vector&lt; double &gt; &amp;par)']]],
   ['initpath_27',['InitPath',['../classBSMPT_1_1BounceActionInt.html#a0dfc853d0c4752c0a0e4fe78c5957123',1,'BSMPT::BounceActionInt']]],
   ['initvectors_28',['initVectors',['../classBSMPT_1_1Class__Potential__Origin.html#a87be49303f2caf58b5dcf89cc934a30a',1,'BSMPT::Class_Potential_Origin']]],
   ['inner_5fintegrand_29',['inner_integrand',['../classBSMPT_1_1BounceSolution.html#a21836c3f561ba2795ca0810f628818f4',1,'BSMPT::BounceSolution']]],
@@ -40,7 +40,8 @@ var searchData=
   ['integratebounce_37',['IntegrateBounce',['../classBSMPT_1_1BounceActionInt.html#ab6c0f5b4f40a029fc5a349e6032b1f6f',1,'BSMPT::BounceActionInt']]],
   ['integration1dstatus_38',['Integration1DStatus',['../classBSMPT_1_1BounceActionInt.html#a2f3feb2cc85873eb12de9c961c56314b',1,'BSMPT::BounceActionInt']]],
   ['invertmap_39',['InvertMap',['../namespaceBSMPT.html#a19358c50de5990badb12ca083ddff645',1,'BSMPT']]],
-  ['isglobmin_40',['IsGlobMin',['../classBSMPT_1_1MinimumTracer.html#a63209e83aacc339c3cec0d8f69c10e48',1,'BSMPT::MinimumTracer']]],
-  ['ismconstants_41',['ISMConstants',['../structBSMPT_1_1ISMConstants.html',1,'BSMPT']]],
-  ['isthereewsymmetryrestoration_42',['IsThereEWSymmetryRestoration',['../classBSMPT_1_1MinimumTracer.html#a6c57bea2a9fcaf0ef497626f2da30624',1,'BSMPT::MinimumTracer']]]
+  ['involvedparticles_40',['involvedparticles',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#add92bfef7467448acc349c939944755e',1,'BSMPT::Baryo::FHCK::TransportModel']]],
+  ['isglobmin_41',['IsGlobMin',['../classBSMPT_1_1MinimumTracer.html#a63209e83aacc339c3cec0d8f69c10e48',1,'BSMPT::MinimumTracer']]],
+  ['ismconstants_42',['ISMConstants',['../structBSMPT_1_1ISMConstants.html',1,'BSMPT']]],
+  ['isthereewsymmetryrestoration_43',['IsThereEWSymmetryRestoration',['../classBSMPT_1_1MinimumTracer.html#a6c57bea2a9fcaf0ef497626f2da30624',1,'BSMPT::MinimumTracer']]]
 ];

@@ -160,7 +160,7 @@ var searchData=
   ['clioptions_157',['CLIOptions',['../structCLIOptions.html',1,'']]],
   ['cmaes_5fminimize_5fplane_5fgen_5fall_158',['CMAES_Minimize_Plane_gen_all',['../MinimizeLibCMAES_8h.html#a77908f6ea21871692ac33938604f133b',1,'BSMPT::Minimizer::LibCMAES']]],
   ['code_20for_20a_20model_159',['Generate the C++ code for a model',['../index.html#autotoc_md12',1,'']]],
-  ['coexphase_160',['CoexPhase',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a8670c698d897e5a18e91fa5211f35897',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['coexphase_160',['CoexPhase',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a469b75c4349879c7948f7126e25d9019',1,'BSMPT::Baryo::FHCK::TransportModel']]],
   ['coexphases_161',['coexphases',['../structBSMPT_1_1CoexPhases.html#a9d2be5af57b80dc88bce3c14f813f593',1,'BSMPT::CoexPhases::CoexPhases()'],['../structBSMPT_1_1CoexPhases.html#a081dfb1ed40afdc47518799f2bb9286d',1,'BSMPT::CoexPhases::CoexPhases(const int &amp;pair_id, const Phase &amp;false_phase, const Phase &amp;true_phase, const double &amp;Tlow_in, const double &amp;Thigh_in)'],['../structBSMPT_1_1CoexPhases.html',1,'BSMPT::CoexPhases']]],
   ['coexphaseslist_162',['CoexPhasesList',['../structBSMPT_1_1Vacuum.html#a42c1bc7761899f2ea292dc323ec0d485',1,'BSMPT::Vacuum']]],
   ['compare_5fc2hdm_163',['Compare_C2HDM',['../classCompare__C2HDM.html',1,'']]],
