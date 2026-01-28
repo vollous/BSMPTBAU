@@ -107,7 +107,6 @@ var annotated_dup =
     [ "Compare_SM", "classCompare__SM.html", null ],
     [ "cvspline", "classcvspline.html", "classcvspline" ],
     [ "Difeq", "structDifeq.html", null ],
-    [ "Difeq_TransportEquation", "structDifeq__TransportEquation.html", null ],
     [ "Mat3DDoub", "classMat3DDoub.html", null ],
     [ "MatDoub", "classMatDoub.html", null ],
     [ "MyListener", "structMyListener.html", null ],

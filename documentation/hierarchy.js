@@ -32,8 +32,8 @@ var hierarchy =
     [ "cvspline", "classcvspline.html", null ],
     [ "BSMPT::DBPLParameters", "structBSMPT_1_1DBPLParameters.html", null ],
     [ "Difeq", "structDifeq.html", [
-      [ "BSMPT::VacuumProfileNS::Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html", null ],
-      [ "Difeq_TransportEquation", "structDifeq__TransportEquation.html", null ]
+      [ "BSMPT::Baryo::FHCK::TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", null ],
+      [ "BSMPT::VacuumProfileNS::Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html", null ]
     ] ],
     [ "Catch::EventListenerBase", null, [
       [ "MyListener", "structMyListener.html", null ]
@@ -90,7 +90,6 @@ var hierarchy =
     [ "BSMPT::transition_data", "structBSMPT_1_1transition__data.html", null ],
     [ "BSMPT::TransitionTracer", "classBSMPT_1_1TransitionTracer.html", null ],
     [ "BSMPT::Baryo::transport_equations", "classBSMPT_1_1Baryo_1_1transport__equations.html", null ],
-    [ "BSMPT::Baryo::FHCK::TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", null ],
     [ "BSMPT::Baryo::FHCK::TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", null ],
     [ "BSMPT::user_input", "structBSMPT_1_1user__input.html", null ],
     [ "BSMPT::Vacuum", "structBSMPT_1_1Vacuum.html", null ],

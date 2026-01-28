@@ -39,12 +39,13 @@ var searchData=
   ['simpson_5fstep_36',['Simpson_step',['../classcvspline.html#a21775e41488a4b26d0650f144e420cd7',1,'cvspline']]],
   ['singlepathdeformation_37',['SinglePathDeformation',['../classBSMPT_1_1BounceActionInt.html#a3a14f225ae5c3f9e3c57135201bbf7a8',1,'BSMPT::BounceActionInt']]],
   ['smallesteigenvalue_38',['SmallestEigenvalue',['../classBSMPT_1_1MinimumTracer.html#af5014d09ef1995293eea1560b075df1a',1,'BSMPT::MinimumTracer']]],
-  ['solve1dbounce_39',['Solve1DBounce',['../classBSMPT_1_1BounceActionInt.html#a885608a426afd615d80c13ef4a3c1172',1,'BSMPT::BounceActionInt']]],
-  ['solvetransportequation_40',['SolveTransportEquation',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac86c557ee7449fa4a8c397e4eeb12481',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['split_41',['split',['../namespaceBSMPT.html#af399e9a581e9c31fc59194a3f32b66f1',1,'BSMPT']]],
-  ['stringendswith_42',['StringEndsWith',['../namespaceBSMPT.html#ab448300c7a9bfd21a81df9069c1ed451',1,'BSMPT']]],
-  ['stringstartswith_43',['StringStartsWith',['../namespaceBSMPT.html#a68d199b1c37b6807ce1cfb6c57c0721b',1,'BSMPT']]],
-  ['sym2dim_44',['sym2Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a357880ba2f026acb7786457089a049ef',1,'BSMPT::Class_Potential_Origin']]],
-  ['sym3dim_45',['sym3Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a8a37be8f20557f8a6a05aa3395f2c065',1,'BSMPT::Class_Potential_Origin']]],
-  ['sym4dim_46',['sym4Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a6832879413039f6fb0d89b0ee912abf2',1,'BSMPT::Class_Potential_Origin']]]
+  ['smatrix_39',['smatrix',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5df991b47e6331ce8255a6de6ac63536',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['solve1dbounce_40',['Solve1DBounce',['../classBSMPT_1_1BounceActionInt.html#a885608a426afd615d80c13ef4a3c1172',1,'BSMPT::BounceActionInt']]],
+  ['solvetransportequation_41',['SolveTransportEquation',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac86c557ee7449fa4a8c397e4eeb12481',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['split_42',['split',['../namespaceBSMPT.html#af399e9a581e9c31fc59194a3f32b66f1',1,'BSMPT']]],
+  ['stringendswith_43',['StringEndsWith',['../namespaceBSMPT.html#ab448300c7a9bfd21a81df9069c1ed451',1,'BSMPT']]],
+  ['stringstartswith_44',['StringStartsWith',['../namespaceBSMPT.html#a68d199b1c37b6807ce1cfb6c57c0721b',1,'BSMPT']]],
+  ['sym2dim_45',['sym2Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a357880ba2f026acb7786457089a049ef',1,'BSMPT::Class_Potential_Origin']]],
+  ['sym3dim_46',['sym3Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a8a37be8f20557f8a6a05aa3395f2c065',1,'BSMPT::Class_Potential_Origin']]],
+  ['sym4dim_47',['sym4Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a6832879413039f6fb0d89b0ee912abf2',1,'BSMPT::Class_Potential_Origin']]]
 ];

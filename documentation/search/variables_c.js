@@ -21,11 +21,12 @@ var searchData=
   ['mpl_18',['MPl',['../structBSMPT_1_1ISMConstants.html#ad41c230cae45a8f3e724422fa68923ea',1,'BSMPT::ISMConstants']]],
   ['msg_19',['msg',['../Kfunctions__grid_8h.html#abfc8a61056c3cffe2dc5ecbf8f6aaebc',1,'BSMPT::Kfactors::Data']]],
   ['msg_5fsize_20',['msg_size',['../Kfunctions__grid_8h.html#a9e91550679894f0b70b228a7a0f25417',1,'BSMPT::Kfactors::Data']]],
-  ['msqrt_5fthermal_21',['msqrt_thermal',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a759b357212769636895d44ace9ebf4ff',1,'BSMPT::Baryo::Calc_Scp::msqrt_thermal'],['../classBSMPT_1_1Baryo_1_1Calc__Gam__M.html#a037ae8a44f9ae8d486d61160cf9f2999',1,'BSMPT::Baryo::Calc_Gam_M::msqrt_thermal']]],
+  ['msqrt_5fthermal_21',['msqrt_thermal',['../classBSMPT_1_1Baryo_1_1Calc__Gam__M.html#a037ae8a44f9ae8d486d61160cf9f2999',1,'BSMPT::Baryo::Calc_Gam_M::msqrt_thermal'],['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a759b357212769636895d44ace9ebf4ff',1,'BSMPT::Baryo::Calc_Scp::msqrt_thermal']]],
   ['msqrt_5fthermal_5fbot_22',['msqrt_thermal_bot',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a895eb8a2e57048b211eb25b834a81301',1,'BSMPT::Baryo::gen_fluid']]],
   ['msqrt_5fthermal_5ftau_23',['msqrt_thermal_tau',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a390b6deddc3980ce4ec71cb9c0d0c0e8',1,'BSMPT::Baryo::gen_fluid']]],
   ['msqrt_5fthermal_5ftop_24',['msqrt_thermal_top',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a65fc4e6321e25635b157062b24cf0a6d',1,'BSMPT::Baryo::gen_fluid']]],
   ['msquaredtsquared_25',['msquaredTsquared',['../KtildeInterpolation_8h.html#afaa28c96c93247045ce4a0d65e67d7ec',1,'BSMPT::Kfactors::Data']]],
   ['mt_26',['mt',['../classBSMPT_1_1Baryo_1_1Calc__kappa__t.html#a345c75e94309eb1068ab7e232bb72fb0',1,'BSMPT::Baryo::Calc_kappa_t']]],
-  ['mu_27',['mu',['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile']]]
+  ['mtildem_27',['MtildeM',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae624efd805aeb98213ed17efab9f9658',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['mu_28',['mu',['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile']]]
 ];
