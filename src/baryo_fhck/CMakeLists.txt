@@ -5,9 +5,11 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck")
 set(header
+    ${header_path}/TransportModel.h
     ${header_path}/TransportEquations.h)
 
 set(src
+    TransportModel.cpp
     TransportEquations.cpp)
 
 add_library(BaryoFHCK ${header} ${src})

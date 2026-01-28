@@ -8,49 +8,17 @@ namespace Baryo
 namespace FHCK
 {
 TransportEquations::TransportEquations(
-    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<CoexPhases> &CoexPhase_in,
-    const double &vwall_in,
-    const double &Tstar_in,
-    const VevProfileMode &VevProfile_In)
+    const std::shared_ptr<TransportModel> &model_in,
+    const double &Tstar_in)
 {
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  CoexPhase    = CoexPhase_in;
-  FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
-  TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
-  VevProfile   = VevProfile_In;
+  transportmodel = model_in;
+  Tstar          = Tstar_in;
   Initialize();
 }
 
 void TransportEquations::Initialize()
 {
-  EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
-
-  SetEtaInterface();
-
-  if (VevProfile == VevProfileMode::FieldEquation)
-  {
-    const double &eps = 0.01;
-    // Calculate tunnel profile
-    std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
-    {
-      // Potential wrapper
-      std::vector<double> res = modelPointer->MinimizeOrderVEV(vev);
-      return modelPointer->VEff(res, Tstar);
-    };
-
-    std::function<std::vector<double>(std::vector<double>)> dV =
-        [=](auto const &arg) { return NablaNumerical(arg, V, eps); };
-    std::function<std::vector<std::vector<double>>(std::vector<double>)>
-        Hessian = [=](auto const &arg)
-    { return HessianNumerical(arg, V, eps); };
-
-    vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
-        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
-    vacuumprofile->CalculateProfile();
-  }
+  transportmodel->Initialize();
 
   uList = MakeDistribution(1, NumberOfSteps);
 
@@ -69,11 +37,9 @@ void TransportEquations::Initialize()
                     std::to_string(uList.back()) + "\n");
 
   Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
+  transportmodel->GenerateFermionMass(zList);
 
-  // Generate the fermion masses splines
-  GenerateFermionMass();
-
-  gamwall = 1. / std::sqrt(1. - vwall * vwall);
+  gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
   nEqs = moment * (nFermions + nBosons);
 
@@ -117,7 +83,7 @@ tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
       {
         tk::spline spl(vw_vals, y_vals);
         x_vals.push_back(x_save);
-        res_vals.push_back(spl(vwall));
+        res_vals.push_back(spl(transportmodel->vwall));
         vw_vals.clear();
         y_vals.clear();
       }
@@ -190,209 +156,6 @@ void TransportEquations::SetNumberOfSteps(const int &num)
   Initialize();
 }
 
-void TransportEquations::SetEtaInterface()
-{
-  auto config =
-      std::pair<std::vector<bool>, int>{std::vector<bool>(5, true), 1};
-  EtaInterface =
-      std::make_shared<CalculateEtaInterface>(config, GetSMConstants());
-
-  EtaInterface->CalcEta(vwall,
-                        TrueVacuum,
-                        FalseVacuum,
-                        Tstar,
-                        modelPointer,
-                        Minimizer::WhichMinimizerDefault);
-
-  Lw = EtaInterface->getLW();
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
-}
-
-std::vector<double> TransportEquations::Vev(const double &z, const int &diff)
-{
-  if (VevProfile == VevProfileMode::Kink)
-  {
-    if (diff == 0)
-      return FalseVacuum + (1 - tanh(z / Lw)) * (TrueVacuum - FalseVacuum) / 2;
-    if (diff == 1)
-      return -1 / pow(cosh(z / Lw), 2) * (TrueVacuum - FalseVacuum) / (2 * Lw);
-    if (diff == 2)
-      return 2 * tanh(z / Lw) / pow(cosh(z / Lw), 2) *
-             (TrueVacuum - FalseVacuum) / (2 * Lw * Lw);
-  }
-  else if (VevProfile == VevProfileMode::FieldEquation)
-  {
-    return vacuumprofile->GetVev(z, diff);
-  }
-
-  Logger::Write(LoggingLevel::FHCK, "Error! No VEV profile selected. - Vev()");
-  std::runtime_error("VEV profile mode selected is not valid.");
-  return std::vector<double>();
-}
-
-void TransportEquations::GenerateFermionMass()
-{
-  QuarkMassesRe.clear();
-  QuarkMassesIm.clear();
-  size_t ind = (modelPointer->get_NQuarks() - 1);
-  std::vector<std::vector<double>> MassesReal, MassesImag;
-  for (auto z : zList)
-  {
-    std::vector<double> MassReal, MassImag;
-
-    Eigen::MatrixXcd MIJQuarks =
-        modelPointer->QuarkMassMatrix(modelPointer->MinimizeOrderVEV(Vev(z)));
-    Eigen::ComplexEigenSolver<Eigen::MatrixXcd> esQuark(MIJQuarks);
-
-    for (auto m : esQuark.eigenvalues())
-    {
-      const int fac = 2 * (m.real() >= 0) - 1;
-      MassReal.push_back(m.real() / fac);
-      MassImag.push_back(m.imag() / fac);
-    }
-    MassesReal.push_back(MassReal);
-    MassesImag.push_back(MassImag);
-  }
-
-  MassesReal = Transpose(MassesReal);
-  MassesImag = Transpose(MassesImag);
-
-  for (auto MassProfile : MassesReal)
-    QuarkMassesRe.push_back(tk::spline(zList,
-                                       MassProfile,
-                                       tk::spline::cspline,
-                                       false,
-                                       tk::spline::not_a_knot,
-                                       0,
-                                       tk::spline::not_a_knot,
-                                       0));
-
-  for (auto MassProfile : MassesImag)
-    QuarkMassesIm.push_back(tk::spline(zList,
-                                       MassProfile,
-                                       tk::spline::cspline,
-                                       false,
-                                       tk::spline::not_a_knot,
-                                       0,
-                                       tk::spline::not_a_knot,
-                                       0));
-
-  AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
-
-  Plot.addPlot(uList, MassesReal.at(ind), "Re(mt)", '*');
-  Plot.addPlot(uList, MassesImag.at(ind), "Im(mt)", '.');
-  Plot.legend();
-  std::stringstream ss;
-  Plot.show(ss);
-  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
-}
-
-void TransportEquations::GetFermionMass(const double &z,
-                                        const size_t &fermion,
-                                        double &m2,
-                                        double &m2prime,
-                                        double &thetaprime,
-                                        double &theta2prime)
-{
-  std::complex<double> m, mprime, mprimeprime;
-  const int ind =
-      (modelPointer->get_NQuarks() - 1) - fermion; // Index of fermion
-
-  m = std::complex<double>(QuarkMassesRe.at(ind)(z), QuarkMassesIm.at(ind)(z));
-
-  mprime      = std::complex<double>(QuarkMassesRe.at(ind).deriv(1, z),
-                                QuarkMassesIm.at(ind).deriv(1, z));
-  mprimeprime = std::complex<double>(QuarkMassesRe.at(ind).deriv(2, z),
-                                     QuarkMassesIm.at(ind).deriv(2, z));
-  m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
-  m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
-  // Calculate theta
-  if (VevProfile == VevProfileMode::Kink)
-  {
-    double brk;
-    double sym;
-
-    // Use BSMPTv2 functions
-    switch (fermion)
-    {
-    case 0:
-      brk = EtaInterface->getBrokenCPViolatingPhase_top();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
-      break;
-    case 1:
-      brk = EtaInterface->getBrokenCPViolatingPhase_top();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
-      break;
-    case 2:
-      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
-      break;
-    default: throw("Invalid fermion in GetFermionMass()"); break;
-    }
-    thetaprime = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
-    theta2prime =
-        ((brk - sym) / pow(cosh(z / Lw), 2) * tanh(z / Lw)) / pow(Lw, 2);
-  }
-  else if (VevProfile == VevProfileMode::FieldEquation)
-  {
-    if (pow(pow(m.imag(), 2) + pow(m.real(), 2), 2) == 0) // avoid 1/0
-    {
-      thetaprime  = 0.;
-      theta2prime = 0.;
-    }
-    else
-    {
-      // Deduce theta' and theta'' from the mass's phase
-      thetaprime = (m.real() * mprime.imag() - m.imag() * mprime.real()) /
-                   (pow(m.imag(), 2) + pow(m.real(), 2));
-      theta2prime =
-          (pow(m.real(), 2) * (-2 * mprime.imag() * mprime.real() +
-                               m.real() * mprimeprime.imag()) +
-           pow(m.imag(), 2) * (2 * mprime.imag() * mprime.real() +
-                               m.real() * mprimeprime.imag()) -
-           pow(m.imag(), 3) * mprimeprime.real() -
-           m.imag() * m.real() *
-               (2 * pow(mprime.imag(), 2) - 2 * pow(mprime.real(), 2) +
-                m.real() * mprimeprime.real())) /
-          pow(pow(m.imag(), 2) + pow(m.real(), 2), 2);
-    }
-  }
-}
-
-double TransportEquations::GetWMass(const std::vector<double> &vev,
-                                    const double &T) const
-{
-  std::vector<double> res;
-  res =
-      modelPointer->GaugeMassesSquared(modelPointer->MinimizeOrderVEV(vev), T);
-  std::vector<double> nrepeat(modelPointer->get_NGauge());
-  for (std::size_t i = 0; i < modelPointer->get_NGauge(); i++)
-  {
-    nrepeat[i] = 0;
-    for (std::size_t j = 0; j < modelPointer->get_NGauge(); j++)
-    {
-      if (std::abs(res.at(i) - res.at(j)) <= 1e-5) nrepeat[i]++;
-    }
-  }
-
-  for (int j = modelPointer->get_NGauge() - 1; j >= 0; j--)
-  {
-    if (nrepeat[j] > 1)
-    {
-      if (std::isnan(res.at(j)))
-      {
-        std::string retmessage = "Nan found in ";
-        retmessage += __func__;
-        throw std::runtime_error(retmessage);
-      }
-      return sqrt(res.at(j)) / Tstar;
-    }
-  }
-  return 0;
-}
-
 MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                                                      VecDoub &FermionMasses,
                                                      VecDoub &BosonMasses)
@@ -410,9 +173,9 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                               sqrt(FermionMasses[2]),
                               sqrt(BosonMasses[0])};
 
-  std::vector<ParticleType> ptype = {ParticleType::Fermion,
-                                     ParticleType::Fermion,
-                                     ParticleType::Fermion,
+  std::vector<ParticleType> ptype = {ParticleType::LeftFermion,
+                                     ParticleType::RightFermion,
+                                     ParticleType::LeftFermion,
                                      ParticleType::Boson};
 
   const double D0T = Dlf[0](mass[0]);
@@ -466,22 +229,20 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         ul                      = 0.;
         trunc[rates.size() - 1] = 1.;
-        Kp =
-            (ptype[i] == ParticleType::Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+        Kp = (ptype[i] == ParticleType::Boson ? Klb[l - 1](m) : Klf[l - 1](m));
       }
       else if (l == 2)
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 1.;
-        Kp                      = -vwall *
-             (ptype[i] == ParticleType::Fermion ? Klf[0](m) : Klb[0](m));
+        Kp                      = -transportmodel->vwall *
+             (ptype[i] == ParticleType::Boson ? Klb[0](m) : Klf[0](m));
       }
       else
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 0.;
-        Kp =
-            (ptype[i] == ParticleType::Fermion ? Klf[l - 1](m) : Klb[l - 1](m));
+        Kp = (ptype[i] == ParticleType::Boson ? Klb[l - 1](m) : Klf[l - 1](m));
       }
 
       for (size_t j = 0; j < prtcl.size(); j++)
@@ -509,17 +270,17 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   {
     // 1, D1, D2, ..., Dn-1
     Di.at(i + 1) =
-        (type == ParticleType::Fermion ? Dlf[i + 1](m) : Dlb[i + 1](m));
+        (type == ParticleType::Boson ? Dlb[i + 1](m) : Dlf[i + 1](m));
     // off-diagonal "diagonal"
     res[i + 1][i] = 1;
   }
 
   // 0, 0, ..., -vwall, -1
-  Ri.at(moment - 2) = -vwall;
+  Ri.at(moment - 2) = -transportmodel->vwall;
   Ri.at(moment - 1) = -1;
 
   // (-1)^moment Inv(A)
-  double Dn = (type == ParticleType::Fermion ? Dlf[moment](m) : Dlb[moment](m));
+  double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
   for (size_t i = 0; i < moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
 
@@ -536,13 +297,13 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const ParticleType &type)
 {
   MatDoub res(moment, moment, 0.);
-  const double fRbar = (type == ParticleType::Fermion ? Rbarf(m) : Rbarb(m));
+  const double fRbar = (type == ParticleType::Boson ? Rbarb(m) : Rbarf(m));
 
   for (size_t l = 1; l <= moment; l++)
   {
-    const double fQ   = (type == ParticleType::Fermion ? Qlf[l](m) : Qlb[l](m));
+    const double fQ   = (type == ParticleType::Boson ? Qlb[l](m) : Qlf[l](m));
     res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
-    res[l - 1][0]     = gamwall * vwall * fQ * dm2;
+    res[l - 1][0]     = gamwall * transportmodel->vwall * fQ * dm2;
   }
   return res;
 }
@@ -555,7 +316,7 @@ VecDoub TransportEquations::calc_source(const double &m,
 {
   VecDoub res(moment);
   for (size_t i = 0; i < moment; i++)
-    res[i] = -vwall * gamwall * h *
+    res[i] = -transportmodel->vwall * gamwall * h *
              ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
               dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
   return res;
@@ -574,17 +335,18 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
 
 double TransportEquations::dudz(const double &u)
 {
-  return pow(1 - u * u, 3. / 2.) / (Lw * LwMultiplier);
+  return pow(1 - u * u, 3. / 2.) / (transportmodel->Lw * LwMultiplier);
 }
 
 double TransportEquations::zTOu(const double &z)
 {
-  return (z / (Lw * LwMultiplier)) / sqrt(1 + pow(z / (Lw * LwMultiplier), 2));
+  return (z / (transportmodel->Lw * LwMultiplier)) /
+         sqrt(1 + pow(z / (transportmodel->Lw * LwMultiplier), 2));
 }
 
 double TransportEquations::uTOz(const double &u)
 {
-  return LwMultiplier * Lw * u / (sqrt(1 - u * u));
+  return LwMultiplier * transportmodel->Lw * u / (sqrt(1 - u * u));
 }
 
 void TransportEquations::Equations(const double &z,
@@ -601,50 +363,42 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = GetWMass(Vev(z), Tstar);
+  const double mW = transportmodel->GetWMass(z, Tstar);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
-  // Fermions
-  for (size_t fermion = 0; fermion < nFermions; fermion++)
+  for (size_t particle = 0; particle < transportmodel->involvedparticles.size();
+       particle++)
   {
-    const int h = pow(-1, fermion + 1); /* = h -> helicity */
-
+    ParticleType ptype = transportmodel->involvedparticles[particle];
     double m2, m2prime, thetaprime, theta2prime;
-    // Calculate fermionic masses
-    GetFermionMass(z, fermion, m2, m2prime, thetaprime, theta2prime);
-    FermionMasses[fermion] = m2;
+    if (ptype == ParticleType::Boson)
+    {
+      m2             = 0;
+      m2prime        = 0;
+      BosonMasses[0] = m2;
+    }
+    else
+    {
+      // Calculate fermionic masses
+      transportmodel->GetFermionMass(
+          z, particle, m2, m2prime, thetaprime, theta2prime);
+      FermionMasses[particle] = m2;
+
+      // Source terms
+      int h = (ptype == ParticleType::LeftFermion ? -1 : 1);
+      VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
+      for (size_t i = 0; i < moment; i++)
+        S[moment * particle + i] = tempS[i];
+    }
 
     // Calculate A inverse for fermion
-    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Fermion));
-    InsertBlockDiagonal(Ainverse, tempA, fermion);
+    MatDoub tempA(calc_Ainv(sqrt(m2), ptype));
+    InsertBlockDiagonal(Ainverse, tempA, particle);
 
     // Calculate m2'B for fermion
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
-    InsertBlockDiagonal(m2B, tempB, fermion);
-
-    // Source terms
-    VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
-    for (size_t i = 0; i < moment; i++)
-      S[moment * fermion + i] = tempS[i];
-  }
-
-  // Bosons
-  for (size_t boson = 0; boson < nBosons; boson++)
-  {
-    double m2, m2prime;
-    // Calculate the boson mass
-    m2                 = 0;
-    m2prime            = 0;
-    BosonMasses[boson] = m2;
-
-    // Calculate A inverse for bosons
-    MatDoub tempA(calc_Ainv(sqrt(m2), ParticleType::Boson));
-    InsertBlockDiagonal(Ainverse, tempA, nFermions + boson);
-
-    // Calculate m2'B
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ParticleType::Fermion));
-    InsertBlockDiagonal(m2B, tempB, nFermions + boson);
+    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ptype));
+    InsertBlockDiagonal(m2B, tempB, particle);
   }
 
   // Gamma = deltaC - m2' B
@@ -809,7 +563,8 @@ void TransportEquations::smatrix(const int k,
 
 void TransportEquations::SolveTransportEquation()
 {
-  Logger::Write(LoggingLevel::FHCK, "Lw = " + std::to_string(Lw));
+  Logger::Write(LoggingLevel::FHCK,
+                "Lw = " + std::to_string(transportmodel->Lw));
 
   Equations(zList.front(), MtildeM, StildeM);
   Equations(zList.back(), MtildeP, StildeP);
@@ -883,24 +638,23 @@ void TransportEquations::CalculateBAU()
     const double ui = uList[i]; // u at position i
     const double zi = uTOz(ui); // z(u)
     // Calculate the vev at z
-    const std::vector<double> vev = Vev(zi);
-    GetFermionMass(zi, 0, mt2, m2prime, thetaprime, theta2prime);
-    GetFermionMass(zi, 2, mb2, m2prime, thetaprime, theta2prime);
+    transportmodel->GetFermionMass(
+        zi, 0, mt2, m2prime, thetaprime, theta2prime);
+    transportmodel->GetFermionMass(
+        zi, 2, mb2, m2prime, thetaprime, theta2prime);
     // Results
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
          Solution.value()[moment * 2][i];                      // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
-    r *= min(
-        1.,
-        2.4 * Tstar / Gsph *
-            exp(-40 *
-                modelPointer->EWSBVEV(modelPointer->MinimizeOrderVEV(vev), 0.) /
-                Tstar)); // f_sph(z)
+    r *= min(1.,
+             2.4 * Tstar / Gsph *
+                 exp(-40 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
-             (4. * vwall * gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
-    r *= 1 / abs(dudz(ui));           // z -> u jacobian
+             (4. * transportmodel->vwall *
+              gamwall));    // exp(-45 G_sph |z| / 4 vw gammaw)
+    r *= 1 / abs(dudz(ui)); // z -> u jacobian
     // Save in list to pass to integrator
     u.push_back(ui);
     muB.push_back(r); // integrand
@@ -940,9 +694,9 @@ void TransportEquations::CalculateBAU()
   gsl_interp_accel_free(acc);
   gsl_integration_workspace_free(workspace);
   // Results
-  const double prefactor =
-      405. * Gsph /
-      (4 * M_PI * M_PI * vwall * gamwall * 106.75 * Tstar); // TODO Fix gstas
+  const double prefactor = 405. * Gsph /
+                           (4 * M_PI * M_PI * transportmodel->vwall * gamwall *
+                            106.75 * Tstar); // TODO Fix gstas
 
   result *= prefactor;
   // Save the result

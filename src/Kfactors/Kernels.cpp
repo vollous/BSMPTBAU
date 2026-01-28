@@ -111,7 +111,7 @@ double Kernel::operator()(const KernelType Kern,
                           const double x,
                           const double vw)
 {
-  const double statistic = (P == ParticleType::Fermion ? 1. : -1.);
+  const double statistic = (P == ParticleType::Boson ? -1. : 1.);
   double gamw            = 1. / std::sqrt(1. - vw * vw);
   double res             = -3 / (M_PI * M_PI * gamw);
 
