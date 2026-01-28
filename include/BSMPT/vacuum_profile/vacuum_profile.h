@@ -17,6 +17,10 @@ namespace BSMPT
 namespace VacuumProfileNS
 {
 
+/**
+ * @brief Status of the Vacuum Profile calculation
+ *
+ */
 enum class VacuumProfileStatus
 {
   Unset,
@@ -48,10 +52,30 @@ struct VacuumProfile
   const size_t dim;
 
   /**
-   * @brief Number of steps in \f$ z \f$
+   * @brief Number of times we let the profile relax without getting better.
    *
    */
-  size_t NumberOfSteps = 1000;
+  size_t NotBetterThreshold = 3;
+
+  /**
+   * @brief Try to solve the tunnel profile from -Lw * LwToSolve -> Lw *
+   * LwToSolve
+   *
+   */
+  double LwToSolve = 10;
+
+  /**
+   * @brief Max iterations for the relaxation method
+   *
+   */
+  size_t itmax = 50;
+
+  /**
+   * @brief Calculates \f$ \frac{d\phi}{dz} \f$ at the edges and, if its too
+   * large, increases the integration domain.
+   *
+   */
+  const double dphiTreshold = 1.e-20;
 
   /**
    * @brief True and False Vacuum
@@ -160,6 +184,13 @@ struct VacuumProfile
   CalculateWidth(const std::vector<double> &TrueVacuum,
                  const std::vector<double> &FalseVacuum,
                  const std::function<double(std::vector<double>)> &V);
+  /**
+   * @brief Create a Path object
+   *
+   * @param Lw Wall width
+   * @param NumberOfSteps Number of steps
+   */
+  void CreatePath(const double &Lw, const size_t &NumberOfSteps);
 
   /**
    * @brief Load path -> z, y
@@ -228,7 +259,9 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double Lw);
+      const double Lw,
+      // Number of steps for the path
+      const size_t NumberOfSteps = 1000);
 
   /**
    * @brief Construct a new Vacuum Profile object
