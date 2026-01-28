@@ -3,7 +3,6 @@
 #include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
-#include <BSMPT/baryo_fhck/difeq_transport_equations.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
