@@ -742,6 +742,11 @@ BSMPT::parser prepare_parser()
                          "7",
                          false);
   argparser.add_subtext("number of path deformations + 1");
+  argparser.add_argument(
+      "forced_no_symmetric_phase",
+      "still calculates BAU even if false vacuum is not symmetric",
+      "false",
+      false);
 
   std::string GSLhelp   = Minimizer::UseGSLDefault ? "true" : "false";
   std::string CMAEShelp = Minimizer::UseLibCMAESDefault ? "true" : "false";
@@ -761,10 +766,11 @@ BSMPT::parser prepare_parser()
       "json", "use a json file instead of cli parameters", false);
 
   std::stringstream ss;
-  ss << "CalcGW calculates the gravitational wave signal\nit is called "
-        "by\n\n\t./bin/CalcGW model input output firstline "
+  ss << "CalcBAU calculates the baryon assymetry of the Universe \nit is "
+        "called "
+        "by\n\n\t./bin/CalcBAU model input output firstline "
         "lastline\n\nor "
-        "with arguments\n\n\t./bin/CalcGW [arguments]\n\nwith the "
+        "with arguments\n\n\t./bin/CalcBAU[arguments]\n\nwith the "
         "following arguments, ([*] are required arguments, others "
         "are optional):\n";
   argparser.set_help_header(ss.str());
