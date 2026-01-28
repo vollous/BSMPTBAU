@@ -100,6 +100,19 @@ size_t VecDoub::size()
   return nn;
 }
 
+void VecDoub::resize(const size_t newn)
+{
+  if (newn != nn)
+  {
+    if (v != nullptr)
+    {
+      delete[] (v);
+    }
+    nn = newn;
+    v  = nn > 0 ? new double[nn] : nullptr;
+  }
+}
+
 void VecDoub::zero()
 {
   for (size_t i = 0; i < nn; i++)
