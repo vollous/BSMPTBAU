@@ -3,7 +3,6 @@
 #include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
-#include <BSMPT/baryo_fhck/difeq_transport_equations.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
@@ -45,7 +44,7 @@ const std::unordered_map<FHCKStatus, std::string> FHCKStatusToString{
     {FHCKStatus::SmallIntegrationRegion, "small_integration_region"},
     {FHCKStatus::UnphysicalBoundary, "unphysical_boundary"}};
 
-class TransportEquations
+class TransportEquations : Difeq
 {
 public:
   /**
@@ -106,6 +105,36 @@ public:
    *
    */
   std::vector<double> uList;
+
+  /**
+   * @brief \f$ M \f$ matrix at the z-negative boundary.
+   *        \f$ S \f$ vector at the z-positive boundary.
+   */
+  MatDoub MtildeM, MtildeP;
+
+  /**
+   * @brief \f$ S \f$ vector at the z - negative boundary.
+   *        \f$ M \f$ matrix at the z - positive boundary.
+   */
+  VecDoub StildeM, StildeP;
+
+  /**
+   * @brief EtaInterface object. To  use BSMPTv2 functions
+   *
+   */
+  std::shared_ptr<CalculateEtaInterface> EtaInterface;
+
+  /**
+   * @brief Phase of the top mass at the false vacuum
+   *
+   */
+  std::optional<double> Theta_False;
+
+  /**
+   * @brief Phase of the top mass at the true vacuum
+   *
+   */
+  std::optional<double> Theta_True;
 
   /**
    * @brief Store the solution from the relaxation method
@@ -238,10 +267,7 @@ public:
    * @param MtildeP \f$ M \f$ matrix at the z-positive boundary.
    * @param StildeP \f$ S \f$ vector at the z-positive boundary.
    */
-  void CheckBoundary(const MatDoub &MtildeM,
-                     const VecDoub &StildeM,
-                     const MatDoub &MtildeP,
-                     const VecDoub &StildeP);
+  void CheckBoundary();
 
   /**
    * @brief Insert a sub matrix into a block diagonal matrix
@@ -298,6 +324,17 @@ public:
    *
    */
   std::vector<double> MakeDistribution(const double xmax, const size_t npoints);
+
+  /**
+   * @brief Smatrix needed of the relaxation method to solve the ODE
+   */
+  void smatrix(const int k,
+               const int k1,
+               const int k2,
+               const int jsf,
+               VecInt &indexv,
+               MatDoub &s,
+               MatDoub &y);
 
   /**
    * @brief Solve the transport equations.

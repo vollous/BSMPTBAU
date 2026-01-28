@@ -43,6 +43,11 @@ void TransportEquations::Initialize()
 
   nEqs = moment * (nFermions + nBosons);
 
+  MtildeM.resize(nEqs, nEqs);
+  MtildeP.resize(nEqs, nEqs);
+  StildeM.resize(nEqs);
+  StildeP.resize(nEqs);
+
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations\n");
 
   BuildKernelInterpolation();
@@ -427,10 +432,7 @@ std::vector<double> TransportEquations::MakeDistribution(const double xmax,
   return res;
 }
 
-void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
-                                       const VecDoub &StildeM,
-                                       const MatDoub &MtildeP,
-                                       const VecDoub &StildeP)
+void TransportEquations::CheckBoundary()
 {
   double STildeLength(0);
   size_t NumberOfNonDecayingModes(0);
@@ -489,21 +491,85 @@ void TransportEquations::CheckBoundary(const MatDoub &MtildeM,
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
+void TransportEquations::smatrix(const int k,
+                                 const int k1,
+                                 const int k2,
+                                 const int jsf,
+                                 VecInt &indexv,
+                                 MatDoub &s,
+                                 MatDoub &y)
+{
+  double temp;
+  MatDoub Mtilde(nEqs, nEqs);
+  VecDoub Stilde(nEqs);
+  s.zero(); // Set matrix s = 0
+  if (k == k1)
+  {
+    // Boundary conditions mu = 0 and first u on first boundary
+    for (size_t i = 0; i < nEqs / 2; i++)
+    {
+      // Sn at the first boundary
+      s[nEqs / 2 + i][nEqs + i] = 1.0;
+      // B0
+      s[nEqs / 2 + i][jsf] = y[indexv[i]][0];
+    }
+  }
+  else if (k > k2 - 1)
+  {
+    // Boundary conditions mu = 0 and first u on second boundary
+    for (size_t i = 0; i < nEqs / 2; i++)
+    {
+      // Sn at the last boundary
+      s[i][nEqs + i] = 1.0;
+      // C0
+      s[i][jsf] = y[indexv[i]][uList.size() - 1];
+    }
+  }
+  else
+  {
+    double um = (uList[k] + uList[k - 1]) / 2.;
+    double du = (uList[k] - uList[k - 1]) / dudz(um);
+    if (um < -0.3) // TODO: change. Too specific
+    {
+      Mtilde = MtildeM;
+      Stilde = StildeM;
+    }
+    else if (um > 0.3) // TODO: chagne. Too specific
+    {
+      Mtilde = MtildeP;
+      Stilde = StildeP;
+    }
+    else
+      Equations(uTOz(um), Mtilde, Stilde);
+    for (size_t j = 0; j < nEqs; j++)
+    {
+      for (size_t n = 0; n < nEqs; n++)
+      {
+        // s matrix for the middle point
+        // S_{j,n}
+        // M[k] and S[k] are evaluated between k and k-1
+        s[j][indexv[n]] = -Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        // S_{j,N + n}
+        s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+      }
+      //  Equations for E(k,k-1)
+      temp = Stilde[j];
+      for (size_t i = 0; i < nEqs; i++)
+        temp += Mtilde[j][i] * (y[i][k] + y[i][k - 1]) / 2.;
+      s[j][jsf] = y[j][k] - y[j][k - 1] - du * temp;
+    }
+  }
+}
+
 void TransportEquations::SolveTransportEquation()
 {
   Logger::Write(LoggingLevel::FHCK,
                 "Lw = " + std::to_string(transportmodel->Lw));
 
-  MatDoub STildeList(NumberOfSteps, nEqs);
-  Mat3DDoub MTildeList(NumberOfSteps, nEqs, nEqs);
-
-  MatDoub Mtilde(nEqs, nEqs), MtildeM(nEqs, nEqs), MtildeP(nEqs, nEqs);
-  VecDoub Stilde(nEqs), StildeM(nEqs), StildeP(nEqs);
-
   Equations(zList.front(), MtildeM, StildeM);
   Equations(zList.back(), MtildeP, StildeP);
 
-  CheckBoundary(MtildeM, StildeM, MtildeP, StildeP);
+  CheckBoundary();
   if (Status != FHCKStatus::NotSet)
   {
     Logger::Write(
@@ -512,35 +578,6 @@ void TransportEquations::SolveTransportEquation()
             FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
     return;
   }
-
-  for (size_t i = 1; i < NumberOfSteps; i++)
-  {
-    // Compute Mtilde and Stilde
-    double uc = (uList[i] + uList[i - 1]) / 2.;
-    if (uc < -0.3) // TODO: Fix this, too specific.
-    {
-      Mtilde = MtildeM;
-      Stilde = StildeM;
-    }
-    else if (uc > 0.3)
-    {
-      Mtilde = MtildeP;
-      Stilde = StildeP;
-    }
-    else
-      Equations(uTOz(uc), Mtilde, Stilde);
-
-    // Save the Mtilde and Stilde
-    for (size_t j = 0; j < nEqs; j++)
-    {
-      STildeList[i][j] = Stilde[j] / dudz(uc);
-      for (size_t k = 0; k < nEqs; k++)
-        MTildeList[i][j][k] = Mtilde[j][k] / dudz(uc);
-    }
-  }
-  // Construct Difeq object (S_j,n matrix)
-  Difeq_TransportEquation difeq(
-      uList, nFermions, nBosons, MTildeList, STildeList, moment);
 
   size_t itmax = 1;
   double conv  = 1e-10;
@@ -561,7 +598,7 @@ void TransportEquations::SolveTransportEquation()
 
   int NB = nEqs / 2;
   MatDoub y(nEqs, uList.size(), 0.);
-  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, difeq);
+  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
 
   std::string str = "u.tsv";
   std::ofstream res(str);
