@@ -83,12 +83,16 @@ void TransportModel::SetEtaInterface()
   EtaInterface =
       std::make_shared<CalculateEtaInterface>(config, GetSMConstants());
 
+  Logger::Write(LoggingLevel::FHCK, "Calculating Lw (EtaInterface)...");
+
   EtaInterface->CalcEta(vwall,
                         TrueVacuum,
                         FalseVacuum,
                         Tstar,
                         modelPointer,
                         Minimizer::WhichMinimizerDefault);
+
+  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 
   Lw = EtaInterface->getLW();
 
