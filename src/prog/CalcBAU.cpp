@@ -613,7 +613,6 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
       if ((moment - 2) % 4 == 0)
         FHCKMoments.push_back(moment); // check if 2 + 4n
     }
-    std::cout << "moments pasaaases\t" << FHCKMoments << "\n";
   }
   catch (BSMPT::parserException &)
   {
