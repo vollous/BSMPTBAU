@@ -120,16 +120,16 @@ public:
    * @brief Construct a new Transport Model object
    *
    * @param pointer_in  Model pointer
-   * @param FalseVacuum_In False Vacuum
    * @param TrueVacuum_In True Vacum
+   * @param FalseVacuum_In False Vacuum
    * @param vwall_in Wall velocity
    * @param Tstar_in  Transition temperature
    * @param VevProfile_In Solver mode. Default: field EOM solution
    */
   TransportModel(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-      const std::vector<double> FalseVacuum_In,
       const std::vector<double> TrueVacuum_In,
+      const std::vector<double> FalseVacuum_In,
       const double &vwall_in,
       const double &Tstar_in,
       const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation);

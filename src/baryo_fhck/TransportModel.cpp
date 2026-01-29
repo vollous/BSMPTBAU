@@ -9,8 +9,8 @@ namespace FHCK
 
 TransportModel::TransportModel(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::vector<double> FalseVacuum_In,
     const std::vector<double> TrueVacuum_In,
+    const std::vector<double> FalseVacuum_In,
     const double &vwall_in,
     const double &Tstar_in,
     const VevProfileMode &VevProfile_In)
@@ -18,9 +18,18 @@ TransportModel::TransportModel(
   modelPointer = pointer_in;
   Tstar        = Tstar_in;
   vwall        = vwall_in;
-  FalseVacuum  = FalseVacuum_In;
   TrueVacuum   = TrueVacuum_In;
+  FalseVacuum  = FalseVacuum_In;
   VevProfile   = VevProfile_In;
+
+  stringstream ss;
+  ss << "----------------- Baryon Asymmetry Calculation -----------------\n";
+  ss << "TrueVacuum = " << TrueVacuum << "\n";
+  ss << "FalseVacuum = " << FalseVacuum << "\n";
+  ss << "T = " << Tstar << "\n";
+  ss << "vw = " << vwall << "\n";
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
 TransportModel::TransportModel(
@@ -30,8 +39,8 @@ TransportModel::TransportModel(
     const double &Tstar_in,
     const VevProfileMode &VevProfile_In)
     : TransportModel(pointer_in,
-                     CoexPhase->false_phase.Get(Tstar_in).point,
                      CoexPhase->true_phase.Get(Tstar_in).point,
+                     CoexPhase->false_phase.Get(Tstar_in).point,
                      vwall_in,
                      Tstar_in,
                      VevProfile_In)
