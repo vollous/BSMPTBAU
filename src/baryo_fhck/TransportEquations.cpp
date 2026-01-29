@@ -13,6 +13,9 @@ TransportEquations::TransportEquations(
 {
   transportmodel = model_in;
   Tstar          = Tstar_in;
+  stringstream ss;
+  ss << "Moments = " << moments;
+  Logger::Write(LoggingLevel::FHCK, ss.str());
   Initialize();
 }
 

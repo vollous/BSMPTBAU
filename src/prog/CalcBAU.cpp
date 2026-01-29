@@ -605,6 +605,22 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
 
   try
   {
+    auto vec_str = split(argparser.get_value("moments"), ',');
+    FHCKMoments.clear();
+    for (std::size_t i = 0; i < vec_str.size(); i++)
+    {
+      size_t moment = std::stoi(vec_str.at(i));
+      if ((moment - 2) % 4 == 0)
+        FHCKMoments.push_back(moment); // check if 2 + 4n
+    }
+    std::cout << "moments pasaaases\t" << FHCKMoments << "\n";
+  }
+  catch (BSMPT::parserException &)
+  {
+    ss << "--moments not set, using default value: " << FHCKMoments << "\n";
+  }
+  try
+  {
     forced_no_symmetric_phase =
         argparser.get_value<bool>("forced_no_symmetric_phase");
   }
@@ -806,6 +822,8 @@ BSMPT::parser prepare_parser()
                          "7",
                          false);
   argparser.add_subtext("number of path deformations + 1");
+  argparser.add_argument(
+      "moments", "moments to solve the transport equations", "2", false);
   argparser.add_argument(
       "forced_no_symmetric_phase",
       "still calculates BAU even if false vacuum is not symmetric",
