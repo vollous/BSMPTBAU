@@ -70,6 +70,7 @@ struct user_input
       TransitionTemperature::Percolation;
   int PNLO_scaling                           = 1;
   size_t number_of_initial_scan_temperatures = 25;
+  bool only_crit                             = false;
 };
 
 /**

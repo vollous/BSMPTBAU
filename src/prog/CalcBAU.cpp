@@ -133,9 +133,8 @@ try
       auto start = std::chrono::high_resolution_clock::now();
 
       bool gw_calculation =
-          args.WhichTransitionTemperature == TransitionTemperature::Critical
-              ? false
-              : true;
+          args.WhichTransitionTemperature != TransitionTemperature::Critical and
+          args.gwoutput;
 
       user_input input{modelPointer,
                        args.templow,
@@ -154,6 +153,9 @@ try
                        gw_calculation,
                        args.WhichTransitionTemperature,
                        args.UserDefined_PNLO_scaling};
+
+      input.only_crit =
+          args.WhichTransitionTemperature == TransitionTemperature::Critical;
 
       TransitionTracer trans(input);
 
@@ -206,51 +208,63 @@ try
               << output.status.status_crit.at(i) << sep
               << output.vec_trans_data.at(i).crit_temp.value_or(EmptyValue)
               << sep << output.vec_trans_data.at(i).crit_false_vev << sep
-              << output.vec_trans_data.at(i).crit_true_vev << sep
-              << output.status.status_bounce_sol.at(i) << sep
-              << output.status.status_nucl_approx.at(i) << sep
-              << output.vec_trans_data.at(i).nucl_approx_temp.value_or(
-                     EmptyValue)
-              << sep << output.vec_trans_data.at(i).nucl_approx_false_vev << sep
-              << output.vec_trans_data.at(i).nucl_approx_true_vev << sep
-              << output.status.status_nucl.at(i) << sep
-              << output.vec_trans_data.at(i).nucl_temp.value_or(EmptyValue)
-              << sep << output.vec_trans_data.at(i).nucl_false_vev << sep
-              << output.vec_trans_data.at(i).nucl_true_vev << sep
-              << output.status.status_perc.at(i) << sep
-              << output.vec_trans_data.at(i).perc_temp.value_or(EmptyValue)
-              << sep << output.vec_trans_data.at(i).perc_false_vev << sep
-              << output.vec_trans_data.at(i).perc_true_vev << sep
-              << output.status.status_compl.at(i) << sep
-              << output.vec_trans_data.at(i).compl_temp.value_or(EmptyValue)
-              << sep << output.vec_trans_data.at(i).compl_false_vev << sep
-              << output.vec_trans_data.at(i).compl_true_vev << sep
-              << output.vec_gw_data.at(i).status_gw << sep
-              << output.vec_gw_data.at(i).trans_temp.value_or(EmptyValue) << sep
-              << output.vec_gw_data.at(i).reh_temp.value_or(EmptyValue) << sep
-              << output.vec_gw_data.at(i).vwall.value_or(EmptyValue) << sep
-              << output.vec_gw_data.at(i).alpha.value_or(EmptyValue) << sep
-              << output.vec_gw_data.at(i).beta_over_H.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).kappa_col.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).kappa_sw.value_or(EmptyValue)
-              << sep
-              << output.vec_gw_data.at(i).Epsilon_Turb.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).cs_f.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).cs_t.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).fb_col.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).omegab_col.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).f1_sw.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).f2_sw.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).omega_2_sw.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).f1_turb.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).f2_turb.value_or(EmptyValue)
-              << sep
-              << output.vec_gw_data.at(i).omega_2_turb.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).SNR_col.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).SNR_sw.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).SNR_turb.value_or(EmptyValue)
-              << sep << output.vec_gw_data.at(i).SNR.value_or(EmptyValue)
-              << sep;
+              << output.vec_trans_data.at(i).crit_true_vev << sep;
+          if (not input.only_crit)
+          {
+            output_contents.at(count - 1)
+                << output.status.status_bounce_sol.at(i) << sep
+                << output.status.status_nucl_approx.at(i) << sep
+                << output.vec_trans_data.at(i).nucl_approx_temp.value_or(
+                       EmptyValue)
+                << sep << output.vec_trans_data.at(i).nucl_approx_false_vev
+                << sep << output.vec_trans_data.at(i).nucl_approx_true_vev
+                << sep << output.status.status_nucl.at(i) << sep
+                << output.vec_trans_data.at(i).nucl_temp.value_or(EmptyValue)
+                << sep << output.vec_trans_data.at(i).nucl_false_vev << sep
+                << output.vec_trans_data.at(i).nucl_true_vev << sep
+                << output.status.status_perc.at(i) << sep
+                << output.vec_trans_data.at(i).perc_temp.value_or(EmptyValue)
+                << sep << output.vec_trans_data.at(i).perc_false_vev << sep
+                << output.vec_trans_data.at(i).perc_true_vev << sep
+                << output.status.status_compl.at(i) << sep
+                << output.vec_trans_data.at(i).compl_temp.value_or(EmptyValue)
+                << sep << output.vec_trans_data.at(i).compl_false_vev << sep
+                << output.vec_trans_data.at(i).compl_true_vev << sep;
+          }
+          if (args.gwoutput and not input.only_crit)
+          {
+            output_contents.at(count - 1)
+                << output.vec_gw_data.at(i).status_gw << sep
+                << output.vec_gw_data.at(i).trans_temp.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).reh_temp.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).vwall.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).alpha.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).beta_over_H.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).kappa_col.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).kappa_sw.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).Epsilon_Turb.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).cs_f.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).cs_t.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).fb_col.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).omegab_col.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).f1_sw.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).f2_sw.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).omega_2_sw.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).f1_turb.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).f2_turb.value_or(EmptyValue)
+                << sep
+                << output.vec_gw_data.at(i).omega_2_turb.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).SNR_col.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).SNR_sw.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).SNR_turb.value_or(EmptyValue)
+                << sep << output.vec_gw_data.at(i).SNR.value_or(EmptyValue)
+                << sep;
+          }
         }
       }
 
@@ -561,6 +575,15 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
 
   try
   {
+    gwoutput = argparser.get_value<bool>("gwoutput");
+  }
+  catch (BSMPT::parserException &)
+  {
+    ss << "--gwoutput not set, using default value: " << gwoutput << "\n";
+  }
+
+  try
+  {
     compl_prbl = argparser.get_value<double>("compl_prbl");
   }
   catch (BSMPT::parserException &)
@@ -747,6 +770,7 @@ BSMPT::parser prepare_parser()
       "still calculates BAU even if false vacuum is not symmetric",
       "false",
       false);
+  argparser.add_argument("gwoutput", "print GW wave output", "false", false);
 
   std::string GSLhelp   = Minimizer::UseGSLDefault ? "true" : "false";
   std::string CMAEShelp = Minimizer::UseLibCMAESDefault ? "true" : "false";

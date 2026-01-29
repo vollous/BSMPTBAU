@@ -562,10 +562,12 @@ public:
    * @brief GetLegend derive legend
    * @param num_coex_phases number of coexisting phase regions
    * @param do_gw_calc bool that determines whether gw calculation is performed
+   * @param only_crit use the critical temperature as transition temperature
    * @return vector of column label strings
    */
   std::vector<std::string> GetLegend(const int &num_coex_phases,
-                                     const bool &do_gw_calc);
+                                     const bool &do_gw_calc,
+                                     const bool &only_crit = false);
 };
 
 /**
