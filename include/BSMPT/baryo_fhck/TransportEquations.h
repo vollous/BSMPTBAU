@@ -86,7 +86,13 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 2;
+  const std::vector<size_t> moments = {2};
+
+  /**
+   * @brief Maximum moment to consider
+   *
+   */
+  size_t max_moment;
 
   /**
    * @brief Interpolated kernel functions for different moments

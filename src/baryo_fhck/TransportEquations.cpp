@@ -18,6 +18,8 @@ TransportEquations::TransportEquations(
 
 void TransportEquations::Initialize()
 {
+  max_moment = *std::max_element(moments.begin(), moments.end());
+
   transportmodel->Initialize();
 
   uList = MakeDistribution(1, NumberOfSteps);
@@ -41,7 +43,7 @@ void TransportEquations::Initialize()
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
-  nEqs = moment * (nFermions + nBosons);
+  nEqs = max_moment * (nFermions + nBosons);
 
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
@@ -113,7 +115,7 @@ void TransportEquations::BuildKernelInterpolation()
   Q9ol.push_back(tk::spline());
   Qlb.push_back(tk::spline());
 
-  for (size_t l = 0; l <= moment; l++)
+  for (size_t l = 0; l <= max_moment; l++)
   {
     for (int type = 0; type <= 1; type++)
     {
@@ -225,7 +227,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   for (size_t i = 0; i < prtcl.size(); i++)
   {
     double m = mass[i];
-    for (size_t l = 1; l <= moment; l++)
+    for (size_t l = 1; l <= max_moment; l++)
     {
       if (l == 1)
       {
@@ -251,12 +253,12 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         for (size_t k = 0; k < rates.size(); k++)
         {
-          Gamma[moment * i + l - 1][moment * j] +=
+          Gamma[max_moment * i + l - 1][max_moment * j] +=
               prtcl[i][j][k] * rates[k] * trunc[k];
         }
-        Gamma[moment * i + l - 1][moment * j] *= Kp;
+        Gamma[max_moment * i + l - 1][max_moment * j] *= Kp;
       }
-      Gamma[moment * i + l - 1][moment * i + l - 1] -= ul * gammatot[i];
+      Gamma[max_moment * i + l - 1][max_moment * i + l - 1] -= ul * gammatot[i];
     }
   }
 
@@ -265,10 +267,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
 
 MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
-  MatDoub res(moment, moment, 0.);
-  std::vector<double> Di(moment, 1), Ri(moment);
+  MatDoub res(max_moment, max_moment, 0.);
+  std::vector<double> Di(max_moment, 1), Ri(max_moment);
 
-  for (size_t i = 0; i < moment - 1; i++)
+  for (size_t i = 0; i < max_moment - 1; i++)
   {
     // 1, D1, D2, ..., Dn-1
     Di.at(i + 1) =
@@ -278,17 +280,18 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   }
 
   // 0, 0, ..., -vwall, -1
-  Ri.at(moment - 2) = -transportmodel->vwall;
-  Ri.at(moment - 1) = -1;
+  Ri.at(max_moment - 2) = -transportmodel->vwall;
+  Ri.at(max_moment - 1) = -1;
 
-  // (-1)^moment Inv(A)
-  double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
-  for (size_t i = 0; i < moment - 1; i++)
+  // (-1)^max_momentInv(A)
+  double Dn =
+      (type == ParticleType::Boson ? Dlb[max_moment](m) : Dlf[max_moment](m));
+  for (size_t i = 0; i < max_moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
 
   // Tensor product
-  for (std::size_t i = 0; i < moment; i++)
-    for (std::size_t j = 0; j < moment; j++)
+  for (std::size_t i = 0; i < max_moment; i++)
+    for (std::size_t j = 0; j < max_moment; j++)
       res[i][j] += Di[i] * Ri[j] / Dn;
 
   return res;
@@ -298,10 +301,10 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
                                      const ParticleType &type)
 {
-  MatDoub res(moment, moment, 0.);
+  MatDoub res(max_moment, max_moment, 0.);
   const double fRbar = (type == ParticleType::Boson ? Rbarb(m) : Rbarf(m));
 
-  for (size_t l = 1; l <= moment; l++)
+  for (size_t l = 1; l <= max_moment; l++)
   {
     const double fQ   = (type == ParticleType::Boson ? Qlb[l](m) : Qlf[l](m));
     res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
@@ -316,8 +319,8 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &d2th,
                                         const int &h)
 {
-  VecDoub res(moment);
-  for (size_t i = 0; i < moment; i++)
+  VecDoub res(max_moment);
+  for (size_t i = 0; i < max_moment; i++)
     res[i] = -transportmodel->vwall * gamwall * h *
              ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
               dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
@@ -390,8 +393,8 @@ void TransportEquations::Equations(const double &z,
       // Source terms
       int h = (ptype == ParticleType::LeftFermion ? -1 : 1);
       VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
-      for (size_t i = 0; i < moment; i++)
-        S[moment * particle + i] = tempS[i];
+      for (size_t i = 0; i < max_moment; i++)
+        S[max_moment * particle + i] = tempS[i];
     }
 
     // Calculate A inverse for fermion
@@ -415,7 +418,7 @@ void TransportEquations::Equations(const double &z,
 
   // Calculate Stilde = A^-1 * S
   for (size_t i = 0; i < nEqs; i++)
-    for (size_t j = 0; j < moment * (nFermions); j++)
+    for (size_t j = 0; j < max_moment * (nFermions); j++)
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
@@ -588,14 +591,14 @@ void TransportEquations::SolveTransportEquation()
   VecInt indexv(nEqs);
 
   // fix μ and first u
-  for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
+  for (size_t l = 0; l < max_moment /* max_moment= 2 + 4k */; l++)
     for (size_t particle = 0; particle < nFermions + nBosons; particle++)
     {
-      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+      indexv[l + particle * max_moment] = particle + l * (nFermions + nBosons);
       Logger::Write(LoggingLevel::FHCK,
                     "indexv[" +
                         std::to_string(particle + l * (nFermions + nBosons)) +
-                        "] = " + std::to_string(l + particle * moment));
+                        "] = " + std::to_string(l + particle * max_moment));
     }
 
   int NB = nEqs / 2;
@@ -648,8 +651,8 @@ void TransportEquations::CalculateBAU()
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
-         Solution.value()[moment * 2][i];                      // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
+         Solution.value()[max_moment * 2][i];                      // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[max_moment][i]; // tR
     r *= min(1.,
              2.4 * Tstar / Gsph *
                  exp(-40 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
@@ -718,10 +721,10 @@ void TransportEquations::PrintTransportEquation(const int &size,
   std::optional<int> ind;
   std::vector<double> z, y;
 
-  if (Particle == "tL") ind = 0 * moment;
-  if (Particle == "tR") ind = 1 * moment;
-  if (Particle == "bL") ind = 2 * moment;
-  if (Particle == "h") ind = 3 * moment;
+  if (Particle == "tL") ind = 0 * max_moment;
+  if (Particle == "tR") ind = 1 * max_moment;
+  if (Particle == "bL") ind = 2 * max_moment;
+  if (Particle == "h") ind = 3 * max_moment;
 
   if (not ind.has_value()) throw("Invalid particle to plot the solution.");
 
