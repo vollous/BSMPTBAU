@@ -297,10 +297,7 @@ try
                   BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation);
 
           BSMPT::Baryo::FHCK::TransportEquations transportequation(
-              transportmodel, trans_temp);
-
-          transportmodel->VevProfile =
-              Baryo::FHCK::VevProfileMode::FieldEquation;
+              transportmodel, trans_temp, input.FHCKMoments);
 
           transportequation.SolveTransportEquation();
 

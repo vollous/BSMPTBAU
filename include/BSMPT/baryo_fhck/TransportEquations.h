@@ -86,7 +86,7 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const std::vector<size_t> moments = {2};
+  std::vector<size_t> moments;
 
   /**
    * @brief Maximum moment to consider
@@ -206,7 +206,8 @@ public:
    * @param Tstar_in Transition temperature
    */
   TransportEquations(const std::shared_ptr<TransportModel> &model_in,
-                     const double &Tstar_in);
+                     const double &Tstar_in,
+                     const std::vector<size_t> &moments_in = {2});
   /**
    * @brief Create the VEV vectors and initalize **Ki()** and **Kfac()**
    * objects.

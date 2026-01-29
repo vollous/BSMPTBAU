@@ -9,12 +9,14 @@ namespace FHCK
 {
 TransportEquations::TransportEquations(
     const std::shared_ptr<TransportModel> &model_in,
-    const double &Tstar_in)
+    const double &Tstar_in,
+    const std::vector<size_t> &moments_in)
 {
   transportmodel = model_in;
   Tstar          = Tstar_in;
+  moments        = moments_in;
   stringstream ss;
-  ss << "Moments = " << moments;
+  ss << "Moments to calculate = " << moments;
   Logger::Write(LoggingLevel::FHCK, ss.str());
   Initialize();
 }
