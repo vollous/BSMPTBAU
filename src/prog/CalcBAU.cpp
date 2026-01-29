@@ -181,43 +181,6 @@ try
         for (std::size_t i = 0; i < trans.output_store.num_coex_phase_pairs;
              i++)
         {
-          // Calculate true/false vacuum and temp at the transition temperature
-          double trans_temp;
-          std::vector<double> trans_true_vev;
-          std::vector<double> trans_false_vev;
-          switch (args.WhichTransitionTemperature)
-          {
-          case TransitionTemperature::ApproxNucleation:
-            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
-            break;
-          case TransitionTemperature::Nucleation:
-            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
-            break;
-          case TransitionTemperature::Percolation:
-            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
-            break;
-          case TransitionTemperature::Completion:
-            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
-            break;
-          default:
-            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
-          }
-          // Check if FalseVacuum is symmetric
-          if ((modelPointer->EWSBVEV(
-                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) and
-              not args.forced_no_symmetric_phase)
-            continue;
-
           output_contents.at(count - 1)
               << output.status.status_crit.at(i) << sep
               << output.vec_trans_data.at(i).crit_temp.value_or(EmptyValue)
@@ -279,6 +242,69 @@ try
                 << sep << output.vec_gw_data.at(i).SNR.value_or(EmptyValue)
                 << sep;
           }
+
+          // Calculate true/false vacuum and temp at the transition temperature
+          double trans_temp;
+          std::vector<double> trans_true_vev;
+          std::vector<double> trans_false_vev;
+          switch (args.WhichTransitionTemperature)
+          {
+          case TransitionTemperature::ApproxNucleation:
+            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
+            break;
+          case TransitionTemperature::Nucleation:
+            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
+            break;
+          case TransitionTemperature::Percolation:
+            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
+            break;
+          case TransitionTemperature::Completion:
+            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
+            break;
+          default:
+            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
+          }
+          // Check if FalseVacuum is symmetric
+          if ((modelPointer->EWSBVEV(
+                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) and
+              not args.forced_no_symmetric_phase)
+            continue;
+          // edge case: use Tc and also calculate vw from bounce.
+          // fallback -> vw = 0.95
+          const double vwall_with_fallback =
+              (args.UserDefined_vwall < 0 and not input.only_crit)
+                  ? output.vec_gw_data.at(i).vwall.value()
+                  : args.UserDefined_vwall;
+
+          std::shared_ptr<BSMPT::Baryo::FHCK::TransportModel> transportmodel =
+              std::make_shared<BSMPT::Baryo::FHCK::TransportModel>(
+                  modelPointer,
+                  trans_true_vev,
+                  trans_false_vev,
+                  vwall_with_fallback,
+                  trans_temp,
+                  BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation);
+
+          BSMPT::Baryo::FHCK::TransportEquations transportequation(
+              transportmodel, trans_temp);
+
+          transportmodel->VevProfile =
+              Baryo::FHCK::VevProfileMode::FieldEquation;
+
+          transportequation.SolveTransportEquation();
+
+          output_contents.at(count - 1)
+              << transportequation.BAUEta.value_or(EmptyValue) << sep;
         }
       }
 
