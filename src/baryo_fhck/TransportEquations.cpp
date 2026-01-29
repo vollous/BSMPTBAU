@@ -48,9 +48,11 @@ void TransportEquations::Initialize()
   StildeM.resize(nEqs);
   StildeP.resize(nEqs);
 
-  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations\n");
+  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
 
   BuildKernelInterpolation();
+
+  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
