@@ -575,7 +575,7 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
     {
       WhichTransitionTemperature = TransitionTemperature::Critical;
     }
-    if (trans_string == "nucl_approx")
+    else if (trans_string == "nucl_approx")
     {
       WhichTransitionTemperature = TransitionTemperature::ApproxNucleation;
     }
@@ -600,7 +600,7 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
   }
   catch (BSMPT::parserException &)
   {
-    ss << "--trans_string not set, using default value: perc\n";
+    ss << "--trans_temp not set, using default value: perc\n";
   }
 
   try
