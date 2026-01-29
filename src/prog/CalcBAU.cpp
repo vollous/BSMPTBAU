@@ -181,24 +181,38 @@ try
         for (std::size_t i = 0; i < trans.output_store.num_coex_phase_pairs;
              i++)
         {
-          // Calculate false vacuum at the transition temperature
+          // Calculate true/false vacuum and temp at the transition temperature
+          double trans_temp;
+          std::vector<double> trans_true_vev;
           std::vector<double> trans_false_vev;
           switch (args.WhichTransitionTemperature)
           {
           case TransitionTemperature::ApproxNucleation:
+            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
             break;
           case TransitionTemperature::Nucleation:
+            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
             break;
           case TransitionTemperature::Percolation:
+            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
             break;
           case TransitionTemperature::Completion:
+            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
             break;
-          default: trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
+          default:
+            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
           }
+          // Check if FalseVacuum is symmetric
           if ((modelPointer->EWSBVEV(
                    modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) and
               not args.forced_no_symmetric_phase)
