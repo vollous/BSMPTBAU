@@ -52,7 +52,7 @@ struct CLIOptions
   int CheckNLOStability{1};
   TransitionTemperature WhichTransitionTemperature{
       TransitionTemperature::Percolation};
-  size_t moment = 2;
+  std::vector<size_t> FHCKMoments = {2};
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
   BSMPT::Baryo::FHCK::VevProfileMode vacuumprofile =
@@ -156,6 +156,7 @@ try
 
       input.only_crit =
           args.WhichTransitionTemperature == TransitionTemperature::Critical;
+      input.FHCKMoments = args.FHCKMoments;
 
       TransitionTracer trans(input);
 

@@ -2798,8 +2798,7 @@ int Vacuum::MinimumFoundAlready(const Minimum &minimum)
 }
 
 std::vector<std::string> MinimumTracer::GetLegend(const int &num_coex_phases,
-                                                  const bool &do_gw_calc,
-                                                  const bool &only_crit)
+                                                  const user_input &input)
 {
   std::vector<std::string> legend;
 
@@ -2823,7 +2822,7 @@ std::vector<std::string> MinimumTracer::GetLegend(const int &num_coex_phases,
       legend.push_back(this->modelPointer->addLegendVEV().at(j).append(
           "_crit_true_" + std::to_string(i)));
     }
-    if (not only_crit)
+    if (not input.only_crit)
     {
       legend.push_back("status_bounce_sol_" + std::to_string(i));
       legend.push_back("status_nucl_approx_" + std::to_string(i));
@@ -2883,7 +2882,7 @@ std::vector<std::string> MinimumTracer::GetLegend(const int &num_coex_phases,
             "_compl_true_" + std::to_string(i)));
       }
     }
-    if (do_gw_calc and not only_crit)
+    if (input.gw_calculation and not input.only_crit)
     {
       legend.push_back("status_gw_" + std::to_string(i));
       legend.push_back("T_star_" + std::to_string(i));
@@ -2909,6 +2908,9 @@ std::vector<std::string> MinimumTracer::GetLegend(const int &num_coex_phases,
       legend.push_back("SNR(LISA-3yrs)_turb_" + std::to_string(i));
       legend.push_back("SNR(LISA-3yrs)_" + std::to_string(i));
     }
+    for (const auto &moment : input.FHCKMoments)
+      legend.push_back("eta(" + std::to_string(moment) + ")_" +
+                       std::to_string(i));
   }
 
   legend.push_back("transition_history");

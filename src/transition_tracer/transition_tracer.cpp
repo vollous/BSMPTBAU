@@ -20,8 +20,7 @@ TransitionTracer::TransitionTracer(user_input &input)
       input.modelPointer, input.which_minimizer, input.use_multithreading));
 
   // initialize legend
-  output_store.legend =
-      mintracer->GetLegend(0, input.gw_calculation, input.only_crit);
+  output_store.legend = mintracer->GetLegend(0, input);
 
   // NLO stability check
   if (input.nlo_check)
@@ -109,9 +108,7 @@ TransitionTracer::TransitionTracer(user_input &input)
           (output_store.status.status_coex_pairs == StatusCoexPair::Success))
       {
         output_store.legend =
-            mintracer->GetLegend(output_store.num_coex_phase_pairs,
-                                 input.gw_calculation,
-                                 input.only_crit);
+            mintracer->GetLegend(output_store.num_coex_phase_pairs, input);
 
         for (auto pair : vec_coex)
         {
