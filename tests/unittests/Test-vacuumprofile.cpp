@@ -251,7 +251,7 @@ TEST_CASE("Test path small domain", "[vacuumprofile]")
   VacuumProfile vacuumprofile(dim, TrueVacuum, FalseVacuum, V, dV, Hessian);
 
   vacuumprofile.LwToSolve = 2;
-  vacuumprofile.CreatePath(1 / sqrt(2), 1000);
+  vacuumprofile.CreatePath(1000);
 
   vacuumprofile.CalculateProfile();
   vacuumprofile.CenterPath();

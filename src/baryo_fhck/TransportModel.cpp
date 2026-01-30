@@ -58,8 +58,6 @@ void TransportModel::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
-  SetEtaInterface();
-
   if (VevProfile == VevProfileMode::FieldEquation)
   {
     const double &eps = 0.01;
@@ -78,9 +76,19 @@ void TransportModel::Initialize()
     { return HessianNumerical(arg, V, eps); };
 
     vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
-        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
+        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian);
     vacuumprofile->CalculateProfile();
+    Lw = vacuumprofile->Lw;
+    if (vacuumprofile->status != VacuumProfileNS::VacuumProfileStatus::Success)
+    {
+      Logger::Write(LoggingLevel::FHCK,
+                    "Vacuum Profile Calculation failed! Using the Kink "
+                    "solution instead.");
+      VevProfile = VevProfileMode::Kink;
+    }
   }
+
+  if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
 }
 
 void TransportModel::SetEtaInterface()
