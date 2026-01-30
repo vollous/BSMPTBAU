@@ -710,6 +710,7 @@ void TransportEquations::CalculateBAU()
                             106.75 * Tstar); // TODO Fix gstas
 
   result *= prefactor;
+  error *= prefactor;
   // Save the result
   BAUeta.at(0) = result;
   // Step 3: Output the result
