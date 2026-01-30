@@ -20,6 +20,29 @@ namespace Baryo
 {
 namespace FHCK
 {
+
+/**
+ * @brief Truncation schemes
+ *
+ */
+enum class TruncationScheme
+{
+  Zero,
+  MinusVw,
+  One,
+  Variance
+};
+
+/**
+ * @brief Transform Truncation schemes to strings
+ *
+ */
+const std::unordered_map<TruncationScheme, std::string>
+    TruncationSchemeToString{{TruncationScheme::Zero, "R = 0"},
+                             {TruncationScheme::MinusVw, "R = -vw"},
+                             {TruncationScheme::One, "R = 1"},
+                             {TruncationScheme::Variance, "Variance"}};
+
 /**
  * @brief Types of vev profiles
  *
@@ -31,6 +54,10 @@ enum class VevProfileMode
   FieldEquation
 };
 
+/**
+ * @brief Transform VevProfileMode to strings
+ *
+ */
 const std::unordered_map<VevProfileMode, std::string> VevProfileModeToString{
     {VevProfileMode::Unset, "unset"},
     {VevProfileMode::Kink, "Kink"},
@@ -122,6 +149,12 @@ public:
   VevProfileMode VevProfile = VevProfileMode::Unset;
 
   /**
+   * @brief Truncation scheme used in the transport equations
+   *
+   */
+  TruncationScheme truncationscheme = TruncationScheme::MinusVw;
+
+  /**
    * @brief Construct a new Transport Model object
    *
    * @param pointer_in  Model pointer
@@ -130,6 +163,7 @@ public:
    * @param vwall_in Wall velocity
    * @param Tstar_in  Transition temperature
    * @param VevProfile_In Solver mode. Default: field EOM solution
+   * @param truncationscheme_in Truncation scheme to be used
    */
   TransportModel(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
@@ -137,7 +171,8 @@ public:
       const std::vector<double> FalseVacuum_In,
       const double &vwall_in,
       const double &Tstar_in,
-      const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation);
+      const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation,
+      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw);
 
   /**
    * @brief Construct a new Transport Model object
@@ -147,12 +182,15 @@ public:
    * @param vwall_in Wall velocity
    * @param Tstar_in Transition temperature
    * @param VevProfile_In Solver mode.
+   * @param truncationscheme_in Truncation scheme to be used
    */
-  TransportModel(const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-                 const std::shared_ptr<CoexPhases> &CoexPhase_in,
-                 const double &vwall_in,
-                 const double &Tstar_in,
-                 const VevProfileMode &VevProfile_In);
+  TransportModel(
+      const std::shared_ptr<Class_Potential_Origin> &pointer_in,
+      const std::shared_ptr<CoexPhases> &CoexPhase_in,
+      const double &vwall_in,
+      const double &Tstar_in,
+      const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation,
+      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw);
 
   /**
    * @brief Create the VEV vectors

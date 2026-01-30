@@ -294,7 +294,8 @@ try
                   trans_false_vev,
                   vwall_with_fallback,
                   trans_temp,
-                  args.vevprofilemode);
+                  args.vevprofilemode,
+                  args.truncationscheme);
 
           BSMPT::Baryo::FHCK::TransportEquations transportequation(
               transportmodel, trans_temp, input.FHCKMoments);
@@ -626,6 +627,38 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
 
   try
   {
+    auto truncationschemestring = argparser.get_value("truncationscheme");
+
+    if (truncationschemestring == "zero")
+    {
+      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::Zero;
+    }
+    else if (truncationschemestring == "minusvw")
+    {
+      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
+    }
+    else if (truncationschemestring == "one")
+    {
+      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::One;
+    }
+    else if (truncationschemestring == "variance")
+    {
+      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::Variance;
+    }
+    else
+    {
+      ss << "--truncationscheme set with invalid option: '"
+         << truncationschemestring << "'. Defaulting back to 'minusvw'.\n";
+      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
+    }
+  }
+  catch (BSMPT::parserException &)
+  {
+    ss << "--truncationscheme not set, using default value: 'minusvw' \n";
+  }
+
+  try
+  {
     auto vec_str = split(argparser.get_value("moments"), ',');
     FHCKMoments.clear();
     for (std::size_t i = 0; i < vec_str.size(); i++)
@@ -846,6 +879,12 @@ BSMPT::parser prepare_parser()
                          "vev profile to solve BAU ('kink' or 'field')",
                          "field",
                          false);
+  argparser.add_argument(
+      "truncationscheme", "truncation scheme to be used", "minusvw", false);
+  argparser.add_subtext("zero: R = 0");
+  argparser.add_subtext("minusvw: R = -vw");
+  argparser.add_subtext("one: R = 1");
+  argparser.add_subtext("variance: variance truncation");
   argparser.add_argument(
       "moments", "moments to solve the transport equations", "2", false);
   argparser.add_argument(
