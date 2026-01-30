@@ -667,6 +667,10 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
       if ((moment - 2) % 4 == 0)
         FHCKMoments.push_back(moment); // check if 2 + 4n
     }
+    // sort and remove duplicates
+    std::sort(FHCKMoments.begin(), FHCKMoments.end());
+    FHCKMoments.erase(unique(FHCKMoments.begin(), FHCKMoments.end()),
+                      FHCKMoments.end());
   }
   catch (BSMPT::parserException &)
   {
