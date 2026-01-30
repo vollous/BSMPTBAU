@@ -24,6 +24,7 @@ target_link_libraries(
          Baryo
          Boost::boost
          BounceSolution
+         TransitionTracer
          GW
          VacuumProfile)
 # target_compile_options(BaryoFHCK PUBLIC ${OpenMP_CXX_FLAGS})

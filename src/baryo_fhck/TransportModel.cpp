@@ -9,18 +9,49 @@ namespace FHCK
 
 TransportModel::TransportModel(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<CoexPhases> &CoexPhase_in,
+    const std::vector<double> TrueVacuum_In,
+    const std::vector<double> FalseVacuum_In,
     const double &vwall_in,
     const double &Tstar_in,
-    const VevProfileMode &VevProfile_In)
+    const VevProfileMode &VevProfile_in,
+    const TruncationScheme &truncationscheme_in)
 {
-  modelPointer = pointer_in;
-  Tstar        = Tstar_in;
-  vwall        = vwall_in;
-  CoexPhase    = CoexPhase_in;
-  FalseVacuum  = CoexPhase->false_phase.Get(Tstar).point;
-  TrueVacuum   = CoexPhase->true_phase.Get(Tstar).point;
-  VevProfile   = VevProfile_In;
+  modelPointer     = pointer_in;
+  Tstar            = Tstar_in;
+  vwall            = vwall_in;
+  TrueVacuum       = TrueVacuum_In;
+  FalseVacuum      = FalseVacuum_In;
+  VevProfile       = VevProfile_in;
+  truncationscheme = truncationscheme_in;
+
+  stringstream ss;
+  ss << "----------------- Baryon Asymmetry Calculation -----------------\n";
+  ss << "TrueVacuum = " << TrueVacuum << "\n";
+  ss << "FalseVacuum = " << FalseVacuum << "\n";
+  ss << "T = " << Tstar << "\n";
+  ss << "vw = " << vwall << "\n";
+  ss << "VEV profile = " << VevProfileModeToString.at(VevProfile) << "\n";
+  ss << "Truncation scheme = " << TruncationSchemeToString.at(truncationscheme)
+     << "\n";
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
+}
+
+TransportModel::TransportModel(
+    const std::shared_ptr<Class_Potential_Origin> &pointer_in,
+    const std::shared_ptr<CoexPhases> &CoexPhase,
+    const double &vwall_in,
+    const double &Tstar_in,
+    const VevProfileMode &VevProfile_in,
+    const TruncationScheme &truncationscheme_in)
+    : TransportModel(pointer_in,
+                     CoexPhase->true_phase.Get(Tstar_in).point,
+                     CoexPhase->false_phase.Get(Tstar_in).point,
+                     vwall_in,
+                     Tstar_in,
+                     VevProfile_in,
+                     truncationscheme_in)
+{
 }
 
 void TransportModel::Initialize()
@@ -59,12 +90,16 @@ void TransportModel::SetEtaInterface()
   EtaInterface =
       std::make_shared<CalculateEtaInterface>(config, GetSMConstants());
 
+  Logger::Write(LoggingLevel::FHCK, "Calculating Lw (EtaInterface)...");
+
   EtaInterface->CalcEta(vwall,
                         TrueVacuum,
                         FalseVacuum,
                         Tstar,
                         modelPointer,
                         Minimizer::WhichMinimizerDefault);
+
+  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 
   Lw = EtaInterface->getLW();
 

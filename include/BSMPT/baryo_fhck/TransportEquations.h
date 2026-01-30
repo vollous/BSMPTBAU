@@ -53,12 +53,6 @@ public:
   std::shared_ptr<TransportModel> transportmodel;
 
   /**
-   * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
-   *
-   */
-  std::optional<double> BAUEta;
-
-  /**
    * @brief Status of the FHCK baryo calculation
    *
    */
@@ -74,7 +68,25 @@ public:
    * @brief Number of moments used to solve transport equation
    *
    */
-  const size_t moment = 2;
+  std::vector<size_t> moments;
+
+  /**
+   * @brief Temp var to store \f$ \eta \f$ at moment
+   *
+   */
+  double bau;
+
+  /**
+   * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
+   *
+   */
+  std::vector<std::optional<double>> BAUeta;
+
+  /**
+   * @brief Moment to consider
+   *
+   */
+  size_t moment;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -188,13 +200,21 @@ public:
    * @param Tstar_in Transition temperature
    */
   TransportEquations(const std::shared_ptr<TransportModel> &model_in,
-                     const double &Tstar_in);
+                     const double &Tstar_in,
+                     const std::vector<size_t> &moments_in = {2});
   /**
    * @brief Create the VEV vectors and initalize **Ki()** and **Kfac()**
    * objects.
    *
    */
   void Initialize();
+
+  /**
+   * @brief Initialize things for the this specific moment
+   *
+   * @param moment
+   */
+  void InitializeMoment(const size_t &moment);
 
   tk::spline InterpolateKernel(const std::string &kernel_Name,
                                const bool is_1D);

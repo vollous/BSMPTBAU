@@ -9,10 +9,16 @@ namespace FHCK
 {
 TransportEquations::TransportEquations(
     const std::shared_ptr<TransportModel> &model_in,
-    const double &Tstar_in)
+    const double &Tstar_in,
+    const std::vector<size_t> &moments_in)
+    : transportmodel(model_in)
+    , Tstar(Tstar_in)
+    , moments(moments_in)
+    , BAUeta(moments.size())
 {
-  transportmodel = model_in;
-  Tstar          = Tstar_in;
+  stringstream ss;
+  ss << "Moments to calculate = " << moments;
+  Logger::Write(LoggingLevel::FHCK, ss.str());
   Initialize();
 }
 
@@ -41,16 +47,24 @@ void TransportEquations::Initialize()
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
+  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
+
+  BuildKernelInterpolation();
+
+  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
+}
+
+void TransportEquations::InitializeMoment(const size_t &moment_in)
+{
+
+  moment = moment_in;
+
   nEqs = moment * (nFermions + nBosons);
 
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
   StildeM.resize(nEqs);
   StildeP.resize(nEqs);
-
-  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations\n");
-
-  BuildKernelInterpolation();
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
@@ -111,7 +125,9 @@ void TransportEquations::BuildKernelInterpolation()
   Q9ol.push_back(tk::spline());
   Qlb.push_back(tk::spline());
 
-  for (size_t l = 0; l <= moment; l++)
+  const size_t max_moment = *std::max_element(moments.begin(), moments.end());
+
+  for (size_t l = 0; l <= max_moment; l++)
   {
     for (int type = 0; type <= 1; type++)
     {
@@ -279,7 +295,7 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   Ri.at(moment - 2) = -transportmodel->vwall;
   Ri.at(moment - 1) = -1;
 
-  // (-1)^moment Inv(A)
+  // (-1)^momentInv(A)
   double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
   for (size_t i = 0; i < moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
@@ -566,62 +582,70 @@ void TransportEquations::SolveTransportEquation()
   Logger::Write(LoggingLevel::FHCK,
                 "Lw = " + std::to_string(transportmodel->Lw));
 
-  Equations(zList.front(), MtildeM, StildeM);
-  Equations(zList.back(), MtildeP, StildeP);
-
-  CheckBoundary();
-  if (Status != FHCKStatus::NotSet)
+  for (size_t ell = 0; ell < moments.size(); ell++)
   {
-    Logger::Write(
-        LoggingLevel::FHCK,
-        "\033[31mTransport equation unable to be computed. Status code : " +
-            FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
-    return;
-  }
+    InitializeMoment(moments.at(ell));
+    bau = 0;
 
-  size_t itmax = 1;
-  double conv  = 1e-10;
-  double slowc = 1.;
-  VecDoub scalv(nEqs, 1);
-  VecInt indexv(nEqs);
+    Equations(zList.front(), MtildeM, StildeM);
+    Equations(zList.back(), MtildeP, StildeP);
 
-  // fix μ and first u
-  for (size_t l = 0; l < moment /* moment = 2 + 4k */; l++)
-    for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+    CheckBoundary();
+    if (Status != FHCKStatus::NotSet)
     {
-      indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
-      Logger::Write(LoggingLevel::FHCK,
-                    "indexv[" +
-                        std::to_string(particle + l * (nFermions + nBosons)) +
-                        "] = " + std::to_string(l + particle * moment));
+      Logger::Write(
+          LoggingLevel::FHCK,
+          "\033[31mTransport equation unable to be computed. Status code : " +
+              FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
+      return;
     }
 
-  int NB = nEqs / 2;
-  MatDoub y(nEqs, uList.size(), 0.);
-  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
+    size_t itmax = 1;
+    double conv  = 1e-10;
+    double slowc = 1.;
+    VecDoub scalv(nEqs, 1);
+    VecInt indexv(nEqs);
 
-  std::string str = "u.tsv";
-  std::ofstream res(str);
+    // fix μ and first u
+    for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
+      for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+      {
+        indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+        Logger::Write(LoggingLevel::FHCK,
+                      "indexv[" +
+                          std::to_string(particle + l * (nFermions + nBosons)) +
+                          "] = " + std::to_string(l + particle * moment));
+      }
 
-  for (size_t k = 0; k < uList.size(); k++)
-  {
-    res << uList[k];
-    for (size_t i = 0; i < nEqs; i++)
-      res << "\t" << y[i][k];
-    res << "\n";
+    int NB = nEqs / 2;
+    MatDoub y(nEqs, uList.size(), 0.);
+    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
+
+    std::string str = "u.tsv";
+    std::ofstream res(str);
+
+    for (size_t k = 0; k < uList.size(); k++)
+    {
+      res << uList[k];
+      for (size_t i = 0; i < nEqs; i++)
+        res << "\t" << y[i][k];
+      res << "\n";
+    }
+
+    res.close();
+
+    // Store the solution
+    Solution = y;
+
+    PrintTransportEquation(120, "tL", "mu");
+    PrintTransportEquation(120, "tR", "mu");
+    PrintTransportEquation(120, "bL", "mu");
+    PrintTransportEquation(120, "h", "mu");
+
+    CalculateBAU();
+
+    BAUeta.at(ell) = bau;
   }
-
-  res.close();
-
-  // Store the solution
-  Solution = y;
-
-  PrintTransportEquation(120, "tL", "mu");
-  PrintTransportEquation(120, "tR", "mu");
-  PrintTransportEquation(120, "bL", "mu");
-  PrintTransportEquation(120, "h", "mu");
-
-  CalculateBAU();
 }
 
 void TransportEquations::CalculateBAU()
@@ -699,8 +723,9 @@ void TransportEquations::CalculateBAU()
                             106.75 * Tstar); // TODO Fix gstas
 
   result *= prefactor;
+  error *= prefactor;
   // Save the result
-  BAUEta = result;
+  bau = result;
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
