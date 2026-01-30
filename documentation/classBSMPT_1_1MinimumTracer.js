@@ -10,7 +10,7 @@ var classBSMPT_1_1MinimumTracer =
     [ "GetGlobalMinimum", "classBSMPT_1_1MinimumTracer.html#ac89e99b025bacb87dfdab00b39a27f37", null ],
     [ "GetGlobalMinimum", "classBSMPT_1_1MinimumTracer.html#a8ec353be5bdc755e4d3bcd555f639cbb", null ],
     [ "GetGlobalMinimum", "classBSMPT_1_1MinimumTracer.html#a92cfc1fcf59f851b007d0ca04401ff73", null ],
-    [ "GetLegend", "classBSMPT_1_1MinimumTracer.html#a9ffa25770bdcf417fbe6fed2a360dcd2", null ],
+    [ "GetLegend", "classBSMPT_1_1MinimumTracer.html#ac98160327ad9b817697110e58ba3f5d5", null ],
     [ "GetStatusEWSR", "classBSMPT_1_1MinimumTracer.html#a2c27faaf7af1e3061d1b510feb636c07", null ],
     [ "GetStatusNLOVEV", "classBSMPT_1_1MinimumTracer.html#a7cc66d3ddc69b83aa5b289fccfe5eaad", null ],
     [ "IsGlobMin", "classBSMPT_1_1MinimumTracer.html#a63209e83aacc339c3cec0d8f69c10e48", null ],

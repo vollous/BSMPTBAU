@@ -62,7 +62,7 @@ var searchData=
   ['getinvtimescale_59',['GetInvTimeScale',['../classBSMPT_1_1BounceSolution.html#a483ddd7153b14e9bd26e8639c8aa0cc3',1,'BSMPT::BounceSolution']]],
   ['getk_5fsw_60',['GetK_sw',['../namespaceBSMPT.html#a262e8a2fd662acd243c9af74c2d839e9',1,'BSMPT']]],
   ['getktilde_61',['GetKtilde',['../namespaceBSMPT.html#ae4aaa2e7c075b89bbcf138eeece28cc9',1,'BSMPT']]],
-  ['getlegend_62',['GetLegend',['../classBSMPT_1_1MinimumTracer.html#a9ffa25770bdcf417fbe6fed2a360dcd2',1,'BSMPT::MinimumTracer']]],
+  ['getlegend_62',['GetLegend',['../classBSMPT_1_1MinimumTracer.html#ac98160327ad9b817697110e58ba3f5d5',1,'BSMPT::MinimumTracer']]],
   ['getlw_63',['getlw',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#a8b85eeb992f78389449a267a87dd0d95',1,'BSMPT::Baryo::CalculateEtaInterface::getLW()'],['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a6c97784b06af9d14a6b9ad74b09e768f',1,'BSMPT::Baryo::GSL_integration_mubl::getLW()']]],
   ['getminimizers_64',['GetMinimizers',['../Minimizer_8h.html#a3ac152f5d63263e90befeadbea1c14d0',1,'BSMPT::Minimizer']]],
   ['getmodel_65',['getModel',['../IncludeAllModels_8h.html#aed5df8b1a3e3690f96116edadafa7614',1,'BSMPT::ModelID']]],

@@ -1,5 +1,12 @@
 var NAVTREEINDEX9 =
 {
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff":[3,0,0,5,1,6],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a1df16074c80e48fe4a93cdafb7606189":[3,0,0,5,1,14],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a31f43d47ab3a65580678870597d50a6b":[3,0,0,5,1,11],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a343449de0aa22512c19d05ae8f89c427":[3,0,0,5,1,16],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3b6d05e83e281c55806fb73adb4e428c":[3,0,0,5,1,2],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3f0fd9345e734f275f458df843d04100":[3,0,0,5,1,22],
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a522654ef006a9662691e06d3a6eb0cca":[3,0,0,5,1,4],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a5f4212fd06f1a319bd5a20dac0889043":[3,0,0,5,1,20],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6104bb10f8a2978cf2ee5e811c1d7fdf":[3,0,0,5,1,21],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a68d7e0837d16d04c9acb5338e8f38b91":[3,0,0,5,1,17],

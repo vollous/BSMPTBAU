@@ -76,6 +76,7 @@ var namespaceBSMPT =
     ] ],
     [ "TransitionTemperature", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0", [
       [ "NotSet", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0afaf396cbd83927b72a84d2616fac76ff", null ],
+      [ "Critical", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0a278d01e5af56273bae1bb99a98b370cd", null ],
       [ "ApproxNucleation", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0af9517cb78f15c1ad1583ac055513c531", null ],
       [ "Nucleation", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0a1a4b443a95bd8b6ca9d6b82e72976225", null ],
       [ "Percolation", "namespaceBSMPT.html#a5f2a6b7efc9d6695e40543d323613ee0ae234ab7b9afbd014f22b8790d87861a1", null ],

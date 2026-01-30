@@ -116,13 +116,16 @@ Inheritance diagram for BSMPT::Baryo::FHCK::TransportEquations:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af7cc9f1718b28985dde305c2cc82818b" id="r_af7cc9f1718b28985dde305c2cc82818b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#af7cc9f1718b28985dde305c2cc82818b">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html">TransportModel</a> &gt; &amp;model_in, const double &amp;Tstar_in)</td></tr>
-<tr class="memdesc:af7cc9f1718b28985dde305c2cc82818b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
-<tr class="separator:af7cc9f1718b28985dde305c2cc82818b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad28948564786cb495373fe120a13d154" id="r_ad28948564786cb495373fe120a13d154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad28948564786cb495373fe120a13d154">TransportEquations</a> (const std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html">TransportModel</a> &gt; &amp;model_in, const double &amp;Tstar_in, const std::vector&lt; size_t &gt; &amp;moments_in={2})</td></tr>
+<tr class="memdesc:ad28948564786cb495373fe120a13d154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Transport Equations object.  <br /></td></tr>
+<tr class="separator:ad28948564786cb495373fe120a13d154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a982893ed03324909628721924919b684" id="r_a982893ed03324909628721924919b684"><td class="memItemLeft" align="right" valign="top"><a id="a982893ed03324909628721924919b684" name="a982893ed03324909628721924919b684"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b> ()</td></tr>
 <tr class="memdesc:a982893ed03324909628721924919b684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the VEV vectors and initalize <b>Ki()</b> and <b>Kfac()</b> objects. <br /></td></tr>
 <tr class="separator:a982893ed03324909628721924919b684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714d12472167ba662ed81643be70c1c1" id="r_a714d12472167ba662ed81643be70c1c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a714d12472167ba662ed81643be70c1c1">InitializeMoment</a> (const size_t &amp;<a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a798959f0996911665f4252fc61612c46">moment</a>)</td></tr>
+<tr class="memdesc:a714d12472167ba662ed81643be70c1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize things for the this specific moment.  <br /></td></tr>
+<tr class="separator:a714d12472167ba662ed81643be70c1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9499ad5285aee0fbffafd79865f6ad3" id="r_ab9499ad5285aee0fbffafd79865f6ad3"><td class="memItemLeft" align="right" valign="top"><a id="ab9499ad5285aee0fbffafd79865f6ad3" name="ab9499ad5285aee0fbffafd79865f6ad3"></a>
 <a class="el" href="classtk_1_1spline.html">tk::spline</a>&#160;</td><td class="memItemRight" valign="bottom"><b>InterpolateKernel</b> (const std::string &amp;kernel_Name, const bool is_1D)</td></tr>
 <tr class="separator:ab9499ad5285aee0fbffafd79865f6ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,10 +194,6 @@ Public Attributes</h2></td></tr>
 std::shared_ptr&lt; <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html">TransportModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transportmodel</b></td></tr>
 <tr class="memdesc:a779950aa0c7840615048ba6ff754871c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport model under consideration. <br /></td></tr>
 <tr class="separator:a779950aa0c7840615048ba6ff754871c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab06067a361afe68e1c2cd27bc6d71e55" id="r_ab06067a361afe68e1c2cd27bc6d71e55"><td class="memItemLeft" align="right" valign="top"><a id="ab06067a361afe68e1c2cd27bc6d71e55" name="ab06067a361afe68e1c2cd27bc6d71e55"></a>
-std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>BAUEta</b></td></tr>
-<tr class="memdesc:ab06067a361afe68e1c2cd27bc6d71e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">\( \eta = \frac{n_B}{n_\gamma}\) <br /></td></tr>
-<tr class="separator:ab06067a361afe68e1c2cd27bc6d71e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9c3248e8509271063a4d75d27054678" id="r_ad9c3248e8509271063a4d75d27054678"><td class="memItemLeft" align="right" valign="top"><a id="ad9c3248e8509271063a4d75d27054678" name="ad9c3248e8509271063a4d75d27054678"></a>
 FHCKStatus&#160;</td><td class="memItemRight" valign="bottom"><b>Status</b> = FHCKStatus::NotSet</td></tr>
 <tr class="memdesc:ad9c3248e8509271063a4d75d27054678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of the FHCK baryo calculation. <br /></td></tr>
@@ -203,10 +202,22 @@ FHCKStatus&#160;</td><td class="memItemRight" valign="bottom"><b>Status</b> = FH
 double&#160;</td><td class="memItemRight" valign="bottom"><b>Tstar</b></td></tr>
 <tr class="memdesc:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transition temperature. <br /></td></tr>
 <tr class="separator:a9d1ee7de8a920efaf3b30c9ba58bf974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45fc4685b2add1f50ba04d1c63b7fd74" id="r_a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memItemLeft" align="right" valign="top"><a id="a45fc4685b2add1f50ba04d1c63b7fd74" name="a45fc4685b2add1f50ba04d1c63b7fd74"></a>
-const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b> = 2</td></tr>
-<tr class="memdesc:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of moments used to solve transport equation. <br /></td></tr>
-<tr class="separator:a45fc4685b2add1f50ba04d1c63b7fd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad115ff918e16d757318d361a992111b8" id="r_ad115ff918e16d757318d361a992111b8"><td class="memItemLeft" align="right" valign="top"><a id="ad115ff918e16d757318d361a992111b8" name="ad115ff918e16d757318d361a992111b8"></a>
+std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>moments</b></td></tr>
+<tr class="memdesc:ad115ff918e16d757318d361a992111b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of moments used to solve transport equation. <br /></td></tr>
+<tr class="separator:ad115ff918e16d757318d361a992111b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1352b1e92422199025860adba82bf1d" id="r_ae1352b1e92422199025860adba82bf1d"><td class="memItemLeft" align="right" valign="top"><a id="ae1352b1e92422199025860adba82bf1d" name="ae1352b1e92422199025860adba82bf1d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>bau</b></td></tr>
+<tr class="memdesc:ae1352b1e92422199025860adba82bf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp var to store \( \eta \) at moment. <br /></td></tr>
+<tr class="separator:ae1352b1e92422199025860adba82bf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33b58249c8f6b442eec078ca5c86b4ee" id="r_a33b58249c8f6b442eec078ca5c86b4ee"><td class="memItemLeft" align="right" valign="top"><a id="a33b58249c8f6b442eec078ca5c86b4ee" name="a33b58249c8f6b442eec078ca5c86b4ee"></a>
+std::vector&lt; std::optional&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>BAUeta</b></td></tr>
+<tr class="memdesc:a33b58249c8f6b442eec078ca5c86b4ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">\( \eta = \frac{n_B}{n_\gamma}\) <br /></td></tr>
+<tr class="separator:a33b58249c8f6b442eec078ca5c86b4ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a798959f0996911665f4252fc61612c46" id="r_a798959f0996911665f4252fc61612c46"><td class="memItemLeft" align="right" valign="top"><a id="a798959f0996911665f4252fc61612c46" name="a798959f0996911665f4252fc61612c46"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>moment</b></td></tr>
+<tr class="memdesc:a798959f0996911665f4252fc61612c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moment to consider. <br /></td></tr>
+<tr class="separator:a798959f0996911665f4252fc61612c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae11136128236afc22bca49fa8a9f4657" id="r_ae11136128236afc22bca49fa8a9f4657"><td class="memItemLeft" align="right" valign="top"><a id="ae11136128236afc22bca49fa8a9f4657" name="ae11136128236afc22bca49fa8a9f4657"></a>
 std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Klf</b></td></tr>
 <tr class="memdesc:ae11136128236afc22bca49fa8a9f4657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolated kernel functions for different moments. <br /></td></tr>
@@ -317,8 +328,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>STildeThreshold</b>
 Additional Inherited Members</h2></td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af7cc9f1718b28985dde305c2cc82818b" name="af7cc9f1718b28985dde305c2cc82818b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7cc9f1718b28985dde305c2cc82818b">&#9670;&#160;</a></span>TransportEquations()</h2>
+<a id="ad28948564786cb495373fe120a13d154" name="ad28948564786cb495373fe120a13d154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad28948564786cb495373fe120a13d154">&#9670;&#160;</a></span>TransportEquations()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,7 +344,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>Tstar_in</em>&#160;</td>
+          <td class="paramname"><em>Tstar_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; size_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>moments_in</em> = <code>{2}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -635,6 +652,32 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">z</td><td>distance to the bubble wall </td></tr>
     <tr><td class="paramname">Mtilde</td><td>\( A^{-1} \Gamma \) </td></tr>
     <tr><td class="paramname">Stilde</td><td>\( A^{-1}\right( \deltaC - m^2&#39; B \left) \) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a714d12472167ba662ed81643be70c1c1" name="a714d12472167ba662ed81643be70c1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a714d12472167ba662ed81643be70c1c1">&#9670;&#160;</a></span>InitializeMoment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BSMPT::Baryo::FHCK::TransportEquations::InitializeMoment </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>moment</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize things for the this specific moment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">moment</td><td></td></tr>
   </table>
   </dd>
 </dl>
