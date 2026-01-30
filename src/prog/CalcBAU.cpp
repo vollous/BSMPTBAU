@@ -52,11 +52,11 @@ struct CLIOptions
   int CheckNLOStability{1};
   TransitionTemperature WhichTransitionTemperature{
       TransitionTemperature::Percolation};
+  BSMPT::Baryo::FHCK::VevProfileMode vevprofilemode =
+      BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
   std::vector<size_t> FHCKMoments = {2};
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
-  BSMPT::Baryo::FHCK::VevProfileMode vacuumprofile =
-      BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
   bool gwoutput                  = false;
   bool forced_no_symmetric_phase = false;
   CLIOptions(const BSMPT::parser &argparser);
@@ -294,7 +294,7 @@ try
                   trans_false_vev,
                   vwall_with_fallback,
                   trans_temp,
-                  BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation);
+                  args.vevprofilemode);
 
           BSMPT::Baryo::FHCK::TransportEquations transportequation(
               transportmodel, trans_temp, input.FHCKMoments);
@@ -602,6 +602,30 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
 
   try
   {
+    auto vevprofilestring = argparser.get_value("vevprofile");
+
+    if (vevprofilestring == "kink")
+    {
+      vevprofilemode = BSMPT::Baryo::FHCK::VevProfileMode::Kink;
+    }
+    else if (vevprofilestring == "field")
+    {
+      vevprofilemode = BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
+    }
+    else
+    {
+      ss << "--vevprofile set with invalid option: '" << vevprofilestring
+         << "'. Defaulting back to 'field'.\n";
+      vevprofilemode = BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
+    }
+  }
+  catch (BSMPT::parserException &)
+  {
+    ss << "--vevprofile not set, using default value: 'field' \n";
+  }
+
+  try
+  {
     auto vec_str = split(argparser.get_value("moments"), ',');
     FHCKMoments.clear();
     for (std::size_t i = 0; i < vec_str.size(); i++)
@@ -818,6 +842,10 @@ BSMPT::parser prepare_parser()
                          "7",
                          false);
   argparser.add_subtext("number of path deformations + 1");
+  argparser.add_argument("vevprofile",
+                         "vev profile to solve BAU ('kink' or 'field')",
+                         "field",
+                         false);
   argparser.add_argument(
       "moments", "moments to solve the transport equations", "2", false);
   argparser.add_argument(

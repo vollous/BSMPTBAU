@@ -31,6 +31,11 @@ enum class VevProfileMode
   FieldEquation
 };
 
+const std::unordered_map<VevProfileMode, std::string> VevProfileModeToString{
+    {VevProfileMode::Unset, "unset"},
+    {VevProfileMode::Kink, "Kink"},
+    {VevProfileMode::FieldEquation, "FieldEquation"}};
+
 class TransportModel
 {
 private:

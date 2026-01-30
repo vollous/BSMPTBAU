@@ -28,6 +28,7 @@ TransportModel::TransportModel(
   ss << "FalseVacuum = " << FalseVacuum << "\n";
   ss << "T = " << Tstar << "\n";
   ss << "vw = " << vwall << "\n";
+  ss << "VEV profile = " << VevProfileModeToString.at(VevProfile) << "\n";
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
