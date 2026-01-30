@@ -36,7 +36,7 @@ void TransportEquations::Initialize()
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()) + "\n");
+                    std::to_string(zList.back()));
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in u \t" + std::to_string(uList.front()) + " -> " +
