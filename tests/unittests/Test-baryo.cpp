@@ -234,12 +234,12 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK1]")
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::Kink;
   transport.SolveTransportEquation();
-  CHECK(transport.BAUEta.value() == Approx(-7.8868e-11).epsilon(1e-2));
+  CHECK(transport.BAUeta.at(0).value() == Approx(-7.8868e-11).epsilon(1e-2));
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
-  CHECK(transport.BAUEta.value() == Approx(-1.18786e-10).epsilon(1e-2));
+  CHECK(transport.BAUeta.at(0).value() == Approx(-1.18786e-10).epsilon(1e-2));
 
   auto t2 = high_resolution_clock::now();
 

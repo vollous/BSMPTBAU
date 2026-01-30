@@ -65,12 +65,6 @@ public:
   std::shared_ptr<TransportModel> transportmodel;
 
   /**
-   * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
-   *
-   */
-  std::optional<double> BAUEta;
-
-  /**
    * @brief Status of the FHCK baryo calculation
    *
    */
@@ -87,6 +81,12 @@ public:
    *
    */
   std::vector<size_t> moments;
+
+  /**
+   * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
+   *
+   */
+  std::vector<std::optional<double>> BAUeta;
 
   /**
    * @brief Maximum moment to consider

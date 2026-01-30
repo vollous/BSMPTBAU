@@ -11,10 +11,11 @@ TransportEquations::TransportEquations(
     const std::shared_ptr<TransportModel> &model_in,
     const double &Tstar_in,
     const std::vector<size_t> &moments_in)
+    : transportmodel(model_in)
+    , Tstar(Tstar_in)
+    , moments(moments_in)
+    , BAUeta(moments.size())
 {
-  transportmodel = model_in;
-  Tstar          = Tstar_in;
-  moments        = moments_in;
   stringstream ss;
   ss << "Moments to calculate = " << moments;
   Logger::Write(LoggingLevel::FHCK, ss.str());
@@ -710,7 +711,7 @@ void TransportEquations::CalculateBAU()
 
   result *= prefactor;
   // Save the result
-  BAUEta = result;
+  BAUeta.at(0) = result;
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
