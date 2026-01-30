@@ -71,16 +71,22 @@ public:
   std::vector<size_t> moments;
 
   /**
+   * @brief Temp var to store \f$ \eta \f$ at moment
+   *
+   */
+  double bau;
+
+  /**
    * @brief \f$ \eta = \frac{n_B}{n_\gamma}\f$
    *
    */
   std::vector<std::optional<double>> BAUeta;
 
   /**
-   * @brief Maximum moment to consider
+   * @brief Moment to consider
    *
    */
-  size_t max_moment;
+  size_t moment;
 
   /**
    * @brief Interpolated kernel functions for different moments
@@ -202,6 +208,13 @@ public:
    *
    */
   void Initialize();
+
+  /**
+   * @brief Initialize things for the this specific moment
+   *
+   * @param moment
+   */
+  void InitializeMoment(const size_t &moment);
 
   tk::spline InterpolateKernel(const std::string &kernel_Name,
                                const bool is_1D);

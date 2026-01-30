@@ -24,8 +24,6 @@ TransportEquations::TransportEquations(
 
 void TransportEquations::Initialize()
 {
-  max_moment = *std::max_element(moments.begin(), moments.end());
-
   transportmodel->Initialize();
 
   uList = MakeDistribution(1, NumberOfSteps);
@@ -49,18 +47,24 @@ void TransportEquations::Initialize()
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
-  nEqs = max_moment * (nFermions + nBosons);
-
-  MtildeM.resize(nEqs, nEqs);
-  MtildeP.resize(nEqs, nEqs);
-  StildeM.resize(nEqs);
-  StildeP.resize(nEqs);
-
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
 
   BuildKernelInterpolation();
 
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
+}
+
+void TransportEquations::InitializeMoment(const size_t &moment_in)
+{
+
+  moment = moment_in;
+
+  nEqs = moment * (nFermions + nBosons);
+
+  MtildeM.resize(nEqs, nEqs);
+  MtildeP.resize(nEqs, nEqs);
+  StildeM.resize(nEqs);
+  StildeP.resize(nEqs);
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
@@ -120,6 +124,8 @@ void TransportEquations::BuildKernelInterpolation()
   Q8ol.push_back(tk::spline());
   Q9ol.push_back(tk::spline());
   Qlb.push_back(tk::spline());
+
+  const size_t max_moment = *std::max_element(moments.begin(), moments.end());
 
   for (size_t l = 0; l <= max_moment; l++)
   {
@@ -233,7 +239,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   for (size_t i = 0; i < prtcl.size(); i++)
   {
     double m = mass[i];
-    for (size_t l = 1; l <= max_moment; l++)
+    for (size_t l = 1; l <= moment; l++)
     {
       if (l == 1)
       {
@@ -259,12 +265,12 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         for (size_t k = 0; k < rates.size(); k++)
         {
-          Gamma[max_moment * i + l - 1][max_moment * j] +=
+          Gamma[moment * i + l - 1][moment * j] +=
               prtcl[i][j][k] * rates[k] * trunc[k];
         }
-        Gamma[max_moment * i + l - 1][max_moment * j] *= Kp;
+        Gamma[moment * i + l - 1][moment * j] *= Kp;
       }
-      Gamma[max_moment * i + l - 1][max_moment * i + l - 1] -= ul * gammatot[i];
+      Gamma[moment * i + l - 1][moment * i + l - 1] -= ul * gammatot[i];
     }
   }
 
@@ -273,10 +279,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
 
 MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
 {
-  MatDoub res(max_moment, max_moment, 0.);
-  std::vector<double> Di(max_moment, 1), Ri(max_moment);
+  MatDoub res(moment, moment, 0.);
+  std::vector<double> Di(moment, 1), Ri(moment);
 
-  for (size_t i = 0; i < max_moment - 1; i++)
+  for (size_t i = 0; i < moment - 1; i++)
   {
     // 1, D1, D2, ..., Dn-1
     Di.at(i + 1) =
@@ -286,18 +292,17 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
   }
 
   // 0, 0, ..., -vwall, -1
-  Ri.at(max_moment - 2) = -transportmodel->vwall;
-  Ri.at(max_moment - 1) = -1;
+  Ri.at(moment - 2) = -transportmodel->vwall;
+  Ri.at(moment - 1) = -1;
 
-  // (-1)^max_momentInv(A)
-  double Dn =
-      (type == ParticleType::Boson ? Dlb[max_moment](m) : Dlf[max_moment](m));
-  for (size_t i = 0; i < max_moment - 1; i++)
+  // (-1)^momentInv(A)
+  double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
+  for (size_t i = 0; i < moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
 
   // Tensor product
-  for (std::size_t i = 0; i < max_moment; i++)
-    for (std::size_t j = 0; j < max_moment; j++)
+  for (std::size_t i = 0; i < moment; i++)
+    for (std::size_t j = 0; j < moment; j++)
       res[i][j] += Di[i] * Ri[j] / Dn;
 
   return res;
@@ -307,10 +312,10 @@ MatDoub TransportEquations::calc_m2B(const double &m,
                                      const double &dm2,
                                      const ParticleType &type)
 {
-  MatDoub res(max_moment, max_moment, 0.);
+  MatDoub res(moment, moment, 0.);
   const double fRbar = (type == ParticleType::Boson ? Rbarb(m) : Rbarf(m));
 
-  for (size_t l = 1; l <= max_moment; l++)
+  for (size_t l = 1; l <= moment; l++)
   {
     const double fQ   = (type == ParticleType::Boson ? Qlb[l](m) : Qlf[l](m));
     res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
@@ -325,8 +330,8 @@ VecDoub TransportEquations::calc_source(const double &m,
                                         const double &d2th,
                                         const int &h)
 {
-  VecDoub res(max_moment);
-  for (size_t i = 0; i < max_moment; i++)
+  VecDoub res(moment);
+  for (size_t i = 0; i < moment; i++)
     res[i] = -transportmodel->vwall * gamwall * h *
              ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
               dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
@@ -399,8 +404,8 @@ void TransportEquations::Equations(const double &z,
       // Source terms
       int h = (ptype == ParticleType::LeftFermion ? -1 : 1);
       VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
-      for (size_t i = 0; i < max_moment; i++)
-        S[max_moment * particle + i] = tempS[i];
+      for (size_t i = 0; i < moment; i++)
+        S[moment * particle + i] = tempS[i];
     }
 
     // Calculate A inverse for fermion
@@ -424,7 +429,7 @@ void TransportEquations::Equations(const double &z,
 
   // Calculate Stilde = A^-1 * S
   for (size_t i = 0; i < nEqs; i++)
-    for (size_t j = 0; j < max_moment * (nFermions); j++)
+    for (size_t j = 0; j < moment * (nFermions); j++)
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
@@ -577,62 +582,70 @@ void TransportEquations::SolveTransportEquation()
   Logger::Write(LoggingLevel::FHCK,
                 "Lw = " + std::to_string(transportmodel->Lw));
 
-  Equations(zList.front(), MtildeM, StildeM);
-  Equations(zList.back(), MtildeP, StildeP);
-
-  CheckBoundary();
-  if (Status != FHCKStatus::NotSet)
+  for (size_t ell = 0; ell < moments.size(); ell++)
   {
-    Logger::Write(
-        LoggingLevel::FHCK,
-        "\033[31mTransport equation unable to be computed. Status code : " +
-            FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
-    return;
-  }
+    InitializeMoment(moments.at(ell));
+    bau = 0;
 
-  size_t itmax = 1;
-  double conv  = 1e-10;
-  double slowc = 1.;
-  VecDoub scalv(nEqs, 1);
-  VecInt indexv(nEqs);
+    Equations(zList.front(), MtildeM, StildeM);
+    Equations(zList.back(), MtildeP, StildeP);
 
-  // fix μ and first u
-  for (size_t l = 0; l < max_moment /* max_moment= 2 + 4k */; l++)
-    for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+    CheckBoundary();
+    if (Status != FHCKStatus::NotSet)
     {
-      indexv[l + particle * max_moment] = particle + l * (nFermions + nBosons);
-      Logger::Write(LoggingLevel::FHCK,
-                    "indexv[" +
-                        std::to_string(particle + l * (nFermions + nBosons)) +
-                        "] = " + std::to_string(l + particle * max_moment));
+      Logger::Write(
+          LoggingLevel::FHCK,
+          "\033[31mTransport equation unable to be computed. Status code : " +
+              FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
+      return;
     }
 
-  int NB = nEqs / 2;
-  MatDoub y(nEqs, uList.size(), 0.);
-  RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
+    size_t itmax = 1;
+    double conv  = 1e-10;
+    double slowc = 1.;
+    VecDoub scalv(nEqs, 1);
+    VecInt indexv(nEqs);
 
-  std::string str = "u.tsv";
-  std::ofstream res(str);
+    // fix μ and first u
+    for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
+      for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+      {
+        indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+        Logger::Write(LoggingLevel::FHCK,
+                      "indexv[" +
+                          std::to_string(particle + l * (nFermions + nBosons)) +
+                          "] = " + std::to_string(l + particle * moment));
+      }
 
-  for (size_t k = 0; k < uList.size(); k++)
-  {
-    res << uList[k];
-    for (size_t i = 0; i < nEqs; i++)
-      res << "\t" << y[i][k];
-    res << "\n";
+    int NB = nEqs / 2;
+    MatDoub y(nEqs, uList.size(), 0.);
+    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
+
+    std::string str = "u.tsv";
+    std::ofstream res(str);
+
+    for (size_t k = 0; k < uList.size(); k++)
+    {
+      res << uList[k];
+      for (size_t i = 0; i < nEqs; i++)
+        res << "\t" << y[i][k];
+      res << "\n";
+    }
+
+    res.close();
+
+    // Store the solution
+    Solution = y;
+
+    PrintTransportEquation(120, "tL", "mu");
+    PrintTransportEquation(120, "tR", "mu");
+    PrintTransportEquation(120, "bL", "mu");
+    PrintTransportEquation(120, "h", "mu");
+
+    CalculateBAU();
+
+    BAUeta.at(ell) = bau;
   }
-
-  res.close();
-
-  // Store the solution
-  Solution = y;
-
-  PrintTransportEquation(120, "tL", "mu");
-  PrintTransportEquation(120, "tR", "mu");
-  PrintTransportEquation(120, "bL", "mu");
-  PrintTransportEquation(120, "h", "mu");
-
-  CalculateBAU();
 }
 
 void TransportEquations::CalculateBAU()
@@ -657,8 +670,8 @@ void TransportEquations::CalculateBAU()
     r = 0;
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
-         Solution.value()[max_moment * 2][i];                      // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[max_moment][i]; // tR
+         Solution.value()[moment * 2][i];                      // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
     r *= min(1.,
              2.4 * Tstar / Gsph *
                  exp(-40 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
@@ -712,7 +725,7 @@ void TransportEquations::CalculateBAU()
   result *= prefactor;
   error *= prefactor;
   // Save the result
-  BAUeta.at(0) = result;
+  bau = result;
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
@@ -728,10 +741,10 @@ void TransportEquations::PrintTransportEquation(const int &size,
   std::optional<int> ind;
   std::vector<double> z, y;
 
-  if (Particle == "tL") ind = 0 * max_moment;
-  if (Particle == "tR") ind = 1 * max_moment;
-  if (Particle == "bL") ind = 2 * max_moment;
-  if (Particle == "h") ind = 3 * max_moment;
+  if (Particle == "tL") ind = 0 * moment;
+  if (Particle == "tR") ind = 1 * moment;
+  if (Particle == "bL") ind = 2 * moment;
+  if (Particle == "h") ind = 3 * moment;
 
   if (not ind.has_value()) throw("Invalid particle to plot the solution.");
 
