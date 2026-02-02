@@ -119,6 +119,12 @@ public:
   std::vector<double> uList;
 
   /**
+   * @brief Matrix used in the solution
+   *
+   */
+  MatDoub ydifeq;
+
+  /**
    * @brief \f$ M \f$ matrix at the z-negative boundary.
    *        \f$ S \f$ vector at the z-positive boundary.
    */
@@ -165,6 +171,12 @@ public:
    *
    */
   size_t nBosons = 1;
+
+  /**
+   * @brief Number of particles
+   *
+   */
+  size_t nParticles;
 
   /**
    * @brief Number of equations
@@ -242,14 +254,29 @@ public:
   MatDoub CalculateCollisionMatrix(const double &mW,
                                    VecDoub &FermionMasses,
                                    VecDoub &BosonMasses);
+
+  /**
+   * @brief Function that calculates the Ri vector;
+   *
+   * @param particle which particle
+   * @param k index of ponit
+   * @return std::vector<double> \f$ R_i \f$
+   */
+  std::vector<double> calc_Ri(const size_t &particle = 0, const size_t &k = 0);
+
   /**
    * @brief Calculate the 2x2 submatrix of Ainv for 1 particle
    *
    * @param m mass of the particle
-   * @param type type of particle e.g. fermion/boson
+   * @param type type type of particle e.g. fermion/boson
+   * @param particle which particle
+   * @param k index in ydifeq
    * @return MatDoub of Ainv
    */
-  MatDoub calc_Ainv(const double &m, const ParticleType &type);
+  MatDoub calc_Ainv(const double &m,
+                    const ParticleType &type,
+                    const size_t &particle,
+                    const size_t &k = 0);
 
   /**
    * @brief Calculate the 2x2 submatrix of m2'B for 1 particle
@@ -329,8 +356,12 @@ public:
    * @param z distance to the bubble wall
    * @param Mtilde \f$ A^{-1} \Gamma \f$
    * @param Stilde \f$ A^{-1}\right( \deltaC - m^2' B \left) \f$
+   * @param k index of point
    */
-  void Equations(const double &z, MatDoub &Mtilde, VecDoub &Stilde);
+  void Equations(const double &z,
+                 MatDoub &Mtilde,
+                 VecDoub &Stilde,
+                 const size_t &k = 0);
 
   /**
    * @brief Solve the transport equation using the relaxation method.

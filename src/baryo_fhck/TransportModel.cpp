@@ -31,8 +31,7 @@ TransportModel::TransportModel(
   ss << "T = " << Tstar << "\n";
   ss << "vw = " << vwall << "\n";
   ss << "VEV profile = " << VevProfileModeToString.at(VevProfile) << "\n";
-  ss << "Truncation scheme = " << TruncationSchemeToString.at(truncationscheme)
-     << "\n";
+  ss << "Truncation scheme = " << TruncationSchemeToString.at(truncationscheme);
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
