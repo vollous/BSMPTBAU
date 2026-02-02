@@ -304,6 +304,17 @@ int Delta(const int &i, const int &j);
 double Li2(const double &x);
 
 /**
+ * @brief Number of combinations of chosing k in n
+ *
+ * \f$ {n \choose k}  = \frac{n!}{k!(n-k)!}\f$
+ *
+ * @param n
+ * @param k
+ * @return unsigned
+ */
+unsigned nChoosek(unsigned n, unsigned k);
+
+/**
  * @brief Incomplete elliptic integral of the second kind of x with a different
  * parameterization and k^2 = -2
  *
