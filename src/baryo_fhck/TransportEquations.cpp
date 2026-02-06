@@ -729,6 +729,15 @@ void TransportEquations::CalculateBAU()
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
+
+  double unc = abs(error / result);
+
+  if (unc > 0.01)
+  {
+    ss << "Calculation failed!\t" << unc << "\n";
+    result = NAN;
+  }
+
   ss << "eta/eta_obs = " << result / (8.7e-11) << std::endl;
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
