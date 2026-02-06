@@ -36,7 +36,7 @@ void TransportEquations::Initialize()
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()) + "\n");
+                    std::to_string(zList.back()));
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in u \t" + std::to_string(uList.front()) + " -> " +
@@ -59,7 +59,10 @@ void TransportEquations::InitializeMoment(const size_t &moment_in)
 
   moment = moment_in;
 
-  nEqs = moment * (nFermions + nBosons);
+  nParticles = nFermions + nBosons;
+  nEqs       = moment * nParticles;
+
+  ydifeq = MatDoub(nEqs, uList.size(), 0.);
 
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
@@ -277,10 +280,54 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   return Gamma;
 }
 
-MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
+std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
+                                                const size_t &k)
+{
+  std::vector<double> Ri(moment, 0);
+
+  switch (transportmodel->truncationscheme)
+  {
+  case TruncationScheme::Zero:
+    // 0, 0, ..., 0, -1
+    Ri.at(moment - 2) = 0;
+    break;
+  case TruncationScheme::MinusVw:
+    // 0, 0, ..., -vwall, -1
+    Ri.at(moment - 2) = -transportmodel->vwall;
+    break;
+  case TruncationScheme::One:
+    // 0, 0, ..., 1, -1
+    Ri.at(moment - 2) = 1;
+    break;
+  case TruncationScheme::Variance:
+    // R_1, ..., R_n-1, -1
+    Ri.at(0) = pow(-1, moment) * moment * (moment - 1) *
+               pow(ydifeq[particle * moment + 1][k], moment - 1);
+    for (size_t i = 2; i < moment; i++)
+    {
+      Ri.at(0) += pow(-1 * ydifeq[particle * moment + 1][k], moment - i - 1) *
+                  nChoosek(moment, k) * ydifeq[particle * moment + i][k] *
+                  (moment - k);
+      Ri.at(i) = pow(-1, moment - i - 1) * nChoosek(moment, i) *
+                 pow(ydifeq[particle * moment + 1][k], moment - i) * i;
+    }
+    break;
+
+  default: throw("Error on selecting the truncation scheme");
+  }
+
+  Ri.at(moment - 1) = -1;
+
+  return Ri;
+}
+
+MatDoub TransportEquations::calc_Ainv(const double &m,
+                                      const ParticleType &type,
+                                      const size_t &particle,
+                                      const size_t &k)
 {
   MatDoub res(moment, moment, 0.);
-  std::vector<double> Di(moment, 1), Ri(moment);
+  std::vector<double> Di(moment, 1), Ri = calc_Ri(particle, k);
 
   for (size_t i = 0; i < moment - 1; i++)
   {
@@ -290,10 +337,6 @@ MatDoub TransportEquations::calc_Ainv(const double &m, const ParticleType &type)
     // off-diagonal "diagonal"
     res[i + 1][i] = 1;
   }
-
-  // 0, 0, ..., -vwall, -1
-  Ri.at(moment - 2) = -transportmodel->vwall;
-  Ri.at(moment - 1) = -1;
 
   // (-1)^momentInv(A)
   double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
@@ -367,7 +410,8 @@ double TransportEquations::uTOz(const double &u)
 
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
-                                   VecDoub &Stilde)
+                                   VecDoub &Stilde,
+                                   const size_t &k)
 {
   MatDoub Ainverse(nEqs, nEqs, 0.); // Store A^-1
 
@@ -409,7 +453,7 @@ void TransportEquations::Equations(const double &z,
     }
 
     // Calculate A inverse for fermion
-    MatDoub tempA(calc_Ainv(sqrt(m2), ptype));
+    MatDoub tempA(calc_Ainv(sqrt(m2), ptype, particle, k));
     InsertBlockDiagonal(Ainverse, tempA, particle);
 
     // Calculate m2'B for fermion
@@ -556,7 +600,7 @@ void TransportEquations::smatrix(const int k,
       Stilde = StildeP;
     }
     else
-      Equations(uTOz(um), Mtilde, Stilde);
+      Equations(uTOz(um), Mtilde, Stilde, k);
     for (size_t j = 0; j < nEqs; j++)
     {
       for (size_t n = 0; n < nEqs; n++)
@@ -587,8 +631,8 @@ void TransportEquations::SolveTransportEquation()
     InitializeMoment(moments.at(ell));
     bau = 0;
 
-    Equations(zList.front(), MtildeM, StildeM);
-    Equations(zList.back(), MtildeP, StildeP);
+    Equations(zList.front(), MtildeM, StildeM, 0);
+    Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
 
     CheckBoundary();
     if (Status != FHCKStatus::NotSet)
@@ -600,7 +644,7 @@ void TransportEquations::SolveTransportEquation()
       return;
     }
 
-    size_t itmax = 1;
+    size_t itmax = 10;
     double conv  = 1e-10;
     double slowc = 1.;
     VecDoub scalv(nEqs, 1);
@@ -608,18 +652,17 @@ void TransportEquations::SolveTransportEquation()
 
     // fix μ and first u
     for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
-      for (size_t particle = 0; particle < nFermions + nBosons; particle++)
+      for (size_t particle = 0; particle < nParticles; particle++)
       {
-        indexv[l + particle * moment] = particle + l * (nFermions + nBosons);
+        indexv[l + particle * moment] = particle + l * (nParticles);
         Logger::Write(LoggingLevel::FHCK,
-                      "indexv[" +
-                          std::to_string(particle + l * (nFermions + nBosons)) +
+                      "indexv[" + std::to_string(particle + l * (nParticles)) +
                           "] = " + std::to_string(l + particle * moment));
       }
 
     int NB = nEqs / 2;
-    MatDoub y(nEqs, uList.size(), 0.);
-    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, y, *this);
+
+    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, ydifeq, *this);
 
     std::string str = "u.tsv";
     std::ofstream res(str);
@@ -628,14 +671,14 @@ void TransportEquations::SolveTransportEquation()
     {
       res << uList[k];
       for (size_t i = 0; i < nEqs; i++)
-        res << "\t" << y[i][k];
+        res << "\t" << ydifeq[i][k];
       res << "\n";
     }
 
     res.close();
 
     // Store the solution
-    Solution = y;
+    Solution = ydifeq;
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
