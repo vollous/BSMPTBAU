@@ -42,7 +42,7 @@ VecInt &VecInt::operator=(const VecInt &a)
     {
       if (v != nullptr) delete[] (v);
       nn = a.nn;
-      v  = nn > 0 ? new int(nn) : nullptr;
+      v  = nn > 0 ? new int[nn] : nullptr;
     }
     for (size_t i = 0; i < nn; i++)
       v[i] = a[i];
@@ -327,7 +327,11 @@ const double *MatDoub::operator[](const size_t i) const
 
 MatDoub::~MatDoub()
 {
-  if (v != nullptr) delete[] (v);
+  if (v != nullptr)
+  {
+    delete[] v[0]; // free the contiguous data
+    delete[] v;    // free row pointers
+  }
 }
 
 Mat3DDoub::Mat3DDoub() : nn(0), mm(0), kk(0), v(nullptr)
