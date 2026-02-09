@@ -104,6 +104,7 @@ var namespaceBSMPT =
     [ "L2NormVector", "namespaceBSMPT.html#a8b82302c8d9c5e58eca68e22f3d5616c", null ],
     [ "Li2", "namespaceBSMPT.html#a9b7ee9ad848ad4f37479dd595602f1cc", null ],
     [ "NablaNumerical", "namespaceBSMPT.html#a5d3fdbfc7b4f3e3d170f2fd5b094fdc3", null ],
+    [ "nChoosek", "namespaceBSMPT.html#a39634082e0bcc0f962ebc3f2fe8f2885", null ],
     [ "Nderive_BounceRatio", "namespaceBSMPT.html#a5f8fa445f29f8398aa04e79642e9ede9", null ],
     [ "Nintegrate_Inner", "namespaceBSMPT.html#a8a47879d8195200514553394af7fc659", null ],
     [ "Nintegrate_Outer", "namespaceBSMPT.html#add310b4cfe7bfdb761385657e4875e1c", null ],

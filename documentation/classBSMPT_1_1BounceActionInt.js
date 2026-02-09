@@ -45,7 +45,6 @@ var classBSMPT_1_1BounceActionInt =
     [ "ExactSolutionLin", "classBSMPT_1_1BounceActionInt.html#ac12f8388f128a27fa120fd9fa05db29d", null ],
     [ "IntegrateBounce", "classBSMPT_1_1BounceActionInt.html#ab6c0f5b4f40a029fc5a349e6032b1f6f", null ],
     [ "LogisticFunction", "classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0", null ],
-    [ "nChoosek", "classBSMPT_1_1BounceActionInt.html#a49f03c6ebd0211e5399aaef39e7507ef", null ],
     [ "NormalForce", "classBSMPT_1_1BounceActionInt.html#a08fff8f4f6ab03f6186d75ab5c6f9971", null ],
     [ "NormalForceBernstein", "classBSMPT_1_1BounceActionInt.html#af7f81b5c6cb4abb0e6e37246125ab436", null ],
     [ "PathDeformation", "classBSMPT_1_1BounceActionInt.html#a1bdfa35af2862059236e530f1d2927ad", null ],

@@ -463,6 +463,9 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9b7ee9ad848ad4f37479dd595602f1cc" id="r_a9b7ee9ad848ad4f37479dd595602f1cc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a9b7ee9ad848ad4f37479dd595602f1cc">Li2</a> (const double &amp;x)</td></tr>
 <tr class="memdesc:a9b7ee9ad848ad4f37479dd595602f1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dilogarithm of x.  <br /></td></tr>
 <tr class="separator:a9b7ee9ad848ad4f37479dd595602f1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39634082e0bcc0f962ebc3f2fe8f2885" id="r_a39634082e0bcc0f962ebc3f2fe8f2885"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#a39634082e0bcc0f962ebc3f2fe8f2885">nChoosek</a> (unsigned n, unsigned k)</td></tr>
+<tr class="memdesc:a39634082e0bcc0f962ebc3f2fe8f2885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of combinations of chosing k in n.  <br /></td></tr>
+<tr class="separator:a39634082e0bcc0f962ebc3f2fe8f2885"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcb7a745c3dcbb7dac3319dc94f792f1" id="r_adcb7a745c3dcbb7dac3319dc94f792f1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#adcb7a745c3dcbb7dac3319dc94f792f1">EllipIntSecond</a> (const double &amp;x)</td></tr>
 <tr class="memdesc:adcb7a745c3dcbb7dac3319dc94f792f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incomplete elliptic integral of the second kind of x with a different parameterization and k^2 = -2.  <br /></td></tr>
 <tr class="separator:adcb7a745c3dcbb7dac3319dc94f792f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1271,6 +1274,45 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;double&gt; The \( dim \times 1 \) gradient of V taken at phi </dd></dl>
+
+</div>
+</div>
+<a id="a39634082e0bcc0f962ebc3f2fe8f2885" name="a39634082e0bcc0f962ebc3f2fe8f2885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39634082e0bcc0f962ebc3f2fe8f2885">&#9670;&#160;</a></span>nChoosek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned BSMPT::nChoosek </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of combinations of chosing k in n. </p>
+<p>\( {n \choose k}  = \frac{n!}{k!(n-k)!}\)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td></td></tr>
+    <tr><td class="paramname">k</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned </dd></dl>
 
 </div>
 </div>

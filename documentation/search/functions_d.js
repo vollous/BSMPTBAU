@@ -3,7 +3,7 @@ var searchData=
   ['n0int_0',['N0Int',['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html#a24fc138ae64ae24817f3885063ba0e90',1,'BSMPT::Baryo::FHCK::N0Int']]],
   ['nablanumerical_1',['NablaNumerical',['../namespaceBSMPT.html#a5d3fdbfc7b4f3e3d170f2fd5b094fdc3',1,'BSMPT']]],
   ['nablavct_2',['NablaVCT',['../classBSMPT_1_1Class__Potential__Origin.html#a93027829ab6605b5a153316129cbbcef',1,'BSMPT::Class_Potential_Origin']]],
-  ['nchoosek_3',['nChoosek',['../classBSMPT_1_1BounceActionInt.html#a49f03c6ebd0211e5399aaef39e7507ef',1,'BSMPT::BounceActionInt']]],
+  ['nchoosek_3',['nChoosek',['../namespaceBSMPT.html#a39634082e0bcc0f962ebc3f2fe8f2885',1,'BSMPT']]],
   ['nderive_5fbounceratio_4',['Nderive_BounceRatio',['../namespaceBSMPT.html#a5f8fa445f29f8398aa04e79642e9ede9',1,'BSMPT']]],
   ['nf_5',['nf',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a6ad17347c19ddbb028ef271443c203a3',1,'BSMPT::Baryo::Calc_Scp']]],
   ['nf_5fprime_6',['nf_prime',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a05458c598da32b09d1ad7b9f38494fb9',1,'BSMPT::Baryo::Calc_Scp']]],
