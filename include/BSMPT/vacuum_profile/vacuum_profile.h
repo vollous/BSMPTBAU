@@ -58,6 +58,12 @@ struct VacuumProfile
   size_t NotBetterThreshold = 3;
 
   /**
+   * @brief Bubble width
+   *
+   */
+  double Lw;
+
+  /**
    * @brief Try to solve the tunnel profile from -Lw * LwToSolve -> Lw *
    * LwToSolve
    *
@@ -75,7 +81,7 @@ struct VacuumProfile
    * large, increases the integration domain.
    *
    */
-  const double dphiTreshold = 1.e-20;
+  const double dphiTreshold = 1.e-10;
 
   /**
    * @brief True and False Vacuum
@@ -187,10 +193,9 @@ struct VacuumProfile
   /**
    * @brief Create a Path object
    *
-   * @param Lw Wall width
    * @param NumberOfSteps Number of steps
    */
-  void CreatePath(const double &Lw, const size_t &NumberOfSteps);
+  void CreatePath(const size_t &NumberOfSteps);
 
   /**
    * @brief Load path -> z, y
@@ -259,7 +264,7 @@ struct VacuumProfile
       const std::function<std::vector<std::vector<double>>(std::vector<double>)>
           &Hessian_In,
       // Bubble width
-      const double Lw,
+      const double Lw_In,
       // Number of steps for the path
       const size_t NumberOfSteps = 1000);
 
