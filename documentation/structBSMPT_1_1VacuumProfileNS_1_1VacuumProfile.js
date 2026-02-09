@@ -1,13 +1,13 @@
 var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
 [
     [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aa9bfb819f54211d641e212860a49a66b", null ],
-    [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a9504367d168cfec478399b935a38ed5d", null ],
+    [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a41d42f49fd3980c02a2d8ff6be701d89", null ],
     [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a3b6d05e83e281c55806fb73adb4e428c", null ],
     [ "Calcindexv", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a936e316ae1027131537827382971e28f", null ],
     [ "CalculateProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a522654ef006a9662691e06d3a6eb0cca", null ],
     [ "CenterPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd", null ],
     [ "CenterPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff", null ],
-    [ "CreatePath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#af09905b0d4520866f5a80c5b1da4ffb1", null ],
+    [ "CreatePath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae2a747d9fa98ee1db20784e9df513f99", null ],
     [ "GenerateSplines", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aad8f93b2f7bb5df550ae7eddd5428766", null ],
     [ "GetVev", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#afdd5dfae1ed97b0dc0426aae92ba1694", null ],
     [ "LoadPath", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf", null ],
@@ -16,6 +16,7 @@ var structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile =
     [ "dV", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aaae219499d871522dcdb4adbab703eb6", null ],
     [ "Hessian", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a1df16074c80e48fe4a93cdafb7606189", null ],
     [ "itmax", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae0e56001b4a6582ecf1d3f5dc6a73435", null ],
+    [ "Lw", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aa91e278357c55631b00bafc1317ff042", null ],
     [ "LwToSolve", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a343449de0aa22512c19d05ae8f89c427", null ],
     [ "mode", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a68d7e0837d16d04c9acb5338e8f38b91", null ],
     [ "NotBetterThreshold", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aecb83d1d5951bca06af688799ed407b3", null ],

@@ -186,7 +186,7 @@ var searchData=
   ['couplings_5fquark_5fhiggs_5f22_183',['Couplings_Quark_Higgs_22',['../classBSMPT_1_1Class__Potential__Origin.html#a478942152c187ac4b2d6db742b51f300',1,'BSMPT::Class_Potential_Origin']]],
   ['create1dimgrid_184',['create1dimgrid',['../namespaceBSMPT.html#afbf3c83ace0916267ddd939a9c3a75c0',1,'BSMPT::Create1DimGrid(const std::vector&lt; double &gt; &amp;point, const int k, const double low_value, const double high_value, const int nsteps=100)'],['../namespaceBSMPT.html#a15e19b31fc051bf042a6e8b00fd68800',1,'BSMPT::Create1DimGrid(const std::vector&lt; double &gt; &amp;min_start, const std::vector&lt; double &gt; &amp;min_end, const int npoints=100)']]],
   ['createmugrid_2ecpp_185',['CreateMuGrid.cpp',['../CreateMuGrid_8cpp.html',1,'']]],
-  ['createpath_186',['CreatePath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#af09905b0d4520866f5a80c5b1da4ffb1',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['createpath_186',['CreatePath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ae2a747d9fa98ee1db20784e9df513f99',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
   ['csound_187',['Csound',['../structBSMPT_1_1ISMConstants.html#a72c7d435cbe846cda7d68cdc99667b1d',1,'BSMPT::ISMConstants']]],
   ['csound_5ffalse_188',['Csound_false',['../classBSMPT_1_1BounceSolution.html#a014964fcb768465765e492fee0ceb6f3',1,'BSMPT::BounceSolution']]],
   ['csound_5ftrue_189',['Csound_true',['../classBSMPT_1_1BounceSolution.html#a5f5263b5380bc0b7285b52d6ef1543c6',1,'BSMPT::BounceSolution']]],
