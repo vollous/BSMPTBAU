@@ -308,8 +308,8 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
       Ri.at(0) += pow(-1 * ydifeq[particle * moment + 1][k], moment - i - 1) *
                   nChoosek(moment, k) * ydifeq[particle * moment + i][k] *
                   (moment - k);
-      Ri.at(i) = pow(-1, moment - i - 1) * nChoosek(moment, i) *
-                 pow(ydifeq[particle * moment + 1][k], moment - i) * i;
+      Ri.at(i) = -nChoosek(moment, i) *
+                 pow(-ydifeq[particle * moment + 1][k], moment - i);
     }
     break;
 
@@ -802,7 +802,30 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
+  size_t i_min_left = 0, i_min_right = uList.size() - 1;
+  double max = -1.;
   for (size_t i = 0; i < uList.size(); i++)
+    max = std::max(max, abs(Solution.value()[ind.value()][i]));
+
+  for (size_t i = 0; i < uList.size(); i++)
+  {
+    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    {
+      i_min_left = i;
+      break;
+    }
+  }
+
+  for (size_t i = uList.size() - 1; i >= 0; i--)
+  {
+    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    {
+      i_min_right = i;
+      break;
+    }
+  }
+
+  for (size_t i = i_min_left; i <= i_min_right; i++)
   {
     z.push_back(uList[i]);
     y.push_back(Solution.value()[ind.value()][i]);
