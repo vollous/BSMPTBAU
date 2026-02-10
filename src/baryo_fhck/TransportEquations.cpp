@@ -308,8 +308,8 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
       Ri.at(0) += pow(-1 * ydifeq[particle * moment + 1][k], moment - i - 1) *
                   nChoosek(moment, k) * ydifeq[particle * moment + i][k] *
                   (moment - k);
-      Ri.at(i) = -nChoosek(moment, i) *
-                 pow(-ydifeq[particle * moment + 1][k], moment - i);
+      Ri.at(i - 1) = -nChoosek(moment, i) *
+                     pow(-ydifeq[particle * moment + 1][k], moment - i);
     }
     break;
 
