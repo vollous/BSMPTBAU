@@ -25,7 +25,7 @@ VecInt VacuumProfile::Calcindexv()
   return indexv;
 }
 
-void VacuumProfile::CreatePath(const double &Lw, const size_t &NumberOfSteps)
+void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
 {
   // temporary variables
   std::vector<std::vector<double>> path;
@@ -138,11 +138,11 @@ void VacuumProfile::CalculateProfile()
       }
       LwToSolve += 10;
       // Generate new path. Keep roughly same number of points
-      CreatePath(CalculateWidth(TrueVacuum, FalseVacuum, V),
-                 ceil(z.size() * LwToSolve / (LwToSolve - 10)));
-      Logger::Write(LoggingLevel::VacuumProfile,
-                    "Vacuum profile small domain, increase LwToSolve to " +
-                        std::to_string(LwToSolve));
+      CreatePath(ceil(z.size() * LwToSolve / (LwToSolve - 10)));
+
+      ss << "Vacuum profile small domain (dphi = " << sqrt(dphi) / (2 * dim)
+         << "), increase LwToSolve to " << LwToSolve;
+      Logger::Write(LoggingLevel::VacuumProfile, ss.str());
       CalculateProfile();
       return;
     }
@@ -184,6 +184,7 @@ double VacuumProfile::CalculateWidth(
                                          (FalseVacuum - TrueVacuum));
     Vb              = std::max(Vb, std::max(abs(Vtrue - Vk), abs(Vfalse - Vk)));
   }
+
   const double Lw = vc / sqrt(8 * Vb);
 
   Logger::Write(LoggingLevel::VacuumProfile,
@@ -329,17 +330,18 @@ VacuumProfile::VacuumProfile(
     const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian_In,
     // Bubble width
-    const double Lw,
+    const double Lw_In,
     // Number of steps for the path
     const size_t NumberOfSteps)
     : dim(dim_In)
+    , Lw(Lw_In)
     , TrueVacuum(TrueVacuum_In)
     , FalseVacuum(FalseVacuum_In)
     , V(V_In)
     , dV(dV_In)
     , Hessian(Hessian_In)
 {
-  CreatePath(Lw, NumberOfSteps);
+  CreatePath(NumberOfSteps);
 }
 
 VacuumProfile::VacuumProfile(

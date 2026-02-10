@@ -36,7 +36,7 @@ void TransportEquations::Initialize()
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()) + "\n");
+                    std::to_string(zList.back()));
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in u \t" + std::to_string(uList.front()) + " -> " +
@@ -772,6 +772,15 @@ void TransportEquations::CalculateBAU()
   // Step 3: Output the result
   stringstream ss;
   ss << "eta = " << result << " with error " << error << std::endl;
+
+  double unc = abs(error / result);
+
+  if (unc > 0.01)
+  {
+    ss << "Calculation failed!\t" << unc << "\n";
+    result = NAN;
+  }
+
   ss << "eta/eta_obs = " << result / (8.7e-11) << std::endl;
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
@@ -793,7 +802,30 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
+  size_t i_min_left = 0, i_min_right = uList.size() - 1;
+  double max = -1.;
   for (size_t i = 0; i < uList.size(); i++)
+    max = std::max(max, abs(Solution.value()[ind.value()][i]));
+
+  for (size_t i = 0; i < uList.size(); i++)
+  {
+    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    {
+      i_min_left = i;
+      break;
+    }
+  }
+
+  for (size_t i = uList.size() - 1; i >= 0; i--)
+  {
+    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    {
+      i_min_right = i;
+      break;
+    }
+  }
+
+  for (size_t i = i_min_left; i <= i_min_right; i++)
   {
     z.push_back(uList[i]);
     y.push_back(Solution.value()[ind.value()][i]);

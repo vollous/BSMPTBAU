@@ -57,8 +57,6 @@ void TransportModel::Initialize()
 {
   EmptyVacuum = std::vector<double>(modelPointer->get_NHiggs(), 0);
 
-  SetEtaInterface();
-
   if (VevProfile == VevProfileMode::FieldEquation)
   {
     const double &eps = 0.01;
@@ -77,9 +75,19 @@ void TransportModel::Initialize()
     { return HessianNumerical(arg, V, eps); };
 
     vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
-        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian, Lw);
+        FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian);
     vacuumprofile->CalculateProfile();
+    Lw = vacuumprofile->Lw;
+    if (vacuumprofile->status != VacuumProfileNS::VacuumProfileStatus::Success)
+    {
+      Logger::Write(LoggingLevel::FHCK,
+                    "Vacuum Profile Calculation failed! Using the Kink "
+                    "solution instead.");
+      VevProfile = VevProfileMode::Kink;
+    }
   }
+
+  if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
 }
 
 void TransportModel::SetEtaInterface()
@@ -155,8 +163,53 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
 
   AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
 
-  Plot.addPlot(zList, MassesReal.at(ind), "Re(mt)", '*');
-  Plot.addPlot(zList, MassesImag.at(ind), "Im(mt)", '.');
+  size_t i_left = 0, i_right = zList.size() - 1;
+
+  double max_dmdz = -1;
+
+  // calculate maximum
+  for (const auto &zi : zList)
+  {
+    const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
+                             pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
+    max_dmdz          = std::max(dmdz, max_dmdz);
+  }
+
+  for (size_t i = i_left; i <= i_right; i++)
+  {
+    const double zi   = zList[i];
+    const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
+                             pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
+    if (dmdz > max_dmdz / 100.)
+    {
+      i_left = i;
+      break;
+    }
+  }
+
+  for (size_t i = i_right; i >= i_left; i--)
+  {
+    const double zi   = zList[i];
+    const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
+                             pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
+    if (dmdz > max_dmdz / 100.)
+    {
+      i_right = i;
+      break;
+    }
+  }
+
+  std::vector<double> zListPlot, RePlot, ImPlot;
+  for (size_t i = i_left; i <= i_right; i++)
+  {
+    zListPlot.push_back(zList[i]);
+    RePlot.push_back(MassesReal.at(ind)[i]);
+    ImPlot.push_back(MassesImag.at(ind)[i]);
+  }
+
+  Plot.addPlot(zListPlot, RePlot, "Re(mt)", '*');
+  Plot.addPlot(zListPlot, ImPlot, "Im(mt)", '.');
+
   Plot.legend();
   std::stringstream ss;
   Plot.show(ss);
