@@ -26,13 +26,7 @@ void TransportEquations::Initialize()
 {
   transportmodel->Initialize();
 
-  uList = MakeDistribution(1, NumberOfSteps);
-
-  zList.clear();
-  for (const auto &u : uList)
-  {
-    zList.push_back(uTOz(u));
-  }
+  MakeDistribution(1, NumberOfSteps);
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in z \t" + std::to_string(zList.front()) + " -> " +
@@ -62,7 +56,7 @@ void TransportEquations::InitializeMoment(const size_t &moment_in)
   nParticles = nFermions + nBosons;
   nEqs       = moment * nParticles;
 
-  ydifeq = MatDoub(nEqs, uList.size(), 0.);
+  Solution = MatDoub(nEqs, uList.size(), 0.);
 
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
@@ -300,18 +294,20 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
     Ri.at(moment - 2) = 1;
     break;
   case TruncationScheme::Variance:
+  {
     // R_1, ..., R_n-1, -1
-    Ri.at(0) = pow(-1, moment) * moment * (moment - 1) *
-               pow(ydifeq[particle * moment + 1][k], moment - 1);
+    double n = (double)moment; // This conversion is NECESSARY!
+    Ri.at(0) = -n * n * pow(-Solution[particle * moment + 1][k], moment - 1);
     for (size_t i = 2; i < moment; i++)
     {
-      Ri.at(0) += pow(-1 * ydifeq[particle * moment + 1][k], moment - i - 1) *
-                  nChoosek(moment, k) * ydifeq[particle * moment + i][k] *
-                  (moment - k);
-      Ri.at(i - 1) = -nChoosek(moment, i) *
-                     pow(-ydifeq[particle * moment + 1][k], moment - i);
+      double nck = nChoosek(moment, i);
+      Ri.at(0) += nck * (n - i) * Solution[particle * moment + i][k] *
+                  pow(-1 * Solution[particle * moment + 1][k], moment - i - 1);
+      Ri.at(i - 1) =
+          -nck * pow(-Solution[particle * moment + 1][k], moment - i);
     }
     break;
+  }
 
   default: throw("Error on selecting the truncation scheme");
   }
@@ -477,19 +473,23 @@ void TransportEquations::Equations(const double &z,
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
-std::vector<double> TransportEquations::MakeDistribution(const double xmax,
-                                                         const size_t npoints)
+void TransportEquations::MakeDistribution(const double xmax,
+                                          const size_t npoints)
 {
-  std::vector<double> res(npoints);
-
+  uList.resize(npoints);
   for (size_t i = 0; i < npoints; i++)
   {
     double temp =
         pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
         4.;
-    res.at(i) = xmax * tan(temp);
+    uList.at(i) = xmax * tan(temp);
   }
-  return res;
+
+  zList.clear();
+  for (const auto &u : uList)
+  {
+    zList.push_back(uTOz(u));
+  }
 }
 
 void TransportEquations::CheckBoundary()
@@ -589,12 +589,12 @@ void TransportEquations::smatrix(const int k,
   {
     double um = (uList[k] + uList[k - 1]) / 2.;
     double du = (uList[k] - uList[k - 1]) / dudz(um);
-    if (um < -0.3) // TODO: change. Too specific
+    if (um < -0.7) // TODO: change. Too specific
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (um > 0.3) // TODO: chagne. Too specific
+    else if (um > 0.7) // TODO: change. Too specific
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
@@ -662,7 +662,7 @@ void TransportEquations::SolveTransportEquation()
 
     int NB = nEqs / 2;
 
-    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, ydifeq, *this);
+    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, Solution, *this);
 
     std::string str = "u.tsv";
     std::ofstream res(str);
@@ -671,14 +671,11 @@ void TransportEquations::SolveTransportEquation()
     {
       res << uList[k];
       for (size_t i = 0; i < nEqs; i++)
-        res << "\t" << ydifeq[i][k];
+        res << "\t" << Solution[i][k];
       res << "\n";
     }
 
     res.close();
-
-    // Store the solution
-    Solution = ydifeq;
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
@@ -711,10 +708,9 @@ void TransportEquations::CalculateBAU()
         zi, 2, mb2, m2prime, thetaprime, theta2prime);
     // Results
     r = 0;
-    r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution.value()[0][i]; // tL
-    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. *
-         Solution.value()[moment * 2][i];                      // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution.value()[moment][i]; // tR
+    r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
+    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
+    r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
     r *= min(1.,
              2.4 * Tstar / Gsph *
                  exp(-40 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
@@ -805,11 +801,11 @@ void TransportEquations::PrintTransportEquation(const int &size,
   size_t i_min_left = 0, i_min_right = uList.size() - 1;
   double max = -1.;
   for (size_t i = 0; i < uList.size(); i++)
-    max = std::max(max, abs(Solution.value()[ind.value()][i]));
+    max = std::max(max, abs(Solution[ind.value()][i]));
 
   for (size_t i = 0; i < uList.size(); i++)
   {
-    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    if (abs(Solution[ind.value()][i]) > max / 100.)
     {
       i_min_left = i;
       break;
@@ -818,7 +814,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   for (size_t i = uList.size() - 1; i >= 0; i--)
   {
-    if (abs(Solution.value()[ind.value()][i]) > max / 100.)
+    if (abs(Solution[ind.value()][i]) > max / 100.)
     {
       i_min_right = i;
       break;
@@ -828,7 +824,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
   for (size_t i = i_min_left; i <= i_min_right; i++)
   {
     z.push_back(uList[i]);
-    y.push_back(Solution.value()[ind.value()][i]);
+    y.push_back(Solution[ind.value()][i]);
   }
   Plot.addPlot(z, y, "", '*');
   std::stringstream ss;

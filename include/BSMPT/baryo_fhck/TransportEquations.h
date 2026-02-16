@@ -119,12 +119,6 @@ public:
   std::vector<double> uList;
 
   /**
-   * @brief Matrix used in the solution
-   *
-   */
-  MatDoub ydifeq;
-
-  /**
    * @brief \f$ M \f$ matrix at the z-negative boundary.
    *        \f$ S \f$ vector at the z-positive boundary.
    */
@@ -158,7 +152,7 @@ public:
    * @brief Store the solution from the relaxation method
    *
    */
-  std::optional<MatDoub> Solution;
+  MatDoub Solution;
 
   /**
    * @brief Number of Weil fermions
@@ -188,14 +182,14 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 1000;
+  size_t NumberOfSteps = 15000;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 100.;
+  double LwMultiplier = 4000.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If
@@ -374,7 +368,7 @@ public:
    * @brief Distributes the points used in the relaxation method
    *
    */
-  std::vector<double> MakeDistribution(const double xmax, const size_t npoints);
+  void MakeDistribution(const double xmax, const size_t npoints);
 
   /**
    * @brief Smatrix needed of the relaxation method to solve the ODE
