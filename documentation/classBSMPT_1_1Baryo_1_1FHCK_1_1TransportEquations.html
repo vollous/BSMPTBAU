@@ -173,10 +173,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildKernelInterpolat
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RelaxationMethod</b> ()</td></tr>
 <tr class="memdesc:ad8804340e2806b23d391825d61bb90f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the transport equation using the relaxation method. Recommended. <br /></td></tr>
 <tr class="separator:ad8804340e2806b23d391825d61bb90f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f6e41b6253429da0bac40b0b344cebb" id="r_a0f6e41b6253429da0bac40b0b344cebb"><td class="memItemLeft" align="right" valign="top"><a id="a0f6e41b6253429da0bac40b0b344cebb" name="a0f6e41b6253429da0bac40b0b344cebb"></a>
-std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MakeDistribution</b> (const double xmax, const size_t npoints)</td></tr>
-<tr class="memdesc:a0f6e41b6253429da0bac40b0b344cebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distributes the points used in the relaxation method. <br /></td></tr>
-<tr class="separator:a0f6e41b6253429da0bac40b0b344cebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ababb3a2f2a2676b6767c41c0cce219" id="r_a0ababb3a2f2a2676b6767c41c0cce219"><td class="memItemLeft" align="right" valign="top"><a id="a0ababb3a2f2a2676b6767c41c0cce219" name="a0ababb3a2f2a2676b6767c41c0cce219"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>MakeDistribution</b> (const double xmax, const size_t npoints)</td></tr>
+<tr class="memdesc:a0ababb3a2f2a2676b6767c41c0cce219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distributes the points used in the relaxation method. <br /></td></tr>
+<tr class="separator:a0ababb3a2f2a2676b6767c41c0cce219"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5df991b47e6331ce8255a6de6ac63536" id="r_a5df991b47e6331ce8255a6de6ac63536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5df991b47e6331ce8255a6de6ac63536">smatrix</a> (const int k, const int k1, const int k2, const int jsf, <a class="el" href="classVecInt.html">VecInt</a> &amp;indexv, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;s, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;y)</td></tr>
 <tr class="memdesc:a5df991b47e6331ce8255a6de6ac63536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smatrix needed of the relaxation method to solve the ODE.  <br /></td></tr>
 <tr class="separator:a5df991b47e6331ce8255a6de6ac63536"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -271,10 +271,6 @@ std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>uList</b></td></tr>
 <tr class="memdesc:ad9984b2587e3398a81a7b1c3b30e1164"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of points on the u-axis (tanh scaled). <br /></td></tr>
 <tr class="separator:ad9984b2587e3398a81a7b1c3b30e1164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecb1b85dca95a5212737bd95fbb1e9cb" id="r_aecb1b85dca95a5212737bd95fbb1e9cb"><td class="memItemLeft" align="right" valign="top"><a id="aecb1b85dca95a5212737bd95fbb1e9cb" name="aecb1b85dca95a5212737bd95fbb1e9cb"></a>
-<a class="el" href="classMatDoub.html">MatDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ydifeq</b></td></tr>
-<tr class="memdesc:aecb1b85dca95a5212737bd95fbb1e9cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix used in the solution. <br /></td></tr>
-<tr class="separator:aecb1b85dca95a5212737bd95fbb1e9cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae624efd805aeb98213ed17efab9f9658" id="r_ae624efd805aeb98213ed17efab9f9658"><td class="memItemLeft" align="right" valign="top"><a id="ae624efd805aeb98213ed17efab9f9658" name="ae624efd805aeb98213ed17efab9f9658"></a>
 <a class="el" href="classMatDoub.html">MatDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MtildeM</b></td></tr>
 <tr class="memdesc:ae624efd805aeb98213ed17efab9f9658"><td class="mdescLeft">&#160;</td><td class="mdescRight">\( M \) matrix at the z-negative boundary. \( S \) vector at the z-positive boundary. <br /></td></tr>
@@ -301,10 +297,10 @@ std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"
 std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Theta_True</b></td></tr>
 <tr class="memdesc:ad1004be157ddf3e3432145b7d07eb45c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structBSMPT_1_1Phase.html" title="Phase object.">Phase</a> of the top mass at the true vacuum. <br /></td></tr>
 <tr class="separator:ad1004be157ddf3e3432145b7d07eb45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe70e022a0b6ace134fe3da1b2ccdb71" id="r_abe70e022a0b6ace134fe3da1b2ccdb71"><td class="memItemLeft" align="right" valign="top"><a id="abe70e022a0b6ace134fe3da1b2ccdb71" name="abe70e022a0b6ace134fe3da1b2ccdb71"></a>
-std::optional&lt; <a class="el" href="classMatDoub.html">MatDoub</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Solution</b></td></tr>
-<tr class="memdesc:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the solution from the relaxation method. <br /></td></tr>
-<tr class="separator:abe70e022a0b6ace134fe3da1b2ccdb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeebbbe8eb4510c5d4e35d0b27bc812b" id="r_aaeebbbe8eb4510c5d4e35d0b27bc812b"><td class="memItemLeft" align="right" valign="top"><a id="aaeebbbe8eb4510c5d4e35d0b27bc812b" name="aaeebbbe8eb4510c5d4e35d0b27bc812b"></a>
+<a class="el" href="classMatDoub.html">MatDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Solution</b></td></tr>
+<tr class="memdesc:aaeebbbe8eb4510c5d4e35d0b27bc812b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the solution from the relaxation method. <br /></td></tr>
+<tr class="separator:aaeebbbe8eb4510c5d4e35d0b27bc812b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b938a582a7ce0f5c06816f6ee86a8a5" id="r_a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="memItemLeft" align="right" valign="top"><a id="a5b938a582a7ce0f5c06816f6ee86a8a5" name="a5b938a582a7ce0f5c06816f6ee86a8a5"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nFermions</b> = 3</td></tr>
 <tr class="memdesc:a5b938a582a7ce0f5c06816f6ee86a8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Weil fermions. <br /></td></tr>
@@ -322,11 +318,11 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nEqs</b></td></tr>
 <tr class="memdesc:a4fcf47cf52552d7475d9f0b63c56d238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of equations. <br /></td></tr>
 <tr class="separator:a4fcf47cf52552d7475d9f0b63c56d238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6650cb0a9ad4a9b42bd330734a2b7af2" id="r_a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="memItemLeft" align="right" valign="top"><a id="a6650cb0a9ad4a9b42bd330734a2b7af2" name="a6650cb0a9ad4a9b42bd330734a2b7af2"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b> = 1000</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b> = 15000</td></tr>
 <tr class="memdesc:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of steps in space. <br /></td></tr>
 <tr class="separator:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58396388ee15d5de8755dff47363bf43" id="r_a58396388ee15d5de8755dff47363bf43"><td class="memItemLeft" align="right" valign="top"><a id="a58396388ee15d5de8755dff47363bf43" name="a58396388ee15d5de8755dff47363bf43"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>LwMultiplier</b> = 100.</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>LwMultiplier</b> = 4000.</td></tr>
 <tr class="memdesc:a58396388ee15d5de8755dff47363bf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">The integration goes from \( - LwMultiplier * Lw \) up to \(
 LwMultiplier * Lw \). <br /></td></tr>
 <tr class="separator:a58396388ee15d5de8755dff47363bf43"><td class="memSeparator" colspan="2">&#160;</td></tr>

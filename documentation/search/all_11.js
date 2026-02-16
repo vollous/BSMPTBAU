@@ -2,7 +2,7 @@ var searchData=
 [
   ['m_5ffull_0',['m_full',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a8bd48cd4c07e7f69c57e8c251c514655',1,'BSMPT::Baryo::Calc_Scp::m_full'],['../classBSMPT_1_1Baryo_1_1Calc__Gam__M.html#a94a4ad05774cee9bb30b972f6fed7572',1,'BSMPT::Baryo::Calc_Gam_M::m_full']]],
   ['main_1',['main',['../BSMPT_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;BSMPT.cpp'],['../PlotEWBG__nL_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;PlotEWBG_nL.cpp']]],
-  ['makedistribution_2',['MakeDistribution',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0f6e41b6253429da0bac40b0b344cebb',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['makedistribution_2',['MakeDistribution',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0ababb3a2f2a2676b6767c41c0cce219',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['marginofcalctempatfalsevacfractionbeforefailure_3',['MarginOfCalcTempAtFalseVacFractionBeforeFailure',['../classBSMPT_1_1BounceSolution.html#afda7119823dc424e147bdcaaa249f981',1,'BSMPT::BounceSolution']]],
   ['masssquaredgauge_4',['MassSquaredGauge',['../classBSMPT_1_1Class__Potential__Origin.html#a0910e59e597c46f796666b0d5f3ed2f5',1,'BSMPT::Class_Potential_Origin']]],
   ['masssquaredhiggs_5',['MassSquaredHiggs',['../classBSMPT_1_1Class__Potential__Origin.html#a9c8d6c116ba64af2517aad548744b1df',1,'BSMPT::Class_Potential_Origin']]],

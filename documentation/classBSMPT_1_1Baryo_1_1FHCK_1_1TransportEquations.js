@@ -14,7 +14,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "Initialize", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684", null ],
     [ "InitializeMoment", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a714d12472167ba662ed81643be70c1c1", null ],
     [ "InsertBlockDiagonal", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892", null ],
-    [ "MakeDistribution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0f6e41b6253429da0bac40b0b344cebb", null ],
+    [ "MakeDistribution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0ababb3a2f2a2676b6767c41c0cce219", null ],
     [ "PrintTransportEquation", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae0d4a3f64284c415f3af982a6d460f24", null ],
     [ "RelaxationMethod", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad8804340e2806b23d391825d61bb90f9", null ],
     [ "SetNumberOfSteps", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#abe593f81716d6c0c6b9f2b3611054a5e", null ],
@@ -37,7 +37,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "nParticles", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae4047d864a40c406b83be6458690a89e", null ],
     [ "NumberOfSteps", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6650cb0a9ad4a9b42bd330734a2b7af2", null ],
     [ "Rbarb", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6d38ba3136fdca2cd0d1df28b9096145", null ],
-    [ "Solution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#abe70e022a0b6ace134fe3da1b2ccdb71", null ],
+    [ "Solution", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aaeebbbe8eb4510c5d4e35d0b27bc812b", null ],
     [ "Status", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad9c3248e8509271063a4d75d27054678", null ],
     [ "StildeM", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#acb560be0588064187bf7975c7ed0f2cd", null ],
     [ "STildeThreshold", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a0bd37b4d1d4c3e7c77316509bf328dea", null ],
@@ -46,6 +46,5 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "transportmodel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a779950aa0c7840615048ba6ff754871c", null ],
     [ "Tstar", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9d1ee7de8a920efaf3b30c9ba58bf974", null ],
     [ "uList", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ad9984b2587e3398a81a7b1c3b30e1164", null ],
-    [ "ydifeq", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aecb1b85dca95a5212737bd95fbb1e9cb", null ],
     [ "zList", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5142d92ac8d5112cf5b1afc21d6237a0", null ]
 ];
