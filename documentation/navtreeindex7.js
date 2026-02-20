@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"functions_vars_f.html":[3,3,2,5],
 "functions_vars_g.html":[3,3,2,6],
 "functions_vars_h.html":[3,3,2,7],
 "functions_vars_i.html":[3,3,2,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html":[3,0,0,0,9],
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a046c2d9c0e8d98e7c9c25ec7a3c5ab02":[3,0,0,0,9,41],
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a08561ddacf81a32155b014f37a7d97c6":[3,0,0,0,9,13],
-"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a0abf1bf6e3369b670b075d026bb7024b":[3,0,0,0,9,32],
-"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a12d93704b0b2fa87cab15aeb2d320b78":[3,0,0,0,9,26]
+"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a0abf1bf6e3369b670b075d026bb7024b":[3,0,0,0,9,32]
 };

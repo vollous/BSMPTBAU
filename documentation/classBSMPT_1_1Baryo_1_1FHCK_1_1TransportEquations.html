@@ -151,8 +151,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildKernelInterpolat
 <tr class="memitem:aeb07a643a6aca143583b0e27ee6a9097" id="r_aeb07a643a6aca143583b0e27ee6a9097"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aeb07a643a6aca143583b0e27ee6a9097">calc_source</a> (const double &amp;m, const double &amp;dm2, const double &amp;dth, const double &amp;d2th, const int &amp;h)</td></tr>
 <tr class="memdesc:aeb07a643a6aca143583b0e27ee6a9097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the souce term S for 1 particle.  <br /></td></tr>
 <tr class="separator:aeb07a643a6aca143583b0e27ee6a9097"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a009c7077399c118c31637c06f3cb2093" id="r_a009c7077399c118c31637c06f3cb2093"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093">CheckBoundary</a> ()</td></tr>
-<tr class="memdesc:a009c7077399c118c31637c06f3cb2093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist.  <br /></td></tr>
+<tr class="memitem:a009c7077399c118c31637c06f3cb2093" id="r_a009c7077399c118c31637c06f3cb2093"><td class="memItemLeft" align="right" valign="top"><a id="a009c7077399c118c31637c06f3cb2093" name="a009c7077399c118c31637c06f3cb2093"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CheckBoundary</b> ()</td></tr>
+<tr class="memdesc:a009c7077399c118c31637c06f3cb2093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist. <br /></td></tr>
 <tr class="separator:a009c7077399c118c31637c06f3cb2093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b34028093eb0d010f1b80affb857892" id="r_a3b34028093eb0d010f1b80affb857892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892">InsertBlockDiagonal</a> (<a class="el" href="classMatDoub.html">MatDoub</a> &amp;full, <a class="el" href="classMatDoub.html">MatDoub</a> &amp;sub, const size_t position)</td></tr>
 <tr class="memdesc:a3b34028093eb0d010f1b80affb857892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a sub matrix into a block diagonal matrix.  <br /></td></tr>
@@ -614,34 +615,6 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMatDoub.html">MatDoub</a> Collision matrix </dd></dl>
-
-</div>
-</div>
-<a id="a009c7077399c118c31637c06f3cb2093" name="a009c7077399c118c31637c06f3cb2093"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a009c7077399c118c31637c06f3cb2093">&#9670;&#160;</a></span>CheckBoundary()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if the boundary have enough decaying modes for the solution to exist. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">MtildeM</td><td>\( M \) matrix at the z-negative boundary. </td></tr>
-    <tr><td class="paramname">StildeM</td><td>\( S \) vector at the z-negative boundary. </td></tr>
-    <tr><td class="paramname">MtildeP</td><td>\( M \) matrix at the z-positive boundary. </td></tr>
-    <tr><td class="paramname">StildeP</td><td>\( S \) vector at the z-positive boundary. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

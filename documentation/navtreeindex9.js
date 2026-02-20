@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html":[3,0,0,5,1],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0864a265463322240559d5e1a2da12bc":[3,0,0,5,1,20],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff":[3,0,0,5,1,6],
 "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a1df16074c80e48fe4a93cdafb7606189":[3,0,0,5,1,14],

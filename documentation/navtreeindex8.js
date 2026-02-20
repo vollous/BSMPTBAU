@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a12d93704b0b2fa87cab15aeb2d320b78":[3,0,0,0,9,26],
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a14d0ae51feac7dd0606b01dec7c583d2":[3,0,0,0,9,17],
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a1536219fc377453cbdf8bcc2f54b0f75":[3,0,0,0,9,2],
 "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a1a8d7603294d3a4308046605d65a719c":[3,0,0,0,9,20],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#ac4d6c344ba33607136da78b3c1e097af":[3,0,0,5,0,6],
 "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#acbee846f9efe820d11e4baf78a084f07":[3,0,0,5,0,2],
 "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af400b6f7e0bcaecc211c4b00cfbc5e96":[3,0,0,5,0,4],
-"structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa":[3,0,0,5,0,5],
-"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html":[3,0,0,5,1]
+"structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#af4c5d8c7bde52c3964bd3d53e411b5fa":[3,0,0,5,0,5]
 };
