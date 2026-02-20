@@ -77,17 +77,21 @@ void TransportModel::Initialize()
     vacuumprofile = std::make_unique<VacuumProfileNS::VacuumProfile>(
         FalseVacuum.size(), TrueVacuum, FalseVacuum, V, dV, Hessian);
     vacuumprofile->CalculateProfile();
-    Lw = vacuumprofile->Lw;
     if (vacuumprofile->status != VacuumProfileNS::VacuumProfileStatus::Success)
     {
-      Logger::Write(LoggingLevel::FHCK,
-                    "Vacuum Profile Calculation failed! Using the Kink "
-                    "solution instead.");
-      VevProfile = VevProfileMode::Kink;
+      Logger::Write(LoggingLevel::FHCK, "Vacuum Profile Calculation failed!");
+      status = TransportModelStatus::Failed;
+      return;
     }
+
+    Lw = vacuumprofile->Lw;
   }
 
-  if (VevProfile == VevProfileMode::Kink) SetEtaInterface();
+  if (VevProfile == VevProfileMode::Kink)
+  {
+    SetEtaInterface();
+    status = TransportModelStatus::Success;
+  }
 }
 
 void TransportModel::SetEtaInterface()
@@ -99,12 +103,21 @@ void TransportModel::SetEtaInterface()
 
   Logger::Write(LoggingLevel::FHCK, "Calculating Lw (EtaInterface)...");
 
-  EtaInterface->CalcEta(vwall,
-                        TrueVacuum,
-                        FalseVacuum,
-                        Tstar,
-                        modelPointer,
-                        Minimizer::WhichMinimizerDefault);
+  try
+  {
+    EtaInterface->CalcEta(vwall,
+                          TrueVacuum,
+                          FalseVacuum,
+                          Tstar,
+                          modelPointer,
+                          Minimizer::WhichMinimizerDefault);
+  }
+  catch (...)
+  {
+    Logger::Write(LoggingLevel::FHCK, "Failed.");
+    status = TransportModelStatus::Failed;
+    return;
+  }
 
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 
