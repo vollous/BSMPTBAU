@@ -50,7 +50,6 @@ void TransportEquations::Initialize()
 
 void TransportEquations::InitializeMoment(const size_t &moment_in)
 {
-
   moment = moment_in;
 
   nParticles = nFermions + nBosons;
