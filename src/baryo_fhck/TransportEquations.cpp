@@ -26,6 +26,13 @@ void TransportEquations::Initialize()
 {
   transportmodel->Initialize();
 
+  if (transportmodel->status != TransportModelStatus::Success)
+  {
+    Logger::Write(LoggingLevel::FHCK,
+                  "Field profile calculation failed. Aborting...\n");
+    return;
+  }
+
   MakeDistribution(1, NumberOfSteps);
 
   Logger::Write(LoggingLevel::FHCK,
@@ -622,6 +629,15 @@ void TransportEquations::smatrix(const int k,
 
 void TransportEquations::SolveTransportEquation()
 {
+  if (transportmodel->status != TransportModelStatus::Success)
+  {
+
+    Logger::Write(LoggingLevel::FHCK,
+                  "SolveTransportEquation() failed. No VEV profile available.");
+    std::fill(BAUeta.begin(), BAUeta.end(), NAN);
+    return;
+  }
+
   Logger::Write(LoggingLevel::FHCK,
                 "Lw = " + std::to_string(transportmodel->Lw));
 

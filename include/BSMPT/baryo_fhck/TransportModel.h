@@ -63,6 +63,17 @@ const std::unordered_map<VevProfileMode, std::string> VevProfileModeToString{
     {VevProfileMode::Kink, "Kink"},
     {VevProfileMode::FieldEquation, "FieldEquation"}};
 
+/**
+ * @brief Status of the Transport Model class
+ *
+ */
+enum class TransportModelStatus
+{
+  Unset,
+  Failed,
+  Success
+};
+
 class TransportModel
 {
 private:
@@ -139,6 +150,12 @@ public:
    *
    */
   double vwall;
+
+  /**
+   * @brief Status of the TransportModel class
+   *
+   */
+  TransportModelStatus status = TransportModelStatus::Unset;
 
   /**
    * @brief Mode of the vev profile.
