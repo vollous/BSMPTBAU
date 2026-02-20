@@ -302,11 +302,6 @@ public:
   /**
    * @brief Check if the boundary have enough decaying modes for the solution to
    * exist.
-   *
-   * @param MtildeM \f$ M \f$ matrix at the z-negative boundary.
-   * @param StildeM \f$ S \f$ vector at the z-negative boundary.
-   * @param MtildeP \f$ M \f$ matrix at the z-positive boundary.
-   * @param StildeP \f$ S \f$ vector at the z-positive boundary.
    */
   void CheckBoundary();
 
