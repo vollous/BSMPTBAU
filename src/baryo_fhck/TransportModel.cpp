@@ -90,8 +90,8 @@ void TransportModel::Initialize()
   if (VevProfile == VevProfileMode::Kink)
   {
     SetEtaInterface();
-    status = TransportModelStatus::Success;
   }
+  status = TransportModelStatus::Success;
 }
 
 void TransportModel::SetEtaInterface()
