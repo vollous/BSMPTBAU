@@ -84,7 +84,8 @@ void TransportModel::Initialize()
       return;
     }
 
-    Lw = vacuumprofile->Lw;
+    status = TransportModelStatus::Success;
+    Lw     = vacuumprofile->Lw;
   }
 
   if (VevProfile == VevProfileMode::Kink)
@@ -120,8 +121,8 @@ void TransportModel::SetEtaInterface()
   }
 
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
-
-  Lw = EtaInterface->getLW();
+  status = TransportModelStatus::Success;
+  Lw     = EtaInterface->getLW();
 
   Logger::Write(LoggingLevel::FHCK,
                 "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
