@@ -68,7 +68,7 @@ struct VacuumProfile
    * LwToSolve
    *
    */
-  double LwToSolve = 100;
+  double LwToSolve = 10;
 
   /**
    * @brief Max iterations for the relaxation method
