@@ -199,7 +199,6 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                                      ParticleType::LeftFermion,
                                      ParticleType::Boson};
 
-  double vw        = transportmodel->vwall;
   const double D0T = Dlf[0](mass[0]);
   const double D0B = Dlf[0](mass[2]);
   const double D0H = Dlb[0](mass[3]);
