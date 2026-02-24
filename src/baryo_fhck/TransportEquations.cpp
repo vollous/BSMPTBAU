@@ -179,6 +179,8 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                                                      VecDoub &FermionMasses,
                                                      VecDoub &BosonMasses)
 {
+  constexpr double KAPPABE = 0.685;
+  constexpr double KAPPAFD = 0.912;
   if (FermionMasses.size() != 3)
     throw std::runtime_error(
         "Transport equation are only supported with 3 Weyl fermions.");
@@ -188,7 +190,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
         "Transport equation are only supported with 1 boson.");
 
   std::vector<double> mass = {sqrt(FermionMasses[0]),
-                              sqrt(FermionMasses[0]),
+                              sqrt(FermionMasses[1]),
                               sqrt(FermionMasses[2]),
                               sqrt(BosonMasses[0])};
 
@@ -199,12 +201,15 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
 
   const double D0T = Dlf[0](mass[0]);
   const double D0B = Dlf[0](mass[2]);
+  const double D0H = Dlb[0](mass[3]);
+  const double D2T = Dlf[2](mass[0]);
+  const double D2B = Dlf[2](mass[2]);
+  const double D2H = Dlb[2](mass[3]);
 
-  const std::vector<double> gammatot = {K4FHf(mass[0]) / (D0T * 6.) * Tstar,
-                                        K4FHf(mass[1]) / (D0T * 6.) * Tstar,
-                                        K4FHf(mass[2]) / (D0B * 6.) * Tstar,
-                                        K4FHb(mass[3]) /
-                                            (Dlb[0](mass[3]) * 20.) * Tstar};
+  const std::vector<double> gammatot = {D2T / (D0T * 6.) * Tstar,
+                                        D2T / (D0T * 6.) * Tstar,
+                                        D2B / (D0B * 6.) * Tstar,
+                                        D2H / (D0H * 20.) * Tstar};
 
   const std::vector<double> rates = {pow(mass[0], 2) / 63. * Tstar, // gammaM
                                      4.2e-3 * Tstar,                // gammaY
@@ -238,19 +243,20 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       tL_interactions, tR_interactions, bL_interactions, h_interactions};
 
   MatDoub Gamma(nEqs, nEqs, 0.);
-  double Kp, ul;
+  double m, Kp, ul, kappa;
   for (size_t i = 0; i < prtcl.size(); i++)
   {
-    double m = mass[i];
-    for (size_t l = 1; l <= moment; l++)
+    m     = mass[i];
+    kappa = (ptype[i] == ParticleType::Boson ? KAPPABE : KAPPAFD);
+    for (size_t l = 0; l < moment; l++)
     {
-      if (l == 1)
+      if (l == 0)
       {
         ul                      = 0.;
         trunc[rates.size() - 1] = 1.;
-        Kp = (ptype[i] == ParticleType::Boson ? Klb[l - 1](m) : Klf[l - 1](m));
+        Kp = (ptype[i] == ParticleType::Boson ? Klb[l](m) : Klf[l](m));
       }
-      else if (l == 2)
+      else if (l == 1)
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 1.;
@@ -261,19 +267,19 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {
         ul                      = 1.;
         trunc[rates.size() - 1] = 0.;
-        Kp = (ptype[i] == ParticleType::Boson ? Klb[l - 1](m) : Klf[l - 1](m));
+        Kp = (ptype[i] == ParticleType::Boson ? Klb[l](m) : Klf[l](m));
       }
 
       for (size_t j = 0; j < prtcl.size(); j++)
       {
         for (size_t k = 0; k < rates.size(); k++)
         {
-          Gamma[moment * i + l - 1][moment * j] +=
+          Gamma[moment * i + l][moment * j] +=
               prtcl[i][j][k] * rates[k] * trunc[k];
         }
-        Gamma[moment * i + l - 1][moment * j] *= Kp;
+        Gamma[moment * i + l][moment * j] *= kappa * Kp;
       }
-      Gamma[moment * i + l - 1][moment * i + l - 1] -= ul * gammatot[i];
+      Gamma[moment * i + l][moment * i + l] -= kappa * ul * gammatot[i];
     }
   }
 
@@ -727,8 +733,8 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
     r *= min(1.,
-             2.4 * Tstar / Gsph *
-                 exp(-40 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
+             1.7 * Tstar / Gsph *
+                 exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * transportmodel->vwall *
               gamwall));    // exp(-45 G_sph |z| / 4 vw gammaw)

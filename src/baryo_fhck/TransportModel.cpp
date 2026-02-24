@@ -92,6 +92,7 @@ void TransportModel::Initialize()
   {
     SetEtaInterface();
   }
+  status = TransportModelStatus::Success;
 }
 
 void TransportModel::SetEtaInterface()
