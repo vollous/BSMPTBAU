@@ -101,7 +101,7 @@ public:
         return;
       }
       errsave = err;
-      ysave = y;
+      ysave   = y;
 
       if (err < conv and it > 3) return;
     }
@@ -120,8 +120,8 @@ public:
    */
   void pinvs(const int ie1, int ie2, const int je1, const int jc1, const int k)
   {
-    int jpiv, jp, jcoff, irow, ipiv, icoff;
-    int je2;
+    int jpiv = 0, jp = 0, jcoff = 0, irow = 0, ipiv = 0, icoff = 0;
+    int je2 = 0;
     double pivinv, piv, big;
     const int iesize = ie2 - ie1;
     VecInt indxr(iesize);
