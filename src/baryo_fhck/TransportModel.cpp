@@ -38,14 +38,14 @@ TransportModel::TransportModel(
 
 TransportModel::TransportModel(
     const std::shared_ptr<Class_Potential_Origin> &pointer_in,
-    const std::shared_ptr<CoexPhases> &CoexPhase,
+    const std::shared_ptr<CoexPhases> &CoexPhase_in,
     const double &vwall_in,
     const double &Tstar_in,
     const VevProfileMode &VevProfile_in,
     const TruncationScheme &truncationscheme_in)
     : TransportModel(pointer_in,
-                     CoexPhase->true_phase.Get(Tstar_in).point,
-                     CoexPhase->false_phase.Get(Tstar_in).point,
+                     CoexPhase_in->true_phase.Get(Tstar_in).point,
+                     CoexPhase_in->false_phase.Get(Tstar_in).point,
                      vwall_in,
                      Tstar_in,
                      VevProfile_in,
@@ -92,7 +92,6 @@ void TransportModel::Initialize()
   {
     SetEtaInterface();
   }
-  status = TransportModelStatus::Success;
 }
 
 void TransportModel::SetEtaInterface()

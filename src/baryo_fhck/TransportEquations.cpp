@@ -123,6 +123,8 @@ void TransportEquations::BuildKernelInterpolation()
   K4FHb = InterpolateKernel("K4FH_b", true);
   Rbarf = InterpolateKernel("Rbar_f", false);
   Rbarb = InterpolateKernel("Rbar_b", false);
+
+  // Pad first element with empty spline
   Qlf.push_back(tk::spline());
   Q8ol.push_back(tk::spline());
   Q9ol.push_back(tk::spline());
@@ -833,7 +835,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
     }
   }
 
-  for (size_t i = uList.size() - 1; i >= 0; i--)
+  for (size_t i = uList.size(); i-- > 0;)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
