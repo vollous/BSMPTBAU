@@ -835,7 +835,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
     }
   }
 
-  for (size_t i = uList.size() - 1; i >= 0; i--)
+  for (size_t i = uList.size(); i-- > 0;)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
