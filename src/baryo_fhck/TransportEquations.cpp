@@ -123,6 +123,8 @@ void TransportEquations::BuildKernelInterpolation()
   K4FHb = InterpolateKernel("K4FH_b", true);
   Rbarf = InterpolateKernel("Rbar_f", false);
   Rbarb = InterpolateKernel("Rbar_b", false);
+
+  // Pad first element with empty spline
   Qlf.push_back(tk::spline());
   Q8ol.push_back(tk::spline());
   Q9ol.push_back(tk::spline());
