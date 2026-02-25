@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('solvde_8h_source.html',''); initResiza
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      }</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      errsave = err;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      ysave = y;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      ysave   = y;</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      <span class="keywordflow">if</span> (err &lt; conv and it &gt; 3) <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    }</div>
@@ -218,8 +218,8 @@ $(document).ready(function(){initNavTree('solvde_8h_source.html',''); initResiza
 <div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classRelaxOde.html#abb4d299f2f2db4f24cbf9b05f9ed3d93">  121</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classRelaxOde.html#abb4d299f2f2db4f24cbf9b05f9ed3d93">pinvs</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> ie1, <span class="keywordtype">int</span> ie2, <span class="keyword">const</span> <span class="keywordtype">int</span> je1, <span class="keyword">const</span> <span class="keywordtype">int</span> jc1, <span class="keyword">const</span> <span class="keywordtype">int</span> k)</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">int</span> jpiv, jp, jcoff, irow, ipiv, icoff;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">int</span> je2;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">int</span> jpiv = 0, jp = 0, jcoff = 0, irow = 0, ipiv = 0, icoff = 0;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">int</span> je2 = 0;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">double</span> pivinv, piv, big;</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> iesize = ie2 - ie1;</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <a class="code hl_class" href="classVecInt.html">VecInt</a> indxr(iesize);</div>
