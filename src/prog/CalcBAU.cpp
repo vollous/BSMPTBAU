@@ -302,6 +302,9 @@ try
 
           transportequation.SolveTransportEquation();
 
+          output_contents.at(count - 1)
+              << transportequation.transportmodel->Lw << sep;
+
           for (const auto &eta : transportequation.BAUeta)
             output_contents.at(count - 1) << eta.value_or(EmptyValue) << sep;
         }
