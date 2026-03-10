@@ -127,12 +127,12 @@ var NAVTREEINDEX =
 "NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a",
 "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#afa96bd15fdb3da9ded73bd7e5ab377a2",
 "classBSMPT_1_1BounceActionInt.html#ad2fe0a80ad1f5a2184fdf902d66a0859",
-"classBSMPT_1_1Class__Potential__Origin.html#a105701013dedcfb38d44c4dda3c0f1e0",
-"classBSMPT_1_1Class__Potential__Origin.html#ac39b156f75e04c068784a4c42333e592",
-"classBSMPT_1_1Models_1_1Class__Potential__R2HDM.html#a6c5a58e49bd243cd6dd6f7644ff9cfff",
-"functions_vars_f.html",
-"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a12d93704b0b2fa87cab15aeb2d320b78",
-"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html"
+"classBSMPT_1_1Class__Potential__Origin.html#a15c0f9b10a492e2aa859a70a8dcb26fc",
+"classBSMPT_1_1Class__Potential__Origin.html#ac90939e82b9d995bd0f6161da2dd89ab",
+"classBSMPT_1_1Models_1_1Class__Potential__R2HDM.html#ab120d58e5f800b5da5a436cd9a32c03c",
+"functions_vars_o.html",
+"structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a5341b54ccae60a12eb5207b2adb43af1",
+"structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a41d42f49fd3980c02a2d8ff6be701d89"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
