@@ -143,7 +143,7 @@ public:
    * @brief Wall thickness
    *
    */
-  double Lw;
+  double Lw = -1;
 
   /**
    * @brief Bubble wall velocity
