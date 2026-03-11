@@ -745,62 +745,53 @@ void TransportEquations::CalculateBAU()
     u.push_back(ui);
     muB.push_back(r); // integrand
   }
-  // Step 1: Set up GSL interpolation
+
   size_t n = u.size();
-  const gsl_interp_type *interp_type =
-      gsl_interp_cspline; // Cubic spline interpolation
-  gsl_interp *interp = gsl_interp_alloc(interp_type, n);
-  gsl_interp_init(interp, u.data(), muB.data(), n);
-  gsl_interp_accel *acc = gsl_interp_accel_alloc();
-  // Step 2: Integrate the interpolated function
   double a = u.front(); // Lower bound of integration
   double b = u.back();  // Upper bound of integration
-  double result, error;
-  // Struct to hold parameters
-  struct Params
-  {
-    gsl_interp *interp;
-    gsl_interp_accel *acc;
-    const std::vector<double> *u;
-    const std::vector<double> *muB;
-  } params                             = {interp, acc, &u, &muB};
-  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
-  gsl_function F;
-  F.function = [](double x, void *p) -> double
-  {
-    auto *data = static_cast<Params *>(p);
-    return gsl_interp_eval(
-        data->interp, data->u->data(), data->muB->data(), x, data->acc);
-  };
-  F.params = &params;
-  gsl_integration_qags(
-      &F, a, b, 1e-30, 1e-30, 1000, workspace, &result, &error);
-  // Cleanup
-  gsl_interp_free(interp);
-  gsl_interp_accel_free(acc);
-  gsl_integration_workspace_free(workspace);
+
+  // linear approximation
+  gsl_interp_accel *acc_l = gsl_interp_accel_alloc();
+  gsl_spline *spline_l    = gsl_spline_alloc(gsl_interp_linear, n);
+  gsl_spline_init(spline_l, u.data(), muB.data(), n);
+  double result_l = gsl_spline_eval_integ(spline_l, a, b, acc_l);
+  gsl_spline_free(spline_l);
+  gsl_interp_accel_free(acc_l);
+
+  // cubic spline approximation
+  gsl_interp_accel *acc_c = gsl_interp_accel_alloc();
+  gsl_spline *spline_c    = gsl_spline_alloc(gsl_interp_cspline, n);
+  gsl_spline_init(spline_c, u.data(), muB.data(), n);
+  double result_c = gsl_spline_eval_integ(spline_c, a, b, acc_c);
+  gsl_spline_free(spline_c);
+  gsl_interp_accel_free(acc_c);
+
+  double error = abs(result_c - result_l);
+
   // Results
   const double prefactor = 405. * Gsph /
                            (4 * M_PI * M_PI * transportmodel->vwall * gamwall *
                             106.75 * Tstar); // TODO Fix gstas
 
-  result *= prefactor;
+  result_c *= prefactor;
   error *= prefactor;
-  // Save the result
-  bau = result;
+
   // Step 3: Output the result
   stringstream ss;
-  ss << "eta = " << result << " with error " << error << std::endl;
+  ss << "eta = " << result_c << " with error " << error << std::endl;
 
-  double unc = abs(error / result);
+  double unc = abs(error / result_c);
 
   if (unc > 0.01)
   {
     ss << "Calculation failed!\t" << unc << "\n";
-    result = NAN;
+    result_c = NAN;
   }
 
-  ss << "eta/eta_obs = " << result / (8.7e-11) << std::endl;
+  // Save the result
+  bau = result_c;
+
+  ss << "eta/eta_obs = " << result_c / (8.7e-11) << std::endl;
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
