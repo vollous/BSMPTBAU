@@ -112,10 +112,10 @@ void VacuumProfile::CalculateProfile()
   {
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
-    std::stringstream ss;
-    ss << "[Relaxation Vacuum profile] it = " << it
-       << ". Error = " << solvde.err;
-    Logger::Write(LoggingLevel::VacuumProfile, ss.str());
+    std::stringstream sss;
+    sss << "[Relaxation Vacuum profile] it = " << it
+        << ". Error = " << solvde.err;
+    Logger::Write(LoggingLevel::VacuumProfile, sss.str());
     if (solvde.err < MinError)
     {
       MinError  = solvde.err;
