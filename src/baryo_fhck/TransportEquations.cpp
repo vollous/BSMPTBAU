@@ -685,20 +685,45 @@ void TransportEquations::SolveTransportEquation()
 
     int NB = nEqs / 2;
 
-    RelaxOde solvde(itmax, conv, slowc, scalv, indexv, NB, Solution, *this);
+    size_t it;
+    double MinError    = 1.e100;
+    double MaxError    = 1e-100;
+    size_t NotBetter   = 0;
+    auto Best_Solution = Solution;
 
-    std::string str = "u.tsv";
-    std::ofstream res(str);
-
-    for (size_t k = 0; k < uList.size(); k++)
+    for (it = 0; it < itmax; it++)
     {
-      res << uList[k];
-      for (size_t i = 0; i < nEqs; i++)
-        res << "\t" << Solution[i][k];
-      res << "\n";
+      if (NotBetter >= NotBetterThreshold) break;
+      RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
+      stringstream ss;
+      ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
+      Logger::Write(LoggingLevel::FHCK, ss.str());
+
+      MaxError = std::max(MaxError, solvde.err);
+
+      if (solvde.err < MinError)
+      {
+        MinError      = solvde.err;
+        Best_Solution = Solution;
+        NotBetter     = 0;
+      }
+
+      // Early exit in case error gets much smaller than the worst case
+      if (solvde.err / MaxError < 1e-10) break;
+
+      NotBetter++;
     }
 
-    res.close();
+    if (it == NotBetter)
+    {
+      Logger::Write(
+          LoggingLevel::FHCK,
+          "Relaxation transport equations failed! [did not converge once]");
+      BAUeta.at(ell) = NAN;
+      return;
+    }
+
+    Solution = Best_Solution;
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
