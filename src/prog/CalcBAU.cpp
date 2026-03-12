@@ -34,7 +34,7 @@ struct CLIOptions
   BSMPT::ModelID::ModelIDs Model{ModelID::ModelIDs::NotSet};
   int firstline{0}, lastline{0};
   double templow{0}, temphigh{300};
-  double UserDefined_vwall     = 0.95;
+  double UserDefined_vwall     = 0.1;
   int UserDefined_PNLO_scaling = 1;
   double UserDefined_epsturb   = 0.1;
   int MaxPathIntegrations      = 7;
