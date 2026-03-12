@@ -11,19 +11,7 @@
 /**
  * @file minimum tracer class
  */
-#include "Eigen/Eigenvalues"                   // Eigenvalues utility
-#include <BSMPT/minimizer/Minimizer.h>         // for Minimizer
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
-#include <BSMPT/utility/Logger.h>              // for Logger Class
-#include <BSMPT/utility/asciiplotter/asciiplotter.h>
-#include <BSMPT/utility/utility.h>
-#include <Eigen/Dense> // Eigenvalues matrix
-#include <chrono>
-#include <cmath>    // std::pow
-#include <memory>   // for shared_ptr
-#include <optional> // std::optional
-#include <stdlib.h> // std::strtol
-
 namespace BSMPT
 {
 
@@ -131,7 +119,8 @@ enum class StatusCrit
   Success,
   FalseLower,
   TrueLower,
-  Failure
+  Failure,
+  CoincideSinglePoint
 };
 /**
  * @brief Map to convert StatusCritToString to strings
@@ -142,6 +131,7 @@ const std::unordered_map<StatusCrit, std::string> StatusCritToString{
     {StatusCrit::Success, "success"},
     {StatusCrit::FalseLower, "false_lower"},
     {StatusCrit::TrueLower, "true_lower"},
+    {StatusCrit::CoincideSinglePoint, "coincide_single_point"},
     {StatusCrit::Failure, "failure"}};
 /**
  * @brief Possible status for the approximated nucleation, exact nucleation,
@@ -195,6 +185,28 @@ enum class TransitionTemperature
   Nucleation,
   Percolation,
   Completion
+};
+/**
+ * @brief Available multistep modes
+ *
+ * - Default - default
+ *
+ * - OneStep - 0
+ *
+ * - EdgeCoverage - 1
+ *
+ * - CompleteCoverage - 2
+ *
+ * - Auto - auto
+ *
+ */
+enum class MultiStepPTMode
+{
+  Default,          // default
+  OneStep,          // mode 0
+  EdgeCoverage,     // mode 1
+  CompleteCoverage, // mode 2
+  Auto              // mode 1 -> mode 2
 };
 
 /**
@@ -285,17 +297,17 @@ std::ostream &operator<<(std::ostream &os, const StatusTemperature &status);
 struct user_input
 {
   std::shared_ptr<Class_Potential_Origin> modelPointer;
-  double T_low            = 0;
-  double T_high           = 300;
-  double vwall            = 0.95;
-  double perc_prbl        = 0.71;
-  double compl_prbl       = 0.01;
-  double epsturb          = 0.1;
-  int maxpathintegrations = 7;
-  int multistepmode       = -1;
-  int num_points          = 10;
-  int ewsr_check          = 0;
-  int nlo_check           = 1;
+  double T_low                  = 0;
+  double T_high                 = 300;
+  double vwall                  = 0.95;
+  double perc_prbl              = 0.71;
+  double compl_prbl             = 0.01;
+  double epsturb                = 0.1;
+  int maxpathintegrations       = 7;
+  MultiStepPTMode multistepmode = MultiStepPTMode::Default;
+  int num_points                = 10;
+  int ewsr_check                = 0;
+  int nlo_check                 = 1;
 
   int which_minimizer     = Minimizer::WhichMinimizerDefault;
   bool use_multithreading = false;
@@ -653,24 +665,6 @@ Create1DimGrid(const std::vector<double> &min_start,
                const int npoints = 100);
 
 /**
- * Returns true if two values are the same given some relative precision
- */
-bool almost_the_same(const double &a,
-                     const double &b,
-                     const double &rel_precision = 0.01,
-                     const double &num_zero      = 1e-10);
-
-/**
- * Returns true if two vectors are the element-wise the same given some relative
- * precision
- */
-bool almost_the_same(const std::vector<double> &a,
-                     const std::vector<double> &b,
-                     const bool &allow_for_sign_flip = false,
-                     const double &rel_precision     = 0.01,
-                     const double &num_zero          = 1e-10);
-
-/**
  * @brief Phase object
  *
  */
@@ -872,6 +866,20 @@ struct Vacuum
   int num_points = 0;
 
   /**
+   * @brief Minimum tracing mode
+   *
+   */
+  MultiStepPTMode UseMultiStepPTMode = MultiStepPTMode::Default;
+
+  /**
+   * @brief if true only tracing and no identification of all possible
+   * coexisting phase pairs and their critical temperatures is done, if false
+   * identification and calculation of Tc is done
+   *
+   */
+  bool do_only_tracing = false;
+
+  /**
    * @brief vacuum status code = success, no_coverage, no_glob_min_coverage
    */
   StatusTracing status_vacuum = StatusTracing::NotSet;
@@ -912,11 +920,10 @@ struct Vacuum
    * @param T_highIn Highest temperature, 300 GeV or set in input file
    * @param MinTracerIn  MinTracer object
    * @param modelPointerIn Model pointer
-   * @param UseMultiStepPTModeIn choose multi-step PT modes: default (= -1),
-   * 0, 1, 2, auto (= 3)
+   * @param UseMultiStepPTModeIn choose multi-step PT modes
    * @param num_pointsIn number of equally-spaced intermediate points to check
    * for new phases
-   * @param do_only_tracing if true only tracing and no identification of all
+   * @param do_only_tracingIn if true only tracing and no identification of all
    * possible coexisting phase pairs and their critical temperatures is done, if
    * false identification and calculation of Tc is done
    */
@@ -924,9 +931,9 @@ struct Vacuum
          const double &T_highIn,
          std::shared_ptr<MinimumTracer> &MinTracerIn,
          std::shared_ptr<Class_Potential_Origin> &modelPointerIn,
-         const int &UseMultiStepPTModeIn,
-         const int &num_pointsIn     = 10,
-         const bool &do_only_tracing = false);
+         const MultiStepPTMode &UseMultiStepPTModeIn,
+         const int &num_pointsIn       = 10,
+         const bool &do_only_tracingIn = false);
 
   /**
    * @brief MultiStepPTTracer traces all phases between T_high and T_low
@@ -958,10 +965,9 @@ struct Vacuum
   /**
    * @brief setCoexRegion Calculates all coexisting phase regions with phase
    * pairs included from the phase vector
-   * @param UseMultiStepPTMode int to distinguish multistep PT mode, for all
-   * modes except mode 0 we try to patch up holes in tracing
+   * @param MultiStepPTMode MultiStepPTMode to distinguish multistep PT mode
    */
-  void setCoexRegion(const int &UseMultiStepPTMode);
+  void setCoexRegion(const MultiStepPTMode &MultiStepPTMode);
 
   /**
    * @brief Adds a phase to the phase list
@@ -971,6 +977,12 @@ struct Vacuum
   void addPhase(Phase &phase);
 
   /**
+   * @brief Orders the phases
+   *
+   */
+  void orderPhases();
+
+  /**
    * @brief This function checks if the minimum already exists in one of the
    * phases in the phase list
    * @param minimum to be checked
@@ -978,6 +990,16 @@ struct Vacuum
    * phase.
    */
   int MinimumFoundAlready(const Minimum &minimum);
+
+  /**
+   * @brief If the global minimizer, incorrectly, finds a high temperature
+   * non-global minimum and but then another phase turns out to be the minimum
+   * at high temperature will break our logic. This is a safety check to ensure
+   * that at high temperature \f$ T_{high} \f$ the Universe is on the global
+   * minimum.
+   *
+   */
+  void EnsureHighTemperatureGlobalMininum();
 
   /**
    * @brief MultiStepPTMode0 single-step PT mode
