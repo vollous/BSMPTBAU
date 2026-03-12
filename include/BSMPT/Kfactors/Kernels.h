@@ -1,7 +1,6 @@
 #pragma once
 
 #include <BSMPT/utility/NumericalIntegration.h>
-#include <cmath>
 #include <iostream>
 #include <memory>
 

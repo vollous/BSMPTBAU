@@ -1,5 +1,5 @@
-#include <BSMPT/Kfactors/Kernels.h>
 #define _USE_MATH_DEFINES
+#include <BSMPT/Kfactors/Kernels.h>
 #include <cmath>
 
 namespace BSMPT
