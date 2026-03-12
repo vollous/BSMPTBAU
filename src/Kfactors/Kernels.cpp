@@ -1,4 +1,6 @@
 #include <BSMPT/Kfactors/Kernels.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 namespace BSMPT
 {
