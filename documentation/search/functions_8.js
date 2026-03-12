@@ -2,7 +2,7 @@ var searchData=
 [
   ['ii_0',['II',['../namespaceBSMPT.html#a3f7a6e0bc281f72955810d5e61ef2a26',1,'BSMPT']]],
   ['init_1',['init',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#aefb21909b1cda96a8d87a63b56ae6ffd',1,'BSMPT::Baryo::GSL_integration_mubl']]],
-  ['initialize_2',['initialize',['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957',1,'BSMPT::Baryo::FHCK::TransportModel::Initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()']]],
+  ['initialize_2',['initialize',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()'],['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957',1,'BSMPT::Baryo::FHCK::TransportModel::Initialize()']]],
   ['initializedvspline_3',['InitializedVSpline',['../classBSMPT_1_1BounceSolution.html#a21218a67011da29030772b801beb44cb',1,'BSMPT::BounceSolution']]],
   ['initializegstarprofile_4',['InitializeGstarProfile',['../classBSMPT_1_1BounceSolution.html#aa80b67ffde0490943c1f728247a65e83',1,'BSMPT::BounceSolution']]],
   ['initializek1bosongrid_5',['initializeK1bosonGrid',['../KfactorsinterpolatedGSL_8h.html#ac089c4eee50d85c1e9dcabf297941686',1,'BSMPT::Kfactors']]],
@@ -16,7 +16,7 @@ var searchData=
   ['initializek8fermiongrid_13',['initializeK8fermionGrid',['../KfactorsinterpolatedGSL_8h.html#a912cf90cf68d131f391e628afae2f971',1,'BSMPT::Kfactors']]],
   ['initializek9fermiongrid_14',['initializeK9fermionGrid',['../KfactorsinterpolatedGSL_8h.html#a258fdb170bf089d40ac47ef97ba83ede',1,'BSMPT::Kfactors']]],
   ['initializemoment_15',['InitializeMoment',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a714d12472167ba662ed81643be70c1c1',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['initmodel_16',['initmodel',['../classBSMPT_1_1Class__Potential__Origin.html#a15c0f9b10a492e2aa859a70a8dcb26fc',1,'BSMPT::Class_Potential_Origin::initModel(const std::vector&lt; double &gt; &amp;par)'],['../classBSMPT_1_1Class__Potential__Origin.html#ae68f6352df1661e94331c17e156896f0',1,'BSMPT::Class_Potential_Origin::initModel(std::string linestr)']]],
+  ['initmodel_16',['initmodel',['../classBSMPT_1_1Class__Potential__Origin.html#aee31cec7bf55091594c7156f93d288f9',1,'BSMPT::Class_Potential_Origin::initModel(const std::vector&lt; double &gt; &amp;par, const bool &amp;adjust_rot_matrix=true)'],['../classBSMPT_1_1Class__Potential__Origin.html#ae68f6352df1661e94331c17e156896f0',1,'BSMPT::Class_Potential_Origin::initModel(std::string linestr)']]],
   ['initvectors_17',['initVectors',['../classBSMPT_1_1Class__Potential__Origin.html#a87be49303f2caf58b5dcf89cc934a30a',1,'BSMPT::Class_Potential_Origin']]],
   ['insertblockdiagonal_18',['InsertBlockDiagonal',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a3b34028093eb0d010f1b80affb857892',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['integrate_5fmubl_19',['Integrate_mubl',['../transport__equations_8h.html#a608185628c16ac3b2726c66fcc34b254',1,'BSMPT::Baryo']]],

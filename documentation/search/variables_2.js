@@ -49,7 +49,7 @@ var searchData=
   ['calc_5fgam_5finp_46',['Calc_Gam_inp',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#acdfb18e9ad4b211f52212b20b7045fda',1,'BSMPT::Baryo::CalculateEtaInterface']]],
   ['calc_5fkappa_5finp_47',['Calc_kappa_inp',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#aaa07d733e4326c89f304f56e8cb0264d',1,'BSMPT::Baryo::CalculateEtaInterface']]],
   ['calc_5fscp_5finp_48',['Calc_Scp_inp',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#ae9c1d54baf3afe5de4c2536e62348a20',1,'BSMPT::Baryo::CalculateEtaInterface']]],
-  ['calccouplingsdone_49',['CalcCouplingsdone',['../classBSMPT_1_1Class__Potential__Origin.html#a762eed521dae06c4d5dae99dc9c6f3bc',1,'BSMPT::Class_Potential_Origin']]],
+  ['calccouplingsdone_49',['CalcCouplingsDone',['../classBSMPT_1_1Class__Potential__Origin.html#a86ecc4c8022f362e877789228c6f00d9',1,'BSMPT::Class_Potential_Origin']]],
   ['calculatedtriplecopulings_50',['CalculatedTripleCopulings',['../classBSMPT_1_1Class__Potential__Origin.html#a519a313f4beca7c3c36dfd265f2441de',1,'BSMPT::Class_Potential_Origin']]],
   ['calculater_51',['Calculater',['../classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator.html#a44dd86c38fafe25f6eb03144aea4d24b',1,'BSMPT::ThermalFunctions::ThermalCoefficientCalculator']]],
   ['coexphase_52',['CoexPhase',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a469b75c4349879c7948f7126e25d9019',1,'BSMPT::Baryo::FHCK::TransportModel']]],

@@ -1,5 +1,8 @@
 var utility_8cpp =
 [
+    [ "almost_the_same", "utility_8cpp.html#a3c3b59dc7c02a46fe99213740fbabaac", null ],
+    [ "almost_the_same", "utility_8cpp.html#a3064ebf1c186332a80b4523704699dce", null ],
+    [ "almost_the_same", "utility_8cpp.html#a48a65cfaa309225724885338185f355c", null ],
     [ "Delta", "utility_8cpp.html#af120c3a683e0fa86053a82db2a79a54b", null ],
     [ "EllipIntSecond", "utility_8cpp.html#adcb7a745c3dcbb7dac3319dc94f792f1", null ],
     [ "factorial", "utility_8cpp.html#a720b2c4437c3b97f3d6fd4c1466dd201", null ],
