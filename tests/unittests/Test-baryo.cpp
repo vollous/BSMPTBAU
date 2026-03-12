@@ -209,7 +209,8 @@ TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
 
   std::shared_ptr<MinimumTracer> MinTracer(
       new MinimumTracer(modelPointer, Minimizer::WhichMinimizerDefault, false));
-  Vacuum vac(0, 300, MinTracer, modelPointer, 1, 10, true);
+  Vacuum vac(
+      0, 300, MinTracer, modelPointer, MultiStepPTMode::Default, 10, true);
   vac.setCoexPhases();
 
   std::shared_ptr<BSMPT::CoexPhases> coex =
