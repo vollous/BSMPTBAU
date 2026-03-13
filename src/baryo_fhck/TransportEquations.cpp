@@ -77,7 +77,8 @@ tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
   double x, x_save, vw, y;
   std::vector<double> vw_vals, y_vals, x_vals, res_vals;
 
-  std::string filename = "kernels/" + kernel_name + ".dat";
+  std::string filename =
+      "include/BSMPT/baryo_fhck/kernels/" + kernel_name + ".dat";
   std::ifstream kernel(filename);
   if (is_1D)
   {
