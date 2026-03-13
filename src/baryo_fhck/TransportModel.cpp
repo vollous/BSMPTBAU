@@ -1,5 +1,5 @@
 #include <BSMPT/baryo_fhck/TransportModel.h>
-
+#include <BSMPT/utility/asciiplotter/asciiplotter.h>
 namespace BSMPT
 {
 namespace Baryo
@@ -24,7 +24,7 @@ TransportModel::TransportModel(
   VevProfile       = VevProfile_in;
   truncationscheme = truncationscheme_in;
 
-  stringstream ss;
+  std::stringstream ss;
   ss << "----------------- Baryon Asymmetry Calculation -----------------\n";
   ss << "TrueVacuum = " << TrueVacuum << "\n";
   ss << "FalseVacuum = " << FalseVacuum << "\n";
