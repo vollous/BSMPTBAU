@@ -23,6 +23,7 @@ target_link_libraries(
          TransitionTracer
          GW
          VacuumProfile)
-# target_compile_options(BaryoFHCK PUBLIC ${OpenMP_CXX_FLAGS})
+
+target_compile_definitions(BaryoFHCK PRIVATE KERNEL_DIR="${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck/kernels")
 target_include_directories(BaryoFHCK PUBLIC ${BSMPT_SOURCE_DIR}/include)
 target_compile_features(BaryoFHCK PUBLIC cxx_std_17)
