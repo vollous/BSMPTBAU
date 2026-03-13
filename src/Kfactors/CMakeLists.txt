@@ -6,7 +6,8 @@
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/Kfactors")
 set(header
     ${header_path}/Kernels.h
-    ${header_path}/Kfactors.h ${header_path}/KfactorsinterpolatedGSL.h
+    ${header_path}/Kfactors.h
+    ${header_path}/KfactorsinterpolatedGSL.h
     ${header_path}/Kfactors_grid/KtildeInterpolation.h
     ${header_path}/Kfactors_grid/Kfunctions_grid.h)
 

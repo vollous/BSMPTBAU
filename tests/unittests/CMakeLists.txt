@@ -22,8 +22,7 @@ target_link_libraries(
           TransitionTracer
           GW
           BaryoFHCK
-          VacuumProfile
-          )
+          VacuumProfile)
 
 if(BSMPTBuildExecutables)
   target_sources(GenericTests PRIVATE CheckExecutables.cpp)
