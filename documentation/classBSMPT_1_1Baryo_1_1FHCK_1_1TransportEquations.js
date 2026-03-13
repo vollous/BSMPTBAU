@@ -34,6 +34,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "nBosons", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a09061573bf19438698f8740a71f5ddb9", null ],
     [ "nEqs", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a4fcf47cf52552d7475d9f0b63c56d238", null ],
     [ "nFermions", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5b938a582a7ce0f5c06816f6ee86a8a5", null ],
+    [ "NotBetterThreshold", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7f7029f1b05e6685aa54559e43fc82fe", null ],
     [ "nParticles", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae4047d864a40c406b83be6458690a89e", null ],
     [ "NumberOfSteps", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6650cb0a9ad4a9b42bd330734a2b7af2", null ],
     [ "Rbarb", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a6d38ba3136fdca2cd0d1df28b9096145", null ],

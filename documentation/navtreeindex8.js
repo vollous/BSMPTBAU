@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"namespaceBSMPT.html#add310b4cfe7bfdb761385657e4875e1c":[2,0,0,60],
 "namespaceBSMPT.html#ae4aaa2e7c075b89bbcf138eeece28cc9":[2,0,0,47],
 "namespaceBSMPT.html#ae51e8d0d5aa187735a5b844739f42261":[2,0,0,75],
 "namespaceBSMPT.html#af0162b26708b2f2f0866d346470d337c":[2,0,0,71],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "structBSMPT_1_1Vacuum.html#a72c406d5caf4afe2b645b67e4721dc3f":[2,0,0,23,18],
 "structBSMPT_1_1Vacuum.html#a72c406d5caf4afe2b645b67e4721dc3f":[3,0,0,30,18],
 "structBSMPT_1_1Vacuum.html#a8076f89c163f88adc27f3592e502d1f2":[2,0,0,23,8],
-"structBSMPT_1_1Vacuum.html#a8076f89c163f88adc27f3592e502d1f2":[3,0,0,30,8],
-"structBSMPT_1_1Vacuum.html#aab1f7b1cdca940d8d62ef7d3fe8e926a":[2,0,0,23,11]
+"structBSMPT_1_1Vacuum.html#a8076f89c163f88adc27f3592e502d1f2":[3,0,0,30,8]
 };

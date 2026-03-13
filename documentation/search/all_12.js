@@ -41,7 +41,7 @@ var searchData=
   ['normalforce_38',['NormalForce',['../classBSMPT_1_1BounceActionInt.html#a08fff8f4f6ab03f6186d75ab5c6f9971',1,'BSMPT::BounceActionInt']]],
   ['normalforcebernstein_39',['NormalForceBernstein',['../classBSMPT_1_1BounceActionInt.html#af7f81b5c6cb4abb0e6e37246125ab436',1,'BSMPT::BounceActionInt']]],
   ['normalvector_40',['normalvector',['../structBSMPT_1_1Minimizer_1_1PointerContainerMinPlane.html#a92b1c0f38cd8f27bb0a25ae88e2df562',1,'BSMPT::Minimizer::PointerContainerMinPlane']]],
-  ['notbetterthreshold_41',['NotBetterThreshold',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aecb83d1d5951bca06af688799ed407b3',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
+  ['notbetterthreshold_41',['notbetterthreshold',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7f7029f1b05e6685aa54559e43fc82fe',1,'BSMPT::Baryo::FHCK::TransportEquations::NotBetterThreshold'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aecb83d1d5951bca06af688799ed407b3',1,'BSMPT::VacuumProfileNS::VacuumProfile::NotBetterThreshold']]],
   ['npar_42',['nPar',['../classBSMPT_1_1Class__Potential__Origin.html#a3328204b234c5be406947aaad568867e',1,'BSMPT::Class_Potential_Origin']]],
   ['nparct_43',['nParCT',['../classBSMPT_1_1Class__Potential__Origin.html#a50f37c7eff1553cf533e96169a2cc6d1',1,'BSMPT::Class_Potential_Origin']]],
   ['nparticles_44',['nParticles',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ae4047d864a40c406b83be6458690a89e',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
