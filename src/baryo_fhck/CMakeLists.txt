@@ -24,6 +24,8 @@ target_link_libraries(
          GW
          VacuumProfile)
 
-target_compile_definitions(BaryoFHCK PRIVATE KERNEL_DIR="${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck/kernels")
+target_compile_definitions(
+  BaryoFHCK
+  PRIVATE KERNEL_DIR="${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck/kernels")
 target_include_directories(BaryoFHCK PUBLIC ${BSMPT_SOURCE_DIR}/include)
 target_compile_features(BaryoFHCK PUBLIC cxx_std_17)
