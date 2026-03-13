@@ -175,8 +175,6 @@ TEST_CASE("Test center path", "[vacuumprofile]")
   using namespace Baryo::FHCK;
   using namespace VacuumProfileNS;
 
-  SetLogger({"--logginglevel::complete=true"});
-
   size_t dim                      = 1;
   std::vector<double> TrueVacuum  = {-1};
   std::vector<double> FalseVacuum = {1};
@@ -268,8 +266,6 @@ TEST_CASE("Test not enough iterations", "[vacuumprofile]")
   using namespace BSMPT;
   using namespace Baryo::FHCK;
   using namespace VacuumProfileNS;
-
-  SetLogger({"--logginglevel::complete=true"});
 
   size_t dim                      = 1;
   std::vector<double> TrueVacuum  = {-1};

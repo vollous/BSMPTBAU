@@ -86,7 +86,6 @@ void VacuumProfile::CalculateProfile()
   size_t it;
   double conv  = 1e-10;
   double slowc = 1e-1;
-  mode         = ProfileSolverMode::Deriv;
 
   VecInt indexv = Calcindexv();
   std::stringstream ss;
