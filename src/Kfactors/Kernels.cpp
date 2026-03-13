@@ -160,7 +160,7 @@ double Kernel::operator()(const KernelType Kern,
   break;
   case KernelType::Rb:
   {
-    N0Int integrand1(vw, gamw, statistic, x);
+    N0Int integrand1(statistic, x);
     const double res1 =
         4. * M_PI * adap_gauss_kronrod_15(integrand1, 0., 1., KERNELPRECISION);
     RbarInt integrand2(vw, gamw, statistic, x);

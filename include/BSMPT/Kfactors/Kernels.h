@@ -302,27 +302,16 @@ private:
    * the integral
    *
    */
-  const double vw, gamw, s, x;
+  const double s, x;
 
 public:
   /**
    * @brief Construct a new N0 Kernel Integrand object
    *
-   * @param vw_in Wall velocity
-   * @param gamw_in Gamma factor of the wall
    * @param vw_in Spin statistic of particle
    * @param x_in x = m / T
    */
-  N0Int(const double vw_in,
-        const double gamw_in,
-        const double s_in,
-        const double x_in)
-      : vw(vw_in)
-      , gamw(gamw_in)
-      , s(s_in)
-      , x(x_in)
-  {
-  }
+  N0Int(const double s_in, const double x_in) : s(s_in), x(x_in) {}
 
   /**
    * @brief Evaluate the integrand depending on u between [0, 1].
