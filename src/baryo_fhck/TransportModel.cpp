@@ -174,8 +174,6 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
                                        tk::spline::not_a_knot,
                                        0));
 
-  AsciiPlotter Plot("Top mass", 120, ceil(120 / 3.));
-
   size_t i_left = 0, i_right = zList.size() - 1;
 
   double max_dmdz = -1;
@@ -220,12 +218,15 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
     ImPlot.push_back(MassesImag.at(ind)[i]);
   }
 
-  Plot.addPlot(zListPlot, RePlot, "Re(mt)", '*');
-  Plot.addPlot(zListPlot, ImPlot, "Im(mt)", '.');
+  AsciiPlotter PlotRe("Re(Top mass)", 120, ceil(120 / 3.));
+  PlotRe.addPlot(zListPlot, RePlot, "", '*');
 
-  Plot.legend();
+  AsciiPlotter PlotIm("Im(Top mass)", 120, ceil(120 / 3.));
+  PlotIm.addPlot(zListPlot, ImPlot, "", '*');
+
   std::stringstream ss;
-  Plot.show(ss);
+  PlotRe.show(ss);
+  PlotIm.show(ss);
   Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
