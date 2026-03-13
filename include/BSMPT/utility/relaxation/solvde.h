@@ -8,14 +8,13 @@
 class RelaxOde
 {
 private:
-  MatDoub &y, ysave;
+  MatDoub &y;
   const int ne, nb1, nb2, nenb1, ne2, m;
   VecInt kmax;
   VecDoub ermax;
   Mat3DDoub c;
   MatDoub s;
   bool VERBOSE = false;
-  double errsave;
 
 public:
   double err;
@@ -29,7 +28,6 @@ public:
            MatDoub &yy,
            Difeq &difeq)
       : y(yy)
-      , ysave(y)
       , ne(y.rows())
       , nb1(nbb)
       , nb2(ne - nb1)
@@ -95,15 +93,7 @@ public:
       if (VERBOSE) std::cout << std::setw(6) << it;
       if (VERBOSE) std::cout << std::setw(13) << err;
       if (VERBOSE) std::cout << std::setw(12) << fac << std::endl;
-      if (it > 1 and errsave < err)
-      {
-        y = ysave;
-        return;
-      }
-      errsave = err;
-      ysave   = y;
-
-      if (err < conv and it > 3) return;
+      (void)conv;
     }
   }
 

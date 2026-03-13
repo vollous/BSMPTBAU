@@ -71,6 +71,12 @@ public:
   std::vector<size_t> moments;
 
   /**
+   * @brief Number of times we let the solution relax without getting better.
+   *
+   */
+  size_t NotBetterThreshold = 3;
+
+  /**
    * @brief Temp var to store \f$ \eta \f$ at moment
    *
    */
