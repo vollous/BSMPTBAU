@@ -1,5 +1,6 @@
 #include <BSMPT/baryo_fhck/TransportEquations.h>
-
+#include <BSMPT/utility/asciiplotter/asciiplotter.h>
+#include <sstream>
 namespace BSMPT
 {
 
@@ -16,7 +17,7 @@ TransportEquations::TransportEquations(
     , moments(moments_in)
     , BAUeta(moments.size())
 {
-  stringstream ss;
+  std::stringstream ss;
   ss << "Moments to calculate = " << moments;
   Logger::Write(LoggingLevel::FHCK, ss.str());
   Initialize();
@@ -510,7 +511,7 @@ void TransportEquations::CheckBoundary()
 {
   double STildeLength(0);
   size_t NumberOfNonDecayingModes(0);
-  stringstream ss;
+  std::stringstream ss;
 
   Eigen::MatrixXcd EigenMtildeM(nEqs, nEqs);
   Eigen::MatrixXcd EigenMtildeP(nEqs, nEqs);
@@ -759,9 +760,10 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
-    r *= min(1.,
-             1.7 * Tstar / Gsph *
-                 exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
+    r *= std::min(
+        1.,
+        1.7 * Tstar / Gsph *
+            exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * transportmodel->vwall *
               gamwall));    // exp(-45 G_sph |z| / 4 vw gammaw)
