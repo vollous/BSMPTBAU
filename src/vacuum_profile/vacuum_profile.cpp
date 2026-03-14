@@ -86,7 +86,6 @@ void VacuumProfile::CalculateProfile()
   size_t it;
   double conv  = 1e-10;
   double slowc = 1e-1;
-  mode         = ProfileSolverMode::Deriv;
 
   VecInt indexv = Calcindexv();
   std::stringstream ss;
@@ -141,8 +140,9 @@ void VacuumProfile::CalculateProfile()
       // Generate new path. Keep roughly same number of points
       CreatePath(ceil(z.size() * LwToSolve / (LwToSolve - 10)));
 
-      ss << "Vacuum profile small domain (dphi = " << sqrt(dphi) / (2 * dim)
-         << "), increase LwToSolve to " << LwToSolve;
+      ss << "\n\033[31mVacuum profile small domain (dphi = "
+         << sqrt(dphi) / (2 * dim) << "), increase LwToSolve to " << LwToSolve
+         << "\033[0m";
       Logger::Write(LoggingLevel::VacuumProfile, ss.str());
       CalculateProfile();
       return;

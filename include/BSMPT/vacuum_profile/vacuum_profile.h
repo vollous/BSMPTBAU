@@ -37,7 +37,7 @@ struct VacuumProfile
    * - Deriv - Fixes \frac{d\vec\phi}{dz}(|z| \to \infty) = 0
    *
    */
-  ProfileSolverMode mode = ProfileSolverMode::Deriv;
+  ProfileSolverMode mode = ProfileSolverMode::Field;
 
   /**
    * @brief State of the vacuum profile
@@ -81,7 +81,7 @@ struct VacuumProfile
    * large, increases the integration domain.
    *
    */
-  const double dphiTreshold = 1.e-10;
+  const double dphiTreshold = 1.e-3;
 
   /**
    * @brief True and False Vacuum

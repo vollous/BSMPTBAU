@@ -17,8 +17,14 @@ set(header
     ${header_path}/relaxation/difeq.h
     ${header_path}/relaxation/solvde.h)
 
-set(src utility.cpp Logger.cpp parser.cpp const_velocity_spline.cpp data_structures.cpp
-        NumericalDerivatives.cpp ModelIDs.cpp)
+set(src
+    utility.cpp
+    Logger.cpp
+    parser.cpp
+    const_velocity_spline.cpp
+    data_structures.cpp
+    NumericalDerivatives.cpp
+    ModelIDs.cpp)
 add_library(Utility ${header} ${src})
 target_include_directories(Utility PUBLIC ${BSMPT_SOURCE_DIR}/include
                                           ${BSMPT_BINARY_DIR}/include)
