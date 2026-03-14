@@ -12,7 +12,7 @@ using Approx = Catch::Approx;
 #include <BSMPT/utility/utility.h>
 #include <BSMPT/vacuum_profile/vacuum_profile.h>
 
-TEST_CASE("Check example_point_C2HDM", "[baryoFHCK]")
+TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
