@@ -180,9 +180,45 @@ try
       if ((output.status.status_tracing == StatusTracing::Success) &&
           (output.status.status_coex_pairs == StatusCoexPair::Success))
       {
-        for (std::size_t i = 0; i < trans.output_store.num_coex_phase_pairs;
-             i++)
+        for (std::size_t i = trans.output_store.num_coex_phase_pairs; i-- > 0;)
         {
+          // Calculate true/false vacuum and temp at the transition temperature
+          double trans_temp;
+          std::vector<double> trans_true_vev;
+          std::vector<double> trans_false_vev;
+          switch (args.WhichTransitionTemperature)
+          {
+          case TransitionTemperature::ApproxNucleation:
+            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
+            break;
+          case TransitionTemperature::Nucleation:
+            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
+            break;
+          case TransitionTemperature::Percolation:
+            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
+            break;
+          case TransitionTemperature::Completion:
+            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
+            break;
+          default:
+            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
+            trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
+            trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
+          }
+          // Check if FalseVacuum is symmetric
+          if ((modelPointer->EWSBVEV(
+                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) or
+              isnan(trans_temp))
+            continue;
+
           output_contents.at(count - 1)
               << output.status.status_crit.at(i) << sep
               << output.vec_trans_data.at(i).crit_temp.value_or(EmptyValue)
@@ -245,38 +281,6 @@ try
                 << sep;
           }
 
-          // Calculate true/false vacuum and temp at the transition temperature
-          double trans_temp;
-          std::vector<double> trans_true_vev;
-          std::vector<double> trans_false_vev;
-          switch (args.WhichTransitionTemperature)
-          {
-          case TransitionTemperature::ApproxNucleation:
-            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
-            break;
-          case TransitionTemperature::Nucleation:
-            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
-            break;
-          case TransitionTemperature::Percolation:
-            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
-            break;
-          case TransitionTemperature::Completion:
-            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
-            break;
-          default:
-            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
-            trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
-            trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
-          }
-
           // edge case: use Tc and also calculate vw from bounce.
           // fallback -> vw = 0.95
           const double vwall_with_fallback =
@@ -304,6 +308,7 @@ try
 
           for (const auto &eta : transportequation.BAUeta)
             output_contents.at(count - 1) << eta.value_or(EmptyValue) << sep;
+          break; // only output first BAU
         }
       }
 
