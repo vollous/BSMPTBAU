@@ -16,8 +16,8 @@ TransitionTracer::TransitionTracer(user_input &input)
 {
   num_vev = input.modelPointer->get_nVEV();
 
-  std::shared_ptr<MinimumTracer> mintracer(new MinimumTracer(
-      input.modelPointer, input.which_minimizer, input.use_multithreading));
+  mintracer = std::make_shared<MinimumTracer>(
+      input.modelPointer, input.which_minimizer, input.use_multithreading);
 
   // initialize legend
   output_store.legend = mintracer->GetLegend(0, input);

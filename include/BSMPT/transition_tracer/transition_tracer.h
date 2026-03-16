@@ -118,6 +118,13 @@ protected:
    */
   std::shared_ptr<Class_Potential_Origin> modelPointer;
 
+public:
+  /**
+   * @brief Minimum tracer
+   *
+   */
+  std::shared_ptr<MinimumTracer> mintracer;
+
 private:
   /**
    * @brief number of VEVs of model
