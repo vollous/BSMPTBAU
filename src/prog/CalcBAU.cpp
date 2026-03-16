@@ -58,8 +58,7 @@ struct CLIOptions
   std::vector<size_t> FHCKMoments = {2};
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
-  bool gwoutput                  = false;
-  bool forced_no_symmetric_phase = false;
+  bool gwoutput = false;
   CLIOptions(const BSMPT::parser &argparser);
   bool good() const;
 };
@@ -277,11 +276,7 @@ try
             trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
           }
-          // Check if FalseVacuum is symmetric
-          if ((modelPointer->EWSBVEV(
-                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) and
-              not args.forced_no_symmetric_phase)
-            continue;
+
           // edge case: use Tc and also calculate vw from bounce.
           // fallback -> vw = 0.95
           const double vwall_with_fallback =
@@ -689,16 +684,6 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
   {
     ss << "--moments not set, using default value: " << FHCKMoments << "\n";
   }
-  try
-  {
-    forced_no_symmetric_phase =
-        argparser.get_value<bool>("forced_no_symmetric_phase");
-  }
-  catch (BSMPT::parserException &)
-  {
-    ss << "--forced_no_symmetric_phase not set, using default value: "
-       << forced_no_symmetric_phase << "\n";
-  }
 
   try
   {
@@ -904,11 +889,6 @@ BSMPT::parser prepare_parser()
   argparser.add_subtext("variance: variance truncation");
   argparser.add_argument(
       "moments", "moments to solve the transport equations", "2", false);
-  argparser.add_argument(
-      "forced_no_symmetric_phase",
-      "still calculates BAU even if false vacuum is not symmetric",
-      "false",
-      false);
   argparser.add_argument("gwoutput", "print GW wave output", "false", false);
 
   std::string GSLhelp   = Minimizer::UseGSLDefault ? "true" : "false";
