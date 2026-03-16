@@ -2958,7 +2958,8 @@ std::vector<std::string> MinimumTracer::GetLegend(const int &num_coex_phases,
       legend.push_back("SNR(LISA-3yrs)_turb_" + std::to_string(i));
       legend.push_back("SNR(LISA-3yrs)_" + std::to_string(i));
     }
-    if (input.FHCKMoments.size() > 0) legend.push_back("Lw");
+    if (input.FHCKMoments.size() > 0)
+      legend.push_back("Lw_" + std::to_string(i));
     for (const auto &moment : input.FHCKMoments)
       legend.push_back("eta(" + std::to_string(moment) + ")_" +
                        std::to_string(i));
