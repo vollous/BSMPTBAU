@@ -170,7 +170,8 @@ try
                            "\nTook\t" + std::to_string(time) + " seconds.\n");
 
       auto output = trans.output_store;
-
+      output.legend =
+          trans.mintracer->GetLegend(1, input); // print single trans
       output_contents.at(count - 1)
           << linestr << sep << parameters.second << sep
           << output.status.status_nlo_stability << sep
