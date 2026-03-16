@@ -14,7 +14,8 @@ TransportModel::TransportModel(
     const double &vwall_in,
     const double &Tstar_in,
     const VevProfileMode &VevProfile_in,
-    const TruncationScheme &truncationscheme_in)
+    const TruncationScheme &truncationscheme_in,
+    const double &truncationR_in)
 {
   modelPointer     = pointer_in;
   Tstar            = Tstar_in;
@@ -24,6 +25,13 @@ TransportModel::TransportModel(
   VevProfile       = VevProfile_in;
   truncationscheme = truncationscheme_in;
 
+  switch (truncationscheme)
+  {
+  case TruncationScheme::Const: truncationR = truncationR_in; break;
+  case TruncationScheme::MinusVw: truncationR = -vwall; break;
+  default: break;
+  }
+
   std::stringstream ss;
   ss << "----------------- Baryon Asymmetry Calculation -----------------\n";
   ss << "TrueVacuum = " << TrueVacuum << "\n";
@@ -32,6 +40,8 @@ TransportModel::TransportModel(
   ss << "vw = " << vwall << "\n";
   ss << "VEV profile = " << VevProfileModeToString.at(VevProfile) << "\n";
   ss << "Truncation scheme = " << TruncationSchemeToString.at(truncationscheme);
+  if (truncationscheme != TruncationScheme::Variance)
+    ss << ". (R = " << truncationR << ")";
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
@@ -42,14 +52,16 @@ TransportModel::TransportModel(
     const double &vwall_in,
     const double &Tstar_in,
     const VevProfileMode &VevProfile_in,
-    const TruncationScheme &truncationscheme_in)
+    const TruncationScheme &truncationscheme_in,
+    const double &truncationR_in)
     : TransportModel(pointer_in,
                      CoexPhase_in->true_phase.Get(Tstar_in).point,
                      CoexPhase_in->false_phase.Get(Tstar_in).point,
                      vwall_in,
                      Tstar_in,
                      VevProfile_in,
-                     truncationscheme_in)
+                     truncationscheme_in,
+                     truncationR_in)
 {
 }
 

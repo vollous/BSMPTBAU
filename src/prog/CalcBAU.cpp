@@ -56,6 +56,7 @@ struct CLIOptions
   BSMPT::Baryo::FHCK::VevProfileMode vevprofilemode =
       BSMPT::Baryo::FHCK::VevProfileMode::FieldEquation;
   std::vector<size_t> FHCKMoments = {2};
+  double truncationR              = 0;
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
   bool gwoutput                  = false;
@@ -296,7 +297,8 @@ try
                   vwall_with_fallback,
                   trans_temp,
                   args.vevprofilemode,
-                  args.truncationscheme);
+                  args.truncationscheme,
+                  args.truncationR);
 
           BSMPT::Baryo::FHCK::TransportEquations transportequation(
               transportmodel, trans_temp, input.FHCKMoments);
@@ -641,17 +643,9 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
   {
     auto truncationschemestring = argparser.get_value("truncationscheme");
 
-    if (truncationschemestring == "zero")
-    {
-      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::Zero;
-    }
-    else if (truncationschemestring == "minusvw")
+    if (truncationschemestring == "minusvw")
     {
       truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
-    }
-    else if (truncationschemestring == "one")
-    {
-      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::One;
     }
     else if (truncationschemestring == "variance")
     {
@@ -659,13 +653,22 @@ CLIOptions::CLIOptions(const BSMPT::parser &argparser)
     }
     else
     {
-      ss << "--truncationscheme set with invalid option: '"
-         << truncationschemestring << "'. Defaulting back to 'minusvw'.\n";
-      truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
+      try
+      {
+        truncationR      = std::stod(truncationschemestring);
+        truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::Const;
+      }
+      catch (BSMPT::parserException &)
+      {
+        ss << "--truncationscheme set with invalid option: '"
+           << truncationschemestring << "'. Defaulting back to 'minusvw'.\n";
+        truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
+      }
     }
   }
   catch (BSMPT::parserException &)
   {
+    truncationscheme = BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
     ss << "--truncationscheme not set, using default value: 'minusvw' \n";
   }
 

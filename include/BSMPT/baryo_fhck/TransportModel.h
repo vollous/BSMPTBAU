@@ -27,9 +27,8 @@ namespace FHCK
  */
 enum class TruncationScheme
 {
-  Zero,
+  Const,
   MinusVw,
-  One,
   Variance
 };
 
@@ -38,9 +37,8 @@ enum class TruncationScheme
  *
  */
 const std::unordered_map<TruncationScheme, std::string>
-    TruncationSchemeToString{{TruncationScheme::Zero, "R = 0"},
+    TruncationSchemeToString{{TruncationScheme::Const, "R = const"},
                              {TruncationScheme::MinusVw, "R = -vw"},
-                             {TruncationScheme::One, "R = 1"},
                              {TruncationScheme::Variance, "Variance"}};
 
 /**
@@ -166,6 +164,12 @@ public:
   VevProfileMode VevProfile = VevProfileMode::Unset;
 
   /**
+   * @brief Constant \f$ R \f$
+   *
+   */
+  double truncationR;
+
+  /**
    * @brief Truncation scheme used in the transport equations
    *
    */
@@ -181,6 +185,7 @@ public:
    * @param Tstar_in  Transition temperature
    * @param VevProfile_In Solver mode. Default: field EOM solution
    * @param truncationscheme_in Truncation scheme to be used
+   * @param truncationR_in Truncation constant \f$ R \f$
    */
   TransportModel(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
@@ -189,7 +194,8 @@ public:
       const double &vwall_in,
       const double &Tstar_in,
       const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation,
-      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw);
+      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw,
+      const double &truncationR_in                = 0);
 
   /**
    * @brief Construct a new Transport Model object
@@ -200,6 +206,7 @@ public:
    * @param Tstar_in Transition temperature
    * @param VevProfile_In Solver mode.
    * @param truncationscheme_in Truncation scheme to be used
+   * @param truncationR_in Truncation constant \f$ R \f$
    */
   TransportModel(
       const std::shared_ptr<Class_Potential_Origin> &pointer_in,
@@ -207,7 +214,8 @@ public:
       const double &vwall_in,
       const double &Tstar_in,
       const VevProfileMode &VevProfile_In = VevProfileMode::FieldEquation,
-      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw);
+      const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw,
+      const double &truncationR_in                = 0);
 
   /**
    * @brief Create the VEV vectors
