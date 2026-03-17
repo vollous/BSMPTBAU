@@ -34,19 +34,6 @@ void TransportEquations::Initialize()
     return;
   }
 
-  MakeDistribution(1, NumberOfSteps);
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()));
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
-                    std::to_string(uList.back()) + "\n");
-
-  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
-  transportmodel->GenerateFermionMass(zList);
-
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
@@ -56,12 +43,30 @@ void TransportEquations::Initialize()
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 }
 
+void TransportEquations::GenerateIntegrationSpace()
+{
+  MakeDistribution(1, NumberOfSteps);
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
+                    std::to_string(zList.back()));
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
+                    std::to_string(uList.back()) + "\n");
+}
+
 void TransportEquations::InitializeMoment(const size_t &moment_in)
 {
   moment = moment_in;
 
   nParticles = nFermions + nBosons;
   nEqs       = moment * nParticles;
+
+  GenerateIntegrationSpace();
+
+  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
+  transportmodel->GenerateFermionMass(zList);
 
   Solution = MatDoub(nEqs, uList.size(), 0.);
 

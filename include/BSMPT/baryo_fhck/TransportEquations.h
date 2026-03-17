@@ -222,6 +222,13 @@ public:
   void Initialize();
 
   /**
+   * @brief Calculates the decaying eigenvalues to calculate how long we have to
+   * go in \f$ z \f$
+   *
+   */
+  void GenerateIntegrationSpace();
+
+  /**
    * @brief Initialize things for the this specific moment
    *
    * @param moment
