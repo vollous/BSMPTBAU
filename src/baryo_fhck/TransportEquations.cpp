@@ -586,12 +586,13 @@ void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
 
   // Number of modes that have to be set to zero
   for (auto ev : EigenSolverM.eigenvalues())
-    if (ev.real() >= 0)
+    if (-ev.real() >= 0) /* minus sign because z -> -Infinity */
       NumberOfNonDecayingModes++;
     else
     {
-      HighestNegRe = std::max(HighestNegRe, ev.real());
-      HighestIm    = std::max(HighestIm, std::abs(ev.imag()));
+      HighestNegRe = std::max(
+          HighestNegRe, -ev.real()); /* minus sign because z -> -Infinity */
+      HighestIm = std::max(HighestIm, std::abs(ev.imag()));
     }
   for (auto ev : EigenSolverP.eigenvalues())
     if (ev.real() >= 0)
