@@ -185,10 +185,26 @@ public:
   size_t nEqs;
 
   /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength
+   *
+   */
+  double StepsPerCycle = 10;
+
+  /**
    * @brief Number of steps in space
    *
    */
   size_t NumberOfSteps = 15000;
+
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$. We use
+   * this so calculate when \f$ e^{-\lambda z} = \text{LwMultiplierCutoff}\f$
+   * using the slowest decaying $\lambda$ (highest negative real part)
+   *
+   */
+  double LwMultiplierCutoff = 1e-6;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
@@ -316,6 +332,8 @@ public:
    * @brief Check if the boundary have enough decaying modes for the solution to
    * exist.
    */
+  void CheckBoundary(double &HighestNegRe, double &HighestIm);
+
   void CheckBoundary();
 
   /**

@@ -1,6 +1,8 @@
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/utility/asciiplotter/asciiplotter.h>
 #include <sstream>
+#define _USE_MATH_DEFINES
+#include <cmath>
 namespace BSMPT
 {
 
@@ -45,7 +47,34 @@ void TransportEquations::Initialize()
 
 void TransportEquations::GenerateIntegrationSpace()
 {
+  // These are only used to calculate the estimated NumberOfSteps and
+  // LwMultiplier
+  NumberOfSteps = 10000;
+  LwMultiplier  = 1000;
+
   MakeDistribution(1, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList);
+  Solution = MatDoub(nEqs, uList.size(), 0.);
+
+  double HighestNegRe, HighestIm;
+  CheckBoundary(HighestNegRe, HighestIm);
+
+  double NewLwMultiplier = ceil(std::log10(LwMultiplierCutoff) /
+                                (transportmodel->Lw * HighestNegRe));
+
+  NumberOfSteps = StepsPerCycle * ceil(2 * LwMultiplier * transportmodel->Lw *
+                                       HighestIm / (2 * M_PI));
+  LwMultiplier  = NewLwMultiplier;
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Calculated NumberOfSteps = " + std::to_string(NumberOfSteps));
+  Logger::Write(LoggingLevel::FHCK,
+                "Calculated LwMultiplier = " + std::to_string(LwMultiplier) +
+                    "\n");
+
+  MakeDistribution(1, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList);
+  Solution = MatDoub(nEqs, uList.size(), 0.);
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in z \t" + std::to_string(zList.front()) + " -> " +
@@ -63,17 +92,12 @@ void TransportEquations::InitializeMoment(const size_t &moment_in)
   nParticles = nFermions + nBosons;
   nEqs       = moment * nParticles;
 
-  GenerateIntegrationSpace();
-
-  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
-  transportmodel->GenerateFermionMass(zList);
-
-  Solution = MatDoub(nEqs, uList.size(), 0.);
-
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
   StildeM.resize(nEqs);
   StildeP.resize(nEqs);
+
+  GenerateIntegrationSpace();
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
@@ -514,6 +538,20 @@ void TransportEquations::MakeDistribution(const double xmax,
 
 void TransportEquations::CheckBoundary()
 {
+  double HighestNegRe, HighestIm;
+  CheckBoundary(HighestNegRe, HighestIm);
+}
+
+void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
+{
+  // Initialize vars
+  HighestNegRe = -1e100;
+  HighestIm    = -1;
+
+  // Calculate asymptotic matrixs
+  Equations(zList.front(), MtildeM, StildeM, 0);
+  Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+
   double STildeLength(0);
   size_t NumberOfNonDecayingModes(0);
   std::stringstream ss;
@@ -548,9 +586,21 @@ void TransportEquations::CheckBoundary()
 
   // Number of modes that have to be set to zero
   for (auto ev : EigenSolverM.eigenvalues())
-    if (ev.real() >= 0) NumberOfNonDecayingModes++;
+    if (ev.real() >= 0)
+      NumberOfNonDecayingModes++;
+    else
+    {
+      HighestNegRe = std::max(HighestNegRe, ev.real());
+      HighestIm    = std::max(HighestIm, std::abs(ev.imag()));
+    }
   for (auto ev : EigenSolverP.eigenvalues())
-    if (ev.real() >= 0) NumberOfNonDecayingModes++;
+    if (ev.real() >= 0)
+      NumberOfNonDecayingModes++;
+    else
+    {
+      HighestNegRe = std::max(HighestNegRe, ev.real());
+      HighestIm    = std::max(HighestIm, std::abs(ev.imag()));
+    }
 
   ss << "There are " << NumberOfNonDecayingModes
      << " modes that have to be set to zero at the boundaries.";
