@@ -1,7 +1,7 @@
 var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel =
 [
-    [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a1ea4ce0b41b5e1194a2bf279535e01cd", null ],
-    [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a731b1dcdc2c3cb1d0dde54f76f8c5fc2", null ],
+    [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a898360ff53344e9748a49d2924eca678", null ],
+    [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a063607ecc6fef79cbd0454e1fa6ca47e", null ],
     [ "EWSBVEV", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74", null ],
     [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a6bb1f21f54af6a47457e2baab6291775", null ],
     [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a123cd34e27644c95e2aa77e3b89d020e", null ],
@@ -19,6 +19,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel =
     [ "QuarkMassesRe", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a7bf144d6a079abdfc923cc2723a987c1", null ],
     [ "status", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#acffa83e52da6a72ac21248ddbc8f9cff", null ],
     [ "TrueVacuum", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a1a8063ef8613c436165b777f1fa0edc6", null ],
+    [ "truncationR", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a0d03371404f6108a6d022be93f2c8e4b", null ],
     [ "truncationscheme", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ae093685d2b22e963f86fbad8015983a1", null ],
     [ "Tstar", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#aed61ca710381b5e305a5494fc6822e9c", null ],
     [ "vacuumprofile", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#aeb7cec2617a1a9d2cf7ae31759a71487", null ],

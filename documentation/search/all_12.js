@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['n0int_0',['n0int',['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html',1,'BSMPT::Baryo::FHCK::N0Int'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html#a24fc138ae64ae24817f3885063ba0e90',1,'BSMPT::Baryo::FHCK::N0Int::N0Int()']]],
+  ['n0int_0',['n0int',['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html',1,'BSMPT::Baryo::FHCK::N0Int'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html#a8923deeedf71904a34a6cd2eb5c30499',1,'BSMPT::Baryo::FHCK::N0Int::N0Int()']]],
   ['n_5fstep_1',['n_step',['../classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html#a2920b41b4ed289a19ebedc25a2b3dded',1,'BSMPT::Baryo::CalculateEtaInterface']]],
   ['nablanumerical_2',['NablaNumerical',['../namespaceBSMPT.html#a5d3fdbfc7b4f3e3d170f2fd5b094fdc3',1,'BSMPT']]],
   ['nablavct_3',['NablaVCT',['../classBSMPT_1_1Class__Potential__Origin.html#a93027829ab6605b5a153316129cbbcef',1,'BSMPT::Class_Potential_Origin']]],
