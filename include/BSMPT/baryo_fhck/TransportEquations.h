@@ -349,8 +349,22 @@ public:
    * @brief Check if the boundary have enough decaying modes for the solution to
    * exist.
    */
-  void CheckBoundary(double &HighestNegRe, double &HighestIm);
 
+  /**
+   * @brief Check if the boundary have enough decaying modes for the solution to
+   * exist.
+   *
+   * @param HighestNegRe Highest real part of negative eigenvalues (close to
+   * zero from below)
+   * @param HighestNegEigenvalue Highest magnitude of all eigenvalues with
+   * negative real part
+   */
+  void CheckBoundary(double &HighestNegRe, double &HighestNegEigenvalue);
+
+  /**
+   * @brief Check if the boundary have enough decaying modes for the solution to
+   * exist.
+   */
   void CheckBoundary();
 
   /**

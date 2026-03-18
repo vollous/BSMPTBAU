@@ -62,14 +62,14 @@ void TransportEquations::GenerateIntegrationSpace()
   transportmodel->GenerateFermionMass(zList);
   Solution = MatDoub(nEqs, uList.size(), 0.);
 
-  double HighestNegRe, HighestIm;
-  CheckBoundary(HighestNegRe, HighestIm);
+  double HighestNegRe, HighestNegEigenvalue;
+  CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 
   double NewLwMultiplier = ceil(std::log10(LwMultiplierCutoff) /
                                 (transportmodel->Lw * HighestNegRe));
 
   NumberOfSteps = StepsPerCycle * ceil(2 * LwMultiplier * transportmodel->Lw *
-                                       HighestIm / (2 * M_PI));
+                                       HighestNegEigenvalue / (2 * M_PI));
   LwMultiplier  = NewLwMultiplier;
 
   Logger::Write(LoggingLevel::FHCK,
@@ -544,15 +544,16 @@ void TransportEquations::MakeDistribution(const double xmax,
 
 void TransportEquations::CheckBoundary()
 {
-  double HighestNegRe, HighestIm;
-  CheckBoundary(HighestNegRe, HighestIm);
+  double HighestNegRe, HighestNegEigenvalue;
+  CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 }
 
-void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
+void TransportEquations::CheckBoundary(double &HighestNegRe,
+                                       double &HighestNegEigenvalue)
 {
   // Initialize vars
-  HighestNegRe = -1e100;
-  HighestIm    = -1;
+  HighestNegRe         = -1e100;
+  HighestNegEigenvalue = -1;
 
   // Calculate asymptotic matrixs
   Equations(zList.front(), MtildeM, StildeM, 0);
@@ -598,15 +599,15 @@ void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
     {
       HighestNegRe = std::max(
           HighestNegRe, -ev.real()); /* minus sign because z -> -Infinity */
-      HighestIm = std::max(HighestIm, std::abs(ev.imag()));
+      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
     }
   for (auto ev : EigenSolverP.eigenvalues())
     if (ev.real() >= 0)
       NumberOfNonDecayingModes++;
     else
     {
-      HighestNegRe = std::max(HighestNegRe, ev.real());
-      HighestIm    = std::max(HighestIm, std::abs(ev.imag()));
+      HighestNegRe         = std::max(HighestNegRe, ev.real());
+      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
     }
 
   if (NumberOfNonDecayingModes > nEqs)
