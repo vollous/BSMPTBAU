@@ -609,9 +609,6 @@ void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
       HighestIm    = std::max(HighestIm, std::abs(ev.imag()));
     }
 
-  ss << "There are " << NumberOfNonDecayingModes
-     << " modes that have to be set to zero at the boundaries.";
-
   if (NumberOfNonDecayingModes > nEqs)
   {
     ss << " \033[31m\nToo many non-decaying modes (" << NumberOfNonDecayingModes
@@ -622,8 +619,6 @@ void TransportEquations::CheckBoundary(double &HighestNegRe, double &HighestIm)
           "conditions of μ = u = 0.\033[0m\n";
     Status = FHCKStatus::UnphysicalBoundary;
   }
-  else
-    ss << " \033[92mSuccess.\033[0m";
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
