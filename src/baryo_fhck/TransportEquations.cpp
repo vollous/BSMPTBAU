@@ -714,6 +714,11 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t ell = 0; ell < moments.size(); ell++)
   {
+    stringstream ss;
+    ss << "---------------- Calculating BAU for ℓ = " << moments.at(ell)
+       << "----------------";
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+    ss.str("");
     StepsPerCycle                = StepsPerCycleLow;
     const double bauLowPrecision = SolveTransportEquationEll(ell);
 
@@ -727,10 +732,9 @@ void TransportEquations::SolveTransportEquation()
     PrintTransportEquation(120, "bL", "mu");
     PrintTransportEquation(120, "h", "mu");
 
-    stringstream ss;
     ss << "BAU(low precision) = " << bauLowPrecision
        << "\nBAU(high precision) = " << bauHighPrecision
-       << "\nUncertainty = " << unc << "\n";
+       << "\nUncertainty = " << unc;
 
     Logger::Write(LoggingLevel::FHCK, ss.str());
 
