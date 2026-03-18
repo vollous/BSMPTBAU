@@ -72,6 +72,11 @@ void TransportEquations::GenerateIntegrationSpace()
                                        HighestNegEigenvalue / (2 * M_PI));
   LwMultiplier  = NewLwMultiplier;
 
+  // Upper bound on NumberOfSteps
+  NumberOfSteps = std::min(NumberOfSteps, MaxNumberOfSteps);
+  // Lower bound on LwMultiplier
+  LwMultiplier = std::max(LwMultiplier, MinLwMultiplier);
+
   Logger::Write(LoggingLevel::FHCK,
                 "Calculated NumberOfSteps = " + std::to_string(NumberOfSteps));
   Logger::Write(LoggingLevel::FHCK,

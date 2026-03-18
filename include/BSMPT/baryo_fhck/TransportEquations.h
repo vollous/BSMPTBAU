@@ -217,6 +217,12 @@ public:
   size_t NumberOfSteps = 15000;
 
   /**
+   * @brief Maximum number of steps in \f$ z \f$
+   *
+   */
+  const size_t MaxNumberOfSteps = 1e6;
+
+  /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$. We use
    * this so calculate when \f$ e^{-\lambda z} = \text{LwMultiplierCutoff}\f$
    * using the slowest decaying $\lambda$ (highest negative real part)
@@ -230,6 +236,12 @@ public:
    *
    */
   double LwMultiplier = 4000.;
+
+  /**
+   * @brief Minimum LwMultiplier used
+   *
+   */
+  const double MinLwMultiplier = 10.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If
