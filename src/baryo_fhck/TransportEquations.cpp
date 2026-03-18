@@ -331,18 +331,6 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
 
   switch (transportmodel->truncationscheme)
   {
-  case TruncationScheme::Zero:
-    // 0, 0, ..., 0, -1
-    Ri.at(moment - 2) = 0;
-    break;
-  case TruncationScheme::MinusVw:
-    // 0, 0, ..., -vwall, -1
-    Ri.at(moment - 2) = -transportmodel->vwall;
-    break;
-  case TruncationScheme::One:
-    // 0, 0, ..., 1, -1
-    Ri.at(moment - 2) = 1;
-    break;
   case TruncationScheme::Variance:
   {
     // R_1, ..., R_n-1, -1
@@ -358,10 +346,13 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
     }
     break;
   }
-
-  default: throw("Error on selecting the truncation scheme");
+  default:
+  {
+    // 0, 0, ..., const, -1
+    Ri.at(moment - 2) = transportmodel->truncationR;
+    break;
   }
-
+  }
   Ri.at(moment - 1) = -1;
 
   return Ri;
