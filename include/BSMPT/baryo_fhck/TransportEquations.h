@@ -74,7 +74,7 @@ public:
    * @brief Number of times we let the solution relax without getting better.
    *
    */
-  size_t NotBetterThreshold = 3;
+  const size_t NotBetterThreshold = 3;
 
   /**
    * @brief Temp var to store \f$ \eta \f$ at moment
@@ -199,7 +199,7 @@ public:
    * low precision calculation.
    *
    */
-  double StepsPerCycleLow = 10;
+  const double StepsPerCycleLow = 10;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
@@ -208,7 +208,8 @@ public:
    * high precision calculation.
    *
    */
-  double StepsPerCycleHigh = 20;
+  const double StepsPerCycleHigh = 20;
+
   /**
    * @brief Number of steps in space
    *
@@ -221,7 +222,7 @@ public:
    * using the slowest decaying $\lambda$ (highest negative real part)
    *
    */
-  double LwMultiplierCutoff = 1e-6;
+  const double LwMultiplierCutoff = 1e-6;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
@@ -235,7 +236,13 @@ public:
    * not then the integration region must be inscreased.
    *
    */
-  double STildeThreshold = 1e-10;
+  const double STildeThreshold = 1e-10;
+
+  /**
+   * @brief Uncertainty threshold for accepting a BAU
+   *
+   */
+  const double UncertaintyThreshold = 1e-2;
 
   /**
    * @brief Construct a new Transport Equations object

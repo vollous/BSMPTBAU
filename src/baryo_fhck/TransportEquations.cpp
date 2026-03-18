@@ -712,7 +712,7 @@ void TransportEquations::SolveTransportEquation()
     StepsPerCycle                 = StepsPerCycleHigh;
     const double bauHighPrecision = SolveTransportEquationEll(ell);
 
-    const double unc = std::abs(bauHighPrecision / bauLowPrecision - 1);
+    const double Uncertainty = std::abs(bauHighPrecision / bauLowPrecision - 1);
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
@@ -721,12 +721,12 @@ void TransportEquations::SolveTransportEquation()
 
     ss << "BAU(low precision) = " << bauLowPrecision
        << "\nBAU(high precision) = " << bauHighPrecision
-       << "\nUncertainty = " << unc;
+       << "\nUncertainty = " << Uncertainty;
 
     Logger::Write(LoggingLevel::FHCK, ss.str());
 
     if (not isnan(bauLowPrecision) and not isnan(bauHighPrecision) and
-        unc < 0.01)
+        Uncertainty < UncertaintyThreshold)
       BAUeta.at(ell) = bauHighPrecision;
   }
 }
@@ -882,11 +882,11 @@ void TransportEquations::CalculateBAU()
   stringstream ss;
   ss << "eta = " << result_c << " with error " << error << std::endl;
 
-  double unc = abs(error / result_c);
+  double Uncertainty = abs(error / result_c);
 
-  if (unc > 0.01)
+  if (Uncertainty > UncertaintyThreshold)
   {
-    ss << "Calculation failed!\t" << unc << "\n";
+    ss << "Calculation failed!\t" << Uncertainty << "\n";
     result_c = NAN;
   }
 
