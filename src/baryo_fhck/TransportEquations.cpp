@@ -694,12 +694,12 @@ void TransportEquations::smatrix(const int k,
 
 void TransportEquations::SolveTransportEquation()
 {
+  std::fill(BAUeta.begin(), BAUeta.end(), NAN);
   if (transportmodel->status != TransportModelStatus::Success)
   {
 
     Logger::Write(LoggingLevel::FHCK,
                   "SolveTransportEquation() failed. No VEV profile available.");
-    std::fill(BAUeta.begin(), BAUeta.end(), NAN);
     return;
   }
 
@@ -708,89 +708,111 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t ell = 0; ell < moments.size(); ell++)
   {
-    InitializeMoment(moments.at(ell));
-    bau = 0;
+    StepsPerCycle                = StepsPerCycleLow;
+    const double bauLowPrecision = SolveTransportEquationEll(ell);
 
-    Equations(zList.front(), MtildeM, StildeM, 0);
-    Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+    StepsPerCycle                 = StepsPerCycleHigh;
+    const double bauHighPrecision = SolveTransportEquationEll(ell);
 
-    CheckBoundary();
-    if (Status != FHCKStatus::NotSet)
-    {
-      Logger::Write(
-          LoggingLevel::FHCK,
-          "\033[31mTransport equation unable to be computed. Status code : " +
-              FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
-      return;
-    }
-
-    size_t itmax = 10;
-    double conv  = 1e-10;
-    double slowc = 1.;
-    VecDoub scalv(nEqs, 1);
-    VecInt indexv(nEqs);
-
-    // fix μ and first u
-    for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
-      for (size_t particle = 0; particle < nParticles; particle++)
-      {
-        indexv[l + particle * moment] = particle + l * (nParticles);
-        Logger::Write(LoggingLevel::FHCK,
-                      "indexv[" + std::to_string(particle + l * (nParticles)) +
-                          "] = " + std::to_string(l + particle * moment));
-      }
-
-    int NB = nEqs / 2;
-
-    size_t it;
-    double MinError    = 1.e100;
-    double MaxError    = 1e-100;
-    size_t NotBetter   = 0;
-    auto Best_Solution = Solution;
-
-    for (it = 0; it < itmax; it++)
-    {
-      if (NotBetter >= NotBetterThreshold) break;
-      RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
-      stringstream ss;
-      ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
-      Logger::Write(LoggingLevel::FHCK, ss.str());
-
-      MaxError = std::max(MaxError, solvde.err);
-
-      if (solvde.err < MinError)
-      {
-        MinError      = solvde.err;
-        Best_Solution = Solution;
-        NotBetter     = 0;
-      }
-
-      // Early exit in case error gets much smaller than the worst case
-      if (solvde.err / MaxError < 1e-10) break;
-
-      NotBetter++;
-    }
-
-    if (it == NotBetter)
-    {
-      Logger::Write(
-          LoggingLevel::FHCK,
-          "Relaxation transport equations failed! [did not converge once]");
-      BAUeta.at(ell) = NAN;
-      return;
-    }
-
-    Solution = Best_Solution;
+    const double unc = std::abs(bauHighPrecision / bauLowPrecision - 1);
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
     PrintTransportEquation(120, "bL", "mu");
     PrintTransportEquation(120, "h", "mu");
 
-    CalculateBAU();
+    stringstream ss;
+    ss << "BAU(low precision) = " << bauLowPrecision
+       << "\nBAU(high precision) = " << bauHighPrecision
+       << "\nUncertainty = " << unc << "\n";
 
-    BAUeta.at(ell) = bau;
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+
+    if (not isnan(bauLowPrecision) and not isnan(bauHighPrecision) and
+        unc < 0.01)
+      BAUeta.at(ell) = bauHighPrecision;
   }
+}
+
+double TransportEquations::SolveTransportEquationEll(const size_t &ell)
+{
+  Status = FHCKStatus::NotSet;
+
+  InitializeMoment(moments.at(ell));
+
+  Equations(zList.front(), MtildeM, StildeM, 0);
+  Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+
+  CheckBoundary();
+  if (Status != FHCKStatus::NotSet)
+  {
+    Logger::Write(
+        LoggingLevel::FHCK,
+        "\033[31mTransport equation unable to be computed. Status code : " +
+            FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
+    return NAN;
+  }
+
+  size_t itmax = 10;
+  double conv  = 1e-10;
+  double slowc = 1.;
+  VecDoub scalv(nEqs, 1);
+  VecInt indexv(nEqs);
+
+  // fix μ and first u
+  for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
+    for (size_t particle = 0; particle < nParticles; particle++)
+    {
+      indexv[l + particle * moment] = particle + l * (nParticles);
+      Logger::Write(LoggingLevel::FHCK,
+                    "indexv[" + std::to_string(particle + l * (nParticles)) +
+                        "] = " + std::to_string(l + particle * moment));
+    }
+
+  int NB = nEqs / 2;
+
+  size_t it;
+  double MinError    = 1.e100;
+  double MaxError    = 1e-100;
+  size_t NotBetter   = 0;
+  auto Best_Solution = Solution;
+
+  for (it = 0; it < itmax; it++)
+  {
+    if (NotBetter >= NotBetterThreshold) break;
+    RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
+    stringstream ss;
+    ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+
+    MaxError = std::max(MaxError, solvde.err);
+
+    if (solvde.err < MinError)
+    {
+      MinError      = solvde.err;
+      Best_Solution = Solution;
+      NotBetter     = 0;
+    }
+
+    // Early exit in case error gets much smaller than the worst case
+    if (solvde.err / MaxError < 1e-10) break;
+
+    NotBetter++;
+  }
+
+  if (it == NotBetter)
+  {
+    Logger::Write(
+        LoggingLevel::FHCK,
+        "Relaxation transport equations failed! [did not converge once]");
+    return NAN;
+  }
+
+  Solution = Best_Solution;
+
+  CalculateBAU();
+
+  return bau;
 }
 
 void TransportEquations::CalculateBAU()

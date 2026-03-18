@@ -190,8 +190,25 @@ public:
    * oscillating. This sets the goal number of points per cycle/wavelength
    *
    */
-  double StepsPerCycle = 10;
+  double StepsPerCycle;
 
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength for a
+   * low precision calculation.
+   *
+   */
+  double StepsPerCycleLow = 10;
+
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength for a
+   * high precision calculation.
+   *
+   */
+  double StepsPerCycleHigh = 20;
   /**
    * @brief Number of steps in space
    *
@@ -406,6 +423,14 @@ public:
                VecInt &indexv,
                MatDoub &s,
                MatDoub &y);
+
+  /**
+   * @brief Solve the transport equation for the moment \f$ \ell \f$
+   *
+   * @param ell \f$ \ell \f$
+   * @return double BAU
+   */
+  double SolveTransportEquationEll(const size_t &ell);
 
   /**
    * @brief Solve the transport equations.
