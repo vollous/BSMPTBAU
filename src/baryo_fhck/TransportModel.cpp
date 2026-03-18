@@ -127,7 +127,8 @@ void TransportModel::SetEtaInterface()
                 "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
 }
 
-void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
+void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
+                                         const bool &MakeTopMassPlot)
 {
   QuarkMassesRe.clear();
   QuarkMassesIm.clear();
@@ -173,6 +174,9 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList)
                                        0,
                                        tk::spline::not_a_knot,
                                        0));
+
+  // Check if plotting is necessary
+  if (not MakeTopMassPlot) return;
 
   size_t i_left = 0, i_right = zList.size() - 1;
 

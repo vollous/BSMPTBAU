@@ -237,7 +237,15 @@ public:
    *
    * @param zList z distribution where we interpolate the fermion mass
    */
-  void GenerateFermionMass(const std::vector<double> &zList);
+
+  /**
+   * @brief Generate the quark masses splines
+   *
+   * @param zList z distribution where we interpolate the fermion mass
+   * @param MakeTopMassPlot Make the plots or not
+   */
+  void GenerateFermionMass(const std::vector<double> &zList,
+                           const bool &MakeTopMassPlot = false);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its

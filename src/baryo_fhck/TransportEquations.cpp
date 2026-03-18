@@ -36,6 +36,12 @@ void TransportEquations::Initialize()
     return;
   }
 
+  // Plot top mass
+  NumberOfSteps = 10000;
+  LwMultiplier  = 100;
+  MakeDistribution(1, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList, true);
+
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
