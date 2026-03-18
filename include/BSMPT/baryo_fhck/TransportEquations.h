@@ -214,7 +214,7 @@ public:
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 15000;
+  size_t NumberOfSteps;
 
   /**
    * @brief Maximum number of steps in \f$ z \f$
@@ -235,7 +235,7 @@ public:
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 4000.;
+  double LwMultiplier;
 
   /**
    * @brief Minimum LwMultiplier used
