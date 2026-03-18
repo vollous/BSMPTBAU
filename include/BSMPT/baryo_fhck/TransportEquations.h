@@ -211,6 +211,12 @@ public:
   const double StepsPerCycleHigh = 20;
 
   /**
+   * @brief Used for quick calculations (should not be that relevant)
+   *
+   */
+  const size_t DefaultNumberOfSteps = 10000;
+
+  /**
    * @brief Number of steps in space
    *
    */
@@ -229,6 +235,12 @@ public:
    *
    */
   const double LwMultiplierCutoff = 1e-6;
+
+  /**
+   * @brief Used for quick calculations (should not be that relevant)
+   *
+   */
+  const double DefaultLwMultiplier = 100;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$

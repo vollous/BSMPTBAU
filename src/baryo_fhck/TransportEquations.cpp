@@ -37,8 +37,8 @@ void TransportEquations::Initialize()
   }
 
   // Plot top mass
-  NumberOfSteps = 10000;
-  LwMultiplier  = 100;
+  NumberOfSteps = DefaultNumberOfSteps;
+  LwMultiplier  = DefaultLwMultiplier;
   MakeDistribution(1, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList, true);
 
@@ -55,8 +55,8 @@ void TransportEquations::GenerateIntegrationSpace()
 {
   // These are only used to calculate the estimated NumberOfSteps and
   // LwMultiplier
-  NumberOfSteps = 10000;
-  LwMultiplier  = 1000;
+  NumberOfSteps = DefaultNumberOfSteps;
+  LwMultiplier  = DefaultLwMultiplier;
 
   MakeDistribution(1, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList);
