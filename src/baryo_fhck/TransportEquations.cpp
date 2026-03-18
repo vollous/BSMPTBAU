@@ -93,7 +93,7 @@ void TransportEquations::GenerateIntegrationSpace()
 
   Logger::Write(LoggingLevel::FHCK,
                 "Limits in u \t" + std::to_string(uList.front()) + " -> " +
-                    std::to_string(uList.back()) + "\n");
+                    std::to_string(uList.back()));
 }
 
 void TransportEquations::InitializeMoment(const size_t &moment_in)
@@ -898,7 +898,7 @@ void TransportEquations::CalculateBAU()
   // Save the result
   bau = result_c;
 
-  ss << "eta/eta_obs = " << result_c / (8.7e-11) << std::endl;
+  ss << "eta/eta_obs = " << result_c / (8.7e-11);
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
