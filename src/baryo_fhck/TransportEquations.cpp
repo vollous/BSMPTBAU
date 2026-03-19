@@ -39,7 +39,7 @@ void TransportEquations::Initialize()
   // Plot top mass
   NumberOfSteps = DefaultNumberOfSteps;
   LwMultiplier  = DefaultLwMultiplier;
-  MakeDistribution(1, NumberOfSteps);
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList, true);
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
@@ -58,7 +58,7 @@ void TransportEquations::GenerateIntegrationSpace()
   NumberOfSteps = DefaultNumberOfSteps;
   LwMultiplier  = DefaultLwMultiplier;
 
-  MakeDistribution(1, NumberOfSteps);
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList);
   Solution = MatDoub(nEqs, zList.size(), 0.);
 
@@ -82,7 +82,7 @@ void TransportEquations::GenerateIntegrationSpace()
                 "Calculated LwMultiplier = " + std::to_string(LwMultiplier) +
                     "\n");
 
-  MakeDistribution(1, NumberOfSteps);
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList);
   Solution = MatDoub(nEqs, zList.size(), 0.);
 
@@ -498,18 +498,18 @@ void TransportEquations::Equations(const double &z,
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
-void TransportEquations::MakeDistribution(const double xmax,
+void TransportEquations::MakeDistribution(const double amplitude,
                                           const size_t npoints)
 {
   zList.clear();
   for (size_t i = 0; i < npoints; i++)
   {
-    double temp =
-        pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
-        4.;
-    temp = xmax * tan(temp);
-    zList.push_back(LwMultiplier * transportmodel->Lw * temp /
-                    (sqrt(1 - temp * temp)));
+    // linear -1 -> 1
+    double u = ((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.);
+    u        = pow(u, 3) * M_PI / 4.;
+    u        = tan(u);
+    u        = amplitude * u / sqrt(1 - u * u);
+    zList.push_back(u);
   }
 }
 

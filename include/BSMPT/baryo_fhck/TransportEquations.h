@@ -193,7 +193,7 @@ public:
    * low precision calculation.
    *
    */
-  const double StepsPerCycleLow = 10;
+  const double StepsPerCycleLow = 100;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
@@ -202,7 +202,7 @@ public:
    * high precision calculation.
    *
    */
-  const double StepsPerCycleHigh = 20;
+  const double StepsPerCycleHigh = 200;
 
   /**
    * @brief Used for quick calculations (should not be that relevant)
@@ -424,8 +424,10 @@ public:
   /**
    * @brief Distributes the points used in the relaxation method
    *
+   * @param amplitude amplitude of points distributed
+   * @param npoints number of points
    */
-  void MakeDistribution(const double xmax, const size_t npoints);
+  void MakeDistribution(const double amplitude, const size_t npoints);
 
   /**
    * @brief Smatrix needed of the relaxation method to solve the ODE
