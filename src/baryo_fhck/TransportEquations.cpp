@@ -65,12 +65,11 @@ void TransportEquations::GenerateIntegrationSpace()
   double HighestNegRe, HighestNegEigenvalue;
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 
-  double NewLwMultiplier = ceil(std::log10(LwMultiplierCutoff) /
-                                (transportmodel->Lw * HighestNegRe));
+  LwMultiplier = ceil(std::log10(LwMultiplierCutoff) /
+                      (transportmodel->Lw * HighestNegRe));
 
   NumberOfSteps = StepsPerCycle * ceil(2 * LwMultiplier * transportmodel->Lw *
                                        HighestNegEigenvalue / (2 * M_PI));
-  LwMultiplier  = NewLwMultiplier;
 
   // Upper bound on NumberOfSteps
   NumberOfSteps = std::min(NumberOfSteps, MaxNumberOfSteps);
