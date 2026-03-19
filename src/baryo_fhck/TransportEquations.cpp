@@ -60,7 +60,7 @@ void TransportEquations::GenerateIntegrationSpace()
 
   MakeDistribution(1, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList);
-  Solution = MatDoub(nEqs, uList.size(), 0.);
+  Solution = MatDoub(nEqs, zList.size(), 0.);
 
   double HighestNegRe, HighestNegEigenvalue;
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
@@ -84,15 +84,11 @@ void TransportEquations::GenerateIntegrationSpace()
 
   MakeDistribution(1, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList);
-  Solution = MatDoub(nEqs, uList.size(), 0.);
+  Solution = MatDoub(nEqs, zList.size(), 0.);
 
   Logger::Write(LoggingLevel::FHCK,
-                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()));
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
-                    std::to_string(uList.back()));
+                "Integration limits in z | " + std::to_string(zList.front()) +
+                    " -> " + std::to_string(zList.back()));
 }
 
 void TransportEquations::InitializeMoment(const size_t &moment_in)
@@ -433,22 +429,6 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
       full[start + i][start + j] = sub[i][j];
 }
 
-double TransportEquations::dudz(const double &u)
-{
-  return pow(1 - u * u, 3. / 2.) / (transportmodel->Lw * LwMultiplier);
-}
-
-double TransportEquations::zTOu(const double &z)
-{
-  return (z / (transportmodel->Lw * LwMultiplier)) /
-         sqrt(1 + pow(z / (transportmodel->Lw * LwMultiplier), 2));
-}
-
-double TransportEquations::uTOz(const double &u)
-{
-  return LwMultiplier * transportmodel->Lw * u / (sqrt(1 - u * u));
-}
-
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde,
@@ -521,19 +501,15 @@ void TransportEquations::Equations(const double &z,
 void TransportEquations::MakeDistribution(const double xmax,
                                           const size_t npoints)
 {
-  uList.resize(npoints);
+  zList.clear();
   for (size_t i = 0; i < npoints; i++)
   {
     double temp =
         pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
         4.;
-    uList.at(i) = xmax * tan(temp);
-  }
-
-  zList.clear();
-  for (const auto &u : uList)
-  {
-    zList.push_back(uTOz(u));
+    temp = xmax * tan(temp);
+    zList.push_back(LwMultiplier * transportmodel->Lw * temp /
+                    (sqrt(1 - temp * temp)));
   }
 }
 
@@ -650,25 +626,25 @@ void TransportEquations::smatrix(const int k,
       // Sn at the last boundary
       s[i][nEqs + i] = 1.0;
       // C0
-      s[i][jsf] = y[indexv[i]][uList.size() - 1];
+      s[i][jsf] = y[indexv[i]][zList.size() - 1];
     }
   }
   else
   {
-    double um = (uList[k] + uList[k - 1]) / 2.;
-    double du = (uList[k] - uList[k - 1]) / dudz(um);
-    if (um < -0.7) // TODO: change. Too specific
+    double zk = (zList[k] + zList[k - 1]) / 2.;
+    double dz = (zList[k] - zList[k - 1]);
+    if (zk < -100 * transportmodel->Lw) // TODO: change. Too specific
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (um > 0.7) // TODO: change. Too specific
+    else if (zk > 100 * transportmodel->Lw) // TODO: change. Too specific
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
     }
     else
-      Equations(uTOz(um), Mtilde, Stilde, k);
+      Equations(zk, Mtilde, Stilde, k);
     for (size_t j = 0; j < nEqs; j++)
     {
       for (size_t n = 0; n < nEqs; n++)
@@ -676,15 +652,15 @@ void TransportEquations::smatrix(const int k,
         // s matrix for the middle point
         // S_{j,n}
         // M[k] and S[k] are evaluated between k and k-1
-        s[j][indexv[n]] = -Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        s[j][indexv[n]] = -Delta(j, n) - 0.5 * dz * (Mtilde[j][n]);
         // S_{j,N + n}
-        s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * dz * (Mtilde[j][n]);
       }
       //  Equations for E(k,k-1)
       temp = Stilde[j];
       for (size_t i = 0; i < nEqs; i++)
         temp += Mtilde[j][i] * (y[i][k] + y[i][k - 1]) / 2.;
-      s[j][jsf] = y[j][k] - y[j][k - 1] - du * temp;
+      s[j][jsf] = y[j][k] - y[j][k - 1] - dz * temp;
     }
   }
 }
@@ -707,7 +683,7 @@ void TransportEquations::SolveTransportEquation()
   {
     stringstream ss;
     ss << "---------------- Calculating BAU for ℓ = " << moments.at(ell)
-       << "----------------";
+       << " ----------------";
     Logger::Write(LoggingLevel::FHCK, ss.str());
     ss.str("");
     StepsPerCycle                = StepsPerCycleLow;
@@ -822,13 +798,11 @@ void TransportEquations::CalculateBAU()
   // Weak spharelon rate
   const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
-  std::vector<double> u;   // list of u positions
+  std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
   {
-
-    const double ui = uList[i]; // u at position i
-    const double zi = uTOz(ui); // z(u)
+    const double zi = zList.at(i);
     // Calculate the vev at z
     transportmodel->GetFermionMass(
         zi, 0, mt2, m2prime, thetaprime, theta2prime);
@@ -845,21 +819,20 @@ void TransportEquations::CalculateBAU()
             exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * transportmodel->vwall *
-              gamwall));    // exp(-45 G_sph |z| / 4 vw gammaw)
-    r *= 1 / abs(dudz(ui)); // z -> u jacobian
+              gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
     // Save in list to pass to integrator
-    u.push_back(ui);
+    z.push_back(zi);
     muB.push_back(r); // integrand
   }
 
-  size_t n = u.size();
-  double a = u.front(); // Lower bound of integration
-  double b = u.back();  // Upper bound of integration
+  size_t n = z.size();
+  double a = z.front(); // Lower bound of integration
+  double b = z.back();  // Upper bound of integration
 
   // linear approximation
   gsl_interp_accel *acc_l = gsl_interp_accel_alloc();
   gsl_spline *spline_l    = gsl_spline_alloc(gsl_interp_linear, n);
-  gsl_spline_init(spline_l, u.data(), muB.data(), n);
+  gsl_spline_init(spline_l, z.data(), muB.data(), n);
   double result_l = gsl_spline_eval_integ(spline_l, a, b, acc_l);
   gsl_spline_free(spline_l);
   gsl_interp_accel_free(acc_l);
@@ -867,7 +840,7 @@ void TransportEquations::CalculateBAU()
   // cubic spline approximation
   gsl_interp_accel *acc_c = gsl_interp_accel_alloc();
   gsl_spline *spline_c    = gsl_spline_alloc(gsl_interp_cspline, n);
-  gsl_spline_init(spline_c, u.data(), muB.data(), n);
+  gsl_spline_init(spline_c, z.data(), muB.data(), n);
   double result_c = gsl_spline_eval_integ(spline_c, a, b, acc_c);
   gsl_spline_free(spline_c);
   gsl_interp_accel_free(acc_c);
@@ -918,12 +891,12 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  size_t i_min_left = 0, i_min_right = uList.size() - 1;
+  size_t i_min_left = 0, i_min_right = zList.size() - 1;
   double max = -1.;
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
     max = std::max(max, abs(Solution[ind.value()][i]));
 
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
@@ -932,7 +905,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
     }
   }
 
-  for (size_t i = uList.size(); i-- > 0;)
+  for (size_t i = zList.size(); i-- > 0;)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
@@ -943,7 +916,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   for (size_t i = i_min_left; i <= i_min_right; i++)
   {
-    z.push_back(uList[i]);
+    z.push_back(zList[i]);
     y.push_back(Solution[ind.value()][i]);
   }
   Plot.addPlot(z, y, "", '*');
