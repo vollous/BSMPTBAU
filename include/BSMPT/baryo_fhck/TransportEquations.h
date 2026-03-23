@@ -228,7 +228,7 @@ public:
    * using the slowest decaying $\lambda$ (highest negative real part)
    *
    */
-  const double LwMultiplierCutoff = 1e-20;
+  const double LwMultiplierCutoff = 1e-10;
 
   /**
    * @brief Used for quick calculations (should not be that relevant)
