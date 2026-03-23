@@ -193,7 +193,7 @@ public:
    * low precision calculation.
    *
    */
-  const double StepsPerCycleLow = 100;
+  const double StepsPerCycleLow = 15;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
@@ -202,7 +202,7 @@ public:
    * high precision calculation.
    *
    */
-  const double StepsPerCycleHigh = 200;
+  const double StepsPerCycleHigh = 30;
 
   /**
    * @brief Used for quick calculations (should not be that relevant)
@@ -228,7 +228,7 @@ public:
    * using the slowest decaying $\lambda$ (highest negative real part)
    *
    */
-  const double LwMultiplierCutoff = 1e-6;
+  const double LwMultiplierCutoff = 1e-20;
 
   /**
    * @brief Used for quick calculations (should not be that relevant)

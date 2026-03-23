@@ -506,10 +506,7 @@ void TransportEquations::MakeDistribution(const double amplitude,
   {
     // linear -1 -> 1
     double u = ((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.);
-    u        = pow(u, 3) * M_PI / 4.;
-    u        = tan(u);
-    u        = amplitude * u / sqrt(1 - u * u);
-    zList.push_back(u);
+    zList.push_back(amplitude * atanh(u));
   }
 }
 
