@@ -193,7 +193,7 @@ public:
    * low precision calculation.
    *
    */
-  const double StepsPerCycleLow = 15;
+  const double StepsPerCycleLow = 20;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
