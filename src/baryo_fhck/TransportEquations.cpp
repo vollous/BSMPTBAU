@@ -683,11 +683,17 @@ void TransportEquations::SolveTransportEquation()
        << " ----------------";
     Logger::Write(LoggingLevel::FHCK, ss.str());
     ss.str("");
-    StepsPerCycle                = StepsPerCycleLow;
-    const double bauLowPrecision = SolveTransportEquationEll(ell);
 
-    StepsPerCycle                 = StepsPerCycleHigh;
-    const double bauHighPrecision = SolveTransportEquationEll(ell);
+    double bauLowPrecision = NAN, bauHighPrecision = NAN;
+
+    StepsPerCycle   = StepsPerCycleLow;
+    bauLowPrecision = SolveTransportEquationEll(ell);
+
+    if (not std::isnan(bauLowPrecision))
+    {
+      StepsPerCycle    = StepsPerCycleHigh;
+      bauHighPrecision = SolveTransportEquationEll(ell);
+    }
 
     const double Uncertainty = std::abs(bauHighPrecision / bauLowPrecision - 1);
 
