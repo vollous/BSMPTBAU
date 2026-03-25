@@ -3,7 +3,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel =
     [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a898360ff53344e9748a49d2924eca678", null ],
     [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a063607ecc6fef79cbd0454e1fa6ca47e", null ],
     [ "EWSBVEV", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74", null ],
-    [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a6bb1f21f54af6a47457e2baab6291775", null ],
+    [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a5200e14199aa0009801ff0a2f12f1928", null ],
     [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a123cd34e27644c95e2aa77e3b89d020e", null ],
     [ "GetWMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a596797b1607825e667f2272b91a2b8a0", null ],
     [ "Initialize", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957", null ],

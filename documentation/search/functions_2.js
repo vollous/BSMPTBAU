@@ -65,7 +65,7 @@ var searchData=
   ['calcwhichminimizer_62',['CalcWhichMinimizer',['../Minimizer_8h.html#aa0c9d80c331aebfa6c08b1f7d8a9c588',1,'BSMPT::Minimizer']]],
   ['centerpath_63',['centerpath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a0c109491a1ecee5a6bd95cf645bbedff',1,'BSMPT::VacuumProfileNS::VacuumProfile::CenterPath(double &amp;center)'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a6af919c4dcd59cfde4561e3003e257bd',1,'BSMPT::VacuumProfileNS::VacuumProfile::CenterPath()']]],
   ['check_5frequired_5fparameters_64',['check_required_parameters',['../classBSMPT_1_1parser.html#a8b445766c7efdb6b1ffd82e2bc50ac2e',1,'BSMPT::parser']]],
-  ['checkboundary_65',['CheckBoundary',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['checkboundary_65',['checkboundary',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a85a4c9b150b42e745f946125866cd677',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary(double &amp;HighestNegRe, double &amp;HighestNegEigenvalue)'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary()']]],
   ['checkmassratio_66',['CheckMassRatio',['../classBSMPT_1_1TransitionTracer.html#a2dd8a3a22c334b324e7eaaca89b82f87',1,'BSMPT::TransitionTracer']]],
   ['checknlovev_67',['CheckNLOVEV',['../classBSMPT_1_1Class__Potential__Origin.html#a16150813f8e3aaf6133af7c655c85a89',1,'BSMPT::Class_Potential_Origin']]],
   ['checkrotationmatrix_68',['CheckRotationMatrix',['../classBSMPT_1_1Class__Potential__Origin.html#a6035873e14f081b7207c2db806248987',1,'BSMPT::Class_Potential_Origin']]],

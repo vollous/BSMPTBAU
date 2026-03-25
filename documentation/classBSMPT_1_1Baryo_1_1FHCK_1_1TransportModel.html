@@ -32,7 +32,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.1.16</span>
+   <div id="projectname">BSMPT<span id="projectnumber">&#160;3.2.0</span>
    </div>
    <div id="projectbrief">BSMPT - Beyond the Standard Model Phase Transitions : A C++ package for the computation of the EWPT in BSM models</div>
   </td>
@@ -126,9 +126,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetEtaInterface</b> (
 <tr class="memdesc:ad63a3e6e306bd15e123de1777d59de16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the VEV \( \vec{v} \) and derivatives \(
 \drac{d^n\vec{v}}{dz^n} \) at the positions z.  <br /></td></tr>
 <tr class="separator:ad63a3e6e306bd15e123de1777d59de16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bb1f21f54af6a47457e2baab6291775" id="r_a6bb1f21f54af6a47457e2baab6291775"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a6bb1f21f54af6a47457e2baab6291775">GenerateFermionMass</a> (const std::vector&lt; double &gt; &amp;zList)</td></tr>
-<tr class="memdesc:a6bb1f21f54af6a47457e2baab6291775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the quark masses splines.  <br /></td></tr>
-<tr class="separator:a6bb1f21f54af6a47457e2baab6291775"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5200e14199aa0009801ff0a2f12f1928" id="r_a5200e14199aa0009801ff0a2f12f1928"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a5200e14199aa0009801ff0a2f12f1928">GenerateFermionMass</a> (const std::vector&lt; double &gt; &amp;zList, const bool &amp;MakeTopMassPlot=false)</td></tr>
+<tr class="memdesc:a5200e14199aa0009801ff0a2f12f1928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the quark masses splines.  <br /></td></tr>
+<tr class="separator:a5200e14199aa0009801ff0a2f12f1928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a123cd34e27644c95e2aa77e3b89d020e" id="r_a123cd34e27644c95e2aa77e3b89d020e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a123cd34e27644c95e2aa77e3b89d020e">GetFermionMass</a> (const double &amp;z, const size_t &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
 <tr class="memdesc:a123cd34e27644c95e2aa77e3b89d020e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
 <tr class="separator:a123cd34e27644c95e2aa77e3b89d020e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -389,8 +389,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="a6bb1f21f54af6a47457e2baab6291775" name="a6bb1f21f54af6a47457e2baab6291775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bb1f21f54af6a47457e2baab6291775">&#9670;&#160;</a></span>GenerateFermionMass()</h2>
+<a id="a5200e14199aa0009801ff0a2f12f1928" name="a5200e14199aa0009801ff0a2f12f1928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5200e14199aa0009801ff0a2f12f1928">&#9670;&#160;</a></span>GenerateFermionMass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,8 +399,18 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
           <td class="memname">void BSMPT::Baryo::FHCK::TransportModel::GenerateFermionMass </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; double &gt; &amp;&#160;</td>
-          <td class="paramname"><em>zList</em></td><td>)</td>
+          <td class="paramname"><em>zList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>MakeTopMassPlot</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -408,7 +418,15 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 <p>Generate the quark masses splines. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">zList</td><td>z distribution where we interpolate the fermion mass</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Generate the quark masses splines</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">zList</td><td>z distribution where we interpolate the fermion mass </td></tr>
+    <tr><td class="paramname">MakeTopMassPlot</td><td>Make the plots or not </td></tr>
   </table>
   </dd>
 </dl>
