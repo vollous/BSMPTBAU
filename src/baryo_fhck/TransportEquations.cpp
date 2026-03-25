@@ -1,6 +1,8 @@
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/utility/asciiplotter/asciiplotter.h>
 #include <sstream>
+#define _USE_MATH_DEFINES
+#include <cmath>
 namespace BSMPT
 {
 
@@ -34,18 +36,11 @@ void TransportEquations::Initialize()
     return;
   }
 
-  MakeDistribution(1, NumberOfSteps);
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Limits in z \t" + std::to_string(zList.front()) + " -> " +
-                    std::to_string(zList.back()));
-
-  Logger::Write(LoggingLevel::FHCK,
-                "Limits in u \t" + std::to_string(uList.front()) + " -> " +
-                    std::to_string(uList.back()) + "\n");
-
-  Logger::Write(LoggingLevel::FHCK, "Calculating fermion masses.\n");
-  transportmodel->GenerateFermionMass(zList);
+  // Plot top mass
+  NumberOfSteps = DefaultNumberOfSteps;
+  LwMultiplier  = DefaultLwMultiplier;
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList, true);
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
@@ -56,6 +51,51 @@ void TransportEquations::Initialize()
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 }
 
+void TransportEquations::GenerateIntegrationSpace()
+{
+  // These are only used to calculate the estimated NumberOfSteps and
+  // LwMultiplier
+  NumberOfSteps = DefaultNumberOfSteps;
+  LwMultiplier  = DefaultLwMultiplier;
+
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList);
+  Solution = MatDoub(nEqs, zList.size(), 0.);
+
+  double HighestNegRe, HighestNegEigenvalue;
+  CheckBoundary(HighestNegRe, HighestNegEigenvalue);
+
+  LwMultiplier = std::ceil(std::log(LwMultiplierCutoff) /
+                           (transportmodel->Lw * HighestNegRe));
+
+  NumberOfSteps =
+      StepsPerCycle * std::ceil(2 * LwMultiplier * transportmodel->Lw *
+                                HighestNegEigenvalue / (2 * M_PI));
+
+  // Upper bound on NumberOfSteps
+  const double LowHighStepFactor =
+      StepsPerCycle /
+      StepsPerCycleHigh; // prevent same MaxNumberOfSteps for high and low cycle
+  NumberOfSteps = std::min(
+      NumberOfSteps, (size_t)std::ceil(MaxNumberOfSteps * LowHighStepFactor));
+  // Lower bound on LwMultiplier
+  LwMultiplier = std::max(LwMultiplier, MinLwMultiplier);
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Calculated NumberOfSteps = " + std::to_string(NumberOfSteps));
+  Logger::Write(LoggingLevel::FHCK,
+                "Calculated LwMultiplier = " + std::to_string(LwMultiplier) +
+                    "\n");
+
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList);
+  Solution = MatDoub(nEqs, zList.size(), 0.);
+
+  Logger::Write(LoggingLevel::FHCK,
+                "Integration limits in z | " + std::to_string(zList.front()) +
+                    " -> " + std::to_string(zList.back()));
+}
+
 void TransportEquations::InitializeMoment(const size_t &moment_in)
 {
   moment = moment_in;
@@ -63,12 +103,12 @@ void TransportEquations::InitializeMoment(const size_t &moment_in)
   nParticles = nFermions + nBosons;
   nEqs       = moment * nParticles;
 
-  Solution = MatDoub(nEqs, uList.size(), 0.);
-
   MtildeM.resize(nEqs, nEqs);
   MtildeP.resize(nEqs, nEqs);
   StildeM.resize(nEqs);
   StildeP.resize(nEqs);
+
+  GenerateIntegrationSpace();
 }
 
 tk::spline TransportEquations::InterpolateKernel(const std::string &kernel_name,
@@ -394,22 +434,6 @@ void TransportEquations::InsertBlockDiagonal(MatDoub &full,
       full[start + i][start + j] = sub[i][j];
 }
 
-double TransportEquations::dudz(const double &u)
-{
-  return pow(1 - u * u, 3. / 2.) / (transportmodel->Lw * LwMultiplier);
-}
-
-double TransportEquations::zTOu(const double &z)
-{
-  return (z / (transportmodel->Lw * LwMultiplier)) /
-         sqrt(1 + pow(z / (transportmodel->Lw * LwMultiplier), 2));
-}
-
-double TransportEquations::uTOz(const double &u)
-{
-  return LwMultiplier * transportmodel->Lw * u / (sqrt(1 - u * u));
-}
-
 void TransportEquations::Equations(const double &z,
                                    MatDoub &Mtilde,
                                    VecDoub &Stilde,
@@ -479,27 +503,37 @@ void TransportEquations::Equations(const double &z,
       Stilde[i] += Ainverse[i][j] * S[j];
 }
 
-void TransportEquations::MakeDistribution(const double xmax,
+void TransportEquations::MakeDistribution(const double amplitude,
                                           const size_t npoints)
 {
-  uList.resize(npoints);
+  zList.clear();
   for (size_t i = 0; i < npoints; i++)
   {
-    double temp =
-        pow(((i + 1 - (npoints + 1) / 2.)) / ((npoints + 1) / 2.), 3) * M_PI /
-        4.;
-    uList.at(i) = xmax * tan(temp);
-  }
-
-  zList.clear();
-  for (const auto &u : uList)
-  {
-    zList.push_back(uTOz(u));
+    // linear -1 -> 1
+    double u = ((i - (npoints - 1) / 2.)) / ((npoints - 1) / 2.);
+    u        = pow(u, 3);
+    u        = amplitude * atanh(u * tanh(2));
+    zList.push_back(u);
   }
 }
 
 void TransportEquations::CheckBoundary()
 {
+  double HighestNegRe, HighestNegEigenvalue;
+  CheckBoundary(HighestNegRe, HighestNegEigenvalue);
+}
+
+void TransportEquations::CheckBoundary(double &HighestNegRe,
+                                       double &HighestNegEigenvalue)
+{
+  // Initialize vars
+  HighestNegRe         = -1e100;
+  HighestNegEigenvalue = -1;
+
+  // Calculate asymptotic matrixs
+  Equations(zList.front(), MtildeM, StildeM, 0);
+  Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+
   double STildeLength(0);
   size_t NumberOfNonDecayingModes(0);
   std::stringstream ss;
@@ -534,12 +568,22 @@ void TransportEquations::CheckBoundary()
 
   // Number of modes that have to be set to zero
   for (auto ev : EigenSolverM.eigenvalues())
-    if (ev.real() >= 0) NumberOfNonDecayingModes++;
+    if (-ev.real() >= 0) /* minus sign because z -> -Infinity */
+      NumberOfNonDecayingModes++;
+    else
+    {
+      HighestNegRe = std::max(
+          HighestNegRe, -ev.real()); /* minus sign because z -> -Infinity */
+      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
+    }
   for (auto ev : EigenSolverP.eigenvalues())
-    if (ev.real() >= 0) NumberOfNonDecayingModes++;
-
-  ss << "There are " << NumberOfNonDecayingModes
-     << " modes that have to be set to zero at the boundaries.";
+    if (ev.real() >= 0)
+      NumberOfNonDecayingModes++;
+    else
+    {
+      HighestNegRe         = std::max(HighestNegRe, ev.real());
+      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
+    }
 
   if (NumberOfNonDecayingModes > nEqs)
   {
@@ -551,8 +595,6 @@ void TransportEquations::CheckBoundary()
           "conditions of μ = u = 0.\033[0m\n";
     Status = FHCKStatus::UnphysicalBoundary;
   }
-  else
-    ss << " \033[92mSuccess.\033[0m";
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
@@ -588,25 +630,25 @@ void TransportEquations::smatrix(const int k,
       // Sn at the last boundary
       s[i][nEqs + i] = 1.0;
       // C0
-      s[i][jsf] = y[indexv[i]][uList.size() - 1];
+      s[i][jsf] = y[indexv[i]][zList.size() - 1];
     }
   }
   else
   {
-    double um = (uList[k] + uList[k - 1]) / 2.;
-    double du = (uList[k] - uList[k - 1]) / dudz(um);
-    if (um < -0.7) // TODO: change. Too specific
+    double zk = (zList[k] + zList[k - 1]) / 2.;
+    double dz = (zList[k] - zList[k - 1]);
+    if (zk < -100 * transportmodel->Lw) // TODO: change. Too specific
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (um > 0.7) // TODO: change. Too specific
+    else if (zk > 100 * transportmodel->Lw) // TODO: change. Too specific
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
     }
     else
-      Equations(uTOz(um), Mtilde, Stilde, k);
+      Equations(zk, Mtilde, Stilde, k);
     for (size_t j = 0; j < nEqs; j++)
     {
       for (size_t n = 0; n < nEqs; n++)
@@ -614,27 +656,27 @@ void TransportEquations::smatrix(const int k,
         // s matrix for the middle point
         // S_{j,n}
         // M[k] and S[k] are evaluated between k and k-1
-        s[j][indexv[n]] = -Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        s[j][indexv[n]] = -Delta(j, n) - 0.5 * dz * (Mtilde[j][n]);
         // S_{j,N + n}
-        s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * du * (Mtilde[j][n]);
+        s[j][nEqs + indexv[n]] = Delta(j, n) - 0.5 * dz * (Mtilde[j][n]);
       }
       //  Equations for E(k,k-1)
       temp = Stilde[j];
       for (size_t i = 0; i < nEqs; i++)
         temp += Mtilde[j][i] * (y[i][k] + y[i][k - 1]) / 2.;
-      s[j][jsf] = y[j][k] - y[j][k - 1] - du * temp;
+      s[j][jsf] = y[j][k] - y[j][k - 1] - dz * temp;
     }
   }
 }
 
 void TransportEquations::SolveTransportEquation()
 {
+  std::fill(BAUeta.begin(), BAUeta.end(), NAN);
   if (transportmodel->status != TransportModelStatus::Success)
   {
 
     Logger::Write(LoggingLevel::FHCK,
                   "SolveTransportEquation() failed. No VEV profile available.");
-    std::fill(BAUeta.begin(), BAUeta.end(), NAN);
     return;
   }
 
@@ -643,89 +685,121 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t ell = 0; ell < moments.size(); ell++)
   {
-    InitializeMoment(moments.at(ell));
-    bau = 0;
+    stringstream ss;
+    ss << "---------------- Calculating BAU for ℓ = " << moments.at(ell)
+       << " ----------------";
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+    ss.str("");
 
-    Equations(zList.front(), MtildeM, StildeM, 0);
-    Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+    double bauLowPrecision = NAN, bauHighPrecision = NAN;
 
-    CheckBoundary();
-    if (Status != FHCKStatus::NotSet)
+    StepsPerCycle   = StepsPerCycleLow;
+    bauLowPrecision = SolveTransportEquationEll(ell);
+
+    if (not std::isnan(bauLowPrecision))
     {
-      Logger::Write(
-          LoggingLevel::FHCK,
-          "\033[31mTransport equation unable to be computed. Status code : " +
-              FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
-      return;
+      StepsPerCycle    = StepsPerCycleHigh;
+      bauHighPrecision = SolveTransportEquationEll(ell);
     }
 
-    size_t itmax = 10;
-    double conv  = 1e-10;
-    double slowc = 1.;
-    VecDoub scalv(nEqs, 1);
-    VecInt indexv(nEqs);
-
-    // fix μ and first u
-    for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
-      for (size_t particle = 0; particle < nParticles; particle++)
-      {
-        indexv[l + particle * moment] = particle + l * (nParticles);
-        Logger::Write(LoggingLevel::FHCK,
-                      "indexv[" + std::to_string(particle + l * (nParticles)) +
-                          "] = " + std::to_string(l + particle * moment));
-      }
-
-    int NB = nEqs / 2;
-
-    size_t it;
-    double MinError    = 1.e100;
-    double MaxError    = 1e-100;
-    size_t NotBetter   = 0;
-    auto Best_Solution = Solution;
-
-    for (it = 0; it < itmax; it++)
-    {
-      if (NotBetter >= NotBetterThreshold) break;
-      RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
-      stringstream ss;
-      ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
-      Logger::Write(LoggingLevel::FHCK, ss.str());
-
-      MaxError = std::max(MaxError, solvde.err);
-
-      if (solvde.err < MinError)
-      {
-        MinError      = solvde.err;
-        Best_Solution = Solution;
-        NotBetter     = 0;
-      }
-
-      // Early exit in case error gets much smaller than the worst case
-      if (solvde.err / MaxError < 1e-10) break;
-
-      NotBetter++;
-    }
-
-    if (it == NotBetter)
-    {
-      Logger::Write(
-          LoggingLevel::FHCK,
-          "Relaxation transport equations failed! [did not converge once]");
-      BAUeta.at(ell) = NAN;
-      return;
-    }
-
-    Solution = Best_Solution;
+    const double Uncertainty = std::abs(bauHighPrecision / bauLowPrecision - 1);
 
     PrintTransportEquation(120, "tL", "mu");
     PrintTransportEquation(120, "tR", "mu");
     PrintTransportEquation(120, "bL", "mu");
     PrintTransportEquation(120, "h", "mu");
 
-    CalculateBAU();
+    ss << "BAU(low precision) = " << bauLowPrecision
+       << "\nBAU(high precision) = " << bauHighPrecision
+       << "\nUncertainty = " << Uncertainty;
 
-    BAUeta.at(ell) = bau;
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+
+    if (not isnan(bauLowPrecision) and not isnan(bauHighPrecision) and
+        Uncertainty < UncertaintyThreshold)
+      BAUeta.at(ell) = bauHighPrecision;
   }
+}
+
+double TransportEquations::SolveTransportEquationEll(const size_t &ell)
+{
+  Status = FHCKStatus::NotSet;
+
+  InitializeMoment(moments.at(ell));
+
+  Equations(zList.front(), MtildeM, StildeM, 0);
+  Equations(zList.back(), MtildeP, StildeP, NumberOfSteps - 1);
+
+  CheckBoundary();
+  if (Status != FHCKStatus::NotSet)
+  {
+    Logger::Write(
+        LoggingLevel::FHCK,
+        "\033[31mTransport equation unable to be computed. Status code : " +
+            FHCKStatusToString.at(FHCKStatus::NotSet) + "\033[0m\n");
+    return NAN;
+  }
+
+  size_t itmax = 10;
+  double conv  = 1e-10;
+  double slowc = 1.;
+  VecDoub scalv(nEqs, 1);
+  VecInt indexv(nEqs);
+
+  // fix μ and first u
+  for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
+    for (size_t particle = 0; particle < nParticles; particle++)
+    {
+      indexv[l + particle * moment] = particle + l * (nParticles);
+      Logger::Write(LoggingLevel::FHCK,
+                    "indexv[" + std::to_string(particle + l * (nParticles)) +
+                        "] = " + std::to_string(l + particle * moment));
+    }
+
+  int NB = nEqs / 2;
+
+  size_t it;
+  double MinError    = 1.e100;
+  double MaxError    = 1e-100;
+  size_t NotBetter   = 0;
+  auto Best_Solution = Solution;
+
+  for (it = 0; it < itmax; it++)
+  {
+    if (NotBetter >= NotBetterThreshold) break;
+    RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
+    stringstream ss;
+    ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+
+    MaxError = std::max(MaxError, solvde.err);
+
+    if (solvde.err < MinError)
+    {
+      MinError      = solvde.err;
+      Best_Solution = Solution;
+      NotBetter     = 0;
+    }
+
+    // Early exit in case error gets much smaller than the worst case
+    if (solvde.err / MaxError < 1e-10) break;
+
+    NotBetter++;
+  }
+
+  if (it == NotBetter)
+  {
+    Logger::Write(
+        LoggingLevel::FHCK,
+        "Relaxation transport equations failed! [did not converge once]");
+    return NAN;
+  }
+
+  Solution = Best_Solution;
+
+  CalculateBAU();
+
+  return bau;
 }
 
 void TransportEquations::CalculateBAU()
@@ -734,13 +808,11 @@ void TransportEquations::CalculateBAU()
   // Weak spharelon rate
   const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
-  std::vector<double> u;   // list of u positions
+  std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
   {
-
-    const double ui = uList[i]; // u at position i
-    const double zi = uTOz(ui); // z(u)
+    const double zi = zList.at(i);
     // Calculate the vev at z
     transportmodel->GetFermionMass(
         zi, 0, mt2, m2prime, thetaprime, theta2prime);
@@ -757,21 +829,20 @@ void TransportEquations::CalculateBAU()
             exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
     r *= exp(-45 * Gsph * std::abs(zi) /
              (4. * transportmodel->vwall *
-              gamwall));    // exp(-45 G_sph |z| / 4 vw gammaw)
-    r *= 1 / abs(dudz(ui)); // z -> u jacobian
+              gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
     // Save in list to pass to integrator
-    u.push_back(ui);
+    z.push_back(zi);
     muB.push_back(r); // integrand
   }
 
-  size_t n = u.size();
-  double a = u.front(); // Lower bound of integration
-  double b = u.back();  // Upper bound of integration
+  size_t n = z.size();
+  double a = z.front(); // Lower bound of integration
+  double b = z.back();  // Upper bound of integration
 
   // linear approximation
   gsl_interp_accel *acc_l = gsl_interp_accel_alloc();
   gsl_spline *spline_l    = gsl_spline_alloc(gsl_interp_linear, n);
-  gsl_spline_init(spline_l, u.data(), muB.data(), n);
+  gsl_spline_init(spline_l, z.data(), muB.data(), n);
   double result_l = gsl_spline_eval_integ(spline_l, a, b, acc_l);
   gsl_spline_free(spline_l);
   gsl_interp_accel_free(acc_l);
@@ -779,7 +850,7 @@ void TransportEquations::CalculateBAU()
   // cubic spline approximation
   gsl_interp_accel *acc_c = gsl_interp_accel_alloc();
   gsl_spline *spline_c    = gsl_spline_alloc(gsl_interp_cspline, n);
-  gsl_spline_init(spline_c, u.data(), muB.data(), n);
+  gsl_spline_init(spline_c, z.data(), muB.data(), n);
   double result_c = gsl_spline_eval_integ(spline_c, a, b, acc_c);
   gsl_spline_free(spline_c);
   gsl_interp_accel_free(acc_c);
@@ -798,18 +869,18 @@ void TransportEquations::CalculateBAU()
   stringstream ss;
   ss << "eta = " << result_c << " with error " << error << std::endl;
 
-  double unc = abs(error / result_c);
+  double Uncertainty = abs(error / result_c);
 
-  if (unc > 0.01)
+  if (Uncertainty > UncertaintyThreshold)
   {
-    ss << "Calculation failed!\t" << unc << "\n";
+    ss << "Calculation failed!\t" << Uncertainty << "\n";
     result_c = NAN;
   }
 
   // Save the result
   bau = result_c;
 
-  ss << "eta/eta_obs = " << result_c / (8.7e-11) << std::endl;
+  ss << "eta/eta_obs = " << result_c / (8.7e-11);
   Logger::Write(LoggingLevel::FHCK, ss.str());
 }
 
@@ -830,12 +901,12 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   if (MuOrU == "u") ind = ind.value() + 1;
 
-  size_t i_min_left = 0, i_min_right = uList.size() - 1;
+  size_t i_min_left = 0, i_min_right = zList.size() - 1;
   double max = -1.;
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
     max = std::max(max, abs(Solution[ind.value()][i]));
 
-  for (size_t i = 0; i < uList.size(); i++)
+  for (size_t i = 0; i < zList.size(); i++)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
@@ -844,7 +915,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
     }
   }
 
-  for (size_t i = uList.size(); i-- > 0;)
+  for (size_t i = zList.size(); i-- > 0;)
   {
     if (abs(Solution[ind.value()][i]) > max / 100.)
     {
@@ -855,7 +926,7 @@ void TransportEquations::PrintTransportEquation(const int &size,
 
   for (size_t i = i_min_left; i <= i_min_right; i++)
   {
-    z.push_back(uList[i]);
+    z.push_back(zList[i]);
     y.push_back(Solution[ind.value()][i]);
   }
   Plot.addPlot(z, y, "", '*');

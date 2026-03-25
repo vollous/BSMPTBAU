@@ -74,7 +74,7 @@ public:
    * @brief Number of times we let the solution relax without getting better.
    *
    */
-  size_t NotBetterThreshold = 3;
+  const size_t NotBetterThreshold = 3;
 
   /**
    * @brief Temp var to store \f$ \eta \f$ at moment
@@ -117,12 +117,6 @@ public:
    *
    */
   std::vector<double> zList;
-
-  /**
-   * @brief List of points on the u-axis (tanh scaled).
-   *
-   */
-  std::vector<double> uList;
 
   /**
    * @brief \f$ M \f$ matrix at the z-negative boundary.
@@ -185,24 +179,88 @@ public:
   size_t nEqs;
 
   /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength
+   *
+   */
+  double StepsPerCycle;
+
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength for a
+   * low precision calculation.
+   *
+   */
+  const double StepsPerCycleLow = 30;
+
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
+   * the imaginary part we can calculate how rapidly the functions are
+   * oscillating. This sets the goal number of points per cycle/wavelength for a
+   * high precision calculation.
+   *
+   */
+  const double StepsPerCycleHigh = 40;
+
+  /**
+   * @brief Used for quick calculations (should not be that relevant)
+   *
+   */
+  const size_t DefaultNumberOfSteps = 10000;
+
+  /**
    * @brief Number of steps in space
    *
    */
-  size_t NumberOfSteps = 15000;
+  size_t NumberOfSteps;
+
+  /**
+   * @brief Maximum number of steps in \f$ z \f$
+   *
+   */
+  const size_t MaxNumberOfSteps = 1e5;
+
+  /**
+   * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$. We use
+   * this so calculate when \f$ e^{-\lambda z} = \text{LwMultiplierCutoff}\f$
+   * using the slowest decaying $\lambda$ (highest negative real part)
+   *
+   */
+  const double LwMultiplierCutoff = 1e-10;
+
+  /**
+   * @brief Used for quick calculations (should not be that relevant)
+   *
+   */
+  const double DefaultLwMultiplier = 100;
 
   /**
    * @brief The integration goes from \f$ - LwMultiplier * Lw \f$ up to \f$
    * LwMultiplier * Lw \f$
    *
    */
-  double LwMultiplier = 4000.;
+  double LwMultiplier;
+
+  /**
+   * @brief Minimum LwMultiplier used
+   *
+   */
+  const double MinLwMultiplier = 10.;
 
   /**
    * @brief Threshold for which the length of the S vector must be smaller. If
    * not then the integration region must be inscreased.
    *
    */
-  double STildeThreshold = 1e-10;
+  const double STildeThreshold = 1e-10;
+
+  /**
+   * @brief Uncertainty threshold for accepting a BAU
+   *
+   */
+  const double UncertaintyThreshold = 1e-2;
 
   /**
    * @brief Construct a new Transport Equations object
@@ -220,6 +278,13 @@ public:
    *
    */
   void Initialize();
+
+  /**
+   * @brief Calculates the decaying eigenvalues to calculate how long we have to
+   * go in \f$ z \f$
+   *
+   */
+  void GenerateIntegrationSpace();
 
   /**
    * @brief Initialize things for the this specific moment
@@ -309,6 +374,22 @@ public:
    * @brief Check if the boundary have enough decaying modes for the solution to
    * exist.
    */
+
+  /**
+   * @brief Check if the boundary have enough decaying modes for the solution to
+   * exist.
+   *
+   * @param HighestNegRe Highest real part of negative eigenvalues (close to
+   * zero from below)
+   * @param HighestNegEigenvalue Highest magnitude of all eigenvalues with
+   * negative real part
+   */
+  void CheckBoundary(double &HighestNegRe, double &HighestNegEigenvalue);
+
+  /**
+   * @brief Check if the boundary have enough decaying modes for the solution to
+   * exist.
+   */
   void CheckBoundary();
 
   /**
@@ -319,31 +400,6 @@ public:
    * @param Stilde \f$ position at which we want to insert the sub matrix \f$
    */
   void InsertBlockDiagonal(MatDoub &full, MatDoub &sub, const size_t position);
-
-  /**
-   * @brief Derivative \f$ \frac{du}{dz} \f$ of \f$ z \to u \equiv \tanh(z/L_w)
-   * \f$
-   *
-   * @param u
-   * @return double
-   */
-  double dudz(const double &u);
-
-  /**
-   * @brief
-   *
-   * @param z
-   * @return double
-   */
-  double zTOu(const double &z);
-
-  /**
-   * @brief Mapping of \f$ u \to z \equiv L_w\tanh^{-1}(z) \f$
-   *
-   * @param u
-   * @return double
-   */
-  double uTOz(const double &u);
 
   /**
    * @brief Calculate the equations
@@ -368,8 +424,10 @@ public:
   /**
    * @brief Distributes the points used in the relaxation method
    *
+   * @param amplitude amplitude of points distributed
+   * @param npoints number of points
    */
-  void MakeDistribution(const double xmax, const size_t npoints);
+  void MakeDistribution(const double amplitude, const size_t npoints);
 
   /**
    * @brief Smatrix needed of the relaxation method to solve the ODE
@@ -381,6 +439,14 @@ public:
                VecInt &indexv,
                MatDoub &s,
                MatDoub &y);
+
+  /**
+   * @brief Solve the transport equation for the moment \f$ \ell \f$
+   *
+   * @param ell \f$ \ell \f$
+   * @return double BAU
+   */
+  double SolveTransportEquationEll(const size_t &ell);
 
   /**
    * @brief Solve the transport equations.

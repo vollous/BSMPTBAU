@@ -190,27 +190,28 @@ try
           switch (args.WhichTransitionTemperature)
           {
           case TransitionTemperature::ApproxNucleation:
-            trans_temp = output.vec_trans_data.at(i).nucl_approx_temp.value();
+            trans_temp =
+                output.vec_trans_data.at(i).nucl_approx_temp.value_or(NAN);
             trans_true_vev  = output.vec_trans_data.at(i).nucl_approx_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).nucl_approx_false_vev;
             break;
           case TransitionTemperature::Nucleation:
-            trans_temp      = output.vec_trans_data.at(i).nucl_temp.value();
+            trans_temp = output.vec_trans_data.at(i).nucl_temp.value_or(NAN);
             trans_true_vev  = output.vec_trans_data.at(i).nucl_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).nucl_false_vev;
             break;
           case TransitionTemperature::Percolation:
-            trans_temp      = output.vec_trans_data.at(i).perc_temp.value();
+            trans_temp = output.vec_trans_data.at(i).perc_temp.value_or(NAN);
             trans_true_vev  = output.vec_trans_data.at(i).perc_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).perc_false_vev;
             break;
           case TransitionTemperature::Completion:
-            trans_temp      = output.vec_trans_data.at(i).compl_temp.value();
+            trans_temp = output.vec_trans_data.at(i).compl_temp.value_or(NAN);
             trans_true_vev  = output.vec_trans_data.at(i).compl_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).compl_false_vev;
             break;
           default:
-            trans_temp      = output.vec_trans_data.at(i).crit_temp.value();
+            trans_temp = output.vec_trans_data.at(i).crit_temp.value_or(NAN);
             trans_true_vev  = output.vec_trans_data.at(i).crit_true_vev;
             trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
           }
