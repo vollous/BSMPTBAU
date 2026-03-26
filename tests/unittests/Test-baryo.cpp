@@ -43,14 +43,6 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
   std::shared_ptr<BSMPT::CoexPhases> coex =
       std::make_shared<BSMPT::CoexPhases>(vac.CoexPhasesList[0]);
 
-  // TODO remove this timing
-  using std::chrono::duration;
-  using std::chrono::duration_cast;
-  using std::chrono::high_resolution_clock;
-  using std::chrono::milliseconds;
-
-  auto t1 = high_resolution_clock::now();
-
   std::shared_ptr<TransportModel> tmodel =
       std::make_shared<TransportModel>(modelPointer,
                                        coex,
@@ -68,15 +60,4 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
   transport.Initialize();
   transport.SolveTransportEquation();
   CHECK(transport.BAUeta.at(0).value() == Approx(-1.36147e-10).epsilon(1e-2));
-
-  auto t2 = high_resolution_clock::now();
-
-  /* Getting number of milliseconds as an integer. */
-  auto ms_int = duration_cast<milliseconds>(t2 - t1);
-
-  /* Getting number of milliseconds as a double. */
-  duration<double, std::milli> ms_double = t2 - t1;
-
-  std::cout << ms_int.count() << "ms\n";
-  std::cout << ms_double.count() << "ms\n";
 }
