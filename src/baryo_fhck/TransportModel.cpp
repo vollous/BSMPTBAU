@@ -144,7 +144,11 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
 {
   QuarkMassesRe.clear();
   QuarkMassesIm.clear();
-  size_t ind = (modelPointer->get_NQuarks() - 1);
+
+  // Start zListSpline with a point that will fullfil the criteria to add one
+  // more. This point is deleted a few lines below
+  std::vector<double> zListSpline{zList.front() -
+                                  (PointsPerLwMassSpline + 1.) * Lw};
   std::vector<std::vector<double>> MassesReal, MassesImag;
   for (auto z : zList)
   {
@@ -160,15 +164,21 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
       MassReal.push_back(m.real() / fac);
       MassImag.push_back(m.imag() / fac);
     }
-    MassesReal.push_back(MassReal);
-    MassesImag.push_back(MassImag);
+    if (z - zListSpline.back() > Lw / PointsPerLwMassSpline)
+    {
+      zListSpline.push_back(z);
+      MassesReal.push_back(MassReal);
+      MassesImag.push_back(MassImag);
+    }
   }
+
+  zListSpline.erase(zListSpline.begin());
 
   MassesReal = Transpose(MassesReal);
   MassesImag = Transpose(MassesImag);
 
   for (auto MassProfile : MassesReal)
-    QuarkMassesRe.push_back(tk::spline(zList,
+    QuarkMassesRe.push_back(tk::spline(zListSpline,
                                        MassProfile,
                                        tk::spline::cspline,
                                        false,
@@ -178,7 +188,7 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
                                        0));
 
   for (auto MassProfile : MassesImag)
-    QuarkMassesIm.push_back(tk::spline(zList,
+    QuarkMassesIm.push_back(tk::spline(zListSpline,
                                        MassProfile,
                                        tk::spline::cspline,
                                        false,
@@ -190,12 +200,13 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
   // Check if plotting is necessary
   if (not MakeTopMassPlot) return;
 
-  size_t i_left = 0, i_right = zList.size() - 1;
+  size_t ind    = (modelPointer->get_NQuarks() - 1);
+  size_t i_left = 0, i_right = zListSpline.size() - 1;
 
   double max_dmdz = -1;
 
   // calculate maximum
-  for (const auto &zi : zList)
+  for (const auto &zi : zListSpline)
   {
     const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
                              pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
@@ -204,7 +215,7 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
 
   for (size_t i = i_left; i <= i_right; i++)
   {
-    const double zi   = zList[i];
+    const double zi   = zListSpline[i];
     const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
                              pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
     if (dmdz > max_dmdz / 100.)
@@ -216,7 +227,7 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
 
   for (size_t i = i_right; i >= i_left; i--)
   {
-    const double zi   = zList[i];
+    const double zi   = zListSpline[i];
     const double dmdz = sqrt(pow(QuarkMassesRe.at(ind).deriv(1, zi), 2) +
                              pow(QuarkMassesIm.at(ind).deriv(1, zi), 2));
     if (dmdz > max_dmdz / 100.)
@@ -229,7 +240,7 @@ void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
   std::vector<double> zListPlot, RePlot, ImPlot;
   for (size_t i = i_left; i <= i_right; i++)
   {
-    zListPlot.push_back(zList[i]);
+    zListPlot.push_back(zListSpline[i]);
     RePlot.push_back(MassesReal.at(ind)[i]);
     ImPlot.push_back(MassesImag.at(ind)[i]);
   }
