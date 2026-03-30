@@ -297,7 +297,7 @@ void TransportModel::GetFermionMass(const double &z,
   mprimeprime = std::complex<double>(QuarkMassesRe.at(ind).deriv(2, z),
                                      QuarkMassesIm.at(ind).deriv(2, z));
   m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
-  m2prime     = std::abs(2. * mprime * m) / (Tstar * Tstar);
+  m2prime     = (2. * mprime * m).real() / (Tstar * Tstar);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {
