@@ -144,6 +144,12 @@ public:
   double Lw = -1;
 
   /**
+   * @brief Number of points per \f$ L_w \f$ when constructiong the mass spline.
+   *
+   */
+  double PointsPerLwMassSpline = 100.;
+
+  /**
    * @brief Bubble wall velocity
    *
    */
