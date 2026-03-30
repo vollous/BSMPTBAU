@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"classBSMPT_1_1Class__Potential__Origin.html#abd0de1495ab5ecb6e1ca4f1a25d52464":[2,0,0,4,139],
 "classBSMPT_1_1Class__Potential__Origin.html#abdf7656d2da634a8eed41e5268144ea1":[2,0,0,4,29],
 "classBSMPT_1_1Class__Potential__Origin.html#abdf7656d2da634a8eed41e5268144ea1":[3,0,0,11,29],
 "classBSMPT_1_1Class__Potential__Origin.html#ac1bd7cf45185943f2d40f371448796d8":[2,0,0,4,154],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#accb7f8710a2148c8010c4f0c6b8c2601":[3,0,0,3,2,6],
 "classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#acdfc1beeed9dcc5c4881c72acd78d990":[3,0,0,3,2,0],
 "classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#aea630adf8b7ef894b9dbd65995a3696e":[3,0,0,3,2,12],
-"classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#af3a96973ba9a484f8d08e55c3ad4445b":[3,0,0,3,2,16],
-"classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html":[3,0,0,3,3]
+"classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#af3a96973ba9a484f8d08e55c3ad4445b":[3,0,0,3,2,16]
 };

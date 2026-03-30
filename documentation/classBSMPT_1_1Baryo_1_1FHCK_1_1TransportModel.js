@@ -16,6 +16,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel =
     [ "involvedparticles", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#add92bfef7467448acc349c939944755e", null ],
     [ "Lw", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#adf26699cef83222930b325d5bf9d2ecf", null ],
     [ "modelPointer", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ad327cee2eafd5d9373d8e727a64e03f2", null ],
+    [ "PointsPerLwMassSpline", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a49080ec93b0d7b4ab43eccfa24592105", null ],
     [ "QuarkMassesRe", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a7bf144d6a079abdfc923cc2723a987c1", null ],
     [ "status", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#acffa83e52da6a72ac21248ddbc8f9cff", null ],
     [ "TrueVacuum", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a1a8063ef8613c436165b777f1fa0edc6", null ],

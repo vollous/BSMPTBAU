@@ -2,7 +2,7 @@ var searchData=
 [
   ['ii_0',['II',['../namespaceBSMPT.html#a3f7a6e0bc281f72955810d5e61ef2a26',1,'BSMPT']]],
   ['init_1',['init',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#aefb21909b1cda96a8d87a63b56ae6ffd',1,'BSMPT::Baryo::GSL_integration_mubl']]],
-  ['initialize_2',['initialize',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()'],['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957',1,'BSMPT::Baryo::FHCK::TransportModel::Initialize()']]],
+  ['initialize_2',['initialize',['../classcvspline.html#a15e889d6e8118a1126d810a497ea8889',1,'cvspline::initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957',1,'BSMPT::Baryo::FHCK::TransportModel::Initialize()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684',1,'BSMPT::Baryo::FHCK::TransportEquations::Initialize()']]],
   ['initializedvspline_3',['InitializedVSpline',['../classBSMPT_1_1BounceSolution.html#a21218a67011da29030772b801beb44cb',1,'BSMPT::BounceSolution']]],
   ['initializegstarprofile_4',['InitializeGstarProfile',['../classBSMPT_1_1BounceSolution.html#aa80b67ffde0490943c1f728247a65e83',1,'BSMPT::BounceSolution']]],
   ['initializek1bosongrid_5',['initializeK1bosonGrid',['../KfactorsinterpolatedGSL_8h.html#ac089c4eee50d85c1e9dcabf297941686',1,'BSMPT::Kfactors']]],

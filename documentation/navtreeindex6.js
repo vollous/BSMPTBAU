@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html":[3,0,0,3,3],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html#a071732d9a2133667367d63d93a895959":[3,0,0,3,3,10],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html#a0a5953810f08330e140f18396c9835f2":[3,0,0,3,3,16],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html#a529fe4f38d7af2f8a8781e8900e1e81f":[3,0,0,3,3,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "functions_func_m.html":[3,3,1,11],
 "functions_func_n.html":[3,3,1,12],
 "functions_func_o.html":[3,3,1,13],
-"functions_func_p.html":[3,3,1,14],
-"functions_func_q.html":[3,3,1,15]
+"functions_func_p.html":[3,3,1,14]
 };
