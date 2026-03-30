@@ -109,6 +109,20 @@ void VacuumProfile::CalculateProfile()
 
   for (it = 0; it < itmax; it++)
   {
+    std::stringstream path_ss;
+    path_ss << "path_" << std::setw(3) << std::setfill('0') << it << ".tsv";
+
+    std::ofstream PathFile(path_ss.str());
+
+    for (size_t i = 0; i < y.cols(); i++)
+    {
+      PathFile << z[i] << "\t";
+      for (size_t j = 0; j < y.rows(); j++)
+        PathFile << y[j][i] << "\t";
+      PathFile << "\n";
+    }
+
+    PathFile.close();
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
     std::stringstream sss;
