@@ -17,7 +17,7 @@ var searchData=
   ['new_20model_14',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
   ['new_20model_3a_15',['How to add a new model:',['../index.html#autotoc_md11',1,'']]],
   ['new_20physics_16',['New Physics',['../md_Changelog.html#autotoc_md36',1,'']]],
-  ['nf_17',['nf',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a6ad17347c19ddbb028ef271443c203a3',1,'BSMPT::Baryo::Calc_Scp']]],
+  ['nf_17',['nf',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a6ad17347c19ddbb028ef271443c203a3',1,'BSMPT::Baryo::Calc_Scp::nf()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aa62cef97614aa791ef168927bdd02f18',1,'BSMPT::Baryo::FHCK::TransportEquations::nf']]],
   ['nf_5fprime_18',['nf_prime',['../classBSMPT_1_1Baryo_1_1Calc__Scp.html#a05458c598da32b09d1ad7b9f38494fb9',1,'BSMPT::Baryo::Calc_Scp']]],
   ['nfermions_19',['nFermions',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a5b938a582a7ce0f5c06816f6ee86a8a5',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['ngauge_20',['NGauge',['../classBSMPT_1_1Class__Potential__Origin.html#aea6673f466a7a52589f8ca020f80e462',1,'BSMPT::Class_Potential_Origin']]],

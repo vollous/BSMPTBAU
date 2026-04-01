@@ -117,7 +117,7 @@ var searchData=
   ['gradientthreshold_114',['GradientThreshold',['../classBSMPT_1_1MinimumTracer.html#afb5bf011334bab53572b2fd336679abe',1,'BSMPT::MinimumTracer']]],
   ['gravitationalwave_115',['GravitationalWave',['../classBSMPT_1_1GravitationalWave.html',1,'BSMPT']]],
   ['gravitationalwavedata_116',['GravitationalWaveData',['../structBSMPT_1_1GravitationalWaveData.html',1,'BSMPT']]],
-  ['groupelements_117',['groupelements',['../classBSMPT_1_1MinimumTracer.html#a3aa1563907f76badf7a7b4ccb5408d50',1,'BSMPT::MinimumTracer::GroupElements'],['../classBSMPT_1_1BounceSolution.html#a34acd7ce9dc3e843e7a526d0b55d4478',1,'BSMPT::BounceSolution::GroupElements']]],
+  ['groupelements_117',['groupelements',['../classBSMPT_1_1BounceSolution.html#a34acd7ce9dc3e843e7a526d0b55d4478',1,'BSMPT::BounceSolution::GroupElements'],['../classBSMPT_1_1MinimumTracer.html#a3aa1563907f76badf7a7b4ccb5408d50',1,'BSMPT::MinimumTracer::GroupElements']]],
   ['gsl_5ffind_5fmaximum_5fline_118',['GSL_Find_Maximum_line',['../WallThicknessLib_8h.html#ac6c9d1a9c52cee2b775274f7b1d79469',1,'BSMPT::Wall']]],
   ['gsl_5fintegration_119',['GSL_integration',['../structBSMPT_1_1Kfactors_1_1GSL__integration.html',1,'BSMPT::Kfactors']]],
   ['gsl_5fintegration_5fmubl_120',['GSL_integration_mubl',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html',1,'BSMPT::Baryo']]],
@@ -142,7 +142,8 @@ var searchData=
   ['gstarprofilelowt_139',['GstarProfileLowT',['../classBSMPT_1_1BounceSolution.html#a3bd55ab25746f070ee69aa15f11bc6f9',1,'BSMPT::BounceSolution']]],
   ['gw_5fdata_140',['gw_data',['../structBSMPT_1_1gw__data.html',1,'BSMPT']]],
   ['gwinitialscan_141',['GWInitialScan',['../classBSMPT_1_1BounceSolution.html#a400c6b72007c5862d22c34b98e433734',1,'BSMPT::BounceSolution']]],
-  ['gwscantowardshighaction_142',['GWScanTowardsHighAction',['../classBSMPT_1_1BounceSolution.html#aca4a6391098e8f687e85b039441983e6',1,'BSMPT::BounceSolution']]],
-  ['gwscantowardslowaction_143',['GWScanTowardsLowAction',['../classBSMPT_1_1BounceSolution.html#a4cf3664b7431ac7a26a157cc92b27b20',1,'BSMPT::BounceSolution']]],
-  ['gwsecondaryscan_144',['GWSecondaryScan',['../classBSMPT_1_1BounceSolution.html#a787451d31b3f1723ca00d8e2ba0c62db',1,'BSMPT::BounceSolution']]]
+  ['gws_142',['Gws',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9e77039b3d52862fbadf07ccdda5d8d2',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['gwscantowardshighaction_143',['GWScanTowardsHighAction',['../classBSMPT_1_1BounceSolution.html#aca4a6391098e8f687e85b039441983e6',1,'BSMPT::BounceSolution']]],
+  ['gwscantowardslowaction_144',['GWScanTowardsLowAction',['../classBSMPT_1_1BounceSolution.html#a4cf3664b7431ac7a26a157cc92b27b20',1,'BSMPT::BounceSolution']]],
+  ['gwsecondaryscan_145',['GWSecondaryScan',['../classBSMPT_1_1BounceSolution.html#a787451d31b3f1723ca00d8e2ba0c62db',1,'BSMPT::BounceSolution']]]
 ];

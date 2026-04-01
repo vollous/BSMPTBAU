@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#acdfc1beeed9dcc5c4881c72acd78d990":[3,0,0,3,2,0],
+"classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#aea630adf8b7ef894b9dbd65995a3696e":[3,0,0,3,2,12],
+"classBSMPT_1_1Models_1_1Class__Potential__CPintheDark.html#af3a96973ba9a484f8d08e55c3ad4445b":[3,0,0,3,2,16],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html":[3,0,0,3,3],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html#a071732d9a2133667367d63d93a895959":[3,0,0,3,3,10],
 "classBSMPT_1_1Models_1_1Class__Potential__N2HDM.html#a0a5953810f08330e140f18396c9835f2":[3,0,0,3,3,16],
@@ -246,8 +249,5 @@ var NAVTREEINDEX6 =
 "functions_func_i.html":[3,3,1,8],
 "functions_func_k.html":[3,3,1,9],
 "functions_func_l.html":[3,3,1,10],
-"functions_func_m.html":[3,3,1,11],
-"functions_func_n.html":[3,3,1,12],
-"functions_func_o.html":[3,3,1,13],
-"functions_func_p.html":[3,3,1,14]
+"functions_func_m.html":[3,3,1,11]
 };

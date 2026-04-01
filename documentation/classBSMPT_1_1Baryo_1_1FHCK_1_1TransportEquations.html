@@ -185,6 +185,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>RelaxationMethod</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SolveTransportEquation</b> ()</td></tr>
 <tr class="memdesc:ac86c557ee7449fa4a8c397e4eeb12481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the transport equations. <br /></td></tr>
 <tr class="separator:ac86c557ee7449fa4a8c397e4eeb12481"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e77039b3d52862fbadf07ccdda5d8d2" id="r_a9e77039b3d52862fbadf07ccdda5d8d2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9e77039b3d52862fbadf07ccdda5d8d2">Gws</a> (const double &amp;z)</td></tr>
+<tr class="memdesc:a9e77039b3d52862fbadf07ccdda5d8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolated spharelon factor suppression.  <br /></td></tr>
+<tr class="separator:a9e77039b3d52862fbadf07ccdda5d8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60831731c0e094b5e6b7d9d3754b7876" id="r_a60831731c0e094b5e6b7d9d3754b7876"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a60831731c0e094b5e6b7d9d3754b7876">WashoutFactor</a> (const double &amp;z)</td></tr>
+<tr class="memdesc:a60831731c0e094b5e6b7d9d3754b7876"><td class="mdescLeft">&#160;</td><td class="mdescRight">\( \mathrm{exp}\left[-\frac{A
+n_{f}}{2v_{w}\gamma_{w}}\int_{-\infty}^{z}\Gamma_{w s}(u)d u\right] \)  <br /></td></tr>
+<tr class="separator:a60831731c0e094b5e6b7d9d3754b7876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfc483605df8710d718c9213860b38b0" id="r_acfc483605df8710d718c9213860b38b0"><td class="memItemLeft" align="right" valign="top"><a id="acfc483605df8710d718c9213860b38b0" name="acfc483605df8710d718c9213860b38b0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculateBAU</b> ()</td></tr>
 <tr class="memdesc:acfc483605df8710d718c9213860b38b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the baryonic assymetry of the Universe. <br /></td></tr>
@@ -318,6 +325,10 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nParticles</b></td>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nEqs</b></td></tr>
 <tr class="memdesc:a4fcf47cf52552d7475d9f0b63c56d238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of equations. <br /></td></tr>
 <tr class="separator:a4fcf47cf52552d7475d9f0b63c56d238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa62cef97614aa791ef168927bdd02f18" id="r_aa62cef97614aa791ef168927bdd02f18"><td class="memItemLeft" align="right" valign="top"><a id="aa62cef97614aa791ef168927bdd02f18" name="aa62cef97614aa791ef168927bdd02f18"></a>
+const double&#160;</td><td class="memItemRight" valign="bottom"><b>nf</b> = 3</td></tr>
+<tr class="memdesc:aa62cef97614aa791ef168927bdd02f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of fermionic families. <br /></td></tr>
+<tr class="separator:aa62cef97614aa791ef168927bdd02f18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab62a1f5266fcb4ac16ed4c0df1e43add" id="r_ab62a1f5266fcb4ac16ed4c0df1e43add"><td class="memItemLeft" align="right" valign="top"><a id="ab62a1f5266fcb4ac16ed4c0df1e43add" name="ab62a1f5266fcb4ac16ed4c0df1e43add"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycle</b></td></tr>
 <tr class="memdesc:ab62a1f5266fcb4ac16ed4c0df1e43add"><td class="mdescLeft">&#160;</td><td class="mdescRight">When \( S = 0 \) the \( \mu = \mu_0 e^{-\lambda z}\), by taking the imaginary part we can calculate how rapidly the functions are oscillating. This sets the goal number of points per cycle/wavelength. <br /></td></tr>
@@ -743,6 +754,33 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a9e77039b3d52862fbadf07ccdda5d8d2" name="a9e77039b3d52862fbadf07ccdda5d8d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e77039b3d52862fbadf07ccdda5d8d2">&#9670;&#160;</a></span>Gws()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::TransportEquations::Gws </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>z</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interpolated spharelon factor suppression. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">z</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
+
+</div>
+</div>
 <a id="a714d12472167ba662ed81643be70c1c1" name="a714d12472167ba662ed81643be70c1c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a714d12472167ba662ed81643be70c1c1">&#9670;&#160;</a></span>InitializeMoment()</h2>
 
@@ -1012,6 +1050,34 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double BAU </dd></dl>
+
+</div>
+</div>
+<a id="a60831731c0e094b5e6b7d9d3754b7876" name="a60831731c0e094b5e6b7d9d3754b7876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60831731c0e094b5e6b7d9d3754b7876">&#9670;&#160;</a></span>WashoutFactor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BSMPT::Baryo::FHCK::TransportEquations::WashoutFactor </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>z</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>\( \mathrm{exp}\left[-\frac{A
+n_{f}}{2v_{w}\gamma_{w}}\int_{-\infty}^{z}\Gamma_{w s}(u)d u\right] \) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">z</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
 </div>
 </div>
