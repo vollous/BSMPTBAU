@@ -608,7 +608,17 @@ void TransportEquations::smatrix(const int k,
                                  MatDoub &s,
                                  MatDoub &y)
 {
-  double temp;
+  double temp, zlow, zhigh;
+  if (transportmodel->VevProfile == VevProfileMode::FieldEquation)
+  {
+    zlow  = transportmodel->vacuumprofile->z.front();
+    zhigh = transportmodel->vacuumprofile->z.back();
+  }
+  else
+  {
+    zlow  = -100. * transportmodel->Lw;
+    zhigh = 100. * transportmodel->Lw;
+  }
   MatDoub Mtilde(nEqs, nEqs);
   VecDoub Stilde(nEqs);
   s.zero(); // Set matrix s = 0
@@ -638,12 +648,12 @@ void TransportEquations::smatrix(const int k,
   {
     double zk = (zList[k] + zList[k - 1]) / 2.;
     double dz = (zList[k] - zList[k - 1]);
-    if (zk < -100 * transportmodel->Lw) // TODO: change. Too specific
+    if (zk < zlow)
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zk > 100 * transportmodel->Lw) // TODO: change. Too specific
+    else if (zk > zhigh)
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
