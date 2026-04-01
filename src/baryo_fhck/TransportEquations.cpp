@@ -19,7 +19,6 @@ TransportEquations::TransportEquations(
     , moments(moments_in)
     , BAUeta(moments.size())
 {
-  Gsph *= Tstar; // Gammasph = const * T
   std::stringstream ss;
   ss << "Moments to calculate = " << moments;
   Logger::Write(LoggingLevel::FHCK, ss.str());
@@ -815,13 +814,14 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
 
 double TransportEquations::Gws(const double &z)
 {
-  const double h = transportmodel->EWSBVEV(z);
+  const double h    = transportmodel->EWSBVEV(z);
+  const double Gsph = 8.e-7 * Tstar;
   return Gsph * std::min(1., 1.7 * Tstar / Gsph * std::exp(-37. * h / Tstar));
 }
 
 double TransportEquations::WashoutFactor(const double &z)
 {
-
+  const double A   = 15. / 2.;
   const double fac = -A * nf / (2 * transportmodel->vwall * gamwall);
 
   gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
@@ -842,6 +842,8 @@ double TransportEquations::WashoutFactor(const double &z)
 
 void TransportEquations::CalculateBAU()
 {
+  const double Nc = 3;
+
   double mt2, mb2, m2prime, thetaprime, theta2prime; // temporary vars
   // Weak spharelon rate
   double r;                // temporary variable to store the result

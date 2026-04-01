@@ -179,28 +179,10 @@ public:
   size_t nEqs;
 
   /**
-   * @brief EW spharelon rate
-   *
-   */
-  double Gsph = 8.e-7;
-
-  /**
-   * @brief Numerical constant for the BAU calculation
-   *
-   */
-  const double A = 15. / 2.;
-
-  /**
    * @brief Number of fermionic families
    *
    */
   const double nf = 3;
-
-  /**
-   * @brief Number of colours
-   *
-   */
-  const double Nc = 3;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
