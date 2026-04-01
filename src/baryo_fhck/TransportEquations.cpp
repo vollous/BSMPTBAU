@@ -637,12 +637,12 @@ void TransportEquations::smatrix(const int k,
   {
     double zk = (zList[k] + zList[k - 1]) / 2.;
     double dz = (zList[k] - zList[k - 1]);
-    if (zk < -100 * transportmodel->Lw) // TODO: change. Too specific
+    if (zk < transportmodel->vacuumprofile->z.front())
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zk > 100 * transportmodel->Lw) // TODO: change. Too specific
+    else if (zk > transportmodel->vacuumprofile->z.back())
     {
       Mtilde = MtildeP;
       Stilde = StildeP;

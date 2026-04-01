@@ -93,12 +93,6 @@ private:
   double Tstar;
 
   /**
-   * @brief pointer to the vacuum profile solver
-   *
-   */
-  std::shared_ptr<VacuumProfileNS::VacuumProfile> vacuumprofile;
-
-  /**
    * @brief False vacuum
    *
    */
@@ -129,6 +123,12 @@ private:
   std::vector<tk::spline> QuarkMassesRe, QuarkMassesIm;
 
 public:
+  /**
+   * @brief pointer to the vacuum profile solver
+   *
+   */
+  std::shared_ptr<VacuumProfileNS::VacuumProfile> vacuumprofile;
+
   /**
    * @brief The standard 4 particle that appear in the transport equations
    *
