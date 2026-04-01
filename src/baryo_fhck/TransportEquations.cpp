@@ -812,11 +812,40 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
   return bau;
 }
 
+double TransportEquations::Gws(const double &z)
+{
+  const double h    = transportmodel->EWSBVEV(z);
+  const double Gsph = 8.e-7 * Tstar;
+  return Gsph * std::min(1., 1.7 * Tstar / Gsph * std::exp(-37. * h / Tstar));
+}
+
+double TransportEquations::WashoutFactor(const double &z)
+{
+  const double A   = 15. / 2.;
+  const double fac = -A * nf / (2 * transportmodel->vwall * gamwall);
+
+  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
+
+  gsl_function F;
+  F.function = [](double zz, void *params) -> double
+  { return static_cast<TransportEquations *>(params)->Gws(zz); };
+  F.params = this;
+
+  double result, error;
+  gsl_integration_qags(
+      &F, zList.front(), z, 1e-8, 1e-8, 1000, workspace, &result, &error);
+
+  gsl_integration_workspace_free(workspace);
+
+  return std::exp(fac * result);
+}
+
 void TransportEquations::CalculateBAU()
 {
+  const double Nc = 3;
+
   double mt2, mb2, m2prime, thetaprime, theta2prime; // temporary vars
   // Weak spharelon rate
-  const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
@@ -833,13 +862,8 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
-    r *= std::min(
-        1.,
-        1.7 * Tstar / Gsph *
-            exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
-    r *= exp(-45 * Gsph * std::abs(zi) /
-             (4. * transportmodel->vwall *
-              gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
+    r *= Gws(zi);
+    r *= WashoutFactor(zi);
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
@@ -868,7 +892,7 @@ void TransportEquations::CalculateBAU()
   double error = abs(result_c - result_l);
 
   // Results
-  const double prefactor = 405. * Gsph /
+  const double prefactor = -45. * nf * Nc /
                            (4 * M_PI * M_PI * transportmodel->vwall * gamwall *
                             106.75 * Tstar); // TODO Fix gstas
 

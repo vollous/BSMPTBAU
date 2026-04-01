@@ -179,6 +179,12 @@ public:
   size_t nEqs;
 
   /**
+   * @brief Number of fermionic families
+   *
+   */
+  const double nf = 3;
+
+  /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
    * the imaginary part we can calculate how rapidly the functions are
    * oscillating. This sets the goal number of points per cycle/wavelength
@@ -453,6 +459,23 @@ public:
    *
    */
   void SolveTransportEquation();
+
+  /**
+   * @brief Interpolated spharelon factor suppression
+   *
+   * @param z
+   * @return double
+   */
+  double Gws(const double &z);
+
+  /**
+   * @brief \f$ \mathrm{exp}\left[-\frac{A
+   * n_{f}}{2v_{w}\gamma_{w}}\int_{-\infty}^{z}\Gamma_{w s}(u)d u\right] \f$
+   *
+   * @param z
+   * @return double
+   */
+  double WashoutFactor(const double &z);
 
   /**
    * @brief Calculate the baryonic assymetry of the Universe
