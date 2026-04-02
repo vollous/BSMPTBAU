@@ -113,7 +113,7 @@ void VacuumProfile::CalculateProfile()
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
     std::stringstream sss;
     sss << "[Relaxation Vacuum profile] it = " << it
-        << ". Error = " << solvde.err;
+        << ". Error = " << solvde.err << ". mu = " << difeq_vacuumprofile.mu;
     Logger::Write(LoggingLevel::VacuumProfile, sss.str());
     if (solvde.err < MinError)
     {
