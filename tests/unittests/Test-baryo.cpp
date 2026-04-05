@@ -1,9 +1,12 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <fstream>
+#include <memory>
 
 using Approx = Catch::Approx;
 
 #include <BSMPT/Kfactors/Kernels.h>
+#include <BSMPT/baryo_fhck/BenchmarkModel.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
@@ -102,17 +105,26 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   TransportEquations transport(tmodel, coex->crit_temp);
 
-  transport.Initialize();
   transport.SolveTransportEquation();
-  transport.CalculateBAU();
   CHECK(transport.bau == Approx(-5.2593e-11).epsilon(1e-2));
+
   for (auto &zi : tmodel->vacuumprofile->z)
     zi += 3 * tmodel->Lw;
-
   tmodel->vacuumprofile->GenerateSplines();
 
-  // transport.Initialize();
   transport.SolveTransportEquation();
-  transport.CalculateBAU();
   CHECK(transport.bau == Approx(-5.2593e-11).epsilon(1e-2));
+}
+
+TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  SetLogger({"--logginglevel::complete=true"});
+
+  std::shared_ptr<BenchmarkModel> bmodel =
+      std::make_shared<BenchmarkModel>(100., 0.1);
+  
+  TransportEquations transport(bmodel, 0.1);
+  transport.SolveTransportEquation();
 }
