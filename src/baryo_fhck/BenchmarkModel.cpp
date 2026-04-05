@@ -123,9 +123,8 @@ void BenchmarkModel::GetFermionMass(const double &z,
 
 double BenchmarkModel::GetWMass(const double &z, const double &T)
 {
-  (void)T;
   double h = hvev(z, 0);
-  return h * g / 2.;
+  return h * g / 2. / T;
 }
 
 double BenchmarkModel::EWSBVEV(const double &z)
