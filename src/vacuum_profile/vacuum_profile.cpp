@@ -54,9 +54,6 @@ void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
 void VacuumProfile::LoadPath(const std::vector<double> &z_In,
                              const std::vector<std::vector<double>> &path_In)
 {
-  std::stringstream ss;
-  ss << "Loading path into VacuumProfile...";
-
   if (z_In.size() != path_In.size())
     throw("z and path have different lengths.");
   scalv = VecDoub(2 * dim, 1); // min of 1
@@ -80,8 +77,6 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
         scalv[dim + i] = abs(y[dim + i][k]);
     }
   }
-  ss << " \033[92mSuccess!\033[0m";
-  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
 void VacuumProfile::CalculateProfile()
@@ -217,7 +212,6 @@ void VacuumProfile::GenerateSplines()
                  0.0);
     splines.push_back(s);
   }
-  Logger::Write(LoggingLevel::VacuumProfile, "Splined generated!");
 }
 
 std::vector<double> VacuumProfile::GetVev(const double &zz, const int &diff)
@@ -279,10 +273,6 @@ void VacuumProfile::CenterPath(double &center)
       max_dphidz = dphidz;
     }
   }
-  Logger::Write(LoggingLevel::VacuumProfile,
-                "Current center at z = \t" + std::to_string(center) +
-                    ". Centering path!");
-
   std::vector<std::vector<double>> new_path;
   for (const double &zk : z)
   {

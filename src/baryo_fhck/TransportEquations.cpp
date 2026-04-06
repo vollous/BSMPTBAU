@@ -759,12 +759,7 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
   // fix μ and first u
   for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
     for (size_t particle = 0; particle < nParticles; particle++)
-    {
       indexv[l + particle * moment] = particle + l * (nParticles);
-      Logger::Write(LoggingLevel::FHCK,
-                    "indexv[" + std::to_string(particle + l * (nParticles)) +
-                        "] = " + std::to_string(l + particle * moment));
-    }
 
   int NB = nEqs / 2;
 
