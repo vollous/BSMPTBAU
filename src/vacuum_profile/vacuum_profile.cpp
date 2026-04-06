@@ -112,6 +112,7 @@ void VacuumProfile::CalculateProfile()
 
   for (it = 0; it < itmax; it++)
   {
+    CenterPath();
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
     std::stringstream sss;
@@ -221,7 +222,7 @@ void VacuumProfile::GenerateSplines()
 
 std::vector<double> VacuumProfile::GetVev(const double &zz, const int &diff)
 {
-  if (status != VacuumProfileStatus::Success)
+  if (splines.size() != dim)
   {
     Logger::Write(LoggingLevel::VacuumProfile,
                   "Vacuum profile calculation failed. Do not call GetVev(z)");
@@ -288,7 +289,7 @@ void VacuumProfile::CenterPath(double &center)
     new_path.push_back(GetVev(zk + center));
   }
   LoadPath(z, new_path);
-  if (status == VacuumProfileStatus::Success) GenerateSplines();
+  GenerateSplines();
 }
 
 VacuumProfile::VacuumProfile(
