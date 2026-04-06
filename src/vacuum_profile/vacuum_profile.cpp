@@ -37,7 +37,10 @@ void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
   for (size_t k = 0; k < NumberOfSteps; k++)
   {
     // uniformly distributed between -10 Lw and 10 Lw
-    const double zk = (-1. + 2. * k / (NumberOfSteps - 1.)) * Lw * LwToSolve;
+    double u        = (-1. + 2. * k / (NumberOfSteps - 1.));
+    u               = pow(u, 3);
+    u               = atanh(u * tanh(2));
+    const double zk = u * Lw * LwToSolve;
     for (size_t i = 0; i < dim; i++)
       vev_k.at(i) =
           TrueVacuum.at(i) +
