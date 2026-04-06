@@ -71,7 +71,7 @@ void TransportModel::Initialize()
 
   if (VevProfile == VevProfileMode::FieldEquation)
   {
-    const double &eps = 0.01;
+    const double &eps = 0.1;
     // Calculate tunnel profile
     std::function<double(std::vector<double>)> V = [&](std::vector<double> vev)
     {
