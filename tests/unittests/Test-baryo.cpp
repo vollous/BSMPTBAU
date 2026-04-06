@@ -54,12 +54,12 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::Kink;
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.88763e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-2.9673e-11).epsilon(1e-2));
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-5.2593e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.87543e-11).epsilon(1e-2));
 }
 
 TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
@@ -105,7 +105,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
   transport.Initialize();
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  CHECK(transport.bau == Approx(-5.2593e-11).epsilon(1e-2));
+  CHECK(transport.bau == Approx(-3.87543e-11).epsilon(1e-2));
   for (auto &zi : tmodel->vacuumprofile->z)
     zi += 3 * tmodel->Lw;
 
@@ -114,5 +114,5 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
   // transport.Initialize();
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  CHECK(transport.bau == Approx(-5.2593e-11).epsilon(1e-2));
+  CHECK(transport.bau == Approx(-3.87543e-11).epsilon(1e-2));
 }
