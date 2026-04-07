@@ -249,16 +249,16 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double D2B = Dlf[2](mass[2]);
   const double D2H = Dlb[2](mass[3]);
 
-  const std::vector<double> gammatot = {D2T / (D0T * 6.) * Tstar,
-                                        D2T / (D0T * 6.) * Tstar,
-                                        D2B / (D0B * 6.) * Tstar,
-                                        D2H / (D0H * 20.) * Tstar};
+  const std::vector<double> gammatot = {D2T / (D0T * 7.1) * Tstar,
+                                        D2T / (D0T * 7.6) * Tstar,
+                                        D2B / (D0B * 7.1) * Tstar,
+                                        D2H / (D0H * 14.) * Tstar};
 
-  const std::vector<double> rates = {pow(mass[0], 2) / 63. * Tstar, // gammaM
-                                     4.2e-3 * Tstar,                // gammaY
-                                     gammatot[3],                   // gammaW
-                                     mW * mW / 50. * Tstar,         // gammaH
-                                     4.9e-4 * Tstar};               // gammaSS
+  const std::vector<double> rates = {0.26 * pow(mass[0], 2) * Tstar, // gammaM
+                                     5.9e-3 * Tstar,                 // gammaY
+                                     gammatot[3],                    // gammaW
+                                     1.5 * mW * mW * Tstar,          // gammaH
+                                     2.7e-3 * Tstar};                // gammaSS
 
   std::vector<double> trunc = {1., 1., 1., 1., 1.};
 
