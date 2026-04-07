@@ -4,7 +4,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck")
-set(header ${header_path}/TransportModel.h ${header_path}/BenchmarkModel.h ${header_path}/TransportEquations.h)
+set(header ${header_path}/TransportModel.h ${header_path}/BenchmarkModel.h
+           ${header_path}/TransportEquations.h)
 
 set(src TransportModel.cpp BenchmarkModel.cpp TransportEquations.cpp)
 
