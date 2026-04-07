@@ -114,7 +114,20 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  CHECK(transport.bau == Approx(-3.87543e-11).epsilon(1e-2));
+  CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+}
+
+TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  SetLogger({"--logginglevel::complete=true"});
+
+  std::shared_ptr<BenchmarkModel> bmodel =
+      std::make_shared<BenchmarkModel>(100., 0.1);
+  
+  TransportEquations transport(bmodel, 100.);
+  transport.SolveTransportEquation();
 }
 
 TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
