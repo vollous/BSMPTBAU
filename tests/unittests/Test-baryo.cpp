@@ -102,7 +102,6 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   TransportEquations transport(tmodel, coex->crit_temp);
 
-  transport.Initialize();
   transport.SolveTransportEquation();
   transport.CalculateBAU();
   CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
@@ -111,7 +110,6 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   tmodel->vacuumprofile->GenerateSplines();
 
-  // transport.Initialize();
   transport.SolveTransportEquation();
   transport.CalculateBAU();
   CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
