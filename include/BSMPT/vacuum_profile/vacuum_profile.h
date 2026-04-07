@@ -55,7 +55,7 @@ struct VacuumProfile
    * @brief Number of times we let the profile relax without getting better.
    *
    */
-  size_t NotBetterThreshold = 3;
+  size_t NotBetterThreshold = 5;
 
   /**
    * @brief Bubble width
