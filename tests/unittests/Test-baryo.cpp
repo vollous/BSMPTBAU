@@ -107,7 +107,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
   transport.CalculateBAU();
   CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
   for (auto &zi : tmodel->vacuumprofile->z)
-    zi += 3 * tmodel->Lw;
+    zi += 5 * tmodel->Lw;
 
   tmodel->vacuumprofile->GenerateSplines();
 
