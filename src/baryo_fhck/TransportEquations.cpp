@@ -255,7 +255,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
                                         D2H / (D0H * 14.) * Tstar};
 
   const std::vector<double> rates = {0.26 * pow(mass[0], 2) * Tstar, // gammaM
-                                     5.7e-3 * Tstar,                 // gammaY
+                                     5.9e-3 * Tstar,                 // gammaY
                                      gammatot[3],                    // gammaW
                                      1.5 * mW * mW * Tstar,          // gammaH
                                      2.7e-3 * Tstar};                // gammaSS
