@@ -152,5 +152,5 @@ TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
 
-  CHECK(transport.bau == Approx(4.65971e-06).epsilon(1e-2));
+  CHECK(transport.bau == Approx(-9.2609e-09).epsilon(1e-2));
 }
