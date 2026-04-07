@@ -126,6 +126,6 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   std::shared_ptr<BenchmarkModel> bmodel =
       std::make_shared<BenchmarkModel>(100., 0.1);
   
-  TransportEquations transport(bmodel, 0.1);
+  TransportEquations transport(bmodel, 100.);
   transport.SolveTransportEquation();
 }
