@@ -144,9 +144,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetEtaInterface</b> (
 <tr class="memitem:a123cd34e27644c95e2aa77e3b89d020e" id="r_a123cd34e27644c95e2aa77e3b89d020e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a123cd34e27644c95e2aa77e3b89d020e">GetFermionMass</a> (const double &amp;z, const size_t &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime)</td></tr>
 <tr class="memdesc:a123cd34e27644c95e2aa77e3b89d020e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
 <tr class="separator:a123cd34e27644c95e2aa77e3b89d020e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a596797b1607825e667f2272b91a2b8a0" id="r_a596797b1607825e667f2272b91a2b8a0"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a596797b1607825e667f2272b91a2b8a0">GetWMass</a> (const double &amp;z, const double &amp;T)</td></tr>
-<tr class="memdesc:a596797b1607825e667f2272b91a2b8a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass. (same code as BSMPTv2)  <br /></td></tr>
-<tr class="separator:a596797b1607825e667f2272b91a2b8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab105d03ef406fc2af8223639f22599c8" id="r_ab105d03ef406fc2af8223639f22599c8"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab105d03ef406fc2af8223639f22599c8">GetWMass</a> (const double &amp;z)</td></tr>
+<tr class="memdesc:ab105d03ef406fc2af8223639f22599c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass. (same code as BSMPTv2)  <br /></td></tr>
+<tr class="separator:ab105d03ef406fc2af8223639f22599c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17bddb896e5b96b6b45f4421b58beb74" id="r_a17bddb896e5b96b6b45f4421b58beb74"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74">EWSBVEV</a> (const double &amp;z)</td></tr>
 <tr class="memdesc:a17bddb896e5b96b6b45f4421b58beb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the EW breaking VEV from all contributing field configurations.  <br /></td></tr>
 <tr class="separator:a17bddb896e5b96b6b45f4421b58beb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -544,8 +544,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 
 </div>
 </div>
-<a id="a596797b1607825e667f2272b91a2b8a0" name="a596797b1607825e667f2272b91a2b8a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a596797b1607825e667f2272b91a2b8a0">&#9670;&#160;</a></span>GetWMass()</h2>
+<a id="ab105d03ef406fc2af8223639f22599c8" name="ab105d03ef406fc2af8223639f22599c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab105d03ef406fc2af8223639f22599c8">&#9670;&#160;</a></span>GetWMass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -557,18 +557,8 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
           <td class="memname">double BSMPT::Baryo::FHCK::TransportModel::GetWMass </td>
           <td>(</td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>z</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>T</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -582,13 +572,12 @@ std::vector&lt; <a class="el" href="classtk_1_1spline.html">tk::spline</a> &gt;&
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vev</td><td>VEV </td></tr>
-    <tr><td class="paramname">T</td><td>Transition temperature </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double W boson mass </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#afca73a60b3eff82a6778769aba45d903">BSMPT::Baryo::FHCK::BenchmarkModel</a>.</p>
+<p>Reimplemented in <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a68f29fe787661fbb8d605caac0f65605">BSMPT::Baryo::FHCK::BenchmarkModel</a>.</p>
 
 </div>
 </div>

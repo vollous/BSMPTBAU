@@ -6,7 +6,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel =
     [ "EWSBVEV", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74", null ],
     [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a5200e14199aa0009801ff0a2f12f1928", null ],
     [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a123cd34e27644c95e2aa77e3b89d020e", null ],
-    [ "GetWMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a596797b1607825e667f2272b91a2b8a0", null ],
+    [ "GetWMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab105d03ef406fc2af8223639f22599c8", null ],
     [ "Initialize", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a32c66a94434c287175b67f9983ee9957", null ],
     [ "SetEtaInterface", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#afca07c6398fcee176f790eca25d7ed40", null ],
     [ "Vev", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ad63a3e6e306bd15e123de1777d59de16", null ],

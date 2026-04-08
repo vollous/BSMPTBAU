@@ -97,7 +97,7 @@ var searchData=
   ['getvevsym_94',['getVEVsym',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#afe3d98c7481a5858f526cc6c143bd901',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['getvw_95',['getvw',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a14d0ae51feac7dd0606b01dec7c583d2',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['getwallvelocity_96',['GetWallVelocity',['../classBSMPT_1_1BounceSolution.html#ae29f5574065159dd09f7deb3b8f5cd2c',1,'BSMPT::BounceSolution']]],
-  ['getwmass_97',['getwmass',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a596797b1607825e667f2272b91a2b8a0',1,'BSMPT::Baryo::FHCK::TransportModel::GetWMass()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#afca73a60b3eff82a6778769aba45d903',1,'BSMPT::Baryo::FHCK::BenchmarkModel::GetWMass()']]],
+  ['getwmass_97',['getwmass',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab105d03ef406fc2af8223639f22599c8',1,'BSMPT::Baryo::FHCK::TransportModel::GetWMass()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a68f29fe787661fbb8d605caac0f65605',1,'BSMPT::Baryo::FHCK::BenchmarkModel::GetWMass()']]],
   ['getypsilon_98',['GetYpsilon',['../namespaceBSMPT.html#aa10b493e35a63b9e48a1aff704d2af38',1,'BSMPT']]],
   ['getzmax_99',['getZMAX',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a5341b54ccae60a12eb5207b2adb43af1',1,'BSMPT::Baryo::GSL_integration_mubl']]],
   ['gsl_5ffind_5fmaximum_5fline_100',['GSL_Find_Maximum_line',['../WallThicknessLib_8h.html#ac6c9d1a9c52cee2b775274f7b1d79469',1,'BSMPT::Wall']]],

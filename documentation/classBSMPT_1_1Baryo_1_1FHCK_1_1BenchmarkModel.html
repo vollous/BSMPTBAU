@@ -142,9 +142,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae6ed83e68bbdf7620fccd4b87bbed2c3" id="r_ae6ed83e68bbdf7620fccd4b87bbed2c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#ae6ed83e68bbdf7620fccd4b87bbed2c3">GetFermionMass</a> (const double &amp;z, const size_t &amp;fermion, double &amp;m2, double &amp;m2prime, double &amp;thetaprime, double &amp;theta2prime) override</td></tr>
 <tr class="memdesc:ae6ed83e68bbdf7620fccd4b87bbed2c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Fermion Mass object Calculate the fermion mass and its derivatives.  <br /></td></tr>
 <tr class="separator:ae6ed83e68bbdf7620fccd4b87bbed2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afca73a60b3eff82a6778769aba45d903" id="r_afca73a60b3eff82a6778769aba45d903"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#afca73a60b3eff82a6778769aba45d903">GetWMass</a> (const double &amp;z, const double &amp;T) override</td></tr>
-<tr class="memdesc:afca73a60b3eff82a6778769aba45d903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass.  <br /></td></tr>
-<tr class="separator:afca73a60b3eff82a6778769aba45d903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68f29fe787661fbb8d605caac0f65605" id="r_a68f29fe787661fbb8d605caac0f65605"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a68f29fe787661fbb8d605caac0f65605">GetWMass</a> (const double &amp;z) override</td></tr>
+<tr class="memdesc:a68f29fe787661fbb8d605caac0f65605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the W boson mass.  <br /></td></tr>
+<tr class="separator:a68f29fe787661fbb8d605caac0f65605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a881ba5023015d17639f1b73805519d3e" id="r_a881ba5023015d17639f1b73805519d3e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a881ba5023015d17639f1b73805519d3e">EWSBVEV</a> (const double &amp;z) override</td></tr>
 <tr class="memdesc:a881ba5023015d17639f1b73805519d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the EW breaking VEV from hvev.  <br /></td></tr>
 <tr class="separator:a881ba5023015d17639f1b73805519d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,6 +177,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>vn</b></td></tr>
 <tr class="memitem:aa64d7a9e075580cc3c3957412b5c5aac" id="r_aa64d7a9e075580cc3c3957412b5c5aac"><td class="memItemLeft" align="right" valign="top"><a id="aa64d7a9e075580cc3c3957412b5c5aac" name="aa64d7a9e075580cc3c3957412b5c5aac"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>wn</b></td></tr>
 <tr class="separator:aa64d7a9e075580cc3c3957412b5c5aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a643b6a53d305d02b528d30cfc81cdd1d" id="r_a643b6a53d305d02b528d30cfc81cdd1d"><td class="memItemLeft" align="right" valign="top"><a id="a643b6a53d305d02b528d30cfc81cdd1d" name="a643b6a53d305d02b528d30cfc81cdd1d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>Tn</b></td></tr>
+<tr class="separator:a643b6a53d305d02b528d30cfc81cdd1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6610cdf6c702b6cc4129da8501d187b3" id="r_a6610cdf6c702b6cc4129da8501d187b3"><td class="memItemLeft" align="right" valign="top"><a id="a6610cdf6c702b6cc4129da8501d187b3" name="a6610cdf6c702b6cc4129da8501d187b3"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>LAM</b></td></tr>
 <tr class="separator:a6610cdf6c702b6cc4129da8501d187b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -521,8 +524,8 @@ TruncationScheme&#160;</td><td class="memItemRight" valign="bottom"><b>truncatio
 
 </div>
 </div>
-<a id="afca73a60b3eff82a6778769aba45d903" name="afca73a60b3eff82a6778769aba45d903"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afca73a60b3eff82a6778769aba45d903">&#9670;&#160;</a></span>GetWMass()</h2>
+<a id="a68f29fe787661fbb8d605caac0f65605" name="a68f29fe787661fbb8d605caac0f65605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68f29fe787661fbb8d605caac0f65605">&#9670;&#160;</a></span>GetWMass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -534,18 +537,8 @@ TruncationScheme&#160;</td><td class="memItemRight" valign="bottom"><b>truncatio
           <td class="memname">double BSMPT::Baryo::FHCK::BenchmarkModel::GetWMass </td>
           <td>(</td>
           <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>z</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>T</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -559,13 +552,12 @@ TruncationScheme&#160;</td><td class="memItemRight" valign="bottom"><b>truncatio
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vev</td><td>VEV </td></tr>
-    <tr><td class="paramname">T</td><td>Transition temperature </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double W boson mass </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a596797b1607825e667f2272b91a2b8a0">BSMPT::Baryo::FHCK::TransportModel</a>.</p>
+<p>Reimplemented from <a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab105d03ef406fc2af8223639f22599c8">BSMPT::Baryo::FHCK::TransportModel</a>.</p>
 
 </div>
 </div>
