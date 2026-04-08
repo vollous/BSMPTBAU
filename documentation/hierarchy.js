@@ -90,7 +90,9 @@ var hierarchy =
     [ "BSMPT::transition_data", "structBSMPT_1_1transition__data.html", null ],
     [ "BSMPT::TransitionTracer", "classBSMPT_1_1TransitionTracer.html", null ],
     [ "BSMPT::Baryo::transport_equations", "classBSMPT_1_1Baryo_1_1transport__equations.html", null ],
-    [ "BSMPT::Baryo::FHCK::TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", null ],
+    [ "BSMPT::Baryo::FHCK::TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", [
+      [ "BSMPT::Baryo::FHCK::BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html", null ]
+    ] ],
     [ "BSMPT::user_input", "structBSMPT_1_1user__input.html", null ],
     [ "BSMPT::Vacuum", "structBSMPT_1_1Vacuum.html", null ],
     [ "BSMPT::VacuumProfileNS::VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html", null ],

@@ -96,9 +96,10 @@ var searchData=
   ['store_5ftemp_93',['store_Temp',['../classBSMPT_1_1BounceSolution.html#ab5538ee4205361f42123c8e7952918c1',1,'BSMPT::BounceSolution']]],
   ['stringendswith_94',['StringEndsWith',['../namespaceBSMPT.html#ab448300c7a9bfd21a81df9069c1ed451',1,'BSMPT']]],
   ['stringstartswith_95',['StringStartsWith',['../namespaceBSMPT.html#a68d199b1c37b6807ce1cfb6c57c0721b',1,'BSMPT']]],
-  ['structure_96',['structure',['../classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html#aba5a8a144d1cc878c0d3ac0a70aa0195',1,'BSMPT::Baryo::FHCK::Kernel::structure'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#ac6a1265d6c9bcbed359f5590d00d63b7',1,'BSMPT::Baryo::FHCK::Q9KernelInty::structure']]],
-  ['sym2dim_97',['sym2Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a357880ba2f026acb7786457089a049ef',1,'BSMPT::Class_Potential_Origin']]],
-  ['sym3dim_98',['sym3Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a8a37be8f20557f8a6a05aa3395f2c065',1,'BSMPT::Class_Potential_Origin']]],
-  ['sym4dim_99',['sym4Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a6832879413039f6fb0d89b0ee912abf2',1,'BSMPT::Class_Potential_Origin']]],
-  ['symmetric_5fcp_5fviolating_5fphase_100',['symmetric_cp_violating_phase',['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a5b7d053c274fbf02405547af6f91307c',1,'BSMPT::Baryo::GSL_integration_mubl::symmetric_CP_violating_phase'],['../classBSMPT_1_1Baryo_1_1transport__equations.html#a0e45b343cc3c122d3d4fa3f5ced46348',1,'BSMPT::Baryo::transport_equations::symmetric_CP_violating_phase'],['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a17ad5241a6a3a66a57c2c64bd7ce8b75',1,'BSMPT::Baryo::gen_fluid::symmetric_CP_violating_phase']]]
+  ['structure_96',['structure',['../classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#ac6a1265d6c9bcbed359f5590d00d63b7',1,'BSMPT::Baryo::FHCK::Q9KernelInty::structure'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html#aba5a8a144d1cc878c0d3ac0a70aa0195',1,'BSMPT::Baryo::FHCK::Kernel::structure']]],
+  ['svev_97',['svev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a4e0efe9634fe2e8f890aeaa858e2b405',1,'BSMPT::Baryo::FHCK::BenchmarkModel']]],
+  ['sym2dim_98',['sym2Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a357880ba2f026acb7786457089a049ef',1,'BSMPT::Class_Potential_Origin']]],
+  ['sym3dim_99',['sym3Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a8a37be8f20557f8a6a05aa3395f2c065',1,'BSMPT::Class_Potential_Origin']]],
+  ['sym4dim_100',['sym4Dim',['../classBSMPT_1_1Class__Potential__Origin.html#a6832879413039f6fb0d89b0ee912abf2',1,'BSMPT::Class_Potential_Origin']]],
+  ['symmetric_5fcp_5fviolating_5fphase_101',['symmetric_cp_violating_phase',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a17ad5241a6a3a66a57c2c64bd7ce8b75',1,'BSMPT::Baryo::gen_fluid::symmetric_CP_violating_phase'],['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#a5b7d053c274fbf02405547af6f91307c',1,'BSMPT::Baryo::GSL_integration_mubl::symmetric_CP_violating_phase'],['../classBSMPT_1_1Baryo_1_1transport__equations.html#a0e45b343cc3c122d3d4fa3f5ced46348',1,'BSMPT::Baryo::transport_equations::symmetric_CP_violating_phase']]]
 ];

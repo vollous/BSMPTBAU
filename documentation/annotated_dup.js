@@ -3,6 +3,7 @@ var annotated_dup =
     [ "BSMPT", "namespaceBSMPT.html", [
       [ "Baryo", null, [
         [ "FHCK", null, [
+          [ "BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel" ],
           [ "K4Int", "classBSMPT_1_1Baryo_1_1FHCK_1_1K4Int.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1K4Int" ],
           [ "Kernel", "classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel" ],
           [ "KernelIntw", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelIntw.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelIntw" ],

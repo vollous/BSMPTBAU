@@ -17,5 +17,6 @@ var searchData=
   ['how_20to_20add_20a_20new_20model_3a_14',['How to add a new model:',['../index.html#autotoc_md11',1,'']]],
   ['how_20to_20include_20a_20new_20model_15',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
   ['how_20to_20include_20bsmpt_20in_20another_20program_16',['How to include BSMPT in another program',['../index.html#autotoc_md9',1,'']]],
-  ['hubblerate_17',['HubbleRate',['../classBSMPT_1_1BounceSolution.html#a686824d441628cabebfb6124011c0c90',1,'BSMPT::BounceSolution']]]
+  ['hubblerate_17',['HubbleRate',['../classBSMPT_1_1BounceSolution.html#a686824d441628cabebfb6124011c0c90',1,'BSMPT::BounceSolution']]],
+  ['hvev_18',['hvev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a1f275e9816bb1b64d331ebcfce80a7bc',1,'BSMPT::Baryo::FHCK::BenchmarkModel']]]
 ];

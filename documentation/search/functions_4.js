@@ -5,7 +5,7 @@ var searchData=
   ['ensurehightemperatureglobalmininum_2',['EnsureHighTemperatureGlobalMininum',['../structBSMPT_1_1Vacuum.html#a49c1ffd3bf9e89ca68efefe9d300742b',1,'BSMPT::Vacuum']]],
   ['equations_3',['Equations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac040129ae22c44154528dfbe3561e86b',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['eta_5fintegrand_5ffunc_4',['eta_integrand_func',['../transport__equations_8h.html#ac605c862b875984970d57d46e9916251',1,'BSMPT::Baryo']]],
-  ['ewsbvev_5',['ewsbvev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74',1,'BSMPT::Baryo::FHCK::TransportModel::EWSBVEV()'],['../classBSMPT_1_1Class__Potential__Origin.html#a11e63f35ce4569aaf9dfc7cc5fa3d6d4',1,'BSMPT::Class_Potential_Origin::EWSBVEV()']]],
+  ['ewsbvev_5',['ewsbvev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a881ba5023015d17639f1b73805519d3e',1,'BSMPT::Baryo::FHCK::BenchmarkModel::EWSBVEV()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74',1,'BSMPT::Baryo::FHCK::TransportModel::EWSBVEV()'],['../classBSMPT_1_1Class__Potential__Origin.html#a11e63f35ce4569aaf9dfc7cc5fa3d6d4',1,'BSMPT::Class_Potential_Origin::EWSBVEV()']]],
   ['exactsolution_6',['ExactSolution',['../classBSMPT_1_1BounceActionInt.html#a424e464f9c73844c1b2bda179a45cc33',1,'BSMPT::BounceActionInt']]],
   ['exactsolutionfromminimum_7',['ExactSolutionFromMinimum',['../classBSMPT_1_1BounceActionInt.html#ac931386046500da9c0d225143d1ddda8',1,'BSMPT::BounceActionInt']]],
   ['exactsolutionlin_8',['ExactSolutionLin',['../classBSMPT_1_1BounceActionInt.html#ac12f8388f128a27fa120fd9fa05db29d',1,'BSMPT::BounceActionInt']]]

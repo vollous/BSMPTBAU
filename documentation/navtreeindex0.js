@@ -2,6 +2,7 @@ var NAVTREEINDEX0 =
 {
 "BSMPT_8cpp.html":[4,0,1,5,0],
 "BSMPT_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97":[4,0,1,5,0,1],
+"BenchmarkModel_8h_source.html":[4,0,0,0,1,0],
 "C2HDM_8h_source.html":[4,0,2,0,0],
 "CPINTHEDARK_8h_source.html":[4,0,2,0,1],
 "CXSM_8h_source.html":[4,0,2,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "ModelIDs_8h_source.html":[4,0,0,0,10,6],
 "ModelTestfunctions_8h_source.html":[4,0,0,0,7,0,0],
 "N2HDM_8h_source.html":[4,0,2,0,3],
-"NLOVEV_8cpp.html":[4,0,1,5,9],
-"NegativeBosonSpline_8cpp.html":[4,0,1,6,0]
+"NLOVEV_8cpp.html":[4,0,1,5,9]
 };
