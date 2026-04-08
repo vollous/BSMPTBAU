@@ -22,6 +22,7 @@ BenchmarkModel::BenchmarkModel(const double Tn_in,
                      truncationR_in)
     , vn(Tn_in)
     , wn(2. * Tn_in)
+    , Tn(Tn_in)
     , LAM(1000.)
 {
   Lw = 5. / Tn_in;
@@ -45,6 +46,7 @@ BenchmarkModel::BenchmarkModel(const double vn_in,
                      truncationR_in)
     , vn(vn_in)
     , wn(wn_in)
+    , Tn(Tn_in)
     , LAM(LAM_in)
 
 {
@@ -121,10 +123,10 @@ void BenchmarkModel::GetFermionMass(const double &z,
   }
 }
 
-double BenchmarkModel::GetWMass(const double &z, const double &T)
+double BenchmarkModel::GetWMass(const double &z)
 {
   double h = hvev(z, 0);
-  return h * g / 2. / T;
+  return h * g / 2. / Tn;
 }
 
 double BenchmarkModel::EWSBVEV(const double &z)

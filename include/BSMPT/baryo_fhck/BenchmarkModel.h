@@ -21,7 +21,7 @@ private:
    *@brief Input parameters of the benchmark model
    *
    */
-  double vn, wn, LAM;
+  double vn, wn, Tn, LAM;
 
   /**
    *@brief Top yukawa coupling and weak coupling constant
@@ -116,10 +116,9 @@ public:
    * @brief Calculate the W boson mass.
    *
    * @param vev VEV
-   * @param T Transition temperature
    * @return double W boson mass
    */
-  double GetWMass(const double &z, const double &T) override;
+  double GetWMass(const double &z) override;
 
   /**
    * @brief This function calculates the EW breaking VEV from hvev
