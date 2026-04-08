@@ -488,14 +488,14 @@ void TransportEquations::Equations(const double &z,
   }
 
   // Gamma = deltaC - m2' B
-  const MatDoub CollisiontMatrix =
+  const MatDoub CollisionMatrix =
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
   for (size_t i = 0; i < nEqs; i++)
     for (size_t j = 0; j < nEqs; j++)
       for (size_t l = 0; l < nEqs; l++)
-        Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
+        Mtilde[i][j] += Ainverse[i][l] * (CollisionMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
   for (size_t i = 0; i < nEqs; i++)

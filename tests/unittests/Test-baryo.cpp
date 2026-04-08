@@ -1,9 +1,12 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <fstream>
+#include <memory>
 
 using Approx = Catch::Approx;
 
 #include <BSMPT/Kfactors/Kernels.h>
+#include <BSMPT/baryo_fhck/BenchmarkModel.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
@@ -151,4 +154,27 @@ TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
   transport.SolveTransportEquation();
 
   CHECK(transport.bau == Approx(-9.2609e-09).epsilon(1e-2));
+}
+ 
+TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+  SetLogger({"--logginglevel::complete=true"});
+
+  std::shared_ptr<BenchmarkModel> bmodel =
+      std::make_shared<BenchmarkModel>(100., 0.1);
+
+  TransportEquations transport(bmodel, 100.);
+  transport.SolveTransportEquation();
+
+  CHECK(transport.bau == Approx(-1.38181e-10).epsilon(1e-2));
+
+  std::shared_ptr<BenchmarkModel> bmodel2 =
+      std::make_shared<BenchmarkModel>(100., 200., 100., 1000., 0.05, 0.1);
+
+  TransportEquations transport2(bmodel2, 100.);
+  transport2.SolveTransportEquation();
+
+  CHECK(transport2.bau == Approx(-1.38181e-10).epsilon(1e-2));
 }
