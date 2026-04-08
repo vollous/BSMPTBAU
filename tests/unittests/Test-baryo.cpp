@@ -30,7 +30,6 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
                                                 /* tan(beta) = */ 4.64487,
                                                 /* Yukawa Type = */ 1};
 
-  using namespace BSMPT;
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -54,14 +53,13 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
 
   TransportEquations transport(tmodel, coex->crit_temp);
 
-  tmodel->VevProfile = Baryo::FHCK::VevProfileMode::Kink;
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-2.93622e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.39268e-11).epsilon(1e-2));
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.83627e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-4.4844e-11).epsilon(1e-2));
 }
 
 TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
@@ -105,7 +103,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  REQUIRE(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-4.4844e-11).epsilon(1e-2));
   for (auto &zi : tmodel->vacuumprofile->z)
     zi += 5 * tmodel->Lw;
 
@@ -113,7 +111,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  REQUIRE(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-4.4844e-11).epsilon(1e-2));
 }
 
 TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
@@ -150,7 +148,7 @@ TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
 
-  REQUIRE(transport.bau == Approx(-9.2609e-09).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-1.12319e-08).epsilon(1e-2));
 }
 
 TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")

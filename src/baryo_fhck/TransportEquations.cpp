@@ -449,7 +449,7 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = transportmodel->GetWMass(z, Tstar);
+  const double mW = transportmodel->GetWMass(z, 0.);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
@@ -566,9 +566,10 @@ void TransportEquations::CheckBoundary(double &HighestNegRe,
   Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverM(EigenMtildeM);
   Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverP(EigenMtildeP);
 
+  const double EigenValueThreshold = -1e-10;
   // Number of modes that have to be set to zero
   for (auto ev : EigenSolverM.eigenvalues())
-    if (-ev.real() >= 0) /* minus sign because z -> -Infinity */
+    if (-ev.real() >= EigenValueThreshold) /* minus sign z -> -Infinity */
       NumberOfNonDecayingModes++;
     else
     {
@@ -577,7 +578,7 @@ void TransportEquations::CheckBoundary(double &HighestNegRe,
       HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
     }
   for (auto ev : EigenSolverP.eigenvalues())
-    if (ev.real() >= 0)
+    if (ev.real() >= EigenValueThreshold)
       NumberOfNonDecayingModes++;
     else
     {
