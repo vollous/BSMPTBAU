@@ -49,13 +49,13 @@ BenchmarkModel::BenchmarkModel(const double vn_in,
 
 {
   Lw = Lw_in;
-  std::cout << "Instantiated\n";
+  Logger::Write(LoggingLevel::FHCK, "Instantiated");
 }
 
 void BenchmarkModel::Initialize()
 {
   status = TransportModelStatus::Success;
-  std::cout << "Initialized\n";
+  Logger::Write(LoggingLevel::FHCK, "Initialized");
 }
 
 void BenchmarkModel::GenerateFermionMass(const std::vector<double> &zList,
@@ -63,7 +63,7 @@ void BenchmarkModel::GenerateFermionMass(const std::vector<double> &zList,
 {
   (void)zList;
   (void)MakeTopMassPlot;
-  std::cout << "FermionsMassesGenerated\n";
+  Logger::Write(LoggingLevel::FHCK, "FermionsMassesGenerated");
 }
 
 double BenchmarkModel::hvev(const double &z, const int &deriv)
