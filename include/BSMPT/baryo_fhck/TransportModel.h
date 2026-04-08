@@ -287,10 +287,9 @@ public:
    * @brief Calculate the W boson mass. (same code as BSMPTv2)
    *
    * @param vev VEV
-   * @param T Transition temperature
    * @return double W boson mass
    */
-  virtual double GetWMass(const double &z, const double &T);
+  virtual double GetWMass(const double &z);
 
   /**
    * @brief This function calculates the EW breaking VEV from all contributing

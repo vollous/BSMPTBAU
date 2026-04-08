@@ -351,8 +351,9 @@ void TransportModel::GetFermionMass(const double &z,
   }
 }
 
-double TransportModel::GetWMass(const double &z, const double &T)
+double TransportModel::GetWMass(const double &z)
 {
+  const double T = 0;
   std::vector<double> res;
   const std::vector<double> vev = Vev(z);
   res =
