@@ -55,7 +55,7 @@ struct VacuumProfile
    * @brief Number of times we let the profile relax without getting better.
    *
    */
-  size_t NotBetterThreshold = 3;
+  size_t NotBetterThreshold = 5;
 
   /**
    * @brief Bubble width
@@ -266,7 +266,7 @@ struct VacuumProfile
       // Bubble width
       const double Lw_In,
       // Number of steps for the path
-      const size_t NumberOfSteps = 1000);
+      const size_t NumberOfSteps = 2000);
 
   /**
    * @brief Construct a new Vacuum Profile object

@@ -31,7 +31,6 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
                                                 /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -81,7 +80,6 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
                                                 /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -107,21 +105,58 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
   for (auto &zi : tmodel->vacuumprofile->z)
-    zi += 3 * tmodel->Lw;
+    zi += 5 * tmodel->Lw;
+
   tmodel->vacuumprofile->GenerateSplines();
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  CHECK(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-3.83627e-11).epsilon(1e-2));
+}
+
+TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
+{
+  using namespace BSMPT;
+  using namespace Baryo::FHCK;
+
+  const std::vector<double> example_point_C2HDM{
+      /* lambda_1 = */ 1.2721750446204907,
+      /* lambda_2 = */ 0.2483141342325688,
+      /* lambda_3 = */ 8.574714969691337,
+      /* lambda_4 = */ -3.209467738667644,
+      /* Re(lambda_5) = */ -2.2755262749518543,
+      /* Im(lambda_5) = */ -0.8030838099435237,
+      /* Re(m_{12}^2) = */ 10780.786,
+      /* tan(beta) = */ 17.147000,
+      /* Yukawa Type = */ 1};
+
+  using namespace BSMPT;
+  const auto SMConstants = GetSMConstants();
+  std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
+      ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
+  modelPointer->initModel(example_point_C2HDM);
+
+  std::vector<double> TrueVacuum = {
+      -3.256852516e-10, 14.33558551, 245.8304988, -0.001799560675};
+  std::vector<double> FalseVacuum = {0, 0, 0, 0};
+  double Tstar                    = 8.897363105;
+
+  std::shared_ptr<TransportModel> tmodel = std::make_shared<TransportModel>(
+      modelPointer, TrueVacuum, FalseVacuum, 0.1, Tstar);
+
+  TransportEquations transport(tmodel, Tstar);
+
+  transport.SolveTransportEquation();
+
+  REQUIRE(transport.bau == Approx(-9.2609e-09).epsilon(1e-2));
 }
 
 TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
-  SetLogger({"--logginglevel::complete=true"});
 
   std::shared_ptr<BenchmarkModel> bmodel =
       std::make_shared<BenchmarkModel>(100., 0.1);
@@ -129,7 +164,7 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   TransportEquations transport(bmodel, 100.);
   transport.SolveTransportEquation();
 
-  CHECK(transport.bau == Approx(-1.38181e-10).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-1.38181e-10).epsilon(1e-2));
 
   std::shared_ptr<BenchmarkModel> bmodel2 =
       std::make_shared<BenchmarkModel>(100., 200., 100., 1000., 0.05, 0.1);
@@ -137,5 +172,5 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   TransportEquations transport2(bmodel2, 100.);
   transport2.SolveTransportEquation();
 
-  CHECK(transport2.bau == Approx(-1.38181e-10).epsilon(1e-2));
+  REQUIRE(transport2.bau == Approx(-1.38181e-10).epsilon(1e-2));
 }
