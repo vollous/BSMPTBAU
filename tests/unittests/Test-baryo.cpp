@@ -31,7 +31,6 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
                                                 /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -81,7 +80,6 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
                                                 /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -135,7 +133,6 @@ TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
       /* Yukawa Type = */ 1};
 
   using namespace BSMPT;
-  SetLogger({"--logginglevel::complete=true"});
   const auto SMConstants = GetSMConstants();
   std::shared_ptr<BSMPT::Class_Potential_Origin> modelPointer =
       ModelID::FChoose(ModelID::ModelIDs::C2HDM, SMConstants);
@@ -160,7 +157,6 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
-  SetLogger({"--logginglevel::complete=true"});
 
   std::shared_ptr<BenchmarkModel> bmodel =
       std::make_shared<BenchmarkModel>(100., 0.1);
