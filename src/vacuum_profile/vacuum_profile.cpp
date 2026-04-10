@@ -39,7 +39,7 @@ void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
     // uniformly distributed between -10 Lw and 10 Lw
     double u        = (-1. + 2. * k / (NumberOfSteps - 1.));
     u               = pow(u, 3);
-    u               = atanh(u * tanh(2));
+    u               = atanh(u * tanh(1));
     const double zk = u * Lw * LwToSolve;
     for (size_t i = 0; i < dim; i++)
       vev_k.at(i) =
@@ -105,6 +105,8 @@ void VacuumProfile::CalculateProfile()
   size_t NotBetter = 0;
   auto Best_y      = y;
 
+  double oldmu = 1e100;
+
   for (it = 0; it < itmax; it++)
   {
     CenterPath();
@@ -112,7 +114,12 @@ void VacuumProfile::CalculateProfile()
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
     std::stringstream sss;
     sss << "[Relaxation Vacuum profile] it = " << it
-        << ". Error = " << solvde.err << ". mu = " << difeq_vacuumprofile.mu;
+        << ". Error = " << solvde.err << ". mu = " << difeq_vacuumprofile.mu
+        << " | relative variation of mu = "
+        << std::abs(difeq_vacuumprofile.mu / oldmu - 1.);
+
+    oldmu = difeq_vacuumprofile.mu;
+
     Logger::Write(LoggingLevel::VacuumProfile, sss.str());
     if (solvde.err < MinError)
     {

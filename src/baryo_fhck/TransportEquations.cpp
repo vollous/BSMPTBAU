@@ -65,6 +65,13 @@ void TransportEquations::GenerateIntegrationSpace()
   double HighestNegRe, HighestNegEigenvalue;
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 
+  stringstream ss;
+
+  ss << "HighestNegRe  = " << HighestNegRe << "\n";
+  ss << "HighestNegEigenvalue  = " << HighestNegEigenvalue;
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
+
   LwMultiplier = std::ceil(std::log(LwMultiplierCutoff) /
                            (transportmodel->Lw * HighestNegRe));
 
@@ -820,7 +827,7 @@ double TransportEquations::WashoutFactor(const double &z)
   const double A   = 15. / 2.;
   const double fac = -A * nf / (2 * transportmodel->vwall * gamwall);
 
-  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(1000);
+  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(10000);
 
   gsl_function F;
   F.function = [](double zz, void *params) -> double
@@ -828,8 +835,16 @@ double TransportEquations::WashoutFactor(const double &z)
   F.params = this;
 
   double result, error;
-  gsl_integration_qags(
-      &F, zList.front(), z, 1e-8, 1e-8, 1000, workspace, &result, &error);
+  gsl_integration_qag(&F,
+                      zList.front(),
+                      z,
+                      1e-10,
+                      1e-10,
+                      10000,
+                      GSL_INTEG_GAUSS51,
+                      workspace,
+                      &result,
+                      &error);
 
   gsl_integration_workspace_free(workspace);
 
