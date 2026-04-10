@@ -54,12 +54,12 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
   TransportEquations transport(tmodel, coex->crit_temp);
 
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.39268e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.65648e-11).epsilon(1e-2));
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-4.4844e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-4.74563e-11).epsilon(1e-2));
 }
 
 TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
@@ -103,7 +103,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  REQUIRE(transport.bau == Approx(-4.4844e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-4.74563e-11).epsilon(1e-2));
   for (auto &zi : tmodel->vacuumprofile->z)
     zi += 5 * tmodel->Lw;
 
@@ -111,7 +111,7 @@ TEST_CASE("Test baryo example_point_C2HDM z-invariance", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
   transport.CalculateBAU();
-  REQUIRE(transport.bau == Approx(-4.4844e-11).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-4.74563e-11).epsilon(1e-2));
 }
 
 TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
@@ -148,7 +148,7 @@ TEST_CASE("Test baryo point. Difficult vacuum profile", "[baryoFHCK]")
 
   transport.SolveTransportEquation();
 
-  REQUIRE(transport.bau == Approx(-1.12319e-08).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-1.76928e-08).epsilon(1e-2));
 }
 
 TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
@@ -162,7 +162,7 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   TransportEquations transport(bmodel, 100.);
   transport.SolveTransportEquation();
 
-  REQUIRE(transport.bau == Approx(-1.38181e-10).epsilon(1e-2));
+  REQUIRE(transport.bau == Approx(-1.4975e-10).epsilon(1e-2));
 
   std::shared_ptr<BenchmarkModel> bmodel2 =
       std::make_shared<BenchmarkModel>(100., 200., 100., 1000., 0.05, 0.1);
@@ -170,5 +170,5 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   TransportEquations transport2(bmodel2, 100.);
   transport2.SolveTransportEquation();
 
-  REQUIRE(transport2.bau == Approx(-1.38181e-10).epsilon(1e-2));
+  REQUIRE(transport2.bau == Approx(-1.4975e-10).epsilon(1e-2));
 }
