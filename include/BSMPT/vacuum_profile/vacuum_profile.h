@@ -266,7 +266,7 @@ struct VacuumProfile
       // Bubble width
       const double Lw_In,
       // Number of steps for the path
-      const size_t NumberOfSteps = 2000);
+      const size_t NumberOfSteps = 1000);
 
   /**
    * @brief Construct a new Vacuum Profile object
