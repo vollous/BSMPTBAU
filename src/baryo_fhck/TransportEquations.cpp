@@ -65,6 +65,13 @@ void TransportEquations::GenerateIntegrationSpace()
   double HighestNegRe, HighestNegEigenvalue;
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 
+  stringstream ss;
+
+  ss << "HighestNegRe  = " << HighestNegRe << "\n";
+  ss << "HighestNegEigenvalue  = " << HighestNegEigenvalue;
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
+
   LwMultiplier = std::ceil(std::log(LwMultiplierCutoff) /
                            (transportmodel->Lw * HighestNegRe));
 
