@@ -263,13 +263,13 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   std::vector<double> trunc = {1., 1., 1., 1., 1.};
 
   const std::vector<std::vector<double>> tL_interactions = {
-      {1., 1., 1., 0., (1. + 9. * D0T)},
-      {-1., -1., 0., 0., (-1. + 9. * D0T)},
+      {2., 1., 1., 0., (1. + 9. * D0T)},
+      {-2., -1., 0., 0., (-1. + 9. * D0T)},
       {0., 0., -1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> tR_interactions = {
-      {-1., -1., 0., 0., -(1. + 9. * D0T)},
-      {1., 2., 0., 0., (1. - 9. * D0T)},
+      {-2., -1., 0., 0., -(1. + 9. * D0T)},
+      {2., 2., 0., 0., (1. - 9. * D0T)},
       {0., -1., 0., 0., -(1. + 9. * D0B)},
       {0., -2., 0., 0., 0.}};
   const std::vector<std::vector<double>> bL_interactions = {
@@ -278,10 +278,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {0., 1., 1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> h_interactions = {
-      {0., 1., 0., 0., 0.},
-      {0., -2., 0., 0., 0},
-      {0., 1., 0., 0., 0.},
-      {0., 2., 0., 1., 0.}};
+      {0., 1.5, 0., 0., 0.},
+      {0., -3., 0., 0., 0},
+      {0., 1.5, 0., 0., 0.},
+      {0., 3., 0., 1., 0.}};
   const std::vector<std::vector<std::vector<double>>> prtcl = {
       tL_interactions, tR_interactions, bL_interactions, h_interactions};
 
