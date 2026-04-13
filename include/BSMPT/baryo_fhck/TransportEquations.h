@@ -199,7 +199,7 @@ public:
    * low precision calculation.
    *
    */
-  const double StepsPerCycleLow = 30;
+  const double StepsPerCycleLow = 35;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$, by taking
@@ -208,7 +208,7 @@ public:
    * high precision calculation.
    *
    */
-  const double StepsPerCycleHigh = 40;
+  const double StepsPerCycleHigh = 45;
 
   /**
    * @brief Used for quick calculations (should not be that relevant)
@@ -385,12 +385,12 @@ public:
    * @brief Check if the boundary have enough decaying modes for the solution to
    * exist.
    *
-   * @param HighestNegRe Highest real part of negative eigenvalues (close to
-   * zero from below)
-   * @param HighestNegEigenvalue Highest magnitude of all eigenvalues with
+   * @param HighestNegReEigenvalue Highest real part of negative eigenvalues
+   * (close to zero from below)
+   * @param HighestImEigenvalue Highest magnitude of all eigenvalues with
    * negative real part
    */
-  void CheckBoundary(double &HighestNegRe, double &HighestNegEigenvalue);
+  void CheckBoundary(double &HighestNegReEigenvalue, double &HighestImEigenvalue);
 
   /**
    * @brief Check if the boundary have enough decaying modes for the solution to
