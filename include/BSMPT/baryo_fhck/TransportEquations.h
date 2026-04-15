@@ -226,7 +226,7 @@ public:
    * @brief Maximum number of steps in \f$ z \f$
    *
    */
-  const size_t MaxNumberOfSteps = 1e4;
+  const size_t MaxNumberOfSteps = 1e5;
 
   /**
    * @brief When \f$ S = 0 \f$ the \f$ \mu = \mu_0 e^{-\lambda z}\f$. We use
