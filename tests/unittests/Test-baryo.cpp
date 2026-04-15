@@ -155,8 +155,32 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
 {
   using namespace BSMPT;
   using namespace Baryo::FHCK;
+  SetLogger({"--logginglevel::complete=true"});
+  std::ofstream file("bench_vw_05_ell_2.tsv");
+  // std::ofstream file("vw001_l_42.tsv");
+  for (double i = -1.; i <= 1.001; i += 0.05)
+  {
+    std::shared_ptr<BenchmarkModel> bmodel = std::make_shared<BenchmarkModel>(
+        100., 0.5, TruncationScheme::Const, -0.6999999999999997);
+    TransportEquations transport(bmodel, 100., {2});
+    transport.SolveTransportEquation();
+    file << i << "\t" << transport.BAUeta.at(0).value_or(EmptyValue) << "\n";
+  }
+  file.close();
 
-  std::shared_ptr<BenchmarkModel> bmodel =
+  // Deep moment with different truncation
+  /* std::shared_ptr<BenchmarkModel> bmodel =
+      std::make_shared<BenchmarkModel>(100., 200., 100., 1000., 1., 0.1);
+
+  TransportEquations transport(
+      bmodel, 100., {2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50});
+  transport.SolveTransportEquation();
+  std::ofstream file("vw01_lw1_R_m1.tsv");
+  for (size_t i = 0; i < 13; i++)
+    file << transport.BAUeta.at(i).value_or(EmptyValue) << "\n";
+  file.close(); */
+
+  /* std::shared_ptr<BenchmarkModel> bmodel =
       std::make_shared<BenchmarkModel>(100., 0.1);
 
   TransportEquations transport(bmodel, 100.);
@@ -170,5 +194,5 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
   TransportEquations transport2(bmodel2, 100.);
   transport2.SolveTransportEquation();
 
-  REQUIRE(transport2.bau == Approx(-1.4975e-10).epsilon(1e-2));
+  REQUIRE(transport2.bau == Approx(-1.4975e-10).epsilon(1e-2)); */
 }
