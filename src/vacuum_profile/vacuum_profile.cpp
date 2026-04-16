@@ -37,7 +37,10 @@ void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
   for (size_t k = 0; k < NumberOfSteps; k++)
   {
     // uniformly distributed between -10 Lw and 10 Lw
-    const double zk = (-1. + 2. * k / (NumberOfSteps - 1.)) * Lw * LwToSolve;
+    double u        = (-1. + 2. * k / (NumberOfSteps - 1.));
+    u               = pow(u, 3);
+    u               = atanh(u * tanh(1));
+    const double zk = u * Lw * LwToSolve;
     for (size_t i = 0; i < dim; i++)
       vev_k.at(i) =
           TrueVacuum.at(i) +
@@ -51,9 +54,6 @@ void VacuumProfile::CreatePath(const size_t &NumberOfSteps)
 void VacuumProfile::LoadPath(const std::vector<double> &z_In,
                              const std::vector<std::vector<double>> &path_In)
 {
-  std::stringstream ss;
-  ss << "Loading path into VacuumProfile...";
-
   if (z_In.size() != path_In.size())
     throw("z and path have different lengths.");
   scalv = VecDoub(2 * dim, 1); // min of 1
@@ -77,8 +77,6 @@ void VacuumProfile::LoadPath(const std::vector<double> &z_In,
         scalv[dim + i] = abs(y[dim + i][k]);
     }
   }
-  ss << " \033[92mSuccess!\033[0m";
-  Logger::Write(LoggingLevel::VacuumProfile, ss.str());
 }
 
 void VacuumProfile::CalculateProfile()
@@ -107,8 +105,11 @@ void VacuumProfile::CalculateProfile()
   size_t NotBetter = 0;
   auto Best_y      = y;
 
+  double oldmu = 1e100;
+
   for (it = 0; it < itmax; it++)
   {
+    CenterPath();
     std::stringstream path_ss;
     path_ss << "path_" << std::setw(3) << std::setfill('0') << it << ".tsv";
 
@@ -123,11 +124,17 @@ void VacuumProfile::CalculateProfile()
     }
 
     PathFile.close();
+
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, dim, y, difeq_vacuumprofile);
     std::stringstream sss;
     sss << "[Relaxation Vacuum profile] it = " << it
-        << ". Error = " << solvde.err;
+        << ". Error = " << solvde.err << ". mu = " << difeq_vacuumprofile.mu
+        << " | relative variation of mu = "
+        << std::abs(difeq_vacuumprofile.mu / oldmu - 1.);
+
+    oldmu = difeq_vacuumprofile.mu;
+
     Logger::Write(LoggingLevel::VacuumProfile, sss.str());
     if (solvde.err < MinError)
     {
@@ -227,12 +234,11 @@ void VacuumProfile::GenerateSplines()
                  0.0);
     splines.push_back(s);
   }
-  Logger::Write(LoggingLevel::VacuumProfile, "Splined generated!");
 }
 
 std::vector<double> VacuumProfile::GetVev(const double &zz, const int &diff)
 {
-  if (status != VacuumProfileStatus::Success)
+  if (splines.size() != dim)
   {
     Logger::Write(LoggingLevel::VacuumProfile,
                   "Vacuum profile calculation failed. Do not call GetVev(z)");
@@ -289,17 +295,13 @@ void VacuumProfile::CenterPath(double &center)
       max_dphidz = dphidz;
     }
   }
-  Logger::Write(LoggingLevel::VacuumProfile,
-                "Current center at z = \t" + std::to_string(center) +
-                    ". Centering path!");
-
   std::vector<std::vector<double>> new_path;
   for (const double &zk : z)
   {
     new_path.push_back(GetVev(zk + center));
   }
   LoadPath(z, new_path);
-  if (status == VacuumProfileStatus::Success) GenerateSplines();
+  GenerateSplines();
 }
 
 VacuumProfile::VacuumProfile(

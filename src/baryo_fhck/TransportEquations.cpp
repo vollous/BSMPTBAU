@@ -65,6 +65,13 @@ void TransportEquations::GenerateIntegrationSpace()
   double HighestNegRe, HighestNegEigenvalue;
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 
+  stringstream ss;
+
+  ss << "HighestNegRe  = " << HighestNegRe << "\n";
+  ss << "HighestNegEigenvalue  = " << HighestNegEigenvalue;
+
+  Logger::Write(LoggingLevel::FHCK, ss.str());
+
   LwMultiplier = std::ceil(std::log(LwMultiplierCutoff) /
                            (transportmodel->Lw * HighestNegRe));
 
@@ -249,27 +256,27 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double D2B = Dlf[2](mass[2]);
   const double D2H = Dlb[2](mass[3]);
 
-  const std::vector<double> gammatot = {D2T / (D0T * 6.) * Tstar,
-                                        D2T / (D0T * 6.) * Tstar,
-                                        D2B / (D0B * 6.) * Tstar,
-                                        D2H / (D0H * 20.) * Tstar};
+  const std::vector<double> gammatot = {D2T / (D0T * 7.1) * Tstar,
+                                        D2T / (D0T * 7.6) * Tstar,
+                                        D2B / (D0B * 7.1) * Tstar,
+                                        D2H / (D0H * 14.) * Tstar};
 
-  const std::vector<double> rates = {pow(mass[0], 2) / 63. * Tstar, // gammaM
-                                     4.2e-3 * Tstar,                // gammaY
-                                     gammatot[3],                   // gammaW
-                                     mW * mW / 50. * Tstar,         // gammaH
-                                     4.9e-4 * Tstar};               // gammaSS
+  const std::vector<double> rates = {0.26 * pow(mass[0], 2) * Tstar, // gammaM
+                                     5.9e-3 * Tstar,                 // gammaY
+                                     gammatot[3],                    // gammaW
+                                     1.5 * mW * mW * Tstar,          // gammaH
+                                     2.7e-3 * Tstar};                // gammaSS
 
   std::vector<double> trunc = {1., 1., 1., 1., 1.};
 
   const std::vector<std::vector<double>> tL_interactions = {
-      {1., 1., 1., 0., (1. + 9. * D0T)},
-      {-1., -1., 0., 0., (-1. + 9. * D0T)},
+      {2., 1., 1., 0., (1. + 9. * D0T)},
+      {-2., -1., 0., 0., (-1. + 9. * D0T)},
       {0., 0., -1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> tR_interactions = {
-      {-1., -1., 0., 0., -(1. + 9. * D0T)},
-      {1., 2., 0., 0., (1. - 9. * D0T)},
+      {-2., -1., 0., 0., -(1. + 9. * D0T)},
+      {2., 2., 0., 0., (1. - 9. * D0T)},
       {0., -1., 0., 0., -(1. + 9. * D0B)},
       {0., -2., 0., 0., 0.}};
   const std::vector<std::vector<double>> bL_interactions = {
@@ -278,10 +285,10 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {0., 1., 1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> h_interactions = {
-      {0., 1., 0., 0., 0.},
-      {0., -2., 0., 0., 0},
-      {0., 1., 0., 0., 0.},
-      {0., 2., 0., 1., 0.}};
+      {0., 1.5, 0., 0., 0.},
+      {0., -3., 0., 0., 0},
+      {0., 1.5, 0., 0., 0.},
+      {0., 3., 0., 1., 0.}};
   const std::vector<std::vector<std::vector<double>>> prtcl = {
       tL_interactions, tR_interactions, bL_interactions, h_interactions};
 
@@ -449,7 +456,7 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = transportmodel->GetWMass(z, Tstar);
+  const double mW = transportmodel->GetWMass(z);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
@@ -488,14 +495,14 @@ void TransportEquations::Equations(const double &z,
   }
 
   // Gamma = deltaC - m2' B
-  const MatDoub CollisiontMatrix =
+  const MatDoub CollisionMatrix =
       CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
   for (size_t i = 0; i < nEqs; i++)
     for (size_t j = 0; j < nEqs; j++)
       for (size_t l = 0; l < nEqs; l++)
-        Mtilde[i][j] += Ainverse[i][l] * (CollisiontMatrix[l][j] - m2B[l][j]);
+        Mtilde[i][j] += Ainverse[i][l] * (CollisionMatrix[l][j] - m2B[l][j]);
 
   // Calculate Stilde = A^-1 * S
   for (size_t i = 0; i < nEqs; i++)
@@ -566,9 +573,10 @@ void TransportEquations::CheckBoundary(double &HighestNegRe,
   Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverM(EigenMtildeM);
   Eigen::ComplexEigenSolver<Eigen::MatrixXcd> EigenSolverP(EigenMtildeP);
 
+  const double EigenValueThreshold = -1e-10;
   // Number of modes that have to be set to zero
   for (auto ev : EigenSolverM.eigenvalues())
-    if (-ev.real() >= 0) /* minus sign because z -> -Infinity */
+    if (-ev.real() >= EigenValueThreshold) /* minus sign z -> -Infinity */
       NumberOfNonDecayingModes++;
     else
     {
@@ -577,7 +585,7 @@ void TransportEquations::CheckBoundary(double &HighestNegRe,
       HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
     }
   for (auto ev : EigenSolverP.eigenvalues())
-    if (ev.real() >= 0)
+    if (ev.real() >= EigenValueThreshold)
       NumberOfNonDecayingModes++;
     else
     {
@@ -607,7 +615,17 @@ void TransportEquations::smatrix(const int k,
                                  MatDoub &s,
                                  MatDoub &y)
 {
-  double temp;
+  double temp, zlow, zhigh;
+  if (transportmodel->VevProfile == VevProfileMode::FieldEquation)
+  {
+    zlow  = transportmodel->vacuumprofile->z.front();
+    zhigh = transportmodel->vacuumprofile->z.back();
+  }
+  else
+  {
+    zlow  = -100. * transportmodel->Lw;
+    zhigh = 100. * transportmodel->Lw;
+  }
   MatDoub Mtilde(nEqs, nEqs);
   VecDoub Stilde(nEqs);
   s.zero(); // Set matrix s = 0
@@ -637,12 +655,12 @@ void TransportEquations::smatrix(const int k,
   {
     double zk = (zList[k] + zList[k - 1]) / 2.;
     double dz = (zList[k] - zList[k - 1]);
-    if (zk < -100 * transportmodel->Lw) // TODO: change. Too specific
+    if (zk < zlow)
     {
       Mtilde = MtildeM;
       Stilde = StildeM;
     }
-    else if (zk > 100 * transportmodel->Lw) // TODO: change. Too specific
+    else if (zk > zhigh)
     {
       Mtilde = MtildeP;
       Stilde = StildeP;
@@ -749,12 +767,7 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
   // fix μ and first u
   for (size_t l = 0; l < moment /* moment= 2 + 4k */; l++)
     for (size_t particle = 0; particle < nParticles; particle++)
-    {
       indexv[l + particle * moment] = particle + l * (nParticles);
-      Logger::Write(LoggingLevel::FHCK,
-                    "indexv[" + std::to_string(particle + l * (nParticles)) +
-                        "] = " + std::to_string(l + particle * moment));
-    }
 
   int NB = nEqs / 2;
 
@@ -817,11 +830,48 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
   return bau;
 }
 
+double TransportEquations::Gws(const double &z)
+{
+  const double h    = transportmodel->EWSBVEV(z);
+  const double Gsph = 8.e-7 * Tstar;
+  return Gsph * std::min(1., 1.7 * Tstar / Gsph * std::exp(-37. * h / Tstar));
+}
+
+double TransportEquations::WashoutFactor(const double &z)
+{
+  const double A   = 15. / 2.;
+  const double fac = -A * nf / (2 * transportmodel->vwall * gamwall);
+
+  gsl_integration_workspace *workspace = gsl_integration_workspace_alloc(10000);
+
+  gsl_function F;
+  F.function = [](double zz, void *params) -> double
+  { return static_cast<TransportEquations *>(params)->Gws(zz); };
+  F.params = this;
+
+  double result, error;
+  gsl_integration_qag(&F,
+                      zList.front(),
+                      z,
+                      1e-10,
+                      1e-10,
+                      10000,
+                      GSL_INTEG_GAUSS51,
+                      workspace,
+                      &result,
+                      &error);
+
+  gsl_integration_workspace_free(workspace);
+
+  return std::exp(fac * result);
+}
+
 void TransportEquations::CalculateBAU()
 {
+  const double Nc = 3;
+
   double mt2, mb2, m2prime, thetaprime, theta2prime; // temporary vars
   // Weak spharelon rate
-  const double Gsph = 1.e-6 * Tstar;
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
@@ -838,13 +888,8 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
-    r *= std::min(
-        1.,
-        1.7 * Tstar / Gsph *
-            exp(-37 * transportmodel->EWSBVEV(zi) / Tstar)); // f_sph(z)
-    r *= exp(-45 * Gsph * std::abs(zi) /
-             (4. * transportmodel->vwall *
-              gamwall)); // exp(-45 G_sph |z| / 4 vw gammaw)
+    r *= Gws(zi);
+    r *= WashoutFactor(zi);
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
@@ -873,7 +918,7 @@ void TransportEquations::CalculateBAU()
   double error = abs(result_c - result_l);
 
   // Results
-  const double prefactor = 405. * Gsph /
+  const double prefactor = -45. * nf * Nc /
                            (4 * M_PI * M_PI * transportmodel->vwall * gamwall *
                             106.75 * Tstar); // TODO Fix gstas
 

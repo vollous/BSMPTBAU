@@ -87,18 +87,6 @@ private:
   std::shared_ptr<CalculateEtaInterface> EtaInterface;
 
   /**
-   * @brief Transition temperature
-   *
-   */
-  double Tstar;
-
-  /**
-   * @brief pointer to the vacuum profile solver
-   *
-   */
-  std::shared_ptr<VacuumProfileNS::VacuumProfile> vacuumprofile;
-
-  /**
    * @brief False vacuum
    *
    */
@@ -130,6 +118,12 @@ private:
 
 public:
   /**
+   * @brief pointer to the vacuum profile solver
+   *
+   */
+  std::shared_ptr<VacuumProfileNS::VacuumProfile> vacuumprofile;
+
+  /**
    * @brief The standard 4 particle that appear in the transport equations
    *
    */
@@ -142,6 +136,12 @@ public:
    *
    */
   double Lw = -1;
+
+  /**
+   * @brief Transition temperature
+   *
+   */
+  double Tstar;
 
   /**
    * @brief Number of points per \f$ L_w \f$ when constructiong the mass spline.
@@ -180,6 +180,11 @@ public:
    *
    */
   TruncationScheme truncationscheme = TruncationScheme::MinusVw;
+
+  /**
+   * @brief Default constructor
+   */
+  TransportModel() {};
 
   /**
    * @brief Construct a new Transport Model object
@@ -227,7 +232,7 @@ public:
    * @brief Create the VEV vectors
    *
    */
-  void Initialize();
+  virtual void Initialize();
 
   /**
    * @brief Set EtaInterface obejct to use BSMPTv2 functions.
@@ -258,8 +263,8 @@ public:
    * @param zList z distribution where we interpolate the fermion mass
    * @param MakeTopMassPlot Make the plots or not
    */
-  void GenerateFermionMass(const std::vector<double> &zList,
-                           const bool &MakeTopMassPlot = false);
+  virtual void GenerateFermionMass(const std::vector<double> &zList,
+                                   const bool &MakeTopMassPlot = false);
 
   /**
    * @brief Get the Fermion Mass object Calculate the fermion mass and its
@@ -272,20 +277,19 @@ public:
    * @param thetaprime \f$ \theta' \f$
    * @param theta2prime \f$ \theta'' \f$
    */
-  void GetFermionMass(const double &z,
-                      const size_t &fermion,
-                      double &m2,
-                      double &m2prime,
-                      double &thetaprime,
-                      double &theta2prime);
+  virtual void GetFermionMass(const double &z,
+                              const size_t &fermion,
+                              double &m2,
+                              double &m2prime,
+                              double &thetaprime,
+                              double &theta2prime);
   /**
    * @brief Calculate the W boson mass. (same code as BSMPTv2)
    *
    * @param vev VEV
-   * @param T Transition temperature
    * @return double W boson mass
    */
-  double GetWMass(const double &z, const double &T);
+  virtual double GetWMass(const double &z);
 
   /**
    * @brief This function calculates the EW breaking VEV from all contributing
@@ -293,9 +297,9 @@ public:
    *
    * @param z distance from the bubble wall
    */
-  double EWSBVEV(const double &z);
+  virtual double EWSBVEV(const double &z);
 
-  ~TransportModel() {};
+  virtual ~TransportModel() {};
 };
 
 } // namespace FHCK
