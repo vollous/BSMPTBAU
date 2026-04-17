@@ -779,21 +779,6 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
 
   for (it = 0; it < itmax; it++)
   {
-    std::stringstream path_ss;
-    path_ss << "transportequations_" << std::setw(3) << std::setfill('0') << it
-            << ".tsv";
-
-    std::ofstream PathFile(path_ss.str());
-
-    for (size_t i = 0; i < Solution.cols(); i++)
-    {
-      PathFile << zList[i] << "\t";
-      for (size_t j = 0; j < Solution.rows(); j++)
-        PathFile << Solution[j][i] << "\t";
-      PathFile << "\n";
-    }
-
-    PathFile.close();
     if (NotBetter >= NotBetterThreshold) break;
     RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
     stringstream ss;
@@ -814,6 +799,23 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
 
     NotBetter++;
   }
+
+  std::stringstream path_ss;
+  path_ss << "transportequations_"
+          << VevProfileModeToString.at(transportmodel->VevProfile) << "_" << ell
+          << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+
+  for (size_t i = 0; i < Best_Solution.cols(); i++)
+  {
+    PathFile << zList[i] << "\t";
+    for (size_t j = 0; j < Best_Solution.rows(); j++)
+      PathFile << Best_Solution[j][i] << "\t";
+    PathFile << "\n";
+  }
+
+  PathFile.close();
 
   if (it == NotBetter)
   {
