@@ -42,17 +42,21 @@ void TransportEquations::Initialize()
   MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList, true);
 
-  std::stringstream path_ss, path_sss;
+  std::stringstream path_ss, path_sss, path_ssss;
   path_ss << "topmass_" << VevProfileModeToString.at(transportmodel->VevProfile)
           << ".tsv";
 
-  path_sss << "vevprofile"
+  path_sss << "vevprofile_"
            << VevProfileModeToString.at(transportmodel->VevProfile) << ".tsv";
+
+  path_ssss << "spharelonrate_"
+            << VevProfileModeToString.at(transportmodel->VevProfile) << ".tsv";
 
   std::ofstream PathFile(path_ss.str());
   std::ofstream PathFileVev(path_sss.str());
+  std::ofstream PathFileSpharelon(path_ssss.str());
 
-  for (double zi = -10. * transportmodel->Lw; zi < 10. * transportmodel->Lw;
+  for (double zi = -100. * transportmodel->Lw; zi < 100. * transportmodel->Lw;
        zi += transportmodel->Lw / 100.)
   {
     PathFile << zi;
@@ -67,10 +71,12 @@ void TransportEquations::Initialize()
     }
     PathFile << "\n";
     PathFileVev << zi << "\t" << transportmodel->Vev(zi) << "\n";
+    PathFileSpharelon << zi << "\t" << Gws(zi) << "\n";
   }
 
   PathFile.close();
   PathFileVev.close();
+  PathFileSpharelon.close();
 
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
