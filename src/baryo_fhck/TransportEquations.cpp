@@ -256,27 +256,27 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const double D2B = Dlf[2](mass[2]);
   const double D2H = Dlb[2](mass[3]);
 
-  const std::vector<double> gammatot = {D2T / (D0T * 7.1) * Tstar,
-                                        D2T / (D0T * 7.6) * Tstar,
-                                        D2B / (D0B * 7.1) * Tstar,
-                                        D2H / (D0H * 14.) * Tstar};
+  const std::vector<double> gammatot = {D2T / (D0T * 6.) * Tstar,
+                                        D2T / (D0T * 6.) * Tstar,
+                                        D2B / (D0B * 6.) * Tstar,
+                                        D2H / (D0H * 20.) * Tstar};
 
-  const std::vector<double> rates = {0.26 * pow(mass[0], 2) * Tstar, // gammaM
-                                     5.9e-3 * Tstar,                 // gammaY
-                                     gammatot[3],                    // gammaW
-                                     1.5 * mW * mW * Tstar,          // gammaH
-                                     2.7e-3 * Tstar};                // gammaSS
+  const std::vector<double> rates = {pow(mass[0], 2) * Tstar / 63., // gammaM
+                                     4.2e-3 * Tstar,                // gammaY
+                                     gammatot[3],                   // gammaW
+                                     mW * mW * Tstar / 50.,         // gammaH
+                                     2.7e-4 * Tstar};               // gammaSS
 
   std::vector<double> trunc = {1., 1., 1., 1., 1.};
 
   const std::vector<std::vector<double>> tL_interactions = {
-      {2., 1., 1., 0., (1. + 9. * D0T)},
-      {-2., -1., 0., 0., (-1. + 9. * D0T)},
+      {1., 1., 1., 0., (1. + 9. * D0T)},
+      {-1., -1., 0., 0., (-1. + 9. * D0T)},
       {0., 0., -1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> tR_interactions = {
-      {-2., -1., 0., 0., -(1. + 9. * D0T)},
-      {2., 2., 0., 0., (1. - 9. * D0T)},
+      {-1., -1., 0., 0., -(1. + 9. * D0T)},
+      {1., 2., 0., 0., (1. - 9. * D0T)},
       {0., -1., 0., 0., -(1. + 9. * D0B)},
       {0., -2., 0., 0., 0.}};
   const std::vector<std::vector<double>> bL_interactions = {
@@ -285,9 +285,9 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
       {0., 1., 1., 0., (1. + 9. * D0B)},
       {0., 1., 0., 0., 0.}};
   const std::vector<std::vector<double>> h_interactions = {
-      {0., 1.5, 0., 0., 0.},
+      {0., 3., 0., 0., 0.},
       {0., -3., 0., 0., 0},
-      {0., 1.5, 0., 0., 0.},
+      {0., 0., 0., 0., 0.},
       {0., 3., 0., 1., 0.}};
   const std::vector<std::vector<std::vector<double>>> prtcl = {
       tL_interactions, tR_interactions, bL_interactions, h_interactions};
