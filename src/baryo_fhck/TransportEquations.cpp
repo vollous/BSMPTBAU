@@ -42,6 +42,30 @@ void TransportEquations::Initialize()
   MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
   transportmodel->GenerateFermionMass(zList, true);
 
+  std::stringstream path_ss;
+  path_ss << "topmass_" << VevProfileModeToString.at(transportmodel->VevProfile)
+          << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+
+  for (double zi = -10. * transportmodel->Lw; zi < 10. * transportmodel->Lw;
+       zi += transportmodel->Lw / 100.)
+  {
+    PathFile << zi;
+    double m2, m2prime, thetaprime, theta2prime;
+
+    for (size_t j = 0; j < 3; j += 2)
+    {
+      transportmodel->GetFermionMass(
+          zi, j, m2, m2prime, thetaprime, theta2prime);
+      PathFile << "\t" << transportmodel->QuarkMassesRe.at(j)(zi) << "\t"
+               << transportmodel->QuarkMassesIm.at(j)(zi) << "\t";
+    }
+    PathFile << "\n";
+  }
+
+  PathFile.close();
+
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
