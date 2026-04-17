@@ -703,6 +703,7 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t ell = 0; ell < moments.size(); ell++)
   {
+    elll = ell;
     stringstream ss;
     ss << "---------------- Calculating BAU for ℓ = " << moments.at(ell)
        << " ----------------";
@@ -877,6 +878,13 @@ void TransportEquations::CalculateBAU()
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
+
+  std::stringstream path_ss;
+  path_ss << "mubl" << VevProfileModeToString.at(transportmodel->VevProfile)
+          << "_" << elll << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+
   for (size_t i = 0; i < zList.size(); i++)
   {
     const double zi = zList.at(i);
@@ -895,7 +903,10 @@ void TransportEquations::CalculateBAU()
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
+    PathFile << zi << "\t" << r << "\n";
   }
+
+  PathFile.close();
 
   size_t n = z.size();
   double a = z.front(); // Lower bound of integration

@@ -118,6 +118,8 @@ public:
    */
   std::vector<double> zList;
 
+  size_t elll;
+
   /**
    * @brief \f$ M \f$ matrix at the z-negative boundary.
    *        \f$ S \f$ vector at the z-positive boundary.
