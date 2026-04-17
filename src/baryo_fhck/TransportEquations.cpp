@@ -64,10 +64,11 @@ void TransportEquations::Initialize()
 
     for (size_t j = 0; j < 3; j += 2)
     {
+      size_t ind = transportmodel->modelPointer->get_NQuarks() - 1 - j;
       transportmodel->GetFermionMass(
           zi, j, m2, m2prime, thetaprime, theta2prime);
-      PathFile << "\t" << transportmodel->QuarkMassesRe.at(j)(zi) << "\t"
-               << transportmodel->QuarkMassesIm.at(j)(zi) << "\t";
+      PathFile << "\t" << transportmodel->QuarkMassesRe.at(ind)(zi) << "\t"
+               << transportmodel->QuarkMassesIm.at(ind)(zi);
     }
     PathFile << "\n";
     PathFileVev << zi << "\t" << transportmodel->Vev(zi) << "\n";
