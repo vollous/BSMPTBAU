@@ -934,12 +934,14 @@ void TransportEquations::CalculateBAU()
     r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
     r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
     r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
+
+    PathFile << zi << "\t" << r << "\n";
+
     r *= Gws(zi);
     r *= WashoutFactor(zi);
     // Save in list to pass to integrator
     z.push_back(zi);
     muB.push_back(r); // integrand
-    PathFile << zi << "\t" << r << "\n";
   }
 
   PathFile.close();
