@@ -103,6 +103,11 @@ void TransportModel::Initialize()
   if (VevProfile == VevProfileMode::Kink)
   {
     SetEtaInterface();
+    std::ofstream PathFile("kink_data.tsv");
+    PathFile << Lw << "\t" << EtaInterface->getBrokenCPViolatingPhase_top()
+             << "\t" << EtaInterface->getSymmetricCPViolatingPhase_top()
+             << "\n";
+    PathFile.close();
   }
 }
 
