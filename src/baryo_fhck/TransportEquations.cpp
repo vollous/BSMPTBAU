@@ -36,6 +36,14 @@ void TransportEquations::Initialize()
     return;
   }
 
+  gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
+
+  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
+
+  BuildKernelInterpolation();
+
+  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
+
   // Plot top mass
   NumberOfSteps = DefaultNumberOfSteps;
   LwMultiplier  = DefaultLwMultiplier;
