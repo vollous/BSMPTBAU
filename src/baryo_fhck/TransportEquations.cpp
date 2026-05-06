@@ -780,24 +780,34 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
   for (it = 0; it < itmax; it++)
   {
     if (NotBetter >= NotBetterThreshold) break;
-    RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
-    stringstream ss;
-    ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
-    Logger::Write(LoggingLevel::FHCK, ss.str());
-
-    MaxError = std::max(MaxError, solvde.err);
-
-    if (solvde.err < MinError)
+    try
     {
-      MinError      = solvde.err;
-      Best_Solution = Solution;
-      NotBetter     = 0;
+      RelaxOde solvde(1, conv, slowc, scalv, indexv, NB, Solution, *this);
+      stringstream ss;
+      ss << "[Transport equations] it = " << it << ". Error = " << solvde.err;
+      Logger::Write(LoggingLevel::FHCK, ss.str());
+
+      MaxError = std::max(MaxError, solvde.err);
+
+      if (solvde.err < MinError)
+      {
+        MinError      = solvde.err;
+        Best_Solution = Solution;
+        NotBetter     = 0;
+      }
+
+      // Early exit in case error gets much smaller than the worst case
+      if (solvde.err / MaxError < 1e-10) break;
+
+      NotBetter++;
     }
-
-    // Early exit in case error gets much smaller than the worst case
-    if (solvde.err / MaxError < 1e-10) break;
-
-    NotBetter++;
+    catch (const char *e)
+    {
+      Logger::Write(LoggingLevel::FHCK,
+                    "\033[31mException caught in solvde: " + std::string(e) +
+                        "\033[0m\n");
+      return NAN;
+    }
   }
 
   if (it == NotBetter)

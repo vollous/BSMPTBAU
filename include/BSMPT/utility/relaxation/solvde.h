@@ -168,6 +168,7 @@ public:
           }
         }
       }
+      if (piv == 0.0) throw("No pivot found in pinvs");
       if (s[ipiv][jpiv] == 0.0) throw("Singular matrix in routine pinvs");
       indxr[ipiv - ie1] = jpiv + 1;
       pivinv            = 1.0 / s[ipiv][jpiv];
