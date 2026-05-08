@@ -80,20 +80,13 @@ void TransportEquations::Initialize()
     }
     PathFile << "\n";
     PathFileVev << zi << "\t" << transportmodel->Vev(zi) << "\n";
-    PathFileSpharelon << zi << "\t" << Gws(zi) << "\n";
+    PathFileSpharelon << zi << "\t" << Gws(zi) << "\t"
+                      << Gws(zi) * WashoutFactor(zi) << "\n";
   }
 
   PathFile.close();
   PathFileVev.close();
   PathFileSpharelon.close();
-
-  gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
-
-  Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
-
-  BuildKernelInterpolation();
-
-  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
 }
 
 void TransportEquations::GenerateIntegrationSpace()
