@@ -130,9 +130,9 @@ double Class_Potential_Origin::boson(double MassSquared,
   {
     res += 1.0 / (2 * std::pow(M_PI, 2)) *
            (4 * std::pow(Temp, 3) *
-                ThermalFunctions::JbosonNumericalIntegration(Ratio, 0) -
+                ThermalFunctions::JbosonInterpolated(Ratio, 0) -
             2 * Temp * MassSquared *
-                ThermalFunctions::JbosonNumericalIntegration(Ratio, 1));
+                ThermalFunctions::JbosonInterpolated(Ratio, 1));
   }
   return res;
 }
@@ -158,9 +158,9 @@ Class_Potential_Origin::fermion(double MassSquared, double Temp, int diff) const
   {
     res += 1.0 / (2 * std::pow(M_PI, 2)) *
            (4 * std::pow(Temp, 3) *
-                ThermalFunctions::JfermionNumericalIntegration(Ratio) -
+                ThermalFunctions::JfermionInterpolated(Ratio, 0) -
             2 * Temp * MassSquared *
-                ThermalFunctions::JfermionNumericalIntegration(Ratio, 1));
+                ThermalFunctions::JfermionInterpolated(Ratio, 1));
   }
   return res;
 }
@@ -2463,7 +2463,7 @@ Class_Potential_Origin::HiggsMassesSquared(const std::vector<double> &v,
 {
   std::vector<double> res;
 
-  auto MassMatrix = HiggsMassMatrix(v, Temp, diff);
+  auto MassMatrix = HiggsMassMatrix(v, Temp);
 
   double ZeroMass = std::pow(10, -5);
 
@@ -3248,13 +3248,23 @@ double Class_Potential_Origin::V1Loop(const std::vector<double> &v,
       double VDebye = 0;
       for (std::size_t k = 0; k < NHiggs; k++)
       {
-        if (HiggsMassesVec[k] > 0) VDebye += std::pow(HiggsMassesVec[k], 1.5);
+        if (HiggsMassesVec[k] > 0)
+        {
+          VDebye += std::pow(HiggsMassesVec[k], 1.5);
+          VDebye += 1.5 * Temp * HiggsMassesVec.at(k + NHiggs) *
+                    std::pow(HiggsMassesVec.at(k), 0.5);
+        }
         if (HiggsMassesZeroTempVec[k] > 0)
           VDebye += -std::pow(HiggsMassesZeroTempVec[k], 1.5);
       }
       for (std::size_t k = 0; k < NGauge; k++)
       {
-        if (GaugeMassesVec[k] > 0) VDebye += std::pow(GaugeMassesVec[k], 1.5);
+        if (GaugeMassesVec[k] > 0)
+        {
+          VDebye += std::pow(GaugeMassesVec[k], 1.5);
+          VDebye += 1.5 * Temp * GaugeMassesVec.at(k + NGauge) *
+                    std::pow(GaugeMassesVec[k], 0.5);
+        }
         if (GaugeMassesZeroTempVec[k] > 0)
           VDebye += -std::pow(GaugeMassesZeroTempVec[k], 1.5);
       }
