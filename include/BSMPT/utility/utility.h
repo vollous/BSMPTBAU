@@ -261,6 +261,75 @@ std::vector<T> operator*(const std::vector<std::vector<T>> &a,
 }
 
 /**
+ * @brief matrix-matrix multiplication
+ *
+ * Computes:
+ *   C = A * B
+ *
+ * where:
+ *   A is (m x n)
+ *   B is (n x p)
+ *   C is (m x p)
+ */
+template <typename T>
+std::vector<std::vector<T>> operator*(const std::vector<std::vector<T>> &A,
+                                      const std::vector<std::vector<T>> &B)
+{
+  if (A.empty() || B.empty())
+  {
+    throw std::runtime_error(
+        "Matrix multiplication cannot be done with empty matrices.");
+  }
+
+  const std::size_t m = A.size();
+  const std::size_t n = A[0].size();
+  const std::size_t p = B[0].size();
+
+  // Check A is rectangular
+  for (const auto &row : A)
+  {
+    if (row.size() != n)
+    {
+      throw std::runtime_error("Matrix A is not rectangular.");
+    }
+  }
+
+  // Check B is rectangular
+  for (const auto &row : B)
+  {
+    if (row.size() != p)
+    {
+      throw std::runtime_error("Matrix B is not rectangular.");
+    }
+  }
+
+  // Compatibility check
+  if (B.size() != n)
+  {
+    throw std::runtime_error(
+        "Matrix multiplication cannot be done. "
+        "Number of columns of A must equal number of rows of B.");
+  }
+
+  // Result matrix initialized with zeros
+  std::vector<std::vector<T>> C(m, std::vector<T>(p, T{}));
+
+  // Standard triple-loop multiplication
+  for (std::size_t i = 0; i < m; ++i)
+  {
+    for (std::size_t k = 0; k < n; ++k)
+    {
+      for (std::size_t j = 0; j < p; ++j)
+      {
+        C[i][j] += A[i][k] * B[k][j];
+      }
+    }
+  }
+
+  return C;
+}
+
+/**
  * @brief flatten matrix
  */
 template <typename T>
