@@ -235,15 +235,19 @@ T operator*(const std::vector<T> &a, const std::vector<T> &b)
 }
 
 /**
- * @brief multiplication of matrix with vector
+ * @brief Matrix-vector multiplication
  */
 template <typename T>
 std::vector<T> operator*(const std::vector<std::vector<T>> &a,
                          const std::vector<T> &b)
 {
-  if (a.size() != b.size())
-    throw("Multiplication of matrix with vector cannot be done. Must have the "
-          "same size.");
+  // Validate dimensions
+  for (const auto &row : a)
+    if (row.size() != b.size())
+    {
+      throw std::runtime_error(
+          "Matrix-vector multiplication dimension mismatch.");
+    }
 
   std::vector<T> result;
   result.reserve(a.size());
@@ -251,7 +255,7 @@ std::vector<T> operator*(const std::vector<std::vector<T>> &a,
   std::transform(a.begin(),
                  a.end(),
                  std::back_inserter(result),
-                 [&](std::vector<T> i) { return (i * b); });
+                 [&](const std::vector<T> &row) { return row * b; });
 
   return result;
 }
