@@ -18,7 +18,6 @@ target_link_libraries(
          Kfactors
          Utility
          Baryo
-         Boost::boost
          BounceSolution
          TransitionTracer
          GW
