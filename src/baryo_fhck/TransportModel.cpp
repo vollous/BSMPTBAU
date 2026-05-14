@@ -1,5 +1,7 @@
 #include <BSMPT/baryo_fhck/TransportModel.h>
+#include <BSMPT/models/IncludeAllModels.h>
 #include <BSMPT/utility/asciiplotter/asciiplotter.h>
+
 namespace BSMPT
 {
 namespace Baryo
@@ -108,35 +110,47 @@ void TransportModel::Initialize()
 
 void TransportModel::SetEtaInterface()
 {
-  auto config =
-      std::pair<std::vector<bool>, int>{std::vector<bool>(5, true), 1};
-  EtaInterface =
-      std::make_shared<CalculateEtaInterface>(config, GetSMConstants());
-
-  Logger::Write(LoggingLevel::FHCK, "Calculating Lw (EtaInterface)...");
-
   try
   {
-    EtaInterface->CalcEta(vwall,
-                          TrueVacuum,
-                          FalseVacuum,
-                          Tstar,
-                          modelPointer,
-                          Minimizer::WhichMinimizerDefault);
+    localCalcEta = std::make_shared<LocalCalcEta>(
+        modelPointer, Tstar, TrueVacuum, FalseVacuum);
   }
   catch (...)
   {
-    Logger::Write(LoggingLevel::FHCK, "Failed.");
+    Logger::Write(LoggingLevel::FHCK, "LocalCalcEta crashed.");
     status = TransportModelStatus::Failed;
     return;
   }
 
-  Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
-  status = TransportModelStatus::Success;
-  Lw     = EtaInterface->getLW();
+  if (localCalcEta->Lw.has_value() and
+      localCalcEta->top_theta_sym.has_value() and
+      localCalcEta->bot_theta_sym.has_value() and
+      localCalcEta->top_theta_brk.has_value() and
+      localCalcEta->bot_theta_brk.has_value())
+  {
+    Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
+    status = TransportModelStatus::Success;
+    Lw     = localCalcEta->Lw.value();
 
-  Logger::Write(LoggingLevel::FHCK,
-                "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
+    Logger::Write(LoggingLevel::FHCK,
+                  "Lw * T = " + std::to_string(Lw * Tstar) + "\n");
+  }
+  else
+  {
+    std::stringstream ss;
+
+    ss << "\n\nLw" << localCalcEta->Lw.value_or(NAN) << "\n";
+    ss << "top_theta_sym" << localCalcEta->top_theta_sym.value_or(NAN) << "\n";
+    ss << "bot_theta_sym" << localCalcEta->bot_theta_sym.value_or(NAN) << "\n";
+    ss << "top_theta_brk" << localCalcEta->top_theta_brk.value_or(NAN) << "\n";
+    ss << "bot_theta_brk" << localCalcEta->bot_theta_brk.value_or(NAN) << "\n";
+
+    ss << "Failed. (nans where found)";
+
+    Logger::Write(LoggingLevel::FHCK, ss.str());
+    status = TransportModelStatus::Failed;
+    return;
+  }
 }
 
 void TransportModel::GenerateFermionMass(const std::vector<double> &zList,
@@ -308,16 +322,16 @@ void TransportModel::GetFermionMass(const double &z,
     switch (fermion)
     {
     case 0:
-      brk = EtaInterface->getBrokenCPViolatingPhase_top();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      brk = localCalcEta->top_theta_brk.value();
+      sym = localCalcEta->top_theta_sym.value();
       break;
     case 1:
-      brk = EtaInterface->getBrokenCPViolatingPhase_top();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_top();
+      brk = localCalcEta->top_theta_brk.value();
+      sym = localCalcEta->top_theta_sym.value();
       break;
     case 2:
-      brk = EtaInterface->getBrokenCPViolatingPhase_bot();
-      sym = EtaInterface->getSymmetricCPViolatingPhase_bot();
+      brk = localCalcEta->bot_theta_brk.value();
+      sym = localCalcEta->bot_theta_sym.value();
       break;
     default: throw("Invalid fermion in GetFermionMass()"); break;
     }
