@@ -136,7 +136,7 @@ var searchData=
   ['changes_20in_20test_133',['Changes in Test',['../md_Changelog.html#autotoc_md44',1,'']]],
   ['changes_20in_20the_20installation_20routine_134',['Changes in the Installation Routine',['../md_Changelog.html#autotoc_md45',1,'']]],
   ['check_5frequired_5fparameters_135',['check_required_parameters',['../classBSMPT_1_1parser.html#a8b445766c7efdb6b1ffd82e2bc50ac2e',1,'BSMPT::parser']]],
-  ['checkboundary_136',['checkboundary',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a85a4c9b150b42e745f946125866cd677',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary(double &amp;HighestNegRe, double &amp;HighestNegEigenvalue)']]],
+  ['checkboundary_136',['checkboundary',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a67dbb91ec2c7d4a0337ac1e9abc47b5e',1,'BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary(double &amp;HighestNegReEigenvalue, double &amp;HighestImEigenvalue)']]],
   ['checkmassratio_137',['CheckMassRatio',['../classBSMPT_1_1TransitionTracer.html#a2dd8a3a22c334b324e7eaaca89b82f87',1,'BSMPT::TransitionTracer']]],
   ['checknlovev_138',['CheckNLOVEV',['../classBSMPT_1_1Class__Potential__Origin.html#a16150813f8e3aaf6133af7c655c85a89',1,'BSMPT::Class_Potential_Origin']]],
   ['checkrotationmatrix_139',['CheckRotationMatrix',['../classBSMPT_1_1Class__Potential__Origin.html#a6035873e14f081b7207c2db806248987',1,'BSMPT::Class_Potential_Origin']]],

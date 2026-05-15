@@ -9,7 +9,7 @@ var classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations =
     [ "CalculateBAU", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#acfc483605df8710d718c9213860b38b0", null ],
     [ "CalculateCollisionMatrix", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#afa96bd15fdb3da9ded73bd7e5ab377a2", null ],
     [ "CheckBoundary", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a009c7077399c118c31637c06f3cb2093", null ],
-    [ "CheckBoundary", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a85a4c9b150b42e745f946125866cd677", null ],
+    [ "CheckBoundary", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a67dbb91ec2c7d4a0337ac1e9abc47b5e", null ],
     [ "Equations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac040129ae22c44154528dfbe3561e86b", null ],
     [ "GenerateIntegrationSpace", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7bffea87fcea0b316b3c8927fcda53ac", null ],
     [ "Gws", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9e77039b3d52862fbadf07ccdda5d8d2", null ],

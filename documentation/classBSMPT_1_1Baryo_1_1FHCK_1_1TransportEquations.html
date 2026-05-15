@@ -155,9 +155,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildKernelInterpolat
 <tr class="memitem:aeb07a643a6aca143583b0e27ee6a9097" id="r_aeb07a643a6aca143583b0e27ee6a9097"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVecDoub.html">VecDoub</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#aeb07a643a6aca143583b0e27ee6a9097">calc_source</a> (const double &amp;m, const double &amp;dm2, const double &amp;dth, const double &amp;d2th, const int &amp;h)</td></tr>
 <tr class="memdesc:aeb07a643a6aca143583b0e27ee6a9097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the souce term S for 1 particle.  <br /></td></tr>
 <tr class="separator:aeb07a643a6aca143583b0e27ee6a9097"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85a4c9b150b42e745f946125866cd677" id="r_a85a4c9b150b42e745f946125866cd677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a85a4c9b150b42e745f946125866cd677">CheckBoundary</a> (double &amp;HighestNegRe, double &amp;HighestNegEigenvalue)</td></tr>
-<tr class="memdesc:a85a4c9b150b42e745f946125866cd677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist.  <br /></td></tr>
-<tr class="separator:a85a4c9b150b42e745f946125866cd677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67dbb91ec2c7d4a0337ac1e9abc47b5e" id="r_a67dbb91ec2c7d4a0337ac1e9abc47b5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a67dbb91ec2c7d4a0337ac1e9abc47b5e">CheckBoundary</a> (double &amp;HighestNegReEigenvalue, double &amp;HighestImEigenvalue)</td></tr>
+<tr class="memdesc:a67dbb91ec2c7d4a0337ac1e9abc47b5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist.  <br /></td></tr>
+<tr class="separator:a67dbb91ec2c7d4a0337ac1e9abc47b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a009c7077399c118c31637c06f3cb2093" id="r_a009c7077399c118c31637c06f3cb2093"><td class="memItemLeft" align="right" valign="top"><a id="a009c7077399c118c31637c06f3cb2093" name="a009c7077399c118c31637c06f3cb2093"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CheckBoundary</b> ()</td></tr>
 <tr class="memdesc:a009c7077399c118c31637c06f3cb2093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the boundary have enough decaying modes for the solution to exist. <br /></td></tr>
@@ -334,11 +334,11 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycle</b></
 <tr class="memdesc:ab62a1f5266fcb4ac16ed4c0df1e43add"><td class="mdescLeft">&#160;</td><td class="mdescRight">When \( S = 0 \) the \( \mu = \mu_0 e^{-\lambda z}\), by taking the imaginary part we can calculate how rapidly the functions are oscillating. This sets the goal number of points per cycle/wavelength. <br /></td></tr>
 <tr class="separator:ab62a1f5266fcb4ac16ed4c0df1e43add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac097ef72a795622bfe6b18f36d0f88ba" id="r_ac097ef72a795622bfe6b18f36d0f88ba"><td class="memItemLeft" align="right" valign="top"><a id="ac097ef72a795622bfe6b18f36d0f88ba" name="ac097ef72a795622bfe6b18f36d0f88ba"></a>
-const double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycleLow</b> = 30</td></tr>
+const double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycleLow</b> = 35</td></tr>
 <tr class="memdesc:ac097ef72a795622bfe6b18f36d0f88ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">When \( S = 0 \) the \( \mu = \mu_0 e^{-\lambda z}\), by taking the imaginary part we can calculate how rapidly the functions are oscillating. This sets the goal number of points per cycle/wavelength for a low precision calculation. <br /></td></tr>
 <tr class="separator:ac097ef72a795622bfe6b18f36d0f88ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa703046db36a17e1d939777c602e58f1" id="r_aa703046db36a17e1d939777c602e58f1"><td class="memItemLeft" align="right" valign="top"><a id="aa703046db36a17e1d939777c602e58f1" name="aa703046db36a17e1d939777c602e58f1"></a>
-const double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycleHigh</b> = 40</td></tr>
+const double&#160;</td><td class="memItemRight" valign="bottom"><b>StepsPerCycleHigh</b> = 45</td></tr>
 <tr class="memdesc:aa703046db36a17e1d939777c602e58f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">When \( S = 0 \) the \( \mu = \mu_0 e^{-\lambda z}\), by taking the imaginary part we can calculate how rapidly the functions are oscillating. This sets the goal number of points per cycle/wavelength for a high precision calculation. <br /></td></tr>
 <tr class="separator:aa703046db36a17e1d939777c602e58f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a797e5549b831b1f31a4a63f59ffe2c93" id="r_a797e5549b831b1f31a4a63f59ffe2c93"><td class="memItemLeft" align="right" valign="top"><a id="a797e5549b831b1f31a4a63f59ffe2c93" name="a797e5549b831b1f31a4a63f59ffe2c93"></a>
@@ -350,7 +350,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>NumberOfSteps</b></
 <tr class="memdesc:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of steps in space. <br /></td></tr>
 <tr class="separator:a6650cb0a9ad4a9b42bd330734a2b7af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99c0cbadc1419e3165fab09d8a444ff8" id="r_a99c0cbadc1419e3165fab09d8a444ff8"><td class="memItemLeft" align="right" valign="top"><a id="a99c0cbadc1419e3165fab09d8a444ff8" name="a99c0cbadc1419e3165fab09d8a444ff8"></a>
-const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>MaxNumberOfSteps</b> = 1e4</td></tr>
+const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>MaxNumberOfSteps</b> = 1e5</td></tr>
 <tr class="memdesc:a99c0cbadc1419e3165fab09d8a444ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of steps in \( z \). <br /></td></tr>
 <tr class="separator:a99c0cbadc1419e3165fab09d8a444ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab53de5381f63c8abad5304851853de9c" id="r_ab53de5381f63c8abad5304851853de9c"><td class="memItemLeft" align="right" valign="top"><a id="ab53de5381f63c8abad5304851853de9c" name="ab53de5381f63c8abad5304851853de9c"></a>
@@ -665,8 +665,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a85a4c9b150b42e745f946125866cd677" name="a85a4c9b150b42e745f946125866cd677"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85a4c9b150b42e745f946125866cd677">&#9670;&#160;</a></span>CheckBoundary()</h2>
+<a id="a67dbb91ec2c7d4a0337ac1e9abc47b5e" name="a67dbb91ec2c7d4a0337ac1e9abc47b5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67dbb91ec2c7d4a0337ac1e9abc47b5e">&#9670;&#160;</a></span>CheckBoundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -675,13 +675,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void BSMPT::Baryo::FHCK::TransportEquations::CheckBoundary </td>
           <td>(</td>
           <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>HighestNegRe</em>, </td>
+          <td class="paramname"><em>HighestNegReEigenvalue</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>HighestNegEigenvalue</em>&#160;</td>
+          <td class="paramname"><em>HighestImEigenvalue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -695,8 +695,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Check if the boundary have enough decaying modes for the solution to exist.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">HighestNegRe</td><td>Highest real part of negative eigenvalues (close to zero from below) </td></tr>
-    <tr><td class="paramname">HighestNegEigenvalue</td><td>Highest magnitude of all eigenvalues with negative real part </td></tr>
+    <tr><td class="paramname">HighestNegReEigenvalue</td><td>Highest real part of negative eigenvalues (close to zero from below) </td></tr>
+    <tr><td class="paramname">HighestImEigenvalue</td><td>Highest magnitude of all eigenvalues with negative real part </td></tr>
   </table>
   </dd>
 </dl>
