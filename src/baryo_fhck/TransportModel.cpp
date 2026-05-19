@@ -106,9 +106,8 @@ void TransportModel::Initialize()
   {
     SetEtaInterface();
     std::ofstream PathFile("kink_data.tsv");
-    PathFile << Lw << "\t" << EtaInterface->getBrokenCPViolatingPhase_top()
-             << "\t" << EtaInterface->getSymmetricCPViolatingPhase_top()
-             << "\n";
+    PathFile << Lw << "\t" << localCalcEta->top_theta_sym.value() << "\t"
+             << localCalcEta->bot_theta_sym.value() << "\n";
     PathFile.close();
   }
 }
