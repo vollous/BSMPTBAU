@@ -216,9 +216,9 @@ try
             trans_false_vev = output.vec_trans_data.at(i).crit_false_vev;
           }
           // Check if FalseVacuum is symmetric
-          if ((modelPointer->EWSBVEV(
-                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0) or
-              isnan(trans_temp))
+          if (isnan(trans_temp) or
+              (modelPointer->EWSBVEV(
+                   modelPointer->MinimizeOrderVEV(trans_false_vev)) != 0))
             continue;
 
           output_contents.at(count - 1)
