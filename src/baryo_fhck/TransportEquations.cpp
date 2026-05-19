@@ -62,22 +62,22 @@ void TransportEquations::GenerateIntegrationSpace()
   transportmodel->GenerateFermionMass(zList);
   Solution = MatDoub(nEqs, zList.size(), 0.);
 
-  double HighestNegRe, HighestNegEigenvalue;
-  CheckBoundary(HighestNegRe, HighestNegEigenvalue);
+  double HighestNegReEigenvalue, HighestImEigenvalue;
+  CheckBoundary(HighestNegReEigenvalue, HighestImEigenvalue);
 
   stringstream ss;
 
-  ss << "HighestNegRe  = " << HighestNegRe << "\n";
-  ss << "HighestNegEigenvalue  = " << HighestNegEigenvalue;
+  ss << "HighestNegRe  = " << HighestNegReEigenvalue << "\n";
+  ss << "HighestNegEigenvalue  = " << HighestImEigenvalue;
 
   Logger::Write(LoggingLevel::FHCK, ss.str());
 
   LwMultiplier = std::ceil(std::log(LwMultiplierCutoff) /
-                           (transportmodel->Lw * HighestNegRe));
+                           (transportmodel->Lw * HighestNegReEigenvalue));
 
   NumberOfSteps =
       StepsPerCycle * std::ceil(2 * LwMultiplier * transportmodel->Lw *
-                                HighestNegEigenvalue / (2 * M_PI));
+                                HighestImEigenvalue / (2 * M_PI));
 
   // Upper bound on NumberOfSteps
   const double LowHighStepFactor =
@@ -530,12 +530,12 @@ void TransportEquations::CheckBoundary()
   CheckBoundary(HighestNegRe, HighestNegEigenvalue);
 }
 
-void TransportEquations::CheckBoundary(double &HighestNegRe,
-                                       double &HighestNegEigenvalue)
+void TransportEquations::CheckBoundary(double &HighestNegReEigenvalue,
+                                       double &HighestImEigenvalue)
 {
   // Initialize vars
-  HighestNegRe         = -1e100;
-  HighestNegEigenvalue = -1;
+  HighestNegReEigenvalue = -1e100;
+  HighestImEigenvalue    = 3;
 
   // Calculate asymptotic matrixs
   Equations(zList.front(), MtildeM, StildeM, 0);
@@ -580,17 +580,18 @@ void TransportEquations::CheckBoundary(double &HighestNegRe,
       NumberOfNonDecayingModes++;
     else
     {
-      HighestNegRe = std::max(
-          HighestNegRe, -ev.real()); /* minus sign because z -> -Infinity */
-      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
+      HighestNegReEigenvalue =
+          std::max(HighestNegReEigenvalue,
+                   -ev.real()); /* minus sign because z -> -Infinity */
+      HighestImEigenvalue = std::max(HighestImEigenvalue, std::abs(ev.imag()));
     }
   for (auto ev : EigenSolverP.eigenvalues())
     if (ev.real() >= EigenValueThreshold)
       NumberOfNonDecayingModes++;
     else
     {
-      HighestNegRe         = std::max(HighestNegRe, ev.real());
-      HighestNegEigenvalue = std::max(HighestNegEigenvalue, std::abs(ev));
+      HighestNegReEigenvalue = std::max(HighestNegReEigenvalue, ev.real());
+      HighestImEigenvalue = std::max(HighestImEigenvalue, std::abs(ev.imag()));
     }
 
   if (NumberOfNonDecayingModes > nEqs)
