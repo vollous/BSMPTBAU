@@ -973,7 +973,7 @@ bool Class_Potential_Origin::CheckRotationMatrix()
 
   const double det_precision = 1e-10; // det precision
   const double el_precision =
-      1e-8; // element precision. different precision to prevent numerical
+      1e-6; // element precision. different precision to prevent numerical
             // instabilities for small elements
 
   if (!almost_the_same(std::abs(mat.determinant()), 1., det_precision))

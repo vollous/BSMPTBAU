@@ -65,8 +65,8 @@ std::ostream &operator<<(std::ostream &os, const StatusTemperature &status)
 
 std::vector<double> MinimumTracer::LocateMinimum(
     const std::vector<double> &guess_In,
-    std::function<std::vector<double>(std::vector<double>)> &df,
-    std::function<std::vector<std::vector<double>>(std::vector<double>)>
+    const std::function<std::vector<double>(std::vector<double>)> &df,
+    const std::function<std::vector<std::vector<double>>(std::vector<double>)>
         &Hessian,
     const double &error,
     const double &const_multiplier,

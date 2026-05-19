@@ -1,7 +1,7 @@
 #pragma once
 
 #include <BSMPT/Kfactors/Kernels.h>
-#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
+#include <BSMPT/baryo_fhck/LocalCalcEta.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
 #include <BSMPT/gravitational_waves/gw.h>
@@ -81,10 +81,10 @@ public:
   std::shared_ptr<Class_Potential_Origin> modelPointer;
 
   /**
-   * @brief EtaInterface object. To  use BSMPTv2 functions
+   * @brief CalculateEtaInterface implementation with local minimizer
    *
    */
-  std::shared_ptr<CalculateEtaInterface> EtaInterface;
+  std::shared_ptr<LocalCalcEta> localCalcEta;
 
   /**
    * @brief False vacuum
