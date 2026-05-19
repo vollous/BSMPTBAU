@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"N2HDM_8h_source.html":[4,0,2,0,3],
+"NLOVEV_8cpp.html":[4,0,1,5,9],
 "NegativeBosonSpline_8cpp.html":[4,0,1,6,0],
 "NegativeBosonSpline_8cpp.html#a062ab089c6d9fefd5a4799a23a446b9a":[4,0,1,6,0,1],
 "NegativeBosonSpline_8cpp.html#abfde607bc1595b6eeccd62be17afbb8f":[4,0,1,6,0,2],
@@ -17,7 +19,9 @@ var NAVTREEINDEX1 =
 "PlotEWBG__vw_8cpp.html":[4,0,1,5,11],
 "PotPlotter_8cpp.html":[4,0,1,5,12],
 "R2HDM_8h_source.html":[4,0,2,0,4],
-"SM_8h_source.html":[4,0,2,0,5],
+"RXSM_8h_source.html":[4,0,2,0,5],
+"RXSM__noVS_8h_source.html":[4,0,2,0,6],
+"SM_8h_source.html":[4,0,2,0,7],
 "Test-origin_8cpp.html":[4,0,2,1,0],
 "Test-origin_8cpp.html#a4fca14e0c58bf555494c6bce8749835f":[4,0,2,1,0,0],
 "Test_8cpp.html":[4,0,1,5,13],
@@ -80,8 +84,8 @@ var NAVTREEINDEX1 =
 "bot__source_8h_source.html":[4,0,0,0,0,0,0],
 "bounce__solution_8h_source.html":[4,0,0,0,2,1],
 "classAsciiPlotter.html":[3,0,2],
-"classBSMPT_1_1BSMPTLogger.html":[3,0,0,10],
 "classBSMPT_1_1BSMPTLogger.html":[2,0,0,3],
+"classBSMPT_1_1BSMPTLogger.html":[3,0,0,10],
 "classBSMPT_1_1BSMPTLogger.html#a3a1ed14027fa3dd50799034db1a40a36":[3,0,0,10,1],
 "classBSMPT_1_1BSMPTLogger.html#a3a1ed14027fa3dd50799034db1a40a36":[2,0,0,3,1],
 "classBSMPT_1_1BSMPTLogger.html#a67ab115f5019af93ce0f46e95376896c":[3,0,0,10,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX1 =
 "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a7bffea87fcea0b316b3c8927fcda53ac":[3,0,0,0,0,9,11],
 "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a860340f1700b3ff5dfdb9db52e4cee0c":[3,0,0,0,0,9,16],
 "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a883a955c5781e564fb7eed6eaabc4102":[3,0,0,0,0,9,53],
-"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684":[3,0,0,0,0,9,13],
-"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a99c0cbadc1419e3165fab09d8a444ff8":[3,0,0,0,0,9,33],
-"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9d1ee7de8a920efaf3b30c9ba58bf974":[3,0,0,0,0,9,56],
-"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9de6dcc05d6e028a15e9f82867703eaf":[3,0,0,0,0,9,34],
-"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a9e77039b3d52862fbadf07ccdda5d8d2":[3,0,0,0,0,9,12]
+"classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a982893ed03324909628721924919b684":[3,0,0,0,0,9,13]
 };
