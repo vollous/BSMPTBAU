@@ -65,6 +65,12 @@ struct LocalCalcEta
   size_t index;
 
   /**
+   * @brief Calculate \f$ L_w \f$ using simply a straight line.
+   *
+   */
+  bool StraightLineApproximation = true;
+
+  /**
    * @brief Bubble width
    *
    */

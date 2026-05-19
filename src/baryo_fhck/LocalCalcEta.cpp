@@ -100,59 +100,55 @@ void LocalCalcEta::CalculateLw()
       [=](auto const &arg) { return HessianNumerical(arg, V, eps); };
 
   // Start at the false vacuum
-  std::vector<double> point = Reduce(FalseVacuum);
+  std::vector<double> new_point, point = Reduce(FalseVacuum);
   MinimumTracer mintracer;
 
   size_t num_points = 200;
 
   double Vb          = -1;
-  double Vbstraight  = -1;
   const double Vtrue = V(TrueVacuum);
   const double DistanceThreshold =
       L2NormVector(TrueVacuum - FalseVacuum) / num_points * 10.;
-
-  std::ofstream MyFile("filename.tsv");
 
   for (double b = 0; b <= num_points; b++)
   {
     std::vector<double> basePoint =
         b / num_points * TrueVacuum + (1. - b / num_points) * FalseVacuum;
-    double d                      = basePoint * n;
-    std::vector<double> new_point = mintracer.LocateMinimum(
-        point,
-        [this, d, dV](auto const &vev)
-        { return gradprojection * dV(FromPlane(vev, d)); },
-        [this, d, Hessian](auto const &vev)
-        {
-          return gradprojection * Hessian(FromPlane(vev, d)) *
-                 Transpose(gradprojection);
-        },
-        1e-2 * GradientThreshold * std::min(1., dim - 1.));
+    const double d = basePoint * n;
+    // Calculates two iteration when StraightLineApproximation
+    if ((not StraightLineApproximation) or (b < 2))
+      new_point = mintracer.LocateMinimum(
+          point,
+          [this, d, dV](auto const &vev)
+          { return gradprojection * dV(FromPlane(vev, d)); },
+          [this, d, Hessian](auto const &vev)
+          {
+            return gradprojection * Hessian(FromPlane(vev, d)) *
+                   Transpose(gradprojection);
+          },
+          1e-2 * GradientThreshold * std::min(1., dim - 1.));
 
     if (L2NormVector(new_point - point) > DistanceThreshold)
     {
       // Diverged
-      // return;
+      return;
     }
 
     path.push_back(FromPlane(new_point, d));
 
-    MyFile << path.back() << "\n";
+    if (StraightLineApproximation)
+      Vb = std::max(Vb, V(basePoint) - Vtrue);
+    else
+      Vb = std::max(Vb, V(path.back()) - Vtrue);
 
-    std::cout << "dV\t" << V(FromPlane(new_point, d)) - Vtrue << " - "
-              << V(basePoint) - Vtrue << "\n";
-
-    Vb         = std::max(Vb, V(FromPlane(new_point, d)) - Vtrue);
-    Vbstraight = std::max(Vbstraight, V(basePoint) - Vtrue);
-
-    std::cout << "dV\t" << V(FromPlane(new_point, d)) - Vtrue << " - "
-              << V(basePoint) - Vtrue << " | " << Vb << "\t" << Vbstraight
-              << "\n";
     point = new_point;
   }
-  MyFile.close();
 
-  if ((Vb > 0) and (L2NormVector(TrueVacuum - path.back()) < dim * 1e-1))
+  if (StraightLineApproximation and (Vb > 0))
+    Lw = L2NormVector(TrueVacuum - FalseVacuum) / sqrt(8 * Vb);
+
+  if ((not StraightLineApproximation) and (Vb > 0) and
+      (L2NormVector(TrueVacuum - path.back()) < dim * 1e-1) /* extra check */)
     Lw = L2NormVector(TrueVacuum - FalseVacuum) / sqrt(8 * Vb);
 
   std::stringstream ss;
