@@ -2,6 +2,7 @@
 
 #include <BSMPT/models/IncludeAllModels.h>
 #include <memory>
+#include <optional>
 #include <vector>
 
 namespace BSMPT
