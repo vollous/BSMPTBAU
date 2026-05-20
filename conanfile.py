@@ -37,6 +37,10 @@ class BSMPT(ConanFile):
         "UseNLopt": [True, False],  # Use NLopt for minimization
         # build additional test executables
         "MakeAdditionalTesting": [True, False],
+        "CompileBaryo": [
+            True,
+            False,
+        ],  # compile the electroweak baryogenesis for the C2HDM
         "EnableCoverage": [True, False],  # enable code coverage
         "UseVectorization": [True, False],  # use vectorization for the build,
         "BuildExecutables": [True, False],
@@ -47,6 +51,7 @@ class BSMPT(ConanFile):
         "UseLibCMAES": True,
         "UseNLopt": True,
         "MakeAdditionalTesting": False,
+        "CompileBaryo": True,
         "EnableCoverage": False,
         # This causes double free with cmaes. We need to modify the package to include vectorization as well as an option
         "UseVectorization": False,
