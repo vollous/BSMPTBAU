@@ -81,7 +81,7 @@ struct VacuumProfile
    * large, increases the integration domain.
    *
    */
-  const double dphiTreshold = 1.e-3;
+  const double dphiTreshold = 1.e-6;
 
   /**
    * @brief True and False Vacuum
