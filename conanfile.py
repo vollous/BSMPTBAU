@@ -4,8 +4,7 @@ from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 from conan.tools.files import load
 from conan.tools.scm import Git
-import os
-import re
+import os, re
 from conan.tools.env import Environment
 from conan.errors import ConanException
 
@@ -35,8 +34,7 @@ class BSMPT(ConanFile):
             False,
         ],  # Use CMAES. Fetches it through cmake_fetch if not installed
         "UseNLopt": [True, False],  # Use NLopt for minimization
-        # build additional test executables
-        "MakeAdditionalTesting": [True, False],
+        "MakeAdditionalTesting": [True, False],  # build additional test executables
         "CompileBaryo": [
             True,
             False,
@@ -53,21 +51,17 @@ class BSMPT(ConanFile):
         "MakeAdditionalTesting": False,
         "CompileBaryo": True,
         "EnableCoverage": False,
-        # This causes double free with cmaes. We need to modify the package to include vectorization as well as an option
-        "UseVectorization": False,
+        "UseVectorization": False,  # This causes double free with cmaes. We need to modify the package to include vectorization as well as an option
         "BuildExecutables": True,
     }
 
     def requirements(self):
-        self.requires("eigen/3.4.0", transitive_headers=True,
-                      transitive_libs=True)
-        self.requires("gsl/2.7.1", transitive_headers=True,
-                      transitive_libs=True)
+        self.requires("eigen/3.4.0", transitive_headers=True, transitive_libs=True)
+        self.requires("gsl/2.7.1", transitive_headers=True, transitive_libs=True)
         self.requires("nlohmann_json/3.11.3", transitive_headers=False)
 
         if self.options.UseNLopt:
-            self.requires("nlopt/2.9.1", transitive_headers=True,
-                          transitive_libs=True)
+            self.requires("nlopt/2.9.1", transitive_headers=True, transitive_libs=True)
 
         if self.options.UseLibCMAES:
             self.requires(
@@ -89,8 +83,7 @@ class BSMPT(ConanFile):
             apt.install(["lcov"], update=True, check=True)
 
     def set_version(self):
-        content = load(self, os.path.join(
-            self.recipe_folder, "CMakeLists.txt"))
+        content = load(self, os.path.join(self.recipe_folder, "CMakeLists.txt"))
         value = re.search(r"set\(BSMPT_VERSION (.*)\)", content)
         extracted_version = value.group(1).strip()
 
@@ -220,8 +213,7 @@ class BSMPT(ConanFile):
             "Utility",
             "BounceSolution",
         ]
-        self.cpp_info.components["GW"].set_property(
-            "cmake_target_name", "BSMPT::GW")
+        self.cpp_info.components["GW"].set_property("cmake_target_name", "BSMPT::GW")
 
         self.cpp_info.components["Minimizer"].libs = ["Minimizer"]
         self.cpp_info.components["Minimizer"].requires = [
@@ -237,12 +229,10 @@ class BSMPT(ConanFile):
 
         if self.options.UseNLopt:
 
-            self.cpp_info.components["Minimizer"].requires.append(
-                "nlopt::nlopt")
+            self.cpp_info.components["Minimizer"].requires.append("nlopt::nlopt")
 
         if self.options.UseLibCMAES:
-            self.cpp_info.components["Minimizer"].requires.append(
-                "cmaes::cmaes")
+            self.cpp_info.components["Minimizer"].requires.append("cmaes::cmaes")
 
         self.cpp_info.components["MinimumTracer"].libs = ["MinimumTracer"]
         self.cpp_info.components["MinimumTracer"].requires = [
@@ -266,16 +256,13 @@ class BSMPT(ConanFile):
             "cmake_target_name", "BSMPT::Models"
         )
 
-        self.cpp_info.components["ThermalFunctions"].libs = [
-            "ThermalFunctions"]
-        self.cpp_info.components["ThermalFunctions"].requires = [
-            "gsl::gsl", "Utility"]
+        self.cpp_info.components["ThermalFunctions"].libs = ["ThermalFunctions"]
+        self.cpp_info.components["ThermalFunctions"].requires = ["gsl::gsl", "Utility"]
         self.cpp_info.components["ThermalFunctions"].set_property(
             "cmake_target_name", "BSMPT::ThermalFunctions"
         )
 
-        self.cpp_info.components["TransitionTracer"].libs = [
-            "TransitionTracer"]
+        self.cpp_info.components["TransitionTracer"].libs = ["TransitionTracer"]
         self.cpp_info.components["TransitionTracer"].requires = [
             "BounceSolution",
             "MinimumTracer",
