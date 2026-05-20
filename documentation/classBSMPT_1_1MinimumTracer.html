@@ -171,9 +171,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ConvertToNonFlatDirec
 <tr class="memitem:adb23c200c817bf0ecc00f4e06c1f0650" id="r_adb23c200c817bf0ecc00f4e06c1f0650"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1MinimumTracer.html#adb23c200c817bf0ecc00f4e06c1f0650">WarpPath</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;path, const std::vector&lt; double &gt; &amp;T1, const std::vector&lt; double &gt; &amp;F1, const std::vector&lt; double &gt; &amp;T2, const std::vector&lt; double &gt; &amp;F2)</td></tr>
 <tr class="memdesc:adb23c200c817bf0ecc00f4e06c1f0650"><td class="mdescLeft">&#160;</td><td class="mdescRight">WarpPath.  <br /></td></tr>
 <tr class="separator:adb23c200c817bf0ecc00f4e06c1f0650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a325badc9e845cdb15d07ab4dfb94cbb4" id="r_a325badc9e845cdb15d07ab4dfb94cbb4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4">LocateMinimum</a> (const std::vector&lt; double &gt; &amp;guess_In, std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;df, std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian, const double &amp;error=1e-4, const double &amp;const_multiplier=1e-2, const int &amp;maxiter=100)</td></tr>
-<tr class="memdesc:a325badc9e845cdb15d07ab4dfb94cbb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds stationary points of a function (not only minimas).  <br /></td></tr>
-<tr class="separator:a325badc9e845cdb15d07ab4dfb94cbb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee238d4e5bc744fc44a971c068fc3394" id="r_aee238d4e5bc744fc44a971c068fc3394"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1MinimumTracer.html#aee238d4e5bc744fc44a971c068fc3394">LocateMinimum</a> (const std::vector&lt; double &gt; &amp;guess_In, const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;df, const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;Hessian, const double &amp;error=1e-4, const double &amp;const_multiplier=1e-2, const int &amp;maxiter=100)</td></tr>
+<tr class="memdesc:aee238d4e5bc744fc44a971c068fc3394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds stationary points of a function (not only minimas).  <br /></td></tr>
+<tr class="separator:aee238d4e5bc744fc44a971c068fc3394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac98160327ad9b817697110e58ba3f5d5" id="r_ac98160327ad9b817697110e58ba3f5d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBSMPT_1_1MinimumTracer.html#ac98160327ad9b817697110e58ba3f5d5">GetLegend</a> (const int &amp;num_coex_phases, const <a class="el" href="structBSMPT_1_1user__input.html">user_input</a> &amp;input)</td></tr>
 <tr class="memdesc:ac98160327ad9b817697110e58ba3f5d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">GetLegend derive legend.  <br /></td></tr>
 <tr class="separator:ac98160327ad9b817697110e58ba3f5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -662,8 +662,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>UseMultithreading</b>
 
 </div>
 </div>
-<a id="a325badc9e845cdb15d07ab4dfb94cbb4" name="a325badc9e845cdb15d07ab4dfb94cbb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a325badc9e845cdb15d07ab4dfb94cbb4">&#9670;&#160;</a></span>LocateMinimum()</h2>
+<a id="aee238d4e5bc744fc44a971c068fc3394" name="aee238d4e5bc744fc44a971c068fc3394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee238d4e5bc744fc44a971c068fc3394">&#9670;&#160;</a></span>LocateMinimum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -677,13 +677,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>UseMultithreading</b>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; std::vector&lt; double &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td>
           <td class="paramname"><em>df</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; std::vector&lt; std::vector&lt; double &gt; &gt;(std::vector&lt; double &gt;)&gt; &amp;&#160;</td>
           <td class="paramname"><em>Hessian</em>, </td>
         </tr>
         <tr>

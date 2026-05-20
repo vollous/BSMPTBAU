@@ -15,7 +15,7 @@ var classBSMPT_1_1MinimumTracer =
     [ "GetStatusNLOVEV", "classBSMPT_1_1MinimumTracer.html#a7cc66d3ddc69b83aa5b289fccfe5eaad", null ],
     [ "IsGlobMin", "classBSMPT_1_1MinimumTracer.html#a63209e83aacc339c3cec0d8f69c10e48", null ],
     [ "IsThereEWSymmetryRestoration", "classBSMPT_1_1MinimumTracer.html#a6c57bea2a9fcaf0ef497626f2da30624", null ],
-    [ "LocateMinimum", "classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4", null ],
+    [ "LocateMinimum", "classBSMPT_1_1MinimumTracer.html#aee238d4e5bc744fc44a971c068fc3394", null ],
     [ "ReduceVEV", "classBSMPT_1_1MinimumTracer.html#a94003a2b47900e634f389c98df4323f5", null ],
     [ "ReduceVEV", "classBSMPT_1_1MinimumTracer.html#adb8985d190f10f2742d8a3ea7465b592", null ],
     [ "SmallestEigenvalue", "classBSMPT_1_1MinimumTracer.html#af5014d09ef1995293eea1560b075df1a", null ],

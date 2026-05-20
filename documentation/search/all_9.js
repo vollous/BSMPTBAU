@@ -9,7 +9,7 @@ var searchData=
   ['epsturb_6',['epsturb',['../classBSMPT_1_1BounceSolution.html#adb0a1026ce5b6ba5762426a0e12b46e1',1,'BSMPT::BounceSolution']]],
   ['equations_7',['Equations',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ac040129ae22c44154528dfbe3561e86b',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['eta_5fintegrand_5ffunc_8',['eta_integrand_func',['../transport__equations_8h.html#ac605c862b875984970d57d46e9916251',1,'BSMPT::Baryo']]],
-  ['etainterface_9',['etainterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations::EtaInterface'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#af07c7417101ac63bda51d8d1c712fe92',1,'BSMPT::Baryo::FHCK::TransportModel::EtaInterface']]],
+  ['etainterface_9',['EtaInterface',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a1a18e8da834396bf7750b052a165a208',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['ewptreturntype_10',['EWPTReturnType',['../structBSMPT_1_1Minimizer_1_1EWPTReturnType.html',1,'BSMPT::Minimizer']]],
   ['ewsbvev_11',['ewsbvev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#a17bddb896e5b96b6b45f4421b58beb74',1,'BSMPT::Baryo::FHCK::TransportModel::EWSBVEV()'],['../classBSMPT_1_1Class__Potential__Origin.html#a11e63f35ce4569aaf9dfc7cc5fa3d6d4',1,'BSMPT::Class_Potential_Origin::EWSBVEV()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a881ba5023015d17639f1b73805519d3e',1,'BSMPT::Baryo::FHCK::BenchmarkModel::EWSBVEV()']]],
   ['exactsolution_12',['ExactSolution',['../classBSMPT_1_1BounceActionInt.html#a424e464f9c73844c1b2bda179a45cc33',1,'BSMPT::BounceActionInt']]],

@@ -11,6 +11,7 @@ var utility_8h =
     [ "L2NormVector", "utility_8h.html#a8b82302c8d9c5e58eca68e22f3d5616c", null ],
     [ "Li2", "utility_8h.html#a9b7ee9ad848ad4f37479dd595602f1cc", null ],
     [ "nChoosek", "utility_8h.html#a39634082e0bcc0f962ebc3f2fe8f2885", null ],
+    [ "operator*", "utility_8h.html#afdd40d623fd99b65e8a0753f73d1e23c", null ],
     [ "operator*", "utility_8h.html#a52dd1aab206bbc883df674011f429768", null ],
     [ "operator*", "utility_8h.html#a7a3c7e03a108c4c850fb10339515df88", null ],
     [ "operator*", "utility_8h.html#a00108332f1a8655d32c993b138514e51", null ],

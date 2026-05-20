@@ -66,6 +66,7 @@ var hierarchy =
     [ "BSMPT::Baryo::FHCK::KernelInty", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelInty.html", null ],
     [ "BSMPT::parser::KeyValue", "structBSMPT_1_1parser_1_1KeyValue.html", null ],
     [ "BSMPT::Minimizer::LibCMAES::LibCMAESReturn", "structBSMPT_1_1Minimizer_1_1LibCMAES_1_1LibCMAESReturn.html", null ],
+    [ "BSMPT::Baryo::FHCK::LocalCalcEta", "structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html", null ],
     [ "BSMPT::Logger", "classBSMPT_1_1Logger.html", null ],
     [ "Mat3DDoub", "classMat3DDoub.html", null ],
     [ "MatDoub", "classMatDoub.html", null ],

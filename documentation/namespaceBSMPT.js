@@ -118,6 +118,7 @@ var namespaceBSMPT =
     [ "Nintegrate_Inner", "namespaceBSMPT.html#a8a47879d8195200514553394af7fc659", null ],
     [ "Nintegrate_Outer", "namespaceBSMPT.html#add310b4cfe7bfdb761385657e4875e1c", null ],
     [ "Nintegrate_SNR", "namespaceBSMPT.html#a32961c0d441ecf5a0efc0b9d90d011c3", null ],
+    [ "operator*", "namespaceBSMPT.html#afdd40d623fd99b65e8a0753f73d1e23c", null ],
     [ "operator*", "namespaceBSMPT.html#a52dd1aab206bbc883df674011f429768", null ],
     [ "operator*", "namespaceBSMPT.html#a7a3c7e03a108c4c850fb10339515df88", null ],
     [ "operator*", "namespaceBSMPT.html#a00108332f1a8655d32c993b138514e51", null ],

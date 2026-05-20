@@ -452,8 +452,12 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a52dd1aab206bbc883df674011f429768" id="r_a52dd1aab206bbc883df674011f429768"><td class="memTemplParams" colspan="2"><a id="a52dd1aab206bbc883df674011f429768" name="a52dd1aab206bbc883df674011f429768"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a52dd1aab206bbc883df674011f429768"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (const std::vector&lt; std::vector&lt; T &gt; &gt; &amp;a, const std::vector&lt; T &gt; &amp;b)</td></tr>
-<tr class="memdesc:a52dd1aab206bbc883df674011f429768"><td class="mdescLeft">&#160;</td><td class="mdescRight">multiplication of matrix with vector <br /></td></tr>
+<tr class="memdesc:a52dd1aab206bbc883df674011f429768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-vector multiplication. <br /></td></tr>
 <tr class="separator:a52dd1aab206bbc883df674011f429768"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdd40d623fd99b65e8a0753f73d1e23c" id="r_afdd40d623fd99b65e8a0753f73d1e23c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:afdd40d623fd99b65e8a0753f73d1e23c"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceBSMPT.html#afdd40d623fd99b65e8a0753f73d1e23c">operator*</a> (const std::vector&lt; std::vector&lt; T &gt; &gt; &amp;A, const std::vector&lt; std::vector&lt; T &gt; &gt; &amp;B)</td></tr>
+<tr class="memdesc:afdd40d623fd99b65e8a0753f73d1e23c"><td class="mdescLeft">&#160;</td><td class="mdescRight">matrix-matrix multiplication  <br /></td></tr>
+<tr class="separator:afdd40d623fd99b65e8a0753f73d1e23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88666c9da7b8687cbbb2efa44d882187" id="r_a88666c9da7b8687cbbb2efa44d882187"><td class="memTemplParams" colspan="2"><a id="a88666c9da7b8687cbbb2efa44d882187" name="a88666c9da7b8687cbbb2efa44d882187"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a88666c9da7b8687cbbb2efa44d882187"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>flatten</b> (std::vector&lt; std::vector&lt; T &gt; &gt; const &amp;vec)</td></tr>
@@ -1572,6 +1576,40 @@ f(\dots ,\vec{\phi}_i - 2  \epsilon )\right)\)</p>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Numerical value of integral and absolute error </dd></dl>
+
+</div>
+</div>
+<a id="afdd40d623fd99b65e8a0753f73d1e23c" name="afdd40d623fd99b65e8a0753f73d1e23c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdd40d623fd99b65e8a0753f73d1e23c">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::vector&lt; T &gt; &gt; BSMPT::operator* </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; T &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; T &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>matrix-matrix multiplication </p>
+<p>Computes: C = A * B</p>
+<p>where: A is (m x n) B is (n x p) C is (m x p) </p>
 
 </div>
 </div>

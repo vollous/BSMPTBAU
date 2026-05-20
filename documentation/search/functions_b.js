@@ -8,6 +8,7 @@ var searchData=
   ['li2_5',['Li2',['../namespaceBSMPT.html#a9b7ee9ad848ad4f37479dd595602f1cc',1,'BSMPT']]],
   ['lin_5fabs_5fderiv_6',['lin_abs_deriv',['../classcvspline.html#ae2e6704ac38588ce28c56b67322e513f',1,'cvspline']]],
   ['loadpath_7',['LoadPath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
-  ['locateminimum_8',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4',1,'BSMPT::MinimumTracer']]],
-  ['logisticfunction_9',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]]
+  ['localcalceta_8',['LocalCalcEta',['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#a3e0a25ccbf1fe2b95bfd11eccf2a7226',1,'BSMPT::Baryo::FHCK::LocalCalcEta']]],
+  ['locateminimum_9',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#aee238d4e5bc744fc44a971c068fc3394',1,'BSMPT::MinimumTracer']]],
+  ['logisticfunction_10',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]]
 ];

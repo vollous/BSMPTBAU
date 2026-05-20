@@ -159,6 +159,7 @@ var NAVTREEINDEX0 =
 "KtildeInterpolation_8h.html#abc33dcbf5a3c9f89eb8f699227d5e679":[4,0,0,0,4,0,1,2],
 "KtildeInterpolation_8h.html#afaa28c96c93247045ce4a0d65e67d7ec":[4,0,0,0,4,0,1,3],
 "KtildeInterpolation_8h_source.html":[4,0,0,0,4,0,1],
+"LocalCalcEta_8h_source.html":[4,0,0,0,1,1],
 "Logger_8cpp.html":[4,0,1,7,0],
 "Logger_8h.html":[4,0,0,0,10,5],
 "Logger_8h_source.html":[4,0,0,0,10,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "Minimizer_8h.html#af3175c2bdc228d061d1d2f85eb9086f9ad0749aaba8b833466dfcbb0428e4f89c":[4,0,0,0,5,4,2,0],
 "Minimizer_8h.html#af3175c2bdc228d061d1d2f85eb9086f9ade50b656b4576690a5aead36d9aaf5c9":[4,0,0,0,5,4,2,2],
 "Minimizer_8h_source.html":[4,0,0,0,5,4],
-"ModelIDs_8h_source.html":[4,0,0,0,10,6],
-"ModelTestfunctions_8h_source.html":[4,0,0,0,7,0,0]
+"ModelIDs_8h_source.html":[4,0,0,0,10,6]
 };

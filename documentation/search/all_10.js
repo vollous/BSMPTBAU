@@ -26,13 +26,14 @@ var searchData=
   ['list_5fx_23',['list_x',['../classcvspline.html#ab8c9a4196bc15ad202ba66efb9163d1c',1,'cvspline']]],
   ['listbouncesolution_24',['ListBounceSolution',['../classBSMPT_1_1TransitionTracer.html#a49172c16356f4017c02c01b17ac2fcc5',1,'BSMPT::TransitionTracer']]],
   ['loadpath_25',['LoadPath',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#ac953ff5d542655dcff6f9880ac70dacf',1,'BSMPT::VacuumProfileNS::VacuumProfile']]],
-  ['locateminimum_26',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#a325badc9e845cdb15d07ab4dfb94cbb4',1,'BSMPT::MinimumTracer']]],
-  ['logger_27',['Logger',['../classBSMPT_1_1Logger.html',1,'BSMPT']]],
-  ['logger_2ecpp_28',['Logger.cpp',['../Logger_8cpp.html',1,'']]],
-  ['logger_2eh_29',['Logger.h',['../Logger_8h.html',1,'']]],
-  ['logisticfunction_30',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]],
-  ['lw_31',['lw',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a74dad50f3e9c6567c27d5c10b2b72ace',1,'BSMPT::Baryo::gen_fluid::LW'],['../classBSMPT_1_1Baryo_1_1transport__equations.html#a84666beee06cb7b4a606578814765da1',1,'BSMPT::Baryo::transport_equations::LW'],['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#ab2c9249268b754d440dab412cbc75721',1,'BSMPT::Baryo::GSL_integration_mubl::LW'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#adf26699cef83222930b325d5bf9d2ecf',1,'BSMPT::Baryo::FHCK::TransportModel::Lw'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aa91e278357c55631b00bafc1317ff042',1,'BSMPT::VacuumProfileNS::VacuumProfile::Lw']]],
-  ['lwmultiplier_32',['LwMultiplier',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a58396388ee15d5de8755dff47363bf43',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['lwmultipliercutoff_33',['LwMultiplierCutoff',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab53de5381f63c8abad5304851853de9c',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
-  ['lwtosolve_34',['LwToSolve',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a343449de0aa22512c19d05ae8f89c427',1,'BSMPT::VacuumProfileNS::VacuumProfile']]]
+  ['localcalceta_26',['localcalceta',['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html',1,'BSMPT::Baryo::FHCK::LocalCalcEta'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab81e1d2ef71504ba90fdf3b801d648fe',1,'BSMPT::Baryo::FHCK::TransportModel::localCalcEta'],['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#a3e0a25ccbf1fe2b95bfd11eccf2a7226',1,'BSMPT::Baryo::FHCK::LocalCalcEta::LocalCalcEta()']]],
+  ['locateminimum_27',['LocateMinimum',['../classBSMPT_1_1MinimumTracer.html#aee238d4e5bc744fc44a971c068fc3394',1,'BSMPT::MinimumTracer']]],
+  ['logger_28',['Logger',['../classBSMPT_1_1Logger.html',1,'BSMPT']]],
+  ['logger_2ecpp_29',['Logger.cpp',['../Logger_8cpp.html',1,'']]],
+  ['logger_2eh_30',['Logger.h',['../Logger_8h.html',1,'']]],
+  ['logisticfunction_31',['LogisticFunction',['../classBSMPT_1_1BounceActionInt.html#a3d8d2c6c729e7176b35956106c0ee6d0',1,'BSMPT::BounceActionInt']]],
+  ['lw_32',['lw',['../classBSMPT_1_1Baryo_1_1gen__fluid.html#a74dad50f3e9c6567c27d5c10b2b72ace',1,'BSMPT::Baryo::gen_fluid::LW'],['../classBSMPT_1_1Baryo_1_1transport__equations.html#a84666beee06cb7b4a606578814765da1',1,'BSMPT::Baryo::transport_equations::LW'],['../structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html#ab2c9249268b754d440dab412cbc75721',1,'BSMPT::Baryo::GSL_integration_mubl::LW'],['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#ab1c0aee6fa5b783e2b89c2e68d1a46a5',1,'BSMPT::Baryo::FHCK::LocalCalcEta::Lw'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#adf26699cef83222930b325d5bf9d2ecf',1,'BSMPT::Baryo::FHCK::TransportModel::Lw'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#aa91e278357c55631b00bafc1317ff042',1,'BSMPT::VacuumProfileNS::VacuumProfile::Lw']]],
+  ['lwmultiplier_33',['LwMultiplier',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a58396388ee15d5de8755dff47363bf43',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['lwmultipliercutoff_34',['LwMultiplierCutoff',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#ab53de5381f63c8abad5304851853de9c',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
+  ['lwtosolve_35',['LwToSolve',['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a343449de0aa22512c19d05ae8f89c427',1,'BSMPT::VacuumProfileNS::VacuumProfile']]]
 ];

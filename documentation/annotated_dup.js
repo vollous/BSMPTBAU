@@ -8,6 +8,7 @@ var annotated_dup =
           [ "Kernel", "classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Kernel" ],
           [ "KernelIntw", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelIntw.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelIntw" ],
           [ "KernelInty", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelInty.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1KernelInty" ],
+          [ "LocalCalcEta", "structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html", "structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta" ],
           [ "N0Int", "classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1N0Int" ],
           [ "Q9KernelIntw", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelIntw.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelIntw" ],
           [ "Q9KernelInty", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty" ],
