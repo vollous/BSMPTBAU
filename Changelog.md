@@ -56,9 +56,13 @@ SPDX-License-Identifier: GPL-3.0-or-later
 With this version, we provide the calculation for the electroweak baryogenesis in the C2HDM with multiple, different approaches.
 For this several smaller libraries have been implemented:
 ### Baryo
-This library contains the numerical evaluation of the different methods to calculate the electroweak baryogenesis.
+This library contains the numerical evaluation of the different methods to calculate the electroweak baryogenesis. The different approaches are described in the manual.
+### WallThickness
+The thickness of the bubble wall is calculated as described in the manual.
 ### ThermalFunctions
 The thermal integrals J_+ and J_- have been moved to their own library. The old implementations are still in the main code and can be accessed for legacy code if wished. 
+### Kfactors
+During the calculation of the transport equations, the K-functions are needed. This library provides a numerical integration for those but also the bicubic spline interpolation which is used in the numerical evaluation of the transport equations. The data points for the interpolation are given in 'include/BSMPT/Kfactors/Kfactors_grid/Kfunctions_grid.h' which has a size of 148mb.
 ### Minimizer
 NLopt is now a possible option for the minimization. You can set the default settings in Minimizer.h 
 ## Models
