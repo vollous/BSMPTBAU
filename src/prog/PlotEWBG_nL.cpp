@@ -10,7 +10,6 @@
  * as a function of the distance z in both approaches.
  */
 
-#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/Fluid_Type/tau_source.h>
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Pot...

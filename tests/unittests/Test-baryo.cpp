@@ -5,8 +5,8 @@
 
 using Approx = Catch::Approx;
 
-#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_fhck/BenchmarkModel.h>
+#include <BSMPT/baryo_fhck/Kernels.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin

@@ -10,7 +10,6 @@
  * given array.
  */
 
-#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Pot...
 #include <BSMPT/models/IncludeAllModels.h>
@@ -166,7 +165,7 @@ try
         outfile << sep << x;
       outfile << std::endl;
     } // END: vw loop
-  }   // END: SFOEWPT FOUND
+  } // END: SFOEWPT FOUND
   else
   {
     outfile << -1 << -1 << -1 << -1 << -1 << std::endl;

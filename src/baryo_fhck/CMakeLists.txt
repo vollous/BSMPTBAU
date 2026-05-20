@@ -5,10 +5,10 @@
 
 set(header_path "${BSMPT_SOURCE_DIR}/include/BSMPT/baryo_fhck")
 set(header ${header_path}/TransportModel.h ${header_path}/BenchmarkModel.h
-           ${header_path}/TransportEquations.h ${header_path}/LocalCalcEta.h)
+           ${header_path}/TransportEquations.h ${header_path}/LocalCalcEta.h ${header_path}/Kernels.h)
 
 set(src TransportModel.cpp BenchmarkModel.cpp TransportEquations.cpp
-        LocalCalcEta.cpp)
+        LocalCalcEta.cpp Kernels.cpp)
 
 add_library(BaryoFHCK ${header} ${src})
 target_link_libraries(
@@ -16,9 +16,7 @@ target_link_libraries(
   PUBLIC Eigen3::Eigen
          GSL::gsl
          Minimizer
-         Kfactors
          Utility
-         Baryo
          BounceSolution
          TransitionTracer
          GW
