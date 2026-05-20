@@ -1,17 +1,11 @@
 var hierarchy =
 [
-    [ "BSMPT::Baryo::AdditionalBaryoArgs", "structBSMPT_1_1Baryo_1_1AdditionalBaryoArgs.html", null ],
     [ "AsciiPlotter", "classAsciiPlotter.html", null ],
     [ "tk::internal::band_matrix", "classtk_1_1internal_1_1band__matrix.html", null ],
     [ "BSMPT::BounceActionInt", "classBSMPT_1_1BounceActionInt.html", null ],
     [ "BSMPT::BounceSolution", "classBSMPT_1_1BounceSolution.html", null ],
     [ "BSMPT::BPLParameters", "structBSMPT_1_1BPLParameters.html", null ],
     [ "BSMPT::BSMPTLogger", "classBSMPT_1_1BSMPTLogger.html", null ],
-    [ "BSMPT::Baryo::Calc_eta", "classBSMPT_1_1Baryo_1_1Calc__eta.html", null ],
-    [ "BSMPT::Baryo::Calc_Gam_M", "classBSMPT_1_1Baryo_1_1Calc__Gam__M.html", null ],
-    [ "BSMPT::Baryo::Calc_kappa_t", "classBSMPT_1_1Baryo_1_1Calc__kappa__t.html", null ],
-    [ "BSMPT::Baryo::Calc_Scp", "classBSMPT_1_1Baryo_1_1Calc__Scp.html", null ],
-    [ "BSMPT::Baryo::CalculateEtaInterface", "classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html", null ],
     [ "BSMPT::Class_Potential_Origin", "classBSMPT_1_1Class__Potential__Origin.html", [
       [ "BSMPT::Models::Class_CxSM", "classBSMPT_1_1Models_1_1Class__CxSM.html", null ],
       [ "BSMPT::Models::Class_Potential_C2HDM", "classBSMPT_1_1Models_1_1Class__Potential__C2HDM.html", null ],
@@ -45,18 +39,9 @@ var hierarchy =
     [ "std::exception", null, [
       [ "BSMPT::parserException", "classBSMPT_1_1parserException.html", null ]
     ] ],
-    [ "BSMPT::Baryo::gen_fluid", "classBSMPT_1_1Baryo_1_1gen__fluid.html", [
-      [ "BSMPT::Baryo::bot_source", "classBSMPT_1_1Baryo_1_1bot__source.html", null ],
-      [ "BSMPT::Baryo::tau_source", "classBSMPT_1_1Baryo_1_1tau__source.html", null ],
-      [ "BSMPT::Baryo::top_source", "classBSMPT_1_1Baryo_1_1top__source.html", null ]
-    ] ],
     [ "BSMPT::GravitationalWave", "classBSMPT_1_1GravitationalWave.html", null ],
     [ "BSMPT::GravitationalWaveData", "structBSMPT_1_1GravitationalWaveData.html", null ],
-    [ "BSMPT::Kfactors::GSL_integration", "structBSMPT_1_1Kfactors_1_1GSL__integration.html", null ],
-    [ "BSMPT::Baryo::GSL_integration_mubl", "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html", null ],
-    [ "BSMPT::Baryo::GSL_mubl_interpolation", "structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html", null ],
     [ "BSMPT::Minimizer::GSL_params", "structBSMPT_1_1Minimizer_1_1GSL__params.html", null ],
-    [ "BSMPT::Wall::GSL_params", "structBSMPT_1_1Wall_1_1GSL__params.html", null ],
     [ "BSMPT::Minimizer::GSLPlaneReturn", "structBSMPT_1_1Minimizer_1_1GSLPlaneReturn.html", null ],
     [ "BSMPT::gw_data", "structBSMPT_1_1gw__data.html", null ],
     [ "BSMPT::ISMConstants", "structBSMPT_1_1ISMConstants.html", null ],
@@ -81,7 +66,6 @@ var hierarchy =
     [ "BSMPT::parser", "classBSMPT_1_1parser.html", null ],
     [ "BSMPT::Phase", "structBSMPT_1_1Phase.html", null ],
     [ "BSMPT::Minimizer::PointerContainerMinPlane", "structBSMPT_1_1Minimizer_1_1PointerContainerMinPlane.html", null ],
-    [ "BSMPT::Baryo::push_back_state_and_time", "structBSMPT_1_1Baryo_1_1push__back__state__and__time.html", null ],
     [ "BSMPT::Baryo::FHCK::Q9KernelIntw", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelIntw.html", null ],
     [ "BSMPT::Baryo::FHCK::Q9KernelInty", "classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html", null ],
     [ "BSMPT::Baryo::FHCK::RbarInt", "classBSMPT_1_1Baryo_1_1FHCK_1_1RbarInt.html", null ],
@@ -93,7 +77,6 @@ var hierarchy =
     [ "BSMPT::ThermalFunctions::ThermalCoefficientCalculator", "classBSMPT_1_1ThermalFunctions_1_1ThermalCoefficientCalculator.html", null ],
     [ "BSMPT::transition_data", "structBSMPT_1_1transition__data.html", null ],
     [ "BSMPT::TransitionTracer", "classBSMPT_1_1TransitionTracer.html", null ],
-    [ "BSMPT::Baryo::transport_equations", "classBSMPT_1_1Baryo_1_1transport__equations.html", null ],
     [ "BSMPT::Baryo::FHCK::TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", [
       [ "BSMPT::Baryo::FHCK::BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html", null ]
     ] ],

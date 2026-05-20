@@ -15,24 +15,7 @@ var annotated_dup =
           [ "RbarInt", "classBSMPT_1_1Baryo_1_1FHCK_1_1RbarInt.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1RbarInt" ],
           [ "TransportEquations", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations" ],
           [ "TransportModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html", "classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel" ]
-        ] ],
-        [ "AdditionalBaryoArgs", "structBSMPT_1_1Baryo_1_1AdditionalBaryoArgs.html", null ],
-        [ "bot_source", "classBSMPT_1_1Baryo_1_1bot__source.html", "classBSMPT_1_1Baryo_1_1bot__source" ],
-        [ "Calc_eta", "classBSMPT_1_1Baryo_1_1Calc__eta.html", "classBSMPT_1_1Baryo_1_1Calc__eta" ],
-        [ "Calc_Gam_M", "classBSMPT_1_1Baryo_1_1Calc__Gam__M.html", "classBSMPT_1_1Baryo_1_1Calc__Gam__M" ],
-        [ "Calc_kappa_t", "classBSMPT_1_1Baryo_1_1Calc__kappa__t.html", "classBSMPT_1_1Baryo_1_1Calc__kappa__t" ],
-        [ "Calc_Scp", "classBSMPT_1_1Baryo_1_1Calc__Scp.html", "classBSMPT_1_1Baryo_1_1Calc__Scp" ],
-        [ "CalculateEtaInterface", "classBSMPT_1_1Baryo_1_1CalculateEtaInterface.html", "classBSMPT_1_1Baryo_1_1CalculateEtaInterface" ],
-        [ "gen_fluid", "classBSMPT_1_1Baryo_1_1gen__fluid.html", "classBSMPT_1_1Baryo_1_1gen__fluid" ],
-        [ "GSL_integration_mubl", "structBSMPT_1_1Baryo_1_1GSL__integration__mubl.html", "structBSMPT_1_1Baryo_1_1GSL__integration__mubl" ],
-        [ "GSL_mubl_interpolation", "structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation.html", "structBSMPT_1_1Baryo_1_1GSL__mubl__interpolation" ],
-        [ "push_back_state_and_time", "structBSMPT_1_1Baryo_1_1push__back__state__and__time.html", null ],
-        [ "tau_source", "classBSMPT_1_1Baryo_1_1tau__source.html", "classBSMPT_1_1Baryo_1_1tau__source" ],
-        [ "top_source", "classBSMPT_1_1Baryo_1_1top__source.html", "classBSMPT_1_1Baryo_1_1top__source" ],
-        [ "transport_equations", "classBSMPT_1_1Baryo_1_1transport__equations.html", "classBSMPT_1_1Baryo_1_1transport__equations" ]
-      ] ],
-      [ "Kfactors", null, [
-        [ "GSL_integration", "structBSMPT_1_1Kfactors_1_1GSL__integration.html", null ]
+        ] ]
       ] ],
       [ "Minimizer", null, [
         [ "LibCMAES", null, [
@@ -65,9 +48,6 @@ var annotated_dup =
       [ "VacuumProfileNS", null, [
         [ "Difeq_VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html", "structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile" ],
         [ "VacuumProfile", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html", "structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile" ]
-      ] ],
-      [ "Wall", null, [
-        [ "GSL_params", "structBSMPT_1_1Wall_1_1GSL__params.html", "structBSMPT_1_1Wall_1_1GSL__params" ]
       ] ],
       [ "BounceActionInt", "classBSMPT_1_1BounceActionInt.html", "classBSMPT_1_1BounceActionInt" ],
       [ "BounceSolution", "classBSMPT_1_1BounceSolution.html", "classBSMPT_1_1BounceSolution" ],
