@@ -123,9 +123,6 @@ double Kernel::operator()(const KernelType Kern,
   {
     KernelIntw integrand(0, 0, l, l, vw, gamw, statistic, x);
     res *= -adap_gauss_kronrod_15(integrand, 0., 1., KERNELPRECISION);
-    // N0Int integrand(vw, gamw, statistic, x);
-    // return 6. / (M_PI * M_PI) * adap_gauss_kronrod_15(integrand, 0., 1.,
-    // KERNELPRECISION);
   }
   break;
   case KernelType::D:
