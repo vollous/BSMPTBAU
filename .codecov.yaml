@@ -9,6 +9,7 @@ ignore:
   - "src/utility/Logger.cpp"
   - "include/BSMPT/utility/Logger.h"
   - "include/BSMPT/utility/relaxation/data_structures.h"
+  - "src/utility/data_structures.cpp"
   - "include/BSMPT/baryo_fhck/kernels"
   - "include/BSMPT/baryo_fhck/Kernels.h"
   - "src/baryo_fhck/Kernels.cpp"

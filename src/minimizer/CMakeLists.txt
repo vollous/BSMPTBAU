@@ -13,7 +13,7 @@ target_link_libraries(Minimizer PUBLIC Eigen3::Eigen GSL::gsl Threads::Threads
                                        Utility Models)
 target_sources(
   Minimizer
-  PUBLIC MinimizeGSL.cpp Minimizer.cpp MinimizePlane.cpp
+  PUBLIC MinimizeGSL.cpp Minimizer.cpp 
   PUBLIC ${header})
 
 if(libcmaes_FOUND)
