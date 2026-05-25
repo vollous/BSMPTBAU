@@ -892,9 +892,8 @@ BSMPT::parser prepare_parser()
                          false);
   argparser.add_argument(
       "truncationscheme", "truncation scheme to be used", "minusvw", false);
-  argparser.add_subtext("zero: R = 0");
   argparser.add_subtext("minusvw: R = -vw");
-  argparser.add_subtext("one: R = 1");
+  argparser.add_subtext("<number>: R = number");
   argparser.add_subtext("variance: variance truncation");
   argparser.add_argument(
       "moments", "moments to solve the transport equations", "2", false);
