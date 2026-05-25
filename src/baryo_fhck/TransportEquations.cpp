@@ -341,12 +341,10 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
 {
   std::vector<double> Ri(moment, 0);
 
-  switch (transportmodel->truncationscheme)
-  {
-  case TruncationScheme::Variance:
+  if (transportmodel->truncationscheme == TruncationScheme::Variance)
   {
     // R_1, ..., R_n-1, -1
-    double n = (double)moment; // This conversion is NECESSARY!
+    double n = static_cast<double>(moment); // This conversion is NECESSARY!
     Ri.at(0) = -n * n * pow(-Solution[particle * moment + 1][k], moment - 1);
     for (size_t i = 2; i < moment; i++)
     {
@@ -356,14 +354,11 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
       Ri.at(i - 1) =
           -nck * pow(-Solution[particle * moment + 1][k], moment - i);
     }
-    break;
   }
-  default:
+  else
   {
     // 0, 0, ..., const, -1
     Ri.at(moment - 2) = transportmodel->truncationR;
-    break;
-  }
   }
   Ri.at(moment - 1) = -1;
 
