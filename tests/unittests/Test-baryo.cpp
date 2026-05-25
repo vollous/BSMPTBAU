@@ -5,8 +5,8 @@
 
 using Approx = Catch::Approx;
 
-#include <BSMPT/Kfactors/Kernels.h>
 #include <BSMPT/baryo_fhck/BenchmarkModel.h>
+#include <BSMPT/baryo_fhck/Kernels.h>
 #include <BSMPT/baryo_fhck/TransportEquations.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Potential_Origin
@@ -54,7 +54,7 @@ TEST_CASE("Test baryo example_point_C2HDM", "[baryoFHCK]")
   TransportEquations transport(tmodel, coex->crit_temp);
 
   transport.SolveTransportEquation();
-  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.69386e-11).epsilon(1e-2));
+  REQUIRE(transport.BAUeta.at(0).value() == Approx(-3.76682e-11).epsilon(1e-2));
 
   tmodel->VevProfile = Baryo::FHCK::VevProfileMode::FieldEquation;
   transport.Initialize();

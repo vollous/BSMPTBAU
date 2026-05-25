@@ -1,7 +1,7 @@
 #pragma once
 
-#include <BSMPT/Kfactors/Kernels.h>
-#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
+#include <BSMPT/baryo_fhck/Kernels.h>
+#include <BSMPT/baryo_fhck/LocalCalcEta.h>
 #include <BSMPT/baryo_fhck/TransportModel.h>
 #include <BSMPT/bounce_solution/action_calculation.h>
 #include <BSMPT/bounce_solution/bounce_solution.h>
@@ -134,7 +134,7 @@ public:
    * @brief EtaInterface object. To  use BSMPTv2 functions
    *
    */
-  std::shared_ptr<CalculateEtaInterface> EtaInterface;
+  std::shared_ptr<LocalCalcEta> localCalcEta;
 
   /**
    * @brief Phase of the top mass at the false vacuum
@@ -390,7 +390,8 @@ public:
    * @param HighestImEigenvalue Highest magnitude of all eigenvalues with
    * negative real part
    */
-  void CheckBoundary(double &HighestNegReEigenvalue, double &HighestImEigenvalue);
+  void CheckBoundary(double &HighestNegReEigenvalue,
+                     double &HighestImEigenvalue);
 
   /**
    * @brief Check if the boundary have enough decaying modes for the solution to

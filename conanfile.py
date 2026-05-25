@@ -60,9 +60,6 @@ class BSMPT(ConanFile):
         self.requires("gsl/2.7.1", transitive_headers=True, transitive_libs=True)
         self.requires("nlohmann_json/3.11.3", transitive_headers=False)
 
-        if self.options.CompileBaryo:
-            self.requires("boost/1.84.0", transitive_headers=True, transitive_libs=True)
-
         if self.options.UseNLopt:
             self.requires("nlopt/2.9.1", transitive_headers=True, transitive_libs=True)
 
@@ -120,7 +117,6 @@ class BSMPT(ConanFile):
         tc.variables["UseLibCMAES"] = self.options.UseLibCMAES
         tc.variables["UseNLopt"] = self.options.UseNLopt
         tc.variables["MakeAdditionalTesting"] = self.options.MakeAdditionalTesting
-        tc.variables["BSMPTCompileBaryo"] = self.options.CompileBaryo
         tc.variables["EnableCoverage"] = self.options.EnableCoverage
         tc.variables["BSMPTUseVectorization"] = self.options.UseVectorization
         tc.variables["BSMPTBuildExecutables"] = self.options.BuildExecutables
@@ -186,11 +182,6 @@ class BSMPT(ConanFile):
             "cmake_target_name", "BSMPT::Spline"
         )
 
-        if self.options.CompileBaryo:
-            self.cpp_info.components["Spline"].requires.append(
-                "boost::boost",
-            )
-
         self.cpp_info.components["Utility"].libs = ["Utility"]
         self.cpp_info.components["Utility"].requires = [
             "gsl::gsl",
@@ -201,11 +192,6 @@ class BSMPT(ConanFile):
         self.cpp_info.components["Utility"].set_property(
             "cmake_target_name", "BSMPT::Utility"
         )
-
-        if self.options.CompileBaryo:
-            self.cpp_info.components["Utility"].requires.append(
-                "boost::boost",
-            )
 
         self.cpp_info.components["BounceSolution"].libs = ["BounceSolution"]
         self.cpp_info.components["BounceSolution"].requires = [
