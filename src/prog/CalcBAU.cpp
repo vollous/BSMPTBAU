@@ -59,7 +59,7 @@ struct CLIOptions
   double truncationR              = 0;
   BSMPT::Baryo::FHCK::TruncationScheme truncationscheme =
       BSMPT::Baryo::FHCK::TruncationScheme::MinusVw;
-  bool gwoutput = false;
+  bool gwoutput = true;
   CLIOptions(const BSMPT::parser &argparser);
   bool good() const;
 };
@@ -898,7 +898,7 @@ BSMPT::parser prepare_parser()
   argparser.add_subtext("variance: variance truncation");
   argparser.add_argument(
       "moments", "moments to solve the transport equations", "2", false);
-  argparser.add_argument("gwoutput", "print GW wave output", "false", false);
+  argparser.add_argument("gwoutput", "print GW wave output", "true", false);
 
   std::string GSLhelp   = Minimizer::UseGSLDefault ? "true" : "false";
   std::string CMAEShelp = Minimizer::UseLibCMAESDefault ? "true" : "false";
