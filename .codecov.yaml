@@ -9,6 +9,8 @@ ignore:
   - "src/utility/Logger.cpp"
   - "include/BSMPT/utility/Logger.h"
   - "include/BSMPT/baryo_fhck/kernels"
+  - "include/BSMPT/baryo_fhck/Kernels.h"
+  - "src/baryo_fhck/Kernels.cpp"
   - "src/models/ClassPotentialOrigin_deprecated.cpp"
   - "src/models/ClassTemplate.cpp"
   - "standalone/**"
