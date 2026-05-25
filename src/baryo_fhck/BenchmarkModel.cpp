@@ -26,6 +26,7 @@ BenchmarkModel::BenchmarkModel(const double Tn_in,
     , LAM(1000.)
 {
   Lw = 5. / Tn_in;
+  Ls = Lw;
 }
 
 BenchmarkModel::BenchmarkModel(const double vn_in,
@@ -33,6 +34,7 @@ BenchmarkModel::BenchmarkModel(const double vn_in,
                                const double Tn_in,
                                const double LAM_in,
                                const double Lw_in,
+                               const double Ls_in,
                                const double vw_in,
                                const TruncationScheme &truncationscheme_in,
                                const double &truncationR_in)
@@ -48,10 +50,9 @@ BenchmarkModel::BenchmarkModel(const double vn_in,
     , wn(wn_in)
     , Tn(Tn_in)
     , LAM(LAM_in)
-
+    , Ls(Ls_in)
 {
   Lw = Lw_in;
-  Logger::Write(LoggingLevel::FHCK, "Instantiated");
 }
 
 void BenchmarkModel::Initialize()
@@ -81,13 +82,13 @@ double BenchmarkModel::hvev(const double &z, const int &deriv)
 double BenchmarkModel::svev(const double &z, const int &deriv)
 {
   double res = 0.;
-  double u   = z / Lw;
+  double u   = z / Ls;
   if (deriv == 0)
     res += wn / 2. * (1 + tanh(u));
   else if (deriv == 1)
-    res += wn / (2. * Lw) / pow(cosh(u), 2);
+    res += wn / (2. * Ls) / pow(cosh(u), 2);
   else if (deriv == 2)
-    res += -wn / (Lw * Lw) * tanh(u) / pow(cosh(u), 2);
+    res += -wn / (Ls * Ls) * tanh(u) / pow(cosh(u), 2);
   return res;
 }
 

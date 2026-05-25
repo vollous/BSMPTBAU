@@ -90,6 +90,10 @@ if(BSMPTBuildExecutables)
   target_link_libraries(CalcBAU BaryoFHCK)
   target_compile_features(CalcBAU PUBLIC cxx_std_17)
 
+  add_executable(CalcBAUBench prog/CalcBAUBench.cpp)
+  target_link_libraries(CalcBAUBench BaryoFHCK)
+  target_compile_features(CalcBAUBench PUBLIC cxx_std_17)
+
   if(BSMPTCompileBaryo)
     add_executable(CalculateEWBG prog/CalculateEWBG.cpp)
     target_link_libraries(CalculateEWBG Minimizer Models Baryo Utility)

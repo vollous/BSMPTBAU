@@ -164,8 +164,8 @@ TEST_CASE("Test benchmark model for correctness.", "[BaryoBench]")
 
   REQUIRE(transport.bau == Approx(-1.4975e-10).epsilon(1e-2));
 
-  std::shared_ptr<BenchmarkModel> bmodel2 =
-      std::make_shared<BenchmarkModel>(100., 200., 100., 1000., 0.05, 0.1);
+  std::shared_ptr<BenchmarkModel> bmodel2 = std::make_shared<BenchmarkModel>(
+      100., 200., 100., 1000., 0.05, 0.05, 0.1);
 
   TransportEquations transport2(bmodel2, 100.);
   transport2.SolveTransportEquation();

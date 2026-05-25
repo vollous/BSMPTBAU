@@ -21,7 +21,7 @@ private:
    *@brief Input parameters of the benchmark model
    *
    */
-  double vn, wn, Tn, LAM;
+  double vn, wn, Tn, LAM, Ls;
 
   /**
    *@brief Top yukawa coupling and weak coupling constant
@@ -48,8 +48,9 @@ public:
    *
    * @param vn_in Vev of the Higgs like field
    * @param wn_in Vev of the second scalar
-   * @param LAM_in New physics scale
    * @param Tn_in Nucleation temperature
+   * @param LAM_in New physics scale
+   * @param Lw_in Thickness of the bubble wall
    * @param vw_in Wall velocity
    * @param trunactionscheme_in Truncation scheme to be used
    * @param truncationR_in Truncation constant \f$ R \f$
@@ -60,6 +61,7 @@ public:
       const double Tn_in,
       const double LAM_in,
       const double Lw_in,
+      const double Ls_in,
       const double vw_in,
       const TruncationScheme &truncationscheme_in = TruncationScheme::MinusVw,
       const double &truncationR_in                = 0);
