@@ -110,10 +110,11 @@ void LocalCalcEta::CalculateLw()
   const double DistanceThreshold =
       L2NormVector(TrueVacuum - FalseVacuum) / num_points * 10.;
 
-  for (double b = 0; b <= num_points; b++)
+  for (size_t b = 0; b <= num_points; b++)
   {
     std::vector<double> basePoint =
-        b / num_points * TrueVacuum + (1. - b / num_points) * FalseVacuum;
+        static_cast<double>(b) / num_points * TrueVacuum +
+        (1. - static_cast<double>(b) / num_points) * FalseVacuum;
     const double d = basePoint * n;
     // Calculates two iteration when StraightLineApproximation
     if ((not StraightLineApproximation) or (b < 2))
