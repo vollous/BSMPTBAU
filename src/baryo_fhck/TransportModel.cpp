@@ -295,8 +295,8 @@ std::vector<double> TransportModel::Vev(const double &z, const int &diff)
 
 void TransportModel::GetFermionRatio(const double &z,
                                     const size_t &fermion,
-                                    double &m2,
-                                    double &m2prime,
+                                    double &x2,
+                                    double &x2prime,
                                     double &thetaprime,
                                     double &theta2prime)
 {
@@ -310,8 +310,8 @@ void TransportModel::GetFermionRatio(const double &z,
                                 QuarkMassesIm.at(ind).deriv(1, z));
   mprimeprime = std::complex<double>(QuarkMassesRe.at(ind).deriv(2, z),
                                      QuarkMassesIm.at(ind).deriv(2, z));
-  m2          = std::abs(m * m) / (Tstar * Tstar); // m^2 of fermion
-  m2prime     = (2. * mprime * m).real() / (Tstar * Tstar);
+  x2          = std::abs(m * m) / (Tstar * Tstar); // x^2 of fermion
+  x2prime     = (2. * mprime * m).real() / (Tstar * Tstar);
   // Calculate theta
   if (VevProfile == VevProfileMode::Kink)
   {

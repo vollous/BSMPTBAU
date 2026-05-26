@@ -102,23 +102,23 @@ public:
    *
    * @param z distance from the bubble wall
    * @param fermion which fermion, 0 = most massive
-   * @param m2 \f$ m^2 \f$
-   * @param m2prime \f$ m'^2 \f$
+   * @param x2 \f$ x^2 \f$
+   * @param x2prime \f$ x'^2 \f$
    * @param thetaprime \f$ \theta' \f$
    * @param theta2prime \f$ \theta'' \f$
    */
   void GetFermionRatio(const double &z,
                       const size_t &fermion,
-                      double &m2,
-                      double &m2prime,
+                      double &x2,
+                      double &x2prime,
                       double &thetaprime,
                       double &theta2prime) override;
 
   /**
-   * @brief Calculate the W boson mass.
+   * @brief Calculate the W boson mass/temperature.
    *
    * @param vev VEV
-   * @return double W boson mass
+   * @return double W boson mass/temperature
    */
   double GetWRatio(const double &z) override;
 
