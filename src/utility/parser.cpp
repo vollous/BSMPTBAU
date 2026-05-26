@@ -55,9 +55,6 @@ parser::parser()
                false);
   add_argument("logginglevel::disabled", "Disable the Logger.", false);
 
-  add_argument("logginglevel::ewbgdetailed",
-               "Turn on/off (true/false) the output for the EWBG calculation.",
-               false);
   add_argument(
       "logginglevel::progdetailed",
       "Turn on/off (true/false) the additional output for the main program.",
@@ -80,10 +77,6 @@ parser::parser(const bool &enable_column_output)
   add_argument("logginglevel::default", "default output", "true", false);
   add_argument("logginglevel::debug", "debug output", "false", false);
   add_argument("logginglevel::disabled", "disable all output", "", false);
-  add_argument("logginglevel::ewbgdetailed",
-               "baryogenesis calculation output",
-               "false",
-               false);
   add_argument(
       "logginglevel::progdetailed", "executable output", "false", false);
   add_argument(
@@ -419,7 +412,8 @@ void parser::set_help_header(const std::string &header)
 
 void parser::add_input(const std::vector<KeyValue> &input)
 {
-  auto throwError = [](const std::string &argument) {
+  auto throwError = [](const std::string &argument)
+  {
     throw parserException("Argument " + argument + " found but not expected.");
   };
   for (const auto &arg : input)

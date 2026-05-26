@@ -5,8 +5,7 @@
 
 set(suffix "include/BSMPT/minimizer")
 set(header_path "${BSMPT_SOURCE_DIR}/${suffix}")
-set(header ${header_path}/Minimizer.h ${header_path}/MinimizePlane.h
-           ${header_path}/MinimizeGSL.h)
+set(header ${header_path}/Minimizer.h ${header_path}/MinimizeGSL.h)
 
 add_library(Minimizer STATIC)
 target_link_libraries(Minimizer PUBLIC Eigen3::Eigen GSL::gsl Threads::Threads

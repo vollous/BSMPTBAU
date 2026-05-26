@@ -5,14 +5,12 @@
     "model": "c2hdm",
     "config": "../../example/EWBG_config.txt",
     "vw": "0.1",
-
     "useNLopt": "true",
     "useCMAES": "true",
     "useGSL": "true",
     "useMultiThreading": "true",
     "logginglevel::default": "true",
     "logginglevel::minimizerdetailed": "false",
-    "logginglevel::ewbgdetailed": "false",
     "logginglevel::debug": "false",
     "logginglevel::progdetailed": "false",
     "logginglevel::disabled_comment": "remove _comment from key to disable logger"
