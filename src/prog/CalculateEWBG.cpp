@@ -12,7 +12,6 @@
  *
  */
 
-#include <BSMPT/baryo_calculation/CalculateEtaInterface.h>
 #include <BSMPT/baryo_calculation/transport_equations.h> // for GSL_integ...
 #include <BSMPT/minimizer/Minimizer.h>
 #include <BSMPT/models/ClassPotentialOrigin.h> // for Class_Pot...
