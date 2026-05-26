@@ -225,7 +225,7 @@ void TransportEquations::SetNumberOfSteps(const int &num)
   Initialize();
 }
 
-MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
+MatDoub TransportEquations::CalculateCollisionMatrix(const double &xW,
                                                      VecDoub &FermionMasses,
                                                      VecDoub &BosonMasses)
 {
@@ -264,7 +264,7 @@ MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
   const std::vector<double> rates = {0.26 * pow(mass[0], 2) * Tstar, // gammaM
                                      5.9e-3 * Tstar,                 // gammaY
                                      gammatot[3],                    // gammaW
-                                     1.5 * mW * mW * Tstar,          // gammaH
+                                     1.5 * xW * xW * Tstar,          // gammaH
                                      2.7e-3 * Tstar};                // gammaSS
 
   std::vector<double> trunc = {1., 1., 1., 1., 1.};
@@ -365,7 +365,7 @@ std::vector<double> TransportEquations::calc_Ri(const size_t &particle,
   return Ri;
 }
 
-MatDoub TransportEquations::calc_Ainv(const double &m,
+MatDoub TransportEquations::calc_Ainv(const double &x,
                                       const ParticleType &type,
                                       const size_t &particle,
                                       const size_t &k)
@@ -377,13 +377,13 @@ MatDoub TransportEquations::calc_Ainv(const double &m,
   {
     // 1, D1, D2, ..., Dn-1
     Di.at(i + 1) =
-        (type == ParticleType::Boson ? Dlb[i + 1](m) : Dlf[i + 1](m));
+        (type == ParticleType::Boson ? Dlb[i + 1](x) : Dlf[i + 1](x));
     // off-diagonal "diagonal"
     res[i + 1][i] = 1;
   }
 
   // (-1)^momentInv(A)
-  double Dn = (type == ParticleType::Boson ? Dlb[moment](m) : Dlf[moment](m));
+  double Dn = (type == ParticleType::Boson ? Dlb[moment](x) : Dlf[moment](x));
   for (size_t i = 0; i < moment - 1; i++)
     Dn -= Ri.at(i) * Di.at(i + 1);
 
@@ -395,24 +395,24 @@ MatDoub TransportEquations::calc_Ainv(const double &m,
   return res;
 }
 
-MatDoub TransportEquations::calc_m2B(const double &m,
-                                     const double &dm2,
+MatDoub TransportEquations::calc_m2B(const double &x,
+                                     const double &dx2,
                                      const ParticleType &type)
 {
   MatDoub res(moment, moment, 0.);
-  const double fRbar = (type == ParticleType::Boson ? Rbarb(m) : Rbarf(m));
+  const double fRbar = (type == ParticleType::Boson ? Rbarb(x) : Rbarf(x));
 
   for (size_t l = 1; l <= moment; l++)
   {
-    const double fQ   = (type == ParticleType::Boson ? Qlb[l](m) : Qlf[l](m));
-    res[l - 1][l - 1] = fRbar * (double)(l - 1) * dm2;
-    res[l - 1][0]     = gamwall * transportmodel->vwall * fQ * dm2;
+    const double fQ   = (type == ParticleType::Boson ? Qlb[l](x) : Qlf[l](x));
+    res[l - 1][l - 1] = fRbar * (double)(l - 1) * dx2;
+    res[l - 1][0]     = gamwall * transportmodel->vwall * fQ * dx2;
   }
   return res;
 }
 
-VecDoub TransportEquations::calc_source(const double &m,
-                                        const double &dm2,
+VecDoub TransportEquations::calc_source(const double &x,
+                                        const double &dx2,
                                         const double &dth,
                                         const double &d2th,
                                         const int &h)
@@ -420,8 +420,8 @@ VecDoub TransportEquations::calc_source(const double &m,
   VecDoub res(moment);
   for (size_t i = 0; i < moment; i++)
     res[i] = -transportmodel->vwall * gamwall * h *
-             ((dm2 * dth + m * m * d2th) * Q8ol[i + 1](m) -
-              dm2 * m * m * dth * Q9ol[i + 1](m)); // Si
+             ((dx2 * dth + x * x * d2th) * Q8ol[i + 1](x) -
+              dx2 * x * x * dth * Q9ol[i + 1](x)); // Si
   return res;
 }
 
@@ -451,7 +451,7 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = transportmodel->GetWMass(z);
+  const double xW = transportmodel->GetWRatio(z);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
@@ -459,39 +459,39 @@ void TransportEquations::Equations(const double &z,
        particle++)
   {
     ParticleType ptype = transportmodel->involvedparticles[particle];
-    double m2, m2prime, thetaprime, theta2prime;
+    double x2, x2prime, thetaprime, theta2prime;
     if (ptype == ParticleType::Boson)
     {
-      m2             = 0;
-      m2prime        = 0;
-      BosonMasses[0] = m2;
+      x2             = 0;
+      x2prime        = 0;
+      BosonMasses[0] = x2;
     }
     else
     {
       // Calculate fermionic masses
-      transportmodel->GetFermionMass(
-          z, particle, m2, m2prime, thetaprime, theta2prime);
-      FermionMasses[particle] = m2;
+      transportmodel->GetFermionRatio(
+          z, particle, x2, x2prime, thetaprime, theta2prime);
+      FermionMasses[particle] = x2;
 
       // Source terms
       int h = (ptype == ParticleType::LeftFermion ? -1 : 1);
-      VecDoub tempS(calc_source(sqrt(m2), m2prime, thetaprime, theta2prime, h));
+      VecDoub tempS(calc_source(sqrt(x2), x2prime, thetaprime, theta2prime, h));
       for (size_t i = 0; i < moment; i++)
         S[moment * particle + i] = tempS[i];
     }
 
     // Calculate A inverse for fermion
-    MatDoub tempA(calc_Ainv(sqrt(m2), ptype, particle, k));
+    MatDoub tempA(calc_Ainv(sqrt(x2), ptype, particle, k));
     InsertBlockDiagonal(Ainverse, tempA, particle);
 
     // Calculate m2'B for fermion
-    MatDoub tempB(calc_m2B(sqrt(m2), m2prime, ptype));
+    MatDoub tempB(calc_m2B(sqrt(x2), x2prime, ptype));
     InsertBlockDiagonal(m2B, tempB, particle);
   }
 
   // Gamma = deltaC - m2' B
   const MatDoub CollisionMatrix =
-      CalculateCollisionMatrix(mW, FermionMasses, BosonMasses);
+      CalculateCollisionMatrix(xW, FermionMasses, BosonMasses);
 
   // Calculate M = A^-1 * Gamma ( = deltaC - m2'B)
   for (size_t i = 0; i < nEqs; i++)
@@ -861,7 +861,7 @@ void TransportEquations::CalculateBAU()
 {
   const double Nc = 3;
 
-  double mt2, mb2, m2prime, thetaprime, theta2prime; // temporary vars
+  double xt2, xb2, x2prime, thetaprime, theta2prime; // temporary vars
   // Weak spharelon rate
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of u positions
@@ -870,15 +870,15 @@ void TransportEquations::CalculateBAU()
   {
     const double zi = zList.at(i);
     // Calculate the vev at z
-    transportmodel->GetFermionMass(
-        zi, 0, mt2, m2prime, thetaprime, theta2prime);
-    transportmodel->GetFermionMass(
-        zi, 2, mb2, m2prime, thetaprime, theta2prime);
+    transportmodel->GetFermionRatio(
+        zi, 0, xt2, x2prime, thetaprime, theta2prime);
+    transportmodel->GetFermionRatio(
+        zi, 2, xb2, x2prime, thetaprime, theta2prime);
     // Results
     r = 0;
-    r += (1 + 4 * Dlf[0](sqrt(mt2))) / 2. * Solution[0][i];          // tL
-    r += (1 + 4 * Dlf[0](sqrt(mb2))) / 2. * Solution[moment * 2][i]; // bL
-    r += 2. * Dlf[0](sqrt(mt2)) * Solution[moment][i];               // tR
+    r += (1 + 4 * Dlf[0](sqrt(xt2))) / 2. * Solution[0][i];          // tL
+    r += (1 + 4 * Dlf[0](sqrt(xb2))) / 2. * Solution[moment * 2][i]; // bL
+    r += 2. * Dlf[0](sqrt(xt2)) * Solution[moment][i];               // tR
     r *= Gws(zi);
     r *= WashoutFactor(zi);
     // Save in list to pass to integrator

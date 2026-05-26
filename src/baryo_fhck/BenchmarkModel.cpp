@@ -92,18 +92,18 @@ double BenchmarkModel::svev(const double &z, const int &deriv)
   return res;
 }
 
-void BenchmarkModel::GetFermionMass(const double &z,
+void BenchmarkModel::GetFermionRatio(const double &z,
                                     const size_t &fermion,
-                                    double &m2,
-                                    double &m2prime,
+                                    double &x2,
+                                    double &x2prime,
                                     double &thetaprime,
                                     double &theta2prime)
 {
   // bottom quark has no mass in this model
   if (fermion == 2)
   {
-    m2          = 0.;
-    m2prime     = 0.;
+    x2          = 0.;
+    x2prime     = 0.;
     thetaprime  = 0.;
     theta2prime = 0.;
   }
@@ -115,16 +115,16 @@ void BenchmarkModel::GetFermionMass(const double &z,
     double ds   = svev(z, 1) / LAM;
     double d2s  = svev(z, 2) / LAM;
     double temp = sqrt(1. + s * s);
-    m2          = yt * h * temp;
-    m2prime     = yt * ((1. + s * s) * dh + h * s * ds) / temp;
-    m2prime     = 2. * m2 * m2prime / (Tstar * Tstar);
-    m2 *= m2 / (Tstar * Tstar);
+    x2          = yt * h * temp;
+    x2prime     = yt * ((1. + s * s) * dh + h * s * ds) / temp;
+    x2prime     = 2. * x2 * x2prime / (Tstar * Tstar);
+    x2 *= x2 / (Tstar * Tstar);
     thetaprime  = ds / (1 + s * s);
     theta2prime = ((1 + s * s) * d2s - 2. * s * ds * ds) / pow(1. + s * s, 2);
   }
 }
 
-double BenchmarkModel::GetWMass(const double &z)
+double BenchmarkModel::GetWRatio(const double &z)
 {
   double h = hvev(z, 0);
   return h * g / 2. / Tn;
