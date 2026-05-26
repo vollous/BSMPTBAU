@@ -219,7 +219,7 @@ void TransportEquations::BuildKernelInterpolation()
   }
 }
 
-MatDoub TransportEquations::CalculateCollisionMatrix(const double &mW,
+MatDoub TransportEquations::CalculateCollisionMatrix(const double &xW,
                                                      VecDoub &FermionMasses,
                                                      VecDoub &BosonMasses)
 {

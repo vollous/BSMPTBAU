@@ -35,7 +35,7 @@ struct CLIOptions
   BSMPT::ModelID::ModelIDs Model{ModelID::ModelIDs::NotSet};
   int firstline{0}, lastline{0};
   double templow{0}, temphigh{300};
-  double UserDefined_vwall     = 0.1;
+  double UserDefined_vwall     = 0.5;
   int UserDefined_PNLO_scaling = 1;
   double UserDefined_epsturb   = 0.1;
   int MaxPathIntegrations      = 7;
@@ -850,7 +850,7 @@ BSMPT::parser prepare_parser()
   argparser.add_argument(
       "num_pts", "intermediate grid-size for default mode", "10", false);
   argparser.add_argument(
-      "vwall", "wall velocity: >0 user defined", "0.95", false);
+      "vwall", "wall velocity: >0 user defined", "0.5", false);
   argparser.add_subtext("-1: approximation");
   argparser.add_subtext("-2: upper bound");
   argparser.add_argument(
