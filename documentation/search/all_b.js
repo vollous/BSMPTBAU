@@ -77,7 +77,7 @@ var searchData=
   ['getwmass_74',['getwmass',['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a68f29fe787661fbb8d605caac0f65605',1,'BSMPT::Baryo::FHCK::BenchmarkModel::GetWMass()'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportModel.html#ab105d03ef406fc2af8223639f22599c8',1,'BSMPT::Baryo::FHCK::TransportModel::GetWMass()']]],
   ['getypsilon_75',['GetYpsilon',['../namespaceBSMPT.html#aa10b493e35a63b9e48a1aff704d2af38',1,'BSMPT']]],
   ['gradientthreshold_76',['GradientThreshold',['../classBSMPT_1_1MinimumTracer.html#afb5bf011334bab53572b2fd336679abe',1,'BSMPT::MinimumTracer']]],
-  ['gradprojection_77',['gradprojection',['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#ab95fbf930e33dec8ef3e31978c6fc1ee',1,'BSMPT::Baryo::FHCK::LocalCalcEta::gradprojection'],['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#aacc390c3ae59b17e8abd65038c9dada1',1,'BSMPT::Baryo::FHCK::LocalCalcEta::GradProjection()']]],
+  ['gradprojection_77',['gradprojection',['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#aacc390c3ae59b17e8abd65038c9dada1',1,'BSMPT::Baryo::FHCK::LocalCalcEta::GradProjection()'],['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#ab95fbf930e33dec8ef3e31978c6fc1ee',1,'BSMPT::Baryo::FHCK::LocalCalcEta::gradprojection']]],
   ['gravitationalwave_78',['GravitationalWave',['../classBSMPT_1_1GravitationalWave.html',1,'BSMPT']]],
   ['gravitationalwavedata_79',['GravitationalWaveData',['../structBSMPT_1_1GravitationalWaveData.html',1,'BSMPT']]],
   ['groupelements_80',['groupelements',['../classBSMPT_1_1MinimumTracer.html#a3aa1563907f76badf7a7b4ccb5408d50',1,'BSMPT::MinimumTracer::GroupElements'],['../classBSMPT_1_1BounceSolution.html#a34acd7ce9dc3e843e7a526d0b55d4478',1,'BSMPT::BounceSolution::GroupElements']]],

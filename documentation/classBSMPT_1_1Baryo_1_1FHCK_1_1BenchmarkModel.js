@@ -1,7 +1,7 @@
 var classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel =
 [
     [ "BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#ae27d52ff8942df0ceb1d5f82f2aedd2c", null ],
-    [ "BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a7f99ea88e1a2b4844ee71f033b21dfc1", null ],
+    [ "BenchmarkModel", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a76227aff7f288307d150eeb2b414f42e", null ],
     [ "EWSBVEV", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a881ba5023015d17639f1b73805519d3e", null ],
     [ "GenerateFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#ab8241dce00a801cced7d7ec6f2f1213a", null ],
     [ "GetFermionMass", "classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#ae6ed83e68bbdf7620fccd4b87bbed2c3", null ],
