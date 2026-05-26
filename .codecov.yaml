@@ -7,6 +7,7 @@ ignore:
   - "tests/**"
   - "src/prog/**"
   - "src/utility/Logger.cpp"
+  - "src/utility/parser.cpp"
   - "include/BSMPT/utility/Logger.h"
   - "include/BSMPT/utility/relaxation/data_structures.h"
   - "src/utility/data_structures.cpp"

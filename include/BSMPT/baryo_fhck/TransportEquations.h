@@ -310,13 +310,6 @@ public:
   void BuildKernelInterpolation();
 
   /**
-   * @brief Set the number of intergrations steps and initialize again.
-   *
-   * @param Num number of steps
-   */
-  void SetNumberOfSteps(const int &num);
-
-  /**
    * @brief Calculate the collision matrix \f$ \deltaC^{1/2} \f$
    *
    * @param z distance to the bubble wall.
