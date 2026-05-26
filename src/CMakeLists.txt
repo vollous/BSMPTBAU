@@ -85,4 +85,8 @@ if(BSMPTBuildExecutables)
   target_link_libraries(CalcBAU BaryoFHCK)
   target_compile_features(CalcBAU PUBLIC cxx_std_17)
 
+  add_executable(CalcBAUBench prog/CalcBAUBench.cpp)
+  target_link_libraries(CalcBAUBench BaryoFHCK)
+  target_compile_features(CalcBAUBench PUBLIC cxx_std_17)
+
 endif(BSMPTBuildExecutables)

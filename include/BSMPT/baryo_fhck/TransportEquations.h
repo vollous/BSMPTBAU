@@ -315,7 +315,7 @@ public:
    * @param z distance to the bubble wall.
    * @return MatDoub Collision matrix
    */
-  MatDoub CalculateCollisionMatrix(const double &mW,
+  MatDoub CalculateCollisionMatrix(const double &xW,
                                    VecDoub &FermionMasses,
                                    VecDoub &BosonMasses);
 
@@ -331,13 +331,13 @@ public:
   /**
    * @brief Calculate the 2x2 submatrix of Ainv for 1 particle
    *
-   * @param m mass of the particle
+   * @param x mass/temperature of the particle
    * @param type type type of particle e.g. fermion/boson
    * @param particle which particle
    * @param k index in ydifeq
    * @return MatDoub of Ainv
    */
-  MatDoub calc_Ainv(const double &m,
+  MatDoub calc_Ainv(const double &x,
                     const ParticleType &type,
                     const size_t &particle,
                     const size_t &k = 0);
@@ -345,26 +345,26 @@ public:
   /**
    * @brief Calculate the 2x2 submatrix of m2'B for 1 particle
    *
-   * @param m mass of the particle
-   * @param dm2 derivative of the squared particle mass
+   * @param x mass/temperature of the particle
+   * @param dx2 derivative of the squared particle mass
    * @param type type of particle e.g. fermion/boson
    * @return MatDoub of m2'B
    */
   MatDoub
-  calc_m2B(const double &m, const double &dm2, const ParticleType &type);
+  calc_m2B(const double &x, const double &dx2, const ParticleType &type);
 
   /**
    * @brief Calculate the souce term S for 1 particle
    *
-   * @param m mass of the particle
-   * @param dm2 derivative of the squared particle mass
+   * @param x mass/temperature of the particle
+   * @param dx2 derivative of the squared particle mass
    * @param dth derivative of theta
    * @param d2th second derivative theta
    * @param h helicity
    * @return VecDoub source term
    */
-  VecDoub calc_source(const double &m,
-                      const double &dm2,
+  VecDoub calc_source(const double &x,
+                      const double &dx2,
                       const double &dth,
                       const double &d2th,
                       const int &h);
