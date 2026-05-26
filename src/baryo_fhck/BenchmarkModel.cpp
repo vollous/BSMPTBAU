@@ -91,7 +91,7 @@ double BenchmarkModel::svev(const double &z, const int &deriv)
   return res;
 }
 
-void BenchmarkModel::GetFermionMass(const double &z,
+void BenchmarkModel::GetFermionRatio(const double &z,
                                     const size_t &fermion,
                                     double &m2,
                                     double &m2prime,
@@ -123,7 +123,7 @@ void BenchmarkModel::GetFermionMass(const double &z,
   }
 }
 
-double BenchmarkModel::GetWMass(const double &z)
+double BenchmarkModel::GetWRatio(const double &z)
 {
   double h = hvev(z, 0);
   return h * g / 2. / Tn;

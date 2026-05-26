@@ -451,7 +451,7 @@ void TransportEquations::Equations(const double &z,
   Mtilde.zero(); // Store A^-1 * M
 
   // Mass vector
-  const double mW = transportmodel->GetWMass(z);
+  const double mW = transportmodel->GetWRatio(z);
   VecDoub FermionMasses(nFermions);
   VecDoub BosonMasses(nBosons);
 
@@ -469,7 +469,7 @@ void TransportEquations::Equations(const double &z,
     else
     {
       // Calculate fermionic masses
-      transportmodel->GetFermionMass(
+      transportmodel->GetFermionRatio(
           z, particle, m2, m2prime, thetaprime, theta2prime);
       FermionMasses[particle] = m2;
 
@@ -870,9 +870,9 @@ void TransportEquations::CalculateBAU()
   {
     const double zi = zList.at(i);
     // Calculate the vev at z
-    transportmodel->GetFermionMass(
+    transportmodel->GetFermionRatio(
         zi, 0, mt2, m2prime, thetaprime, theta2prime);
-    transportmodel->GetFermionMass(
+    transportmodel->GetFermionRatio(
         zi, 2, mb2, m2prime, thetaprime, theta2prime);
     // Results
     r = 0;

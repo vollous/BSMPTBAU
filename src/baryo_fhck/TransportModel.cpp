@@ -293,7 +293,7 @@ std::vector<double> TransportModel::Vev(const double &z, const int &diff)
   return std::vector<double>();
 }
 
-void TransportModel::GetFermionMass(const double &z,
+void TransportModel::GetFermionRatio(const double &z,
                                     const size_t &fermion,
                                     double &m2,
                                     double &m2prime,
@@ -333,7 +333,7 @@ void TransportModel::GetFermionMass(const double &z,
       brk = localCalcEta->bot_theta_brk.value();
       sym = localCalcEta->bot_theta_sym.value();
       break;
-    default: throw("Invalid fermion in GetFermionMass()"); break;
+    default: throw("Invalid fermion in GetFermionRatio()"); break;
     }
     thetaprime = -0.5 * ((brk - sym) * 1 / pow(cosh(z / Lw), 2)) / Lw;
     theta2prime =
@@ -365,7 +365,7 @@ void TransportModel::GetFermionMass(const double &z,
   }
 }
 
-double TransportModel::GetWMass(const double &z)
+double TransportModel::GetWRatio(const double &z)
 {
   const double T = 0;
   std::vector<double> res;

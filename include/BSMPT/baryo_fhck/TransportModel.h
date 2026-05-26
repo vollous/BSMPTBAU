@@ -277,7 +277,7 @@ public:
    * @param thetaprime \f$ \theta' \f$
    * @param theta2prime \f$ \theta'' \f$
    */
-  virtual void GetFermionMass(const double &z,
+  virtual void GetFermionRatio(const double &z,
                               const size_t &fermion,
                               double &m2,
                               double &m2prime,
@@ -289,7 +289,7 @@ public:
    * @param vev VEV
    * @return double W boson mass
    */
-  virtual double GetWMass(const double &z);
+  virtual double GetWRatio(const double &z);
 
   /**
    * @brief This function calculates the EW breaking VEV from all contributing
