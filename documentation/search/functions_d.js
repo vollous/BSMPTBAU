@@ -9,7 +9,6 @@ var searchData=
   ['nintegrate_5fouter_6',['Nintegrate_Outer',['../namespaceBSMPT.html#add310b4cfe7bfdb761385657e4875e1c',1,'BSMPT']]],
   ['nintegrate_5fsnr_7',['Nintegrate_SNR',['../namespaceBSMPT.html#a32961c0d441ecf5a0efc0b9d90d011c3',1,'BSMPT']]],
   ['nloptveff_8',['NLOPTVEff',['../MinimizeNLOPT_8h.html#a01152bea3731d373bb7f7fb36cbdf43e',1,'BSMPT::Minimizer::LibNLOPT']]],
-  ['nloptveffplane_9',['NLOPTVEffPlane',['../MinimizeNLOPT_8h.html#a3c2f4fc87ad61938f03b8a127fbd37df',1,'BSMPT::Minimizer::LibNLOPT']]],
-  ['normalforce_10',['NormalForce',['../classBSMPT_1_1BounceActionInt.html#a08fff8f4f6ab03f6186d75ab5c6f9971',1,'BSMPT::BounceActionInt']]],
-  ['normalforcebernstein_11',['NormalForceBernstein',['../classBSMPT_1_1BounceActionInt.html#af7f81b5c6cb4abb0e6e37246125ab436',1,'BSMPT::BounceActionInt']]]
+  ['normalforce_9',['NormalForce',['../classBSMPT_1_1BounceActionInt.html#a08fff8f4f6ab03f6186d75ab5c6f9971',1,'BSMPT::BounceActionInt']]],
+  ['normalforcebernstein_10',['NormalForceBernstein',['../classBSMPT_1_1BounceActionInt.html#af7f81b5c6cb4abb0e6e37246125ab436',1,'BSMPT::BounceActionInt']]]
 ];

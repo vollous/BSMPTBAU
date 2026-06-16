@@ -27,10 +27,7 @@ var annotated_dup =
         ] ],
         [ "EWPTReturnType", "structBSMPT_1_1Minimizer_1_1EWPTReturnType.html", null ],
         [ "GSL_params", "structBSMPT_1_1Minimizer_1_1GSL__params.html", null ],
-        [ "GSLPlaneReturn", "structBSMPT_1_1Minimizer_1_1GSLPlaneReturn.html", "structBSMPT_1_1Minimizer_1_1GSLPlaneReturn" ],
-        [ "MinimizePlaneReturn", "structBSMPT_1_1Minimizer_1_1MinimizePlaneReturn.html", null ],
-        [ "MinimizersToUse", "structBSMPT_1_1Minimizer_1_1MinimizersToUse.html", null ],
-        [ "PointerContainerMinPlane", "structBSMPT_1_1Minimizer_1_1PointerContainerMinPlane.html", "structBSMPT_1_1Minimizer_1_1PointerContainerMinPlane" ]
+        [ "MinimizersToUse", "structBSMPT_1_1Minimizer_1_1MinimizersToUse.html", null ]
       ] ],
       [ "Models", null, [
         [ "Class_CxSM", "classBSMPT_1_1Models_1_1Class__CxSM.html", "classBSMPT_1_1Models_1_1Class__CxSM" ],

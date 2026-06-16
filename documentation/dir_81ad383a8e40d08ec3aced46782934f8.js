@@ -10,8 +10,6 @@ var dir_81ad383a8e40d08ec3aced46782934f8 =
     [ "CreateMuGrid.cpp", "CreateMuGrid_8cpp.html", "CreateMuGrid_8cpp" ],
     [ "MinimaTracer.cpp", "MinimaTracer_8cpp.html", "MinimaTracer_8cpp" ],
     [ "NLOVEV.cpp", "NLOVEV_8cpp.html", "NLOVEV_8cpp" ],
-    [ "PlotEWBG_nL.cpp", "PlotEWBG__nL_8cpp.html", "PlotEWBG__nL_8cpp" ],
-    [ "PlotEWBG_vw.cpp", "PlotEWBG__vw_8cpp.html", "PlotEWBG__vw_8cpp" ],
     [ "PotPlotter.cpp", "PotPlotter_8cpp.html", "PotPlotter_8cpp" ],
     [ "Test.cpp", "Test_8cpp.html", "Test_8cpp" ],
     [ "TripleHiggsNLO.cpp", "TripleHiggsNLO_8cpp.html", "TripleHiggsNLO_8cpp" ],
