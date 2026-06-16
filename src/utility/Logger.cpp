@@ -22,7 +22,6 @@ namespace BSMPT
 static std::map<std::string, LoggingLevel> LoggingPrefixes{
     {"--logginglevel::default=", LoggingLevel::Default},
     {"--logginglevel::debug=", LoggingLevel::Debug},
-    {"--logginglevel::ewbgdetailed=", LoggingLevel::EWBGDetailed},
     {"--logginglevel::progdetailed=", LoggingLevel::ProgDetailed},
     {"--logginglevel::minimizerdetailed=", LoggingLevel::MinimizerDetailed},
     {"--logginglevel::transitiondetailed=", LoggingLevel::TransitionDetailed},

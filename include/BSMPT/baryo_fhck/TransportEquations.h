@@ -299,6 +299,13 @@ public:
    */
   void InitializeMoment(const size_t &moment);
 
+  /**
+   * @brief Generates the spline for the <kernel_Name>
+   *
+   * @param kernel_Name Kernel function name
+   * @param is_1D is 1D or 2D
+   * @return tk::spline
+   */
   tk::spline InterpolateKernel(const std::string &kernel_Name,
                                const bool is_1D);
 
@@ -308,13 +315,6 @@ public:
    *
    */
   void BuildKernelInterpolation();
-
-  /**
-   * @brief Set the number of intergrations steps and initialize again.
-   *
-   * @param Num number of steps
-   */
-  void SetNumberOfSteps(const int &num);
 
   /**
    * @brief Calculate the collision matrix \f$ \deltaC^{1/2} \f$

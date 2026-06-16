@@ -219,12 +219,6 @@ void TransportEquations::BuildKernelInterpolation()
   }
 }
 
-void TransportEquations::SetNumberOfSteps(const int &num)
-{
-  NumberOfSteps = num;
-  Initialize();
-}
-
 MatDoub TransportEquations::CalculateCollisionMatrix(const double &xW,
                                                      VecDoub &FermionMasses,
                                                      VecDoub &BosonMasses)
