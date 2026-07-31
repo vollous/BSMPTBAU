@@ -6,7 +6,7 @@
 
 /**
  * @file
- * This program calculates properties of graviational waves sourced by phase
+ * This program calbulates properties of graviational waves sourced by phase
  * transitions
  *
  */
@@ -267,15 +267,15 @@ try
                 << sep << output.vec_gw_data.at(i).cs_t.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).fb_col.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omegab_col.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omegab_col.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f1_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f2_sw.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omega_2_sw.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omega_2_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f1_turb.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f2_turb.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omega_2_turb.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omega_2_turb.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_col.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_turb.value_or(EmptyValue)
