@@ -36,12 +36,6 @@ void TransportEquations::Initialize()
     return;
   }
 
-  // Plot top mass
-  NumberOfSteps = DefaultNumberOfSteps;
-  LwMultiplier  = DefaultLwMultiplier;
-  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
-  transportmodel->GenerateFermionMass(zList, true);
-
   gamwall = 1. / std::sqrt(1. - transportmodel->vwall * transportmodel->vwall);
 
   Logger::Write(LoggingLevel::FHCK, "Building Kernels Interpolations...");
@@ -49,6 +43,50 @@ void TransportEquations::Initialize()
   BuildKernelInterpolation();
 
   Logger::Write(LoggingLevel::FHCK, "\033[92mSuccess.\033[0m");
+
+  // Plot top mass
+  NumberOfSteps = DefaultNumberOfSteps;
+  LwMultiplier  = DefaultLwMultiplier;
+  MakeDistribution(LwMultiplier * transportmodel->Lw, NumberOfSteps);
+  transportmodel->GenerateFermionMass(zList, true);
+
+  std::stringstream path_ss, path_sss, path_ssss;
+  path_ss << "topmass_" << VevProfileModeToString.at(transportmodel->VevProfile)
+          << ".tsv";
+
+  path_sss << "vevprofile_"
+           << VevProfileModeToString.at(transportmodel->VevProfile) << ".tsv";
+
+  path_ssss << "spharelonrate_"
+            << VevProfileModeToString.at(transportmodel->VevProfile) << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+  std::ofstream PathFileVev(path_sss.str());
+  std::ofstream PathFileSpharelon(path_ssss.str());
+
+  for (double zi = -100. * transportmodel->Lw; zi < 100. * transportmodel->Lw;
+       zi += transportmodel->Lw / 100.)
+  {
+    PathFile << zi;
+    double m2, m2prime, thetaprime, theta2prime;
+
+    for (size_t j = 0; j < 3; j += 2)
+    {
+      size_t ind = transportmodel->modelPointer->get_NQuarks() - 1 - j;
+      transportmodel->GetFermionMass(
+          zi, j, m2, m2prime, thetaprime, theta2prime);
+      PathFile << "\t" << transportmodel->QuarkMassesRe.at(ind)(zi) << "\t"
+               << transportmodel->QuarkMassesIm.at(ind)(zi);
+    }
+    PathFile << "\n";
+    PathFileVev << zi << "\t" << transportmodel->Vev(zi) << "\n";
+    PathFileSpharelon << zi << "\t" << Gws(zi) << "\t"
+                      << Gws(zi) * WashoutFactor(zi) << "\n";
+  }
+
+  PathFile.close();
+  PathFileVev.close();
+  PathFileSpharelon.close();
 }
 
 void TransportEquations::GenerateIntegrationSpace()
@@ -693,6 +731,7 @@ void TransportEquations::SolveTransportEquation()
 
   for (size_t ell = 0; ell < moments.size(); ell++)
   {
+    elll = ell;
     stringstream ss;
     ss << "---------------- Calculating BAU for ℓ = " << moments.at(ell)
        << " ----------------";
@@ -800,6 +839,23 @@ double TransportEquations::SolveTransportEquationEll(const size_t &ell)
     }
   }
 
+  std::stringstream path_ss;
+  path_ss << "transportequations_"
+          << VevProfileModeToString.at(transportmodel->VevProfile) << "_" << ell
+          << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+
+  for (size_t i = 0; i < Best_Solution.cols(); i++)
+  {
+    PathFile << zList[i] << "\t";
+    for (size_t j = 0; j < Best_Solution.rows(); j++)
+      PathFile << Best_Solution[j][i] << "\t";
+    PathFile << "\n";
+  }
+
+  PathFile.close();
+
   if (it == NotBetter)
   {
     Logger::Write(
@@ -860,6 +916,13 @@ void TransportEquations::CalculateBAU()
   double r;                // temporary variable to store the result
   std::vector<double> z;   // list of u positions
   std::vector<double> muB; // muB integrand at position u
+
+  std::stringstream path_ss;
+  path_ss << "mubl" << VevProfileModeToString.at(transportmodel->VevProfile)
+          << "_" << elll << ".tsv";
+
+  std::ofstream PathFile(path_ss.str());
+
   for (size_t i = 0; i < zList.size(); i++)
   {
     const double zi = zList.at(i);
@@ -879,6 +942,8 @@ void TransportEquations::CalculateBAU()
     z.push_back(zi);
     muB.push_back(r); // integrand
   }
+
+  PathFile.close();
 
   size_t n = z.size();
   double a = z.front(); // Lower bound of integration
