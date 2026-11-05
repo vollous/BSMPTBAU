@@ -6,7 +6,7 @@
 
 /**
  * @file
- * This program calculates properties of graviational waves sourced by phase
+ * This program calbulates properties of graviational waves sourced by phase
  * transitions
  *
  */
@@ -35,7 +35,7 @@ struct CLIOptions
   BSMPT::ModelID::ModelIDs Model{ModelID::ModelIDs::NotSet};
   int firstline{0}, lastline{0};
   double templow{0}, temphigh{300};
-  double UserDefined_vwall     = 0.1;
+  double UserDefined_vwall     = 0.5;
   int UserDefined_PNLO_scaling = 1;
   double UserDefined_epsturb   = 0.1;
   int MaxPathIntegrations      = 7;
@@ -267,15 +267,15 @@ try
                 << sep << output.vec_gw_data.at(i).cs_t.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).fb_col.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omegab_col.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omegab_col.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f1_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f2_sw.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omega_2_sw.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omega_2_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f1_turb.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).f2_turb.value_or(EmptyValue)
                 << sep
-                << output.vec_gw_data.at(i).omega_2_turb.value_or(EmptyValue)
+                << output.vec_gw_data.at(i).h2omega_2_turb.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_col.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_sw.value_or(EmptyValue)
                 << sep << output.vec_gw_data.at(i).SNR_turb.value_or(EmptyValue)
@@ -850,7 +850,7 @@ BSMPT::parser prepare_parser()
   argparser.add_argument(
       "num_pts", "intermediate grid-size for default mode", "10", false);
   argparser.add_argument(
-      "vwall", "wall velocity: >0 user defined", "0.95", false);
+      "vwall", "wall velocity: >0 user defined", "0.5", false);
   argparser.add_subtext("-1: approximation");
   argparser.add_subtext("-2: upper bound");
   argparser.add_argument(

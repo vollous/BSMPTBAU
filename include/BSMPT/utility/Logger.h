@@ -36,7 +36,6 @@ enum class LoggingLevel
   VacuumProfile,
   BounceDetailed,
   ProgDetailed,
-  EWBGDetailed,
   Debug,
   Complete
 };
@@ -93,7 +92,6 @@ private:
 
   const std::map<LoggingLevel, bool> mDefaultSetup{
       {LoggingLevel::Default, true},
-      {LoggingLevel::EWBGDetailed, false},
       {LoggingLevel::ProgDetailed, false},
       {LoggingLevel::MinimizerDetailed, false},
       {LoggingLevel::MinTracerDetailed, false},
