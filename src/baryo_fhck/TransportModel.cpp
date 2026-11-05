@@ -36,9 +36,9 @@ TransportModel::TransportModel(
 
   std::stringstream ss;
   ss << "----------------- Baryon Asymmetry Calculation -----------------\n";
-  ss << "TrueVacuum = " << TrueVacuum << "\n";
-  ss << "FalseVacuum = " << FalseVacuum << "\n";
-  ss << "T = " << Tstar << "\n";
+  ss << std::setprecision(20) << "TrueVacuum = " << TrueVacuum << "\n";
+  ss << std::setprecision(20) << "FalseVacuum = " << FalseVacuum << "\n";
+  ss << std::setprecision(20) << "T = " << Tstar << "\n";
   ss << "vw = " << vwall << "\n";
   ss << "VEV profile = " << VevProfileModeToString.at(VevProfile) << "\n";
   ss << "Truncation scheme = " << TruncationSchemeToString.at(truncationscheme);
@@ -105,6 +105,10 @@ void TransportModel::Initialize()
   if (VevProfile == VevProfileMode::Kink)
   {
     SetEtaInterface();
+    std::ofstream PathFile("kink_data.tsv");
+    PathFile << Lw << "\t" << localCalcEta->top_theta_brk.value() << "\t"
+             << localCalcEta->top_theta_sym.value() << "\n";
+    PathFile.close();
   }
 }
 

@@ -74,7 +74,7 @@ enum class TransportModelStatus
 
 class TransportModel
 {
-private:
+public:
   /**
    * @brief modelPointer for the used parameter point
    */
