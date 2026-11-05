@@ -17,7 +17,7 @@ var searchData=
   ['development_14',['Development',['../index.html#autotoc_md7',1,'']]],
   ['difeq_15',['Difeq',['../structDifeq.html',1,'']]],
   ['difeq_5fvacuumprofile_16',['Difeq_VacuumProfile',['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html',1,'BSMPT::VacuumProfileNS']]],
-  ['differences_20in_20how_20to_20include_20a_20new_20model_17',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
+  ['differences_20in_20how_20to_20include_20a_20new_20model_17',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md45',1,'']]],
   ['dim_18',['dim',['../structBSMPT_1_1VacuumProfileNS_1_1Difeq__VacuumProfile.html#aa8f94e935dc3c16f276ab2c4d61bdc37',1,'BSMPT::VacuumProfileNS::Difeq_VacuumProfile::dim'],['../structBSMPT_1_1VacuumProfileNS_1_1VacuumProfile.html#a31f43d47ab3a65580678870597d50a6b',1,'BSMPT::VacuumProfileNS::VacuumProfile::dim'],['../classcvspline.html#a2a84285059eb1be60bb1b5552729ae97',1,'cvspline::dim'],['../classBSMPT_1_1BounceActionInt.html#a01159002c3d65f5cc0f6a17bc9a20800',1,'BSMPT::BounceActionInt::dim'],['../structBSMPT_1_1Baryo_1_1FHCK_1_1LocalCalcEta.html#aa2384ff7550a07f8fd7169cc4bad0e82',1,'BSMPT::Baryo::FHCK::LocalCalcEta::dim']]],
   ['dl_19',['dl',['../classcvspline.html#a6d1c75d9b856e77b7a3a0c3f05eb5e38',1,'cvspline']]],
   ['dldrho_5fsol_20',['dldrho_sol',['../classBSMPT_1_1BounceActionInt.html#a3292f964a2fbddd162e96d01cdacdfec',1,'BSMPT::BounceActionInt']]],

@@ -1,9 +1,9 @@
 var searchData=
 [
   ['a_20model_0',['Generate the C++ code for a model',['../index.html#autotoc_md12',1,'']]],
-  ['a_20new_20model_1',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
+  ['a_20new_20model_1',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md45',1,'']]],
   ['a_20new_20model_3a_2',['How to add a new model:',['../index.html#autotoc_md11',1,'']]],
-  ['a_20package_3',['BSMPT as a package',['../md_Changelog.html#autotoc_md43',1,'']]],
+  ['a_20package_3',['BSMPT as a package',['../md_Changelog.html#autotoc_md42',1,'']]],
   ['abserr_4',['abserr',['../classBSMPT_1_1BounceSolution.html#aafcb2823b8877e27e46024f2feb4e7ce',1,'BSMPT::BounceSolution::AbsErr'],['../classBSMPT_1_1GravitationalWave.html#a8bd591555d4a16213c46ce1bedeeaaf7',1,'BSMPT::GravitationalWave::AbsErr']]],
   ['action_5',['Action',['../classBSMPT_1_1BounceActionInt.html#a381293a29a38482cf1ac38ac3fdba3d1',1,'BSMPT::BounceActionInt']]],
   ['action_5fcalculation_2ecpp_6',['action_calculation.cpp',['../action__calculation_8cpp.html',1,'']]],
@@ -29,7 +29,7 @@ var searchData=
   ['alpha_26',['alpha',['../classBSMPT_1_1BounceSolution.html#ad748b0e18d854cc0b2d49da5648da0bb',1,'BSMPT::BounceSolution::alpha'],['../classBSMPT_1_1BounceActionInt.html#ae67bd826a910bac7a4d85518d7b1d509',1,'BSMPT::BounceActionInt::Alpha']]],
   ['another_20program_27',['How to include BSMPT in another program',['../index.html#autotoc_md9',1,'']]],
   ['armzerothreshold_28',['ARMZeroThreshold',['../classBSMPT_1_1Class__Potential__Origin.html#ab6258f71ce50afd4a4252a27abb3a22a',1,'BSMPT::Class_Potential_Origin']]],
-  ['as_20a_20package_29',['BSMPT as a package',['../md_Changelog.html#autotoc_md43',1,'']]],
+  ['as_20a_20package_29',['BSMPT as a package',['../md_Changelog.html#autotoc_md42',1,'']]],
   ['asciiplotter_30',['AsciiPlotter',['../classAsciiPlotter.html',1,'']]],
   ['auxfunctiondev_31',['AuxFunctionDev',['../classBSMPT_1_1BounceActionInt.html#abea15c1789845d23ef2eb7497b764444',1,'BSMPT::BounceActionInt']]]
 ];

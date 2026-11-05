@@ -13,7 +13,7 @@ var searchData=
   ['higgsvev_10',['HiggsVev',['../classBSMPT_1_1Class__Potential__Origin.html#ad195337e2edf3dc98f2a23f90bfe9e88',1,'BSMPT::Class_Potential_Origin']]],
   ['hightemperaturevev_11',['HighTemperatureVEV',['../classBSMPT_1_1MinimumTracer.html#aed54425666127f35e23eae9d5295175d',1,'BSMPT::MinimumTracer']]],
   ['how_20to_20add_20a_20new_20model_3a_12',['How to add a new model:',['../index.html#autotoc_md11',1,'']]],
-  ['how_20to_20include_20a_20new_20model_13',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md46',1,'']]],
+  ['how_20to_20include_20a_20new_20model_13',['Differences in how to include a new model',['../md_Changelog.html#autotoc_md45',1,'']]],
   ['how_20to_20include_20bsmpt_20in_20another_20program_14',['How to include BSMPT in another program',['../index.html#autotoc_md9',1,'']]],
   ['hubblerate_15',['HubbleRate',['../classBSMPT_1_1BounceSolution.html#a686824d441628cabebfb6124011c0c90',1,'BSMPT::BounceSolution']]],
   ['hvev_16',['hvev',['../classBSMPT_1_1Baryo_1_1FHCK_1_1BenchmarkModel.html#a1f275e9816bb1b64d331ebcfce80a7bc',1,'BSMPT::Baryo::FHCK::BenchmarkModel']]]

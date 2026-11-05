@@ -1,7 +1,7 @@
 var searchData=
 [
   ['w_0',['w',['../classBSMPT_1_1Baryo_1_1FHCK_1_1Q9KernelInty.html#ab13c93f525e0f1464e22d1a13adac04f',1,'BSMPT::Baryo::FHCK::Q9KernelInty::w'],['../classBSMPT_1_1Baryo_1_1FHCK_1_1KernelInty.html#a62da03572c339d37c05069d3ed84871e',1,'BSMPT::Baryo::FHCK::KernelInty::w']]],
-  ['wallthickness_1',['WallThickness',['../md_Changelog.html#autotoc_md38',1,'']]],
+  ['wallthickness_1',['WallThickness',['../md_Changelog.html#autotoc_md37',1,'']]],
   ['warppath_2',['WarpPath',['../classBSMPT_1_1MinimumTracer.html#adb23c200c817bf0ecc00f4e06c1f0650',1,'BSMPT::MinimumTracer']]],
   ['washoutfactor_3',['WashoutFactor',['../classBSMPT_1_1Baryo_1_1FHCK_1_1TransportEquations.html#a60831731c0e094b5e6b7d9d3754b7876',1,'BSMPT::Baryo::FHCK::TransportEquations']]],
   ['weinbergfirstderivative_4',['WeinbergFirstDerivative',['../classBSMPT_1_1Class__Potential__Origin.html#aa5a918e248a2b4e73eee204e0d0c19a8',1,'BSMPT::Class_Potential_Origin']]],
